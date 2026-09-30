@@ -33,7 +33,7 @@ type EpisodeRow = {
   technical_checklist: unknown; editorial_notes_for_post: string | null;
   editor_script_synthesis: string | null; recording_time_elapsed: number | null;
   scheduled_date: string | null; created_at: string; updated_at: string;
-  checklist: unknown; production_status: string; version: number;
+  checklist: unknown;
 };
 
 type ParticipantRow = {
@@ -137,8 +137,7 @@ export class SupabasePersistence implements Persistence {
       editorial_notes_for_post: episode.editorialNotesForPost ?? null,
       editor_script_synthesis: episode.editorScriptSynthesis ?? null,
       recording_time_elapsed: episode.recordingTimeElapsed ?? 0,
-      scheduled_date: episode.scheduledDate ?? null, checklist: episode.checklist ?? null,
-      production_status: episode.productionStatus ?? 'draft', version: episode.version ?? 1,
+      scheduled_date: null, checklist: null,
     };
     const { data, error } = await this.client.from('episodes').upsert(payload, { onConflict: 'id' }).select('*').single();
     if (error) throw new AppError(error.message, 'PERSISTENCE_WRITE_FAILED', 500);
@@ -161,7 +160,7 @@ export class SupabasePersistence implements Persistence {
       legacy_id: guest.id, program_id: guest.showId, name: guest.name, role: guest.role,
       company: guest.company, company_or_group: guest.company, bio: guest.bio,
       contacts: guest.contacts, notes: guest.notes, links: guest.links ?? [],
-      members: guest.members ?? [], previous_episodes: guest.previousEpisodes ?? 0,
+      members: [], previous_episodes: guest.previousEpisodes?.length ?? 0,
     };
     const { data, error } = await this.client.from('participants').upsert(payload, { onConflict: 'id' }).select('*').single();
     if (error) throw new AppError(error.message, 'PERSISTENCE_WRITE_FAILED', 500);
@@ -191,9 +190,8 @@ export class SupabasePersistence implements Persistence {
       technicalChecklist: row.technical_checklist as Episode['technicalChecklist'],
       editorialNotesForPost: row.editorial_notes_for_post ?? '',
       editorScriptSynthesis: row.editor_script_synthesis ?? '',
-      recordingTimeElapsed: row.recording_time_elapsed ?? 0, scheduledDate: row.scheduled_date ?? undefined,
-      checklist: row.checklist as Episode['checklist'], productionStatus: row.production_status,
-      version: row.version, createdAt: row.created_at, updatedAt: row.updated_at,
+      recordingTimeElapsed: row.recording_time_elapsed ?? 0,
+      createdAt: row.created_at, updatedAt: row.updated_at,
     };
   }
 
@@ -202,7 +200,7 @@ export class SupabasePersistence implements Persistence {
       id: requireValue(row.id, 'participants.id'), showId: row.program_id, name: row.name,
       role: row.role ?? '', company: row.company ?? row.company_or_group ?? '',
       bio: row.bio ?? '', contacts: row.contacts ?? '', notes: row.notes ?? '',
-      links: row.links ?? [], members: row.members ?? [], previousEpisodes: row.previous_episodes ?? 0,
+      links: row.links ?? [], previousEpisodes: [], createdAt: row.created_at,
     };
   }
 }
