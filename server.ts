@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { db } from './src/server/db';
 import { ai, parseAIJson } from './src/server/ai';
+import { requireAuth } from './src/server/auth';
 import { Episode, EditorialDiagnosis, ResearchData, OutlineBlock, QuestionItem, ScriptItem, PlannedShort, FollowUpItem } from './src/types';
 
 const app = express();
@@ -15,6 +16,8 @@ app.get('/api/health', async (_req: Request, res: Response) => {
   const health = await getHealth();
   res.status(health.status === 'ok' ? 200 : 503).json(health);
 });
+
+app.use('/api', requireAuth);
 
 // --- REST Endpoints: Shows ---
 app.get('/api/shows', (req: Request, res: Response) => {
