@@ -4,6 +4,7 @@ import fs from 'fs';
 import { db } from './src/server/db';
 import { ai, parseAIJson } from './src/server/ai';
 import { requireAuth } from './src/server/auth';
+import { validateEpisodeInput, validateGuestInput, validateShowInput } from './src/server/contracts';
 import { Episode, EditorialDiagnosis, ResearchData, OutlineBlock, QuestionItem, ScriptItem, PlannedShort, FollowUpItem } from './src/types';
 
 const app = express();
@@ -31,6 +32,7 @@ app.get('/api/shows/:id', (req: Request, res: Response) => {
 });
 
 app.post('/api/shows', (req: Request, res: Response) => {
+  validateShowInput(req.body);
   const newShow = {
     ...req.body,
     id: req.body.id || `show-${Date.now()}`,
@@ -42,6 +44,7 @@ app.post('/api/shows', (req: Request, res: Response) => {
 });
 
 app.put('/api/shows/:id', (req: Request, res: Response) => {
+  validateShowInput(req.body, true);
   const updated = db.saveShow({ ...req.body, id: req.params.id });
   res.json(updated);
 });
@@ -63,6 +66,7 @@ app.get('/api/episodes/:id', (req: Request, res: Response) => {
 });
 
 app.post('/api/episodes', (req: Request, res: Response) => {
+  validateEpisodeInput(req.body);
   const ep = req.body as Episode;
   const created = db.saveEpisode({
     ...ep,
@@ -74,6 +78,7 @@ app.post('/api/episodes', (req: Request, res: Response) => {
 });
 
 app.put('/api/episodes/:id', (req: Request, res: Response) => {
+  validateEpisodeInput(req.body, true);
   const updated = db.saveEpisode({ ...req.body, id: req.params.id });
   res.json(updated);
 });
@@ -89,6 +94,7 @@ app.get('/api/guests', (req: Request, res: Response) => {
 });
 
 app.post('/api/guests', (req: Request, res: Response) => {
+  validateGuestInput(req.body);
   const guest = req.body;
   const created = db.saveGuest({
     ...guest,
@@ -99,6 +105,7 @@ app.post('/api/guests', (req: Request, res: Response) => {
 });
 
 app.put('/api/guests/:id', (req: Request, res: Response) => {
+  validateGuestInput(req.body, true);
   const updated = db.saveGuest({ ...req.body, id: req.params.id });
   res.json(updated);
 });
