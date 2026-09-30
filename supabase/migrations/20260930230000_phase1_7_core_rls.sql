@@ -53,66 +53,17 @@ alter table public.programs enable row level security;
 alter table public.episodes enable row level security;
 alter table public.participants enable row level security;
 
-drop policy if exists organizations_member_select on public.organizations;
-create policy organizations_member_select
-  on public.organizations for select to authenticated
-  using (public.is_org_member(id));
-
-drop policy if exists organization_members_self_or_org_select on public.organization_members;
-create policy organization_members_self_or_org_select
-  on public.organization_members for select to authenticated
-  using (user_id = auth.uid() or public.is_org_member(organization_id));
-
-drop policy if exists organization_programs_member_select on public.organization_programs;
-create policy organization_programs_member_select
-  on public.organization_programs for select to authenticated
-  using (public.is_org_member(organization_id));
-
-drop policy if exists program_user_access_self_or_org_select on public.program_user_access;
-create policy program_user_access_self_or_org_select
-  on public.program_user_access for select to authenticated
-  using (user_id = auth.uid() or public.is_org_member(organization_id));
-
 drop policy if exists programs_access_select on public.programs;
-create policy programs_access_select
-  on public.programs for select to authenticated
-  using (public.has_program_access(id));
+create policy programs_access_select on public.programs for select to authenticated using (public.has_program_access(id));
 
-drop policy if exists programs_org_insert on public.programs;
-create policy programs_org_insert
-  on public.programs for insert to authenticated
-  with check (organization_id is not null and public.is_org_member(organization_id));
+drop policy if exists episodes_access_select on public.episodes;
+create policy episodes_access_select on public.episodes for select to authenticated using (public.has_program_access(program_id));
 
-drop policy if exists programs_org_update on public.programs;
-create policy programs_org_update
-  on public.programs for update to authenticated
-  using (public.has_program_access(id))
-  with check (organization_id is not null and public.is_org_member(organization_id));
+drop policy if exists participants_access_select on public.participants;
+create policy participants_access_select on public.participants for select to authenticated using (public.has_program_access(program_id));
 
-drop policy if exists programs_org_delete on public.programs;
-create policy programs_org_delete
-  on public.programs for delete to authenticated
-  using (public.has_program_access(id));
-
-drop policy if exists episodes_program_access on public.episodes;
-create policy episodes_program_access
-  on public.episodes for all to authenticated
-  using (public.has_program_access(program_id))
-  with check (public.has_program_access(program_id));
-
-drop policy if exists participants_program_access on public.participants;
-create policy participants_program_access
-  on public.participants for all to authenticated
-  using (public.has_program_access(program_id))
-  with check (public.has_program_access(program_id));
-
-revoke all on table public.organizations from anon, authenticated;
-revoke all on table public.organization_members from anon, authenticated;
-revoke all on table public.organization_programs from anon, authenticated;
-revoke all on table public.program_user_access from anon, authenticated;
-revoke all on table public.programs from anon, authenticated;
-revoke all on table public.episodes from anon, authenticated;
-revoke all on table public.participants from anon, authenticated;
+revoke all on table public.organizations, public.organization_members, public.organization_programs, public.program_user_access from anon, authenticated;
+revoke all on table public.programs, public.episodes, public.participants from anon, authenticated;
 
 grant select on table public.organizations, public.organization_members, public.organization_programs, public.program_user_access to authenticated;
 grant select, insert, update, delete on table public.programs, public.episodes, public.participants to authenticated;
