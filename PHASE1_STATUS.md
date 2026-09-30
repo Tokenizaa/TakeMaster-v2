@@ -15,7 +15,7 @@ Implemented in this branch:
 
 Not yet enabled:
 - Existing CRUD endpoints are still backed by the V2 JSON database. They are not switched to the shared production database yet.
-- Existing UI is not yet gated by authentication because the shared database/RLS model has not been live-verified.
+- UI is now gated by Supabase authentication, and API routes require a validated Bearer token. Database/RLS authorization is still not live-verified.
 - No production schema migration has been applied.
 
 Reason:
