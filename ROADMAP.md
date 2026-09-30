@@ -539,7 +539,7 @@ O projeto não deve avançar apenas porque código foi implementado.
 - health endpoint.
 
 **Em andamento:**
-- Fase 1.
+- Fase 1 — 1.5 implementada na base; 1.6 e 1.7 parcialmente implementadas, com ativação final bloqueada pela validação live do banco compartilhado.
 
 **Ainda bloqueado:**
 - inspeção confiável do Supabase compartilhado;
