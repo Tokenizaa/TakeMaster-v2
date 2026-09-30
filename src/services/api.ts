@@ -10,23 +10,24 @@ import {
   FollowUpItem,
   PlannedShort,
 } from '../types';
+import { apiFetch } from '../lib/apiFetch';
 
 export const api = {
   // Shows
   async getShows(): Promise<Show[]> {
-    const res = await fetch('/api/shows');
+    const res = await apiFetch('/api/shows');
     if (!res.ok) throw new Error('Falha ao carregar programas');
     return res.json();
   },
 
   async getShow(id: string): Promise<Show> {
-    const res = await fetch(`/api/shows/${id}`);
+    const res = await apiFetch(`/api/shows/${id}`);
     if (!res.ok) throw new Error('Programa não encontrado');
     return res.json();
   },
 
   async createShow(show: Partial<Show>): Promise<Show> {
-    const res = await fetch('/api/shows', {
+    const res = await apiFetch('/api/shows', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(show),
@@ -36,7 +37,7 @@ export const api = {
   },
 
   async updateShow(id: string, show: Partial<Show>): Promise<Show> {
-    const res = await fetch(`/api/shows/${id}`, {
+    const res = await apiFetch(`/api/shows/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(show),
@@ -46,7 +47,7 @@ export const api = {
   },
 
   async deleteShow(id: string): Promise<boolean> {
-    const res = await fetch(`/api/shows/${id}`, { method: 'DELETE' });
+    const res = await apiFetch(`/api/shows/${id}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Falha ao excluir programa');
     const data = await res.json();
     return data.success;
@@ -54,19 +55,19 @@ export const api = {
 
   // Episodes
   async getEpisodes(): Promise<Episode[]> {
-    const res = await fetch('/api/episodes');
+    const res = await apiFetch('/api/episodes');
     if (!res.ok) throw new Error('Falha ao carregar episódios');
     return res.json();
   },
 
   async getEpisode(id: string): Promise<Episode> {
-    const res = await fetch(`/api/episodes/${id}`);
+    const res = await apiFetch(`/api/episodes/${id}`);
     if (!res.ok) throw new Error('Episódio não encontrado');
     return res.json();
   },
 
   async createEpisode(episode: Partial<Episode>): Promise<Episode> {
-    const res = await fetch('/api/episodes', {
+    const res = await apiFetch('/api/episodes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episode),
@@ -76,7 +77,7 @@ export const api = {
   },
 
   async updateEpisode(id: string, episode: Partial<Episode>): Promise<Episode> {
-    const res = await fetch(`/api/episodes/${id}`, {
+    const res = await apiFetch(`/api/episodes/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episode),
@@ -86,7 +87,7 @@ export const api = {
   },
 
   async deleteEpisode(id: string): Promise<boolean> {
-    const res = await fetch(`/api/episodes/${id}`, { method: 'DELETE' });
+    const res = await apiFetch(`/api/episodes/${id}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Falha ao excluir episódio');
     const data = await res.json();
     return data.success;
@@ -94,13 +95,13 @@ export const api = {
 
   // Guests
   async getGuests(): Promise<Guest[]> {
-    const res = await fetch('/api/guests');
+    const res = await apiFetch('/api/guests');
     if (!res.ok) throw new Error('Falha ao carregar convidados');
     return res.json();
   },
 
   async createGuest(guest: Partial<Guest>): Promise<Guest> {
-    const res = await fetch('/api/guests', {
+    const res = await apiFetch('/api/guests', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(guest),
@@ -110,7 +111,7 @@ export const api = {
   },
 
   async updateGuest(id: string, guest: Partial<Guest>): Promise<Guest> {
-    const res = await fetch(`/api/guests/${id}`, {
+    const res = await apiFetch(`/api/guests/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(guest),
@@ -120,115 +121,50 @@ export const api = {
   },
 
   // AI Generation Endpoints
-  async aiDiagnose(params: {
-    idea: string;
-    guestName?: string;
-    format?: string;
-    durationMin?: number;
-    objective?: string;
-    additionalInfo?: string;
-  }): Promise<EditorialDiagnosis> {
-    const res = await fetch('/api/ai/diagnose', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    });
+  async aiDiagnose(params: { idea: string; guestName?: string; format?: string; durationMin?: number; objective?: string; additionalInfo?: string }): Promise<EditorialDiagnosis> {
+    const res = await apiFetch('/api/ai/diagnose', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
     if (!res.ok) throw new Error('Falha na análise editorial da IA');
     return res.json();
   },
 
-  async aiResearch(params: {
-    guestName: string;
-    company?: string;
-    idea: string;
-    diagnosis?: EditorialDiagnosis;
-  }): Promise<ResearchData> {
-    const res = await fetch('/api/ai/research', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    });
+  async aiResearch(params: { guestName: string; company?: string; idea: string; diagnosis?: EditorialDiagnosis }): Promise<ResearchData> {
+    const res = await apiFetch('/api/ai/research', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
     if (!res.ok) throw new Error('Falha ao gerar pesquisa');
     return res.json();
   },
 
-  async aiOutline(params: {
-    idea: string;
-    guestName: string;
-    targetDurationMin: number;
-    diagnosis: EditorialDiagnosis;
-    research?: ResearchData;
-  }): Promise<{ outline: OutlineBlock[]; questions: QuestionItem[] }> {
-    const res = await fetch('/api/ai/outline', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    });
+  async aiOutline(params: { idea: string; guestName: string; targetDurationMin: number; diagnosis: EditorialDiagnosis; research?: ResearchData }): Promise<{ outline: OutlineBlock[]; questions: QuestionItem[] }> {
+    const res = await apiFetch('/api/ai/outline', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
     if (!res.ok) throw new Error('Falha ao gerar pauta inteligente');
     return res.json();
   },
 
   async aiScript(episode: Episode): Promise<{ script: ScriptItem[] }> {
-    const res = await fetch('/api/ai/script', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ episode }),
-    });
+    const res = await apiFetch('/api/ai/script', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ episode }) });
     if (!res.ok) throw new Error('Falha ao escrever roteiro completo');
     return res.json();
   },
 
-  async aiRepiques(params: {
-    questionText: string;
-    context?: string;
-    guestName?: string;
-  }): Promise<{ followUps: FollowUpItem[] }> {
-    const res = await fetch('/api/ai/repiques', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    });
+  async aiRepiques(params: { questionText: string; context?: string; guestName?: string }): Promise<{ followUps: FollowUpItem[] }> {
+    const res = await apiFetch('/api/ai/repiques', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
     if (!res.ok) throw new Error('Falha ao gerar repiques');
     return res.json();
   },
 
   async aiShorts(episode: Episode): Promise<{ shorts: PlannedShort[] }> {
-    const res = await fetch('/api/ai/shorts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ episode }),
-    });
+    const res = await apiFetch('/api/ai/shorts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ episode }) });
     if (!res.ok) throw new Error('Falha ao planejar cortes e shorts');
     return res.json();
   },
 
-  async aiAssist(params: {
-    episode: Episode;
-    userPrompt: string;
-    currentTab: string;
-    activeBlockId?: string;
-    activeQuestionId?: string;
-  }): Promise<{
-    actionType: string;
-    summary: string;
-    targetField: string;
-    updatedData: any;
-  }> {
-    const res = await fetch('/api/ai/assist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    });
+  async aiAssist(params: { episode: Episode; userPrompt: string; currentTab: string; activeBlockId?: string; activeQuestionId?: string }): Promise<{ actionType: string; summary: string; targetField: string; updatedData: any }> {
+    const res = await apiFetch('/api/ai/assist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(params) });
     if (!res.ok) throw new Error('Falha no assistente de IA');
     return res.json();
   },
 
   async aiEditorScript(episode: Episode): Promise<{ editorScript: string }> {
-    const res = await fetch('/api/ai/editor-script', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ episode }),
-    });
+    const res = await apiFetch('/api/ai/editor-script', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ episode }) });
     if (!res.ok) throw new Error('Falha ao sintetizar roteiro de edição');
     return res.json();
   },
