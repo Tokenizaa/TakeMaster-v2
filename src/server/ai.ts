@@ -24,7 +24,7 @@ async function callNim(model: string, contents: string, responseMimeType?: strin
 
 async function generateWithFallback(options: GenerateOptions): Promise<GenerateResponse> {
   const c = getServerConfig();
-  const primary = options.model || c.nimPrimaryModel;
+  const primary = c.nimPrimaryModel;
   try { return await callNim(primary, options.contents, options.config?.responseMimeType); }
   catch (primaryError) {
     if (!c.nimFallbackModel || c.nimFallbackModel === primary) throw primaryError;
@@ -38,7 +38,7 @@ export const ai = { models: { generateContent: generateWithFallback } };
 export function parseAIJson<T>(rawText: string | undefined): T {
   if (!rawText) throw new Error('A IA retornou uma resposta vazia.');
   let cleaned = rawText.trim();
-  cleaned = cleaned.replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '').trim();
+  cleaned = cleaned.replace(/^\x60\x60\x60json\s*/, '').replace(/^\x60\x60\x60\s*/, '').replace(/\s*\x60\x60\x60$/, '').trim();
   try { return JSON.parse(cleaned) as T; }
   catch { throw new Error('A IA retornou JSON inválido.'); }
 }
