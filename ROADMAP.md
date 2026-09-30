@@ -147,9 +147,9 @@ Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda 
 - normalização somente nas bordas;
 - impedir payloads incompatíveis de contaminarem o domínio.
 
-**Status:** PARCIAL.
+**Status:** IMPLEMENTADA NA BASE.
 
-Já existe tratamento de erro e parsing estrito de IA. A validação completa dos contratos de domínio/API ainda falta.
+Foram adicionados contratos de entrada para Programs, Episodes e Participants/Guests e eles já estão aplicados nas rotas CRUD existentes. A validação estrutural completa das respostas de IA permanece em 4.2.
 
 ## 1.6 — Persistência Supabase
 **Escopo:**
@@ -161,9 +161,11 @@ Já existe tratamento de erro e parsing estrito de IA. A validação completa do
 - autosave/persistência confiável;
 - evitar dependência direta da UI no schema.
 
-**Status:** PENDENTE.
+**Status:** PARCIAL / BLOQUEADA.
 
-Atualmente o CRUD existente ainda usa JSON local.
+Foi criado o adapter `SupabasePersistence` e o mapeamento inicial de `Program` para o schema documentado no V1. Episode/Participant ainda não foram mapeados porque o banco compartilhado não está acessível para validação live.
+
+O CRUD principal ainda usa JSON local como fonte de verdade.
 
 **Bloqueio:** depende do 0.5.
 
@@ -178,9 +180,11 @@ Atualmente o CRUD existente ainda usa JSON local.
 - grants mínimos;
 - testes allow/deny.
 
-**Status:** PENDENTE.
+**Status:** PARCIAL / BLOQUEADA.
 
-A autenticação foi implementada, mas autenticação não substitui autorização. O acesso aos dados deverá ser protegido também no banco, combinando grants e RLS. citeturn0search0turn0search1
+Foi criada a camada de autorização server-side para membership de Organization, roles e acesso a Program, usando as relações documentadas no V1. Ela ainda não foi ligada ao CRUD principal porque o schema live e as políticas reais precisam ser confirmados primeiro.
+
+RLS/grants ainda não foram alterados nem testados no banco compartilhado. A autenticação não substitui autorização; o desenho continua dependendo de grants + RLS. citeturn1search1turn1search2
 
 ## 1.8 — Relacionamentos editoriais
 **Escopo:**
@@ -540,10 +544,10 @@ O projeto não deve avançar apenas porque código foi implementado.
 **Ainda bloqueado:**
 - inspeção confiável do Supabase compartilhado;
 - schema definitivo;
-- RLS/grants;
-- autorização Organization/Program;
-- adapter de persistência Supabase;
-- remoção do JSON como fonte de verdade;
+- RLS/grants e testes allow/deny;
+- ativação da autorização Organization/Program nas rotas;
+- conclusão dos mapeamentos Episode/Participant;
+- troca do JSON pela persistência Supabase;
 - testes completos.
 
 **Regra para a próxima execução:**
