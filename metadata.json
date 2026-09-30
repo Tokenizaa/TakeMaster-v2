@@ -1,0 +1,8 @@
+{
+  "name": "TakeMaster - Direção & Roteiro Audiovisual",
+  "description": "Sistema profissional de pré-produção, roteirização, direção de câmeras e estúdio de gravação assistido por IA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
