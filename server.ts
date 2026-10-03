@@ -2,13 +2,22 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { db } from './src/server/db';
-import { ai, parseGeminiJson } from './src/server/ai';
+import { ai, parseAIJson } from './src/server/ai';
+import { requireAuth } from './src/server/auth';
 import { Episode, EditorialDiagnosis, ResearchData, OutlineBlock, QuestionItem, ScriptItem, PlannedShort, FollowUpItem } from './src/types';
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json({ limit: '15mb' }));
+
+app.get('/api/health', async (_req: Request, res: Response) => {
+  const { getHealth } = await import('./src/server/health');
+  const health = await getHealth();
+  res.status(health.status === 'ok' ? 200 : 503).json(health);
+});
+
+app.use('/api', requireAuth);
 
 // --- REST Endpoints: Shows ---
 app.get('/api/shows', (req: Request, res: Response) => {
@@ -155,7 +164,7 @@ Responda ESTRITAMENTE em formato JSON com o seguinte schema:
       },
     });
 
-    const diagnosis = parseGeminiJson<EditorialDiagnosis>(response.text, {
+    const diagnosis = parseAIJson<EditorialDiagnosis>(response.text, {
       centralTheme: 'Tema central do episódio',
       potentialStory: 'História potencial a ser explorada',
       primaryConflict: 'Conflito principal a ser abordado',
@@ -255,7 +264,7 @@ Retorne ESTRITAMENTE em formato JSON com o seguinte schema:
       },
     });
 
-    const research = parseGeminiJson<ResearchData>(response.text, {
+    const research = parseAIJson<ResearchData>(response.text, {
       aboutGuest: '',
       trajectory: '',
       company: '',
@@ -449,7 +458,7 @@ Retorne ESTRITAMENTE em formato JSON com o schema:
       },
     });
 
-    const parsed = parseGeminiJson<{ outline: OutlineBlock[]; questions: QuestionItem[] }>(response.text, {
+    const parsed = parseAIJson<{ outline: OutlineBlock[]; questions: QuestionItem[] }>(response.text, {
       outline: [],
       questions: [],
     });
@@ -523,7 +532,7 @@ Retorne ESTRITAMENTE em formato JSON com o schema:
       },
     });
 
-    const parsed = parseGeminiJson<{ script: ScriptItem[] }>(response.text, { script: [] });
+    const parsed = parseAIJson<{ script: ScriptItem[] }>(response.text, { script: [] });
     res.json(parsed);
   } catch (error: any) {
     console.error('Error generating script:', error);
@@ -593,7 +602,7 @@ Retorne em formato JSON:
       },
     });
 
-    const parsed = parseGeminiJson<{ followUps: FollowUpItem[] }>(response.text, { followUps: [] });
+    const parsed = parseAIJson<{ followUps: FollowUpItem[] }>(response.text, { followUps: [] });
     res.json(parsed);
   } catch (error: any) {
     console.error('Error generating repiques:', error);
@@ -660,7 +669,7 @@ Retorne em formato JSON:
       },
     });
 
-    const parsed = parseGeminiJson<{ shorts: PlannedShort[] }>(response.text, { shorts: [] });
+    const parsed = parseAIJson<{ shorts: PlannedShort[] }>(response.text, { shorts: [] });
     res.json(parsed);
   } catch (error: any) {
     console.error('Error generating shorts:', error);
@@ -717,7 +726,7 @@ Retorne ESTRITAMENTE em formato JSON:
       },
     });
 
-    const parsed = parseGeminiJson<any>(response.text, {
+    const parsed = parseAIJson<any>(response.text, {
       actionType: 'text_feedback',
       summary: 'Sugestão processada',
       targetField: '',
@@ -785,7 +794,7 @@ Retorne em formato JSON:
       },
     });
 
-    const parsed = parseGeminiJson<{ editorScript: string }>(response.text, {
+    const parsed = parseAIJson<{ editorScript: string }>(response.text, {
       editorScript: 'Roteiro de edição sintetizado com sucesso.',
     });
     res.json(parsed);
