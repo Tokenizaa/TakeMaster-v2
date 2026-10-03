@@ -147,9 +147,9 @@ Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda 
 - normalização somente nas bordas;
 - impedir payloads incompatíveis de contaminarem o domínio.
 
-**Status:** PARCIAL.
+**Status:** IMPLEMENTADA NA BASE.
 
-Já existe tratamento de erro e parsing estrito de IA. A validação completa dos contratos de domínio/API ainda falta.
+Foram adicionados contratos de entrada para Programs, Episodes e Participants/Guests e eles já estão aplicados nas rotas CRUD existentes. A validação estrutural completa das respostas de IA permanece em 4.2.
 
 ## 1.6 — Persistência Supabase
 **Escopo:**
@@ -161,11 +161,11 @@ Já existe tratamento de erro e parsing estrito de IA. A validação completa do
 - autosave/persistência confiável;
 - evitar dependência direta da UI no schema.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA CAMADA DE PERSISTÊNCIA; ATIVAÇÃO DO CRUD AINDA PENDENTE.
 
-Atualmente o CRUD existente ainda usa JSON local.
+O schema live do projeto correto foi validado. O adapter `SupabasePersistence` agora possui mappings de Program, Episode e Participant contra as tabelas reais `programs`, `episodes` e `participants`.
 
-**Bloqueio:** depende do 0.5.
+O CRUD principal ainda usa JSON local como fonte de verdade; a próxima etapa é substituir os handlers por este adapter e cobrir os relacionamentos filhos do Episode.
 
 ## 1.7 — Autorização, organização e programas
 **Escopo:**
@@ -178,9 +178,11 @@ Atualmente o CRUD existente ainda usa JSON local.
 - grants mínimos;
 - testes allow/deny.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA BASE; MATRIZ DE ROLES AINDA PENDENTE.
 
-A autenticação foi implementada, mas autenticação não substitui autorização. O acesso aos dados deverá ser protegido também no banco, combinando grants e RLS. citeturn0search0turn0search1
+O schema live foi validado no projeto correto. O banco já possui RLS e políticas existentes baseadas em `tm_private.is_org_member/is_org_role`; foi mantida essa arquitetura e adicionada uma camada de acesso por programa para leitura direta quando houver vínculo em `program_user_access`.
+
+Os grants das tabelas centrais foram reduzidos para `authenticated`, removendo acesso `anon`. Os testes iniciais confirmam que `anon` não consegue consultar `programs` e que `authenticated` sem identidade/membership vê zero linhas. Ainda falta a matriz completa de permissões por role e testes allow/deny com usuários reais. citeturn1search2turn1search4
 
 ## 1.8 — Relacionamentos editoriais
 **Escopo:**
@@ -499,12 +501,12 @@ O projeto não deve avançar apenas porque código foi implementado.
 ### Gate B — Banco e segurança
 **Condição:** schema + dados + grants + RLS + autorização validados.
 
-**Estado atual:** NÃO PASSOU.
+**Estado atual:** PARCIALMENTE PASSOU — schema/RLS/grants centrais validados e hardening aplicado; falta matriz de roles + testes com identidades reais.
 
 ### Gate C — Persistência
 **Condição:** Supabase é a fonte de verdade do V2.
 
-**Estado atual:** NÃO PASSOU; JSON local ainda existe.
+**Estado atual:** NÃO PASSOU; adapter está pronto para as entidades raiz, mas JSON local ainda é a fonte de verdade.
 
 ### Gate D — Editorial
 **Condição:** fluxo completo de episódio funcional.
@@ -535,14 +537,13 @@ O projeto não deve avançar apenas porque código foi implementado.
 - health endpoint.
 
 **Em andamento:**
-- Fase 1.
+- Fase 1 — 1.5 implementada na base; 1.6 e 1.7 parcialmente implementadas, com ativação final bloqueada pela validação live do banco compartilhado.
 
 **Ainda bloqueado:**
-- inspeção confiável do Supabase compartilhado;
-- schema definitivo;
-- RLS/grants;
-- autorização Organization/Program;
-- adapter de persistência Supabase;
+- ativação da persistência Supabase nas rotas CRUD;
+- conclusão dos relacionamentos filhos do Episode;
+- matriz de roles Organization/Program;
+- testes RLS allow/deny com identidades reais;
 - remoção do JSON como fonte de verdade;
 - testes completos.
 
