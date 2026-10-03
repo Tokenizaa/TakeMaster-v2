@@ -27,7 +27,7 @@ export const RecordingPrepTab: React.FC<RecordingPrepTabProps> = ({
   onUpdateEpisode,
   onOpenStudioMode,
 }) => {
-  const checklist = episode.technicalChecklist || {
+  const checklist = episode.technical_checklist || {
     cam1Recording: false,
     cam2Recording: false,
     cam3Recording: false,
@@ -88,7 +88,7 @@ export const RecordingPrepTab: React.FC<RecordingPrepTabProps> = ({
       ...checklist,
       [key]: !checklist[key],
     };
-    onUpdateEpisode({ technicalChecklist: updated });
+    onUpdateEpisode({ technical_checklist: updated });
   };
 
   const toggleCustomItem = (id: string) => {
@@ -96,7 +96,7 @@ export const RecordingPrepTab: React.FC<RecordingPrepTabProps> = ({
       it.id === id ? { ...it, done: !it.done } : it
     );
     onUpdateEpisode({
-      technicalChecklist: { ...checklist, customItems: updatedCustom },
+      technical_checklist: { ...checklist, customItems: updatedCustom },
     });
   };
 
@@ -111,7 +111,7 @@ export const RecordingPrepTab: React.FC<RecordingPrepTabProps> = ({
     };
 
     onUpdateEpisode({
-      technicalChecklist: {
+      technical_checklist: {
         ...checklist,
         customItems: [...(checklist.customItems || []), newItem],
       },

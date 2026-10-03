@@ -10,13 +10,13 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { Episode, Show, EpisodeStatus } from '../types';
+import { Episode, Program, EpisodeStatus } from '../types';
 import { getStatusColorClass, getStatusLabel } from '../utils/format';
 
 interface DashboardViewProps {
   episodes: Episode[];
-  shows: Show[];
-  activeShow: Show | null;
+  programs: Program[];
+  activeShow: Program | null;
   onSelectEpisode: (ep: Episode, initialTab?: string) => void;
   onNewEpisodeClick: () => void;
   onNewShowClick: () => void;
@@ -25,7 +25,7 @@ interface DashboardViewProps {
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   episodes,
-  shows,
+  programs,
   activeShow,
   onSelectEpisode,
   onNewEpisodeClick,
@@ -124,7 +124,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono font-bold text-amber-400">
-                        EP {String(ep.episodeNumber).padStart(3, '0')}
+                        EP {String(ep.episode_number).padStart(3, '0')}
                       </span>
                       <span className="text-zinc-600">·</span>
                       <span className="text-xs text-zinc-400">{ep.format}</span>
@@ -138,14 +138,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     {ep.title}
                   </h3>
 
-                  <p className="text-xs text-zinc-400 mt-1.5 line-clamp-2">
-                    {ep.guestName ? `Convidado: ${ep.guestName} · ` : ''}{ep.diagnosis?.centralTheme || ep.idea}
-                  </p>
+                   <p className="text-xs text-zinc-400 mt-1.5 line-clamp-2">
+                     {ep.diagnosis?.centralTheme || ep.idea}
+                   </p>
 
                   <div className="flex items-center gap-4 mt-3 text-xs text-zinc-400 font-mono">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
-                      {ep.targetDurationMin} min planejados
+                      {ep.target_duration_min} min planejados
                     </span>
                     <span>·</span>
                     <span>{ep.outline?.length || 0} blocos</span>
@@ -209,7 +209,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="text-xs font-mono font-bold text-amber-400">
-                      EP {String(ep.episodeNumber).padStart(3, '0')}
+                      EP {String(ep.episode_number).padStart(3, '0')}
                     </span>
                     <span className={`px-2 py-0.5 text-[11px] font-mono rounded-md border ${getStatusColorClass(ep.status)}`}>
                       {getStatusLabel(ep.status)}
@@ -226,9 +226,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-400">
-                  <span className="truncate max-w-[140px] text-zinc-300">
-                    {ep.guestName || 'Solo'}
-                  </span>
+                   <span className="truncate max-w-[140px] text-zinc-300">
+                     {ep.host}
+                   </span>
                   <div className="flex items-center gap-1 text-amber-400 font-medium group-hover:translate-x-1 transition-transform">
                     <span>Acessar</span>
                     <ArrowRight className="w-3.5 h-3.5" />

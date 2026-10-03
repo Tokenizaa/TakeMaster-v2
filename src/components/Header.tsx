@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span>← Episódios</span>
             </button>
             <span className="text-zinc-600">/</span>
-            <span className="text-zinc-400 font-mono">EP {String(activeEpisode.episodeNumber).padStart(3, '0')}</span>
+            <span className="text-zinc-400 font-mono">EP {String(activeEpisode.episode_number).padStart(3, '0')}</span>
             <span className="text-zinc-600">/</span>
             <span className="text-zinc-100 font-semibold truncate max-w-sm">{activeEpisode.title}</span>
           </div>

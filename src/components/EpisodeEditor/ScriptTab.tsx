@@ -67,14 +67,13 @@ export const ScriptTab: React.FC<ScriptTabProps> = ({
     }
   };
 
-  const handleGenerateRepiques = async (q: QuestionItem) => {
-    setRepiquesLoadingId(q.id);
-    try {
-      const res = await api.aiRepiques({
-        questionText: q.text,
-        context: episode.diagnosis?.primaryConflict,
-        guestName: episode.guestName,
-      });
+     const handleGenerateRepiques = async (q: QuestionItem) => {
+     setRepiquesLoadingId(q.id);
+     try {
+       const res = await api.aiRepiques({
+         questionText: q.text,
+         context: episode.diagnosis?.primaryConflict,
+       });
 
       if (res.followUps) {
         const updatedQuestions = questions.map((item) =>

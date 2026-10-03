@@ -1,0 +1,12 @@
+- generic [ref=e3]:
+  - generic [ref=e4]: "[plugin:vite:oxc] Transform failed with 2 errors: [PARSE_ERROR] `await` is only allowed within async functions and at the top levels of modules ╭─[ src/App.tsx:356:19 ] │ 356 │ const saved = await api.createEpisode(newEpisode); │ ──┬── │ ╰──── │ │ Help: Either remove this `await` or add the `async` keyword to the enclosing function ─────╯ [PARSE_ERROR] Expected `}` but found `{` ╭─[ src/App.tsx:560:12 ] │ 560 │ {currentView === 'studio-setup' && ( │ ┬ │ ╰── `}` expected ─────╯"
+  - generic [ref=e5]: /home/lg/workspace/projects/TakeMaster-v2/src/App.tsx
+  - generic [ref=e7]: at transformWithOxc (/home/lg/workspace/projects/TakeMaster-v2/node_modules/vite/dist/node/chunks/node.js:7551:19) at TransformPluginContext.transform (/home/lg/workspace/projects/TakeMaster-v2/node_modules/vite/dist/node/chunks/node.js:7623:26) at EnvironmentPluginContainer.transform (/home/lg/workspace/projects/TakeMaster-v2/node_modules/vite/dist/node/chunks/node.js:8515:51) at async loadAndTransform (/home/lg/workspace/projects/TakeMaster-v2/node_modules/vite/dist/node/chunks/node.js:19998:26) at async viteTransformMiddleware (/home/lg/workspace/projects/TakeMaster-v2/node_modules/vite/dist/node/chunks/node.js:20217:20)
+  - generic [ref=e8]:
+    - text: Click outside, press Esc key, or fix the code to dismiss.You can also disable this overlay by setting
+    - code [ref=e9]: server.hmr.overlay
+    - text: to
+    - code [ref=e10]: "false"
+    - text: in
+    - code [ref=e11]: vite.config.ts
+    - text: .

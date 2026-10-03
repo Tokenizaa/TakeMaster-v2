@@ -12,6 +12,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { Guest } from '../types';
+import { ErrorMessage } from './ErrorMessage';
 
 interface GuestsViewProps {
   guests: Guest[];
@@ -32,6 +33,8 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
   const [bio, setBio] = useState('');
   const [contacts, setContacts] = useState('');
   const [notes, setNotes] = useState('');
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
 
   const filteredGuests = guests.filter(
     (g) =>
@@ -40,29 +43,41 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
       g.role.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
+   const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     if (!name.trim()) {
+       setSaveError('Por favor, preencha o nome do convidado.');
+       return;
+     }
 
-    await onSaveGuest({
-      name,
-      role,
-      company,
-      bio,
-      contacts,
-      notes,
-      links: [],
-      previousEpisodes: [],
-    });
+     setSaveError(null);
+     setSaveSuccess(null);
+     
+     try {
+       await onSaveGuest({
+         name,
+         role,
+         company,
+         bio,
+       contacts,
+       notes,
+       links: [],
+       previousEpisodes: [],
+       });
 
-    setName('');
-    setRole('');
-    setCompany('');
-    setBio('');
-    setContacts('');
-    setNotes('');
-    setShowAddModal(false);
-  };
+       setName('');
+       setRole('');
+       setCompany('');
+       setBio('');
+       setContacts('');
+       setNotes('');
+       setShowAddModal(false);
+       
+       setSaveSuccess('Convidado salvo com sucesso!');
+     } catch (err: any) {
+       setSaveError(err.message || 'Falha ao salvar convidado. Por favor, tente novamente.');
+     }
+   };
 
   return (
     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 max-w-7xl mx-auto w-full">
@@ -87,17 +102,48 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
         </button>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative max-w-md">
-        <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Buscar por nome, cargo ou empresa..."
-          className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
-        />
-      </div>
+       {/* Search Bar */}
+       <div className="relative max-w-md">
+         <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
+         <input
+           type="text"
+           value={searchTerm}
+           onChange={(e) => setSearchTerm(e.target.value)}
+           placeholder="Buscar por nome, cargo ou empresa..."
+           className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+         />
+       </div>
+       
+       {/* Save Error Message */}
+       {saveError && (
+         <div className="flex items-center justify-start w-full mb-4">
+           <ErrorMessage message={saveError} onDismiss={() => setSaveError(null)} />
+         </div>
+       )}
+       
+       {/* Save Success Message */}
+       {saveSuccess && (
+         <div className="flex items-center justify-start w-full mb-4">
+           <div className="p-4 mb-4 bg-green-900/50 border border-green-800/50 text-green-400 rounded-lg flex items-center gap-3">
+             <div className="flex-shrink-0">
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+               </svg>
+             </div>
+             <div className="flex-1">
+               <p className="text-sm font-medium">{saveSuccess}</p>
+             </div>
+             <button
+               onClick={() => setSaveSuccess(null)}
+               className="text-green-400 hover:text-green-200 flex-shrink-0 p-1 rounded"
+             >
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+               </svg>
+             </button>
+           </div>
+         </div>
+       )}
 
       {/* Guests Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

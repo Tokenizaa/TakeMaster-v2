@@ -15,9 +15,10 @@ import {
   FileCheck,
   PlayCircle,
   Clapperboard,
-  LayoutDashboard
+  LayoutDashboard,
+  Database,
 } from 'lucide-react';
-import { Episode, Show } from '../types';
+import { Episode, Program } from '../types';
 
 interface SidebarProps {
   currentView: string;
@@ -27,9 +28,9 @@ interface SidebarProps {
   onSelectEpisodeTab: (tab: string) => void;
   onOpenStudioMode: () => void;
   onNewEpisodeClick: () => void;
-  shows: Show[];
-  activeShowId: string;
-  onSelectShowId: (id: string) => void;
+  programs: Program[];
+  activeProgramId: string;
+  onSelectProgramId: (id: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -40,17 +41,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onSelectEpisodeTab,
   onOpenStudioMode,
   onNewEpisodeClick,
-  shows,
-  activeShowId,
-  onSelectShowId,
+  programs,
+  activeProgramId,
+  onSelectProgramId,
 }) => {
-  const currentShow = shows.find((s) => s.id === activeShowId) || shows[0];
+   const currentProgram = programs.find((p) => p.id === activeProgramId) || programs[0];
 
   const mainNav = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'episodes', label: 'Episódios', icon: Film },
-    { id: 'shows', label: 'Programas', icon: Tv },
+    { id: 'programs', label: 'Programas', icon: Tv },
     { id: 'guests', label: 'Convidados', icon: Users },
+    { id: 'catalog', label: 'Catálogo', icon: Database },
     { id: 'studio-setup', label: 'Setup de Câmeras', icon: Sliders },
   ];
 
@@ -87,14 +89,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           Programa Ativo
         </label>
         <select
-          value={activeShowId}
-          onChange={(e) => onSelectShowId(e.target.value)}
+          value={activeProgramId}
+          onChange={(e) => onSelectProgramId(e.target.value)}
           aria-label="Selecionar Programa Ativo"
           className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 text-xs rounded-md px-2.5 py-1.5 focus:outline-none focus:border-amber-500/50"
         >
-          {shows.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.title} ({s.format})
+          {programs.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.title} ({p.format})
             </option>
           ))}
         </select>
@@ -136,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 Produção Atual
               </span>
               <span className="text-[10px] font-mono text-zinc-400">
-                EP #{activeEpisode.episodeNumber}
+                EP #{activeEpisode.episode_number}
               </span>
             </div>
 
@@ -144,9 +146,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <p className="text-xs font-semibold text-zinc-200 truncate" title={activeEpisode.title}>
                 {activeEpisode.title}
               </p>
-              <p className="text-[11px] text-zinc-400 truncate">
-                {activeEpisode.guestName} · {activeEpisode.targetDurationMin} min
-              </p>
+               <p className="text-[11px] text-zinc-400 truncate">
+                 {activeEpisode.target_duration_min} min
+               </p>
             </div>
 
             {/* Quick Button: Start Studio Mode */}

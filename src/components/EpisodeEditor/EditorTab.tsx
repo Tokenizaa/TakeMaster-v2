@@ -28,14 +28,13 @@ export const EditorTab: React.FC<EditorTabProps> = ({
 
   // Generate synthetic editor timeline text if not already created
   const getInitialEditorScript = () => {
-    if (episode.editorScriptSynthesis) return episode.editorScriptSynthesis;
+    if (episode.editor_script_synthesis) return episode.editor_script_synthesis;
 
     const lines: string[] = [];
-    lines.push(`ROTEIRO TÉCNICO DE EDIÇÃO & MONTAGEM`);
-    lines.push(`PROGRAMA: ${episode.title}`);
-    lines.push(`CONVIDADO: ${episode.guestName || 'Solo'}`);
-    lines.push(`DATA DE GERAÇÃO: ${new Date().toLocaleDateString('pt-BR')}`);
-    lines.push(`------------------------------------------------------------------\n`);
+     lines.push(`ROTEIRO TÉCNICO DE EDIÇÃO & MONTAGEM`);
+     lines.push(`PROGRAMA: ${episode.title}`);
+     lines.push(`DATA DE GERAÇÃO: ${new Date().toLocaleDateString('pt-BR')}`);
+     lines.push(`------------------------------------------------------------------\n`);
 
     lines.push(`--- LINHA DO TEMPO ESTIMADA & CORTES DE CÂMERA ---`);
     (episode.script || []).forEach((item) => {
@@ -77,7 +76,7 @@ export const EditorTab: React.FC<EditorTabProps> = ({
       const res = await api.aiEditorScript(episode);
       if (res.editorScript) {
         setEditorText(res.editorScript);
-        onUpdateEpisode({ editorScriptSynthesis: res.editorScript });
+        onUpdateEpisode({ editor_script_synthesis: res.editorScript });
       }
     } catch (err) {
       console.error('Failed to synthesize editor script:', err);
@@ -97,7 +96,7 @@ export const EditorTab: React.FC<EditorTabProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `roteiro_edicao_ep_${episode.episodeNumber}.txt`;
+    a.download = `roteiro_edicao_ep_${episode.episode_number}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -199,7 +198,7 @@ export const EditorTab: React.FC<EditorTabProps> = ({
           value={editorText}
           onChange={(e) => {
             setEditorText(e.target.value);
-            onUpdateEpisode({ editorScriptSynthesis: e.target.value });
+            onUpdateEpisode({ editor_script_synthesis: e.target.value });
           }}
           className="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg p-4 font-mono text-xs text-zinc-200 focus:outline-none focus:border-amber-500 leading-relaxed selection:bg-amber-500/20"
         />

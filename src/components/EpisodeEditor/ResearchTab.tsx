@@ -53,23 +53,22 @@ export const ResearchTab: React.FC<ResearchTabProps> = ({
     'CONFIRMADO' | 'NÃO CONFIRMADO' | 'PERGUNTAR AO CONVIDADO'
   >('CONFIRMADO');
 
-  const handleRunAiResearch = async () => {
-    setLoading(true);
-    try {
-      const generated = await api.aiResearch({
-        guestName: episode.guestName || 'Convidado',
-        company: episode.additionalInfo,
-        idea: episode.idea,
-        diagnosis: episode.diagnosis,
-      });
-      setResearch(generated);
-      onUpdateEpisode({ research: generated });
-    } catch (err) {
-      console.error('Failed to run AI research:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+     const handleRunAiResearch = async () => {
+     setLoading(true);
+     try {
+       const generated = await api.aiResearch({
+         company: episode.additional_info,
+         idea: episode.idea,
+         diagnosis: episode.diagnosis,
+       });
+       setResearch(generated);
+       onUpdateEpisode({ research: generated });
+     } catch (err) {
+       console.error('Failed to run AI research:', err);
+     } finally {
+       setLoading(false);
+     }
+   };
 
   const handleAddSource = (e: React.FormEvent) => {
     e.preventDefault();

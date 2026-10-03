@@ -1,0 +1,1124 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Tv,
+  Plus,
+  Clock,
+  User,
+  Sliders,
+  Sparkles,
+  Trash2,
+  Film,
+  Save,
+  X,
+  AlertTriangle
+} from 'lucide-react';
+import { Program, ShowFormat } from '../types';
+import { ErrorMessage } from './ErrorMessage';
+
+interface ProgramsViewProps {
+  programs: Program[];
+  activeProgramId: string;
+  onSelectProgramId: (id: string) => void;
+  onSaveProgram: (show: Partial<Program>) => Promise<void>;
+  onDeleteProgram: (id: string) => Promise<void>;
+  onGetPrograms: () => Promise<Program[]>;
+}
+
+export const ProgramsView: React.FC<ProgramsViewProps> = ({
+  programs,
+  activeProgramId,
+  onSelectProgramId,
+  onSaveProgram,
+  onDeleteProgram,
+  onGetPrograms,
+}) => {
+  // Add show modal state
+  const [programAddModal, setProgramAddModal] = useState(false);
+   
+  // Edit program state
+  const [editingProgramId, setEditingProgramId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editHost, setEditHost] = useState('');
+  const [editFormat, setEditFormat] = useState<ShowFormat>('Entrevista');
+  const [editDefaultDurationMin, setEditDefaultDurationMin] = useState(45);
+  const [editEditorialStyle, setEditEditorialStyle] = useState('');
+  const [editScenario, setEditScenario] = useState('');
+  
+  // Edit program form validation states
+  const [editTitleIsValid, setEditTitleIsValid] = useState(false);
+  const [editDescriptionIsValid, setEditDescriptionIsValid] = useState(false);
+  const [editHostIsValid, setEditHostIsValid] = useState(false);
+  const [editFormatIsValid, setEditFormatIsValid] = useState(true); // Format is valid by default as it has a selected value
+  const [editDurationIsValid, setEditDurationIsValid] = useState(true); // Duration is valid by default as it has a valid value
+  const [editTitleError, setEditTitleError] = useState('');
+  const [editDescriptionError, setEditDescriptionError] = useState('');
+  const [editHostError, setEditHostError] = useState('');
+  const [editFormatError, setEditFormatError] = useState('');
+  const [editDurationError, setEditDurationError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
+  
+  // Error states for other operations
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  
+  // Expanded program state
+  const [expandedProgramId, setExpandedProgramId] = useState<string | null>(null);
+  
+  // Add program form state (for new programs)
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [host, setHost] = useState('');
+  const [format, setFormat] = useState<ShowFormat>('Entrevista');
+  const [defaultDurationMin, setDefaultDurationMin] = useState(45);
+  const [editorialStyle, setEditorialStyle] = useState('');
+  const [scenario, setScenario] = useState('');
+  
+  // Add program form validation states
+  const [titleIsValid, setTitleIsValid] = useState(false);
+  const [descriptionIsValid, setDescriptionIsValid] = useState(false);
+  const [hostIsValid, setHostIsValid] = useState(false);
+  const [formatIsValid, setFormatIsValid] = useState(true); // Format is valid by default as it has a selected value
+  const [durationIsValid, setDurationIsValid] = useState(true); // Duration is valid by default as it has a valid value
+  const [titleError, setTitleError] = useState('');
+  const [descriptionError, setDescriptionError] = useState('');
+  const [hostError, setHostError] = useState('');
+  const [formatError, setFormatError] = useState('');
+  const [durationError, setDurationError] = useState('');
+  
+  // General error state for API operations
+  const [error, setError] = useState<string | null>(null);
+  
+  // Helper function to get user-friendly error message
+  const getErrorMessage = (err: any): string => {
+    if (err.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      switch (err.response.status) {
+        case 400:
+          return 'Por favor, verifique os campos obrigatórios e tente novamente';
+        case 401:
+          return 'Você não está autorizado. Por favor, faça login novamente.';
+        case 403:
+          return 'Você não tem permissão para realizar esta ação.';
+        case 404:
+          return 'O programa solicitado não foi encontrado.';
+        case 408:
+          return 'Tempo de conexão esgotado. Verifique sua conexão e tente novamente.';
+        case 500:
+          return 'Ocorreu um erro interno. Por favor, tente novamente mais tarde.';
+        case 502:
+          return 'Serviço temporariamente indisponível. Por favor, tente novamente mais tarde.';
+        case 503:
+          return 'Serviço indisponível. Por favor, tente novamente mais tarde.';
+        case 504:
+          return 'Tempo de gateway esgotado. Verifique sua conexão e tente novamente.';
+        default:
+          return `Erro ${err.response.status}: Ocorreu um erro inesperado. Por favor, tente novamente.`;
+      }
+    } else if (err.request) {
+      // The request was made but no response was received
+      return 'Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.';
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      return 'Ocorreu um erro inesperado. Por favor, tente novamente.';
+    }
+  };
+  
+  // Fetch programs on mount and when refetch is needed
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        // Note: In a real implementation, we would update the programs state here
+        // However, since programs are passed as props, we assume the parent handles updates
+        // This useEffect is primarily for error handling demonstration
+        await onGetPrograms();
+        // Clear any fetch error on successful fetch
+        setError(null);
+      } catch (err: any) {
+        // Set error message based on error type
+        const message = getErrorMessage(err);
+        setError(message);
+        // Also set fetchError for backward compatibility with existing ErrorMessage
+        setFetchError(message);
+      }
+    };
+
+    fetchPrograms();
+  }, [onGetPrograms]);
+
+  // Validation functions for Add Program form
+  const validateTitle = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setTitleError('Título é obrigatório');
+      setTitleIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 3) {
+      setTitleError('Título deve ter pelo menos 3 caracteres');
+      setTitleIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length > 100) {
+      setTitleError('Título deve ter no máximo 100 caracteres');
+      setTitleIsValid(false);
+      return false;
+    }
+    
+    setTitleError('');
+    setTitleIsValid(true);
+    return true;
+  };
+
+  const validateDescription = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setDescriptionError('Descrição é obrigatória');
+      setDescriptionIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 10) {
+      setDescriptionError('Descrição deve ter pelo menos 10 caracteres');
+      setDescriptionIsValid(false);
+      return false;
+    }
+    
+    setDescriptionError('');
+    setDescriptionIsValid(true);
+    return true;
+  };
+
+  const validateHost = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setHostError('Host é obrigatório');
+      setHostIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 2) {
+      setHostError('Host deve ter pelo menos 2 caracteres');
+      setHostIsValid(false);
+      return false;
+    }
+    
+    setHostError('');
+    setHostIsValid(true);
+    return true;
+  };
+
+  const validateDuration = (value: number): boolean => {
+    if (value === null || value === undefined) {
+      setDurationError('Duração é obrigatória');
+      setDurationIsValid(false);
+      return false;
+    }
+    
+    if (isNaN(value) || value < 10) {
+      setDurationError('Duração deve ser pelo menos 10 minutos');
+      setDurationIsValid(false);
+      return false;
+    }
+    
+    if (value > 240) {
+      setDurationError('Duração deve ser no máximo 240 minutos');
+      setDurationIsValid(false);
+      return false;
+    }
+    
+    setDurationError('');
+    setDurationIsValid(true);
+    return true;
+  };
+
+  // Validation functions for Edit Program form
+  const validateEditTitle = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setEditTitleError('Título é obrigatório');
+      setEditTitleIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 3) {
+      setEditTitleError('Título deve ter pelo menos 3 caracteres');
+      setEditTitleIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length > 100) {
+      setEditTitleError('Título deve ter no máximo 100 caracteres');
+      setEditTitleIsValid(false);
+      return false;
+    }
+    
+    setEditTitleError('');
+    setEditTitleIsValid(true);
+    return true;
+  };
+
+  const validateEditDescription = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setEditDescriptionError('Descrição é obrigatória');
+      setEditDescriptionIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 10) {
+      setEditDescriptionError('Descrição deve ter pelo menos 10 caracteres');
+      setEditDescriptionIsValid(false);
+      return false;
+    }
+    
+    setEditDescriptionError('');
+    setEditDescriptionIsValid(true);
+    return true;
+  };
+
+  const validateEditHost = (value: string): boolean => {
+    if (!value || value.trim() === '') {
+      setEditHostError('Host é obrigatório');
+      setEditHostIsValid(false);
+      return false;
+    }
+    
+    if (value.trim().length < 2) {
+      setEditHostError('Host deve ter pelo menos 2 caracteres');
+      setEditHostIsValid(false);
+      return false;
+    }
+    
+    setEditHostError('');
+    setEditHostIsValid(true);
+    return true;
+  };
+
+  const validateEditDuration = (value: number): boolean => {
+    if (value === null || value === undefined) {
+      setEditDurationError('Duração é obrigatória');
+      setEditDurationIsValid(false);
+      return false;
+    }
+    
+    if (isNaN(value) || value < 10) {
+      setEditDurationError('Duração deve ser pelo menos 10 minutos');
+      setEditDurationIsValid(false);
+      return false;
+    }
+    
+    if (value > 240) {
+      setEditDurationError('Duração deve ser no máximo 240 minutos');
+      setEditDurationIsValid(false);
+      return false;
+    }
+    
+    setEditDurationError('');
+    setEditDurationIsValid(true);
+    return true;
+  };
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate all fields
+    const isTitleValid = validateTitle(title);
+    const isDescriptionValid = validateDescription(description);
+    const isHostValid = validateHost(host);
+    const isDurationValid = validateDuration(defaultDurationMin);
+    
+    // If any field is invalid, don't submit
+    if (!isTitleValid || !isDescriptionValid || !isHostValid || !isDurationValid) {
+      return;
+    }
+
+    try {
+      // editorial_style, scenario, default_opening e default_closing são NOT NULL em
+      // programs. A UI os apresenta como opcionais, então o 500 só aparecia no submit.
+      // Normalizar aqui evita o erro sem transformar campo opcional em obrigatório na UX.
+      await onSaveProgram({
+        title,
+        description,
+        host,
+        format,
+        defaultDurationMin,
+        editorialStyle: editorialStyle.trim() || 'Padrão',
+        scenario: scenario.trim() || 'Estúdio padrão',
+        defaultOpening: '',
+        defaultClosing: '',
+        cameras: [
+          {
+            id: 'cam-1',
+            name: 'CAM 1',
+            label: 'CAM 1',
+            purpose: 'Abertura, encerramento, passagens e teleprompter',
+            framing: 'Plano Médio Frontal',
+            active: true,
+          },
+          {
+            id: 'cam-2',
+            name: 'CAM 2',
+            label: 'CAM 2',
+            purpose: 'Perguntas e interação na bancada',
+            framing: 'Plano Médio 45°',
+            active: true,
+          },
+          {
+            id: 'cam-3',
+            name: 'CAM 3',
+            label: 'CAM 3',
+            purpose: 'Respostas e closes do entrevistado',
+            framing: 'Plano Fechado 45°',
+            active: true,
+          },
+        ],
+        standardStructure: ['Gancho', 'Abertura', 'Origem', 'A Crise', 'A Virada', 'Ping-Pong', 'Encerramento'],
+        defaultOpening: 'Bem-vindos a mais um episódio...',
+        defaultClosing: 'Obrigado por nos acompanhar até aqui. Nos vemos na próxima semana!',
+      });
+
+      setTitle('');
+      setDescription('');
+      setHost('');
+      setEditorialStyle('');
+      setScenario('');
+      setProgramAddModal(false);
+      // Reset validation states
+      setTitleIsValid(false);
+      setDescriptionIsValid(false);
+      setHostIsValid(false);
+      setFormatIsValid(true);
+      setDurationIsValid(true);
+      setTitleError('');
+      setDescriptionError('');
+      setHostError('');
+      setFormatError('');
+      setDurationError('');
+      // Clear error on successful operation
+      setError(null);
+      setSaveError(null);
+      setSaveSuccess('Programa criado com sucesso!');
+    } catch (err: any) {
+      // Set general error state
+      const message = getErrorMessage(err);
+      setError(message);
+      // Also set saveError for backward compatibility with form-specific error display
+      setSaveError(message);
+    }
+  };
+
+    // Edit program handlers
+    const startEditing = (program: Program) => {
+      setEditingProgramId(program.id);
+      setEditTitle(program.title);
+      setEditDescription(program.description);
+      setEditHost(program.host);
+      setEditFormat(program.format);
+      setEditDefaultDurationMin(program.defaultDurationMin);
+      setEditEditorialStyle(program.editorialStyle);
+      setEditScenario(program.scenario);
+      // Initialize validation states based on current values
+      setEditTitleIsValid(!!program.title && program.title.trim().length >= 3 && program.title.trim().length <= 100);
+      setEditTitleError(program.title && program.title.trim() === '' ? 'Título é obrigatório' : 
+                       program.title && program.title.trim().length < 3 ? 'Título deve ter pelo menos 3 caracteres' :
+                       program.title && program.title.trim().length > 100 ? 'Título deve ter no máximo 100 caracteres' : '');
+      setEditDescriptionIsValid(!!program.description && program.description.trim().length >= 10);
+      setEditDescriptionError(program.description && program.description.trim() === '' ? 'Descrição é obrigatória' :
+                             program.description && program.description.trim().length < 10 ? 'Descrição deve ter pelo menos 10 caracteres' : '');
+      setEditHostIsValid(!!program.host && program.host.trim().length >= 2);
+      setEditHostError(program.host && program.host.trim() === '' ? 'Host é obrigatório' :
+                      program.host && program.host.trim().length < 2 ? 'Host deve ter pelo menos 2 caracteres' : '');
+      setEditFormatIsValid(true); // Format is always valid as it comes from the program
+      setEditFormatError('');
+      setEditDurationIsValid(program.defaultDurationMin >= 10 && program.defaultDurationMin <= 240);
+      setEditDurationError(program.defaultDurationMin < 10 ? 'Duração deve ser pelo menos 10 minutos' :
+                          program.defaultDurationMin > 240 ? 'Duração deve ser no máximo 240 minutos' : '');
+      // Clear any previous errors/success messages
+      setSaveError(null);
+      setSaveSuccess(null);
+    };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate all fields
+    const isTitleValid = validateEditTitle(editTitle);
+    const isDescriptionValid = validateEditDescription(editDescription);
+    const isHostValid = validateEditHost(editHost);
+    const isDurationValid = validateEditDuration(editDefaultDurationMin);
+    
+    // If any field is invalid, don't submit
+    if (!isTitleValid || !isDescriptionValid || !isHostValid || !isDurationValid) {
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveError(null);
+    setSaveSuccess(null);
+    // Clear general error state
+    setError(null);
+
+    try {
+      await onSaveProgram({
+        id: editingProgramId,
+        title: editTitle,
+        description: editDescription,
+        host: editHost,
+        format: editFormat,
+        defaultDurationMin: editDefaultDurationMin,
+        // Mesmas normalizações do create: editorial_style e scenario são NOT NULL.
+        editorialStyle: editEditorialStyle.trim() || 'Padrão',
+        scenario: editScenario.trim() || 'Estúdio padrão',
+        // cameras, standardStructure, defaultOpening e defaultClosing não são editáveis
+        // neste formulário; o persistence preserva os valores existentes no merge.
+      });
+
+      setSaveSuccess('Programa atualizado com sucesso!');
+      setIsSaving(false);
+
+      // Optionally exit edit mode after successful save
+      // setEditingProgramId(null);
+      // Clear error on successful operation
+      setError(null);
+      
+      // Reset validation states (though component will unmount/edit mode exit)
+      setEditTitleIsValid(false);
+      setEditDescriptionIsValid(false);
+      setEditHostIsValid(false);
+      setEditFormatIsValid(true);
+      setEditDurationIsValid(true);
+      setEditTitleError('');
+      setEditDescriptionError('');
+      setEditHostError('');
+      setEditFormatError('');
+      setEditDurationError('');
+    } catch (err: any) {
+      console.error('Failed to update program:', err);
+      // Set general error state
+      const message = getErrorMessage(err);
+      setError(message);
+      // Also set saveError for backward compatibility with form-specific error display
+      setSaveError(message);
+      setIsSaving(false);
+    }
+  };
+
+     const handleCancelEdit = () => {
+      setEditingProgramId(null);
+      setSaveError(null);
+      setSaveSuccess(null);
+      // Reset validation states
+      setEditTitleIsValid(false);
+      setEditDescriptionIsValid(false);
+      setEditHostIsValid(false);
+      setEditFormatIsValid(true);
+      setEditDurationIsValid(true);
+      setEditTitleError('');
+      setEditDescriptionError('');
+      setEditHostError('');
+      setEditFormatError('');
+      setEditDurationError('');
+    };
+     
+      const handleDeleteProgram = async (id: string) => {
+        // Clear deleteError for backward compatibility
+        setDeleteError(null);
+        // Clear general error state
+        setError(null);
+        try {
+          await onDeleteProgram(id);
+          // Clear error on successful operation
+          setError(null);
+        } catch (err: any) {
+          // Set general error state
+          const message = getErrorMessage(err);
+          setError(message);
+          // Also set deleteError for backward compatibility with existing ErrorMessage
+          setDeleteError(message);
+        }
+      };
+
+  return (
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Tv className="w-5 h-5 text-amber-400" />
+              <h1 className="text-xl md:text-2xl font-bold text-zinc-100">Programas & Identidades Editoriais</h1>
+            </div>
+            <p className="text-xs text-zinc-400">
+              Cadastre os formatos principais. Novos episódios herdam estrutura, duração e setup de câmeras.
+            </p>
+          </div>
+          
+          {/* General Error Message */}
+          {error && (
+            <div className="flex items-center justify-start w-full">
+              <ErrorMessage message={error} onDismiss={() => setError(null)} />
+            </div>
+          )}
+          
+          {/* Fetch Error Message */}
+          {fetchError && (
+            <div className="flex items-center justify-start w-full">
+              <ErrorMessage message={fetchError} onDismiss={() => setFetchError(null)} />
+            </div>
+          )}
+          
+          {/* Delete Error Message */}
+          {deleteError && (
+            <div className="flex items-center justify-start w-full">
+              <ErrorMessage message={deleteError} onDismiss={() => setDeleteError(null)} />
+            </div>
+          )}
+
+          <button
+            onClick={() => {
+              setProgramAddModal(true);
+              // Reset validation states when opening the modal
+              setTitleIsValid(false);
+              setDescriptionIsValid(false);
+              setHostIsValid(false);
+              setFormatIsValid(true); // Reset to valid as we have a default value
+              setDurationIsValid(true); // Reset to valid as we have a default value
+              setTitleError('');
+              setDescriptionError('');
+              setHostError('');
+              setFormatError('');
+              setDurationError('');
+            }}
+            className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs rounded-lg flex items-center gap-2 transition-colors cursor-pointer shrink-0"
+          >
+            <Plus className="w-4 h-4 stroke-[3]" />
+            <span>Novo Programa</span>
+          </button>
+      </div>
+
+         {/* Programs Grid */}
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           {programs.map((program) => {
+             const isActive = program.id === activeProgramId;
+             const isEditing = editingProgramId === program.id;
+             const isExpanded = expandedProgramId === program.id;
+             return (
+               <div
+                 key={program.id}
+                 className={`rounded-2xl p-6 transition-all border flex flex-col justify-between space-y-4 ${
+                   isActive
+                     ? 'bg-zinc-900 border-amber-500/80 ring-1 ring-amber-500/30'
+                     : isEditing
+                     ? 'bg-zinc-900 border-blue-500/80 ring-1 ring-blue-500/30'
+                     : 'bg-zinc-900/70 border-zinc-800 hover:border-zinc-700'
+                 }`}
+                 onClick={() => !isEditing && startEditing(program)}
+                 onDoubleClick={() => !isEditing && onSelectProgramId(program.id)}
+                 title={!isEditing ? 'Clique para editar, duplo clique para ativar' : 'Editando programa...'}
+                 className={!isEditing ? 'cursor-pointer' : ''}
+               >
+                 <div className="space-y-3">
+                   <div className="flex items-center justify-between">
+                     <div className="flex items-center gap-2">
+                       <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase">
+                         {program.format}
+                       </span>
+                       {isActive && (
+                         <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">
+                           PROGRAMA SELECIONADO
+                         </span>
+                       )}
+                       {isEditing && (
+                         <span className="text-[10px] font-mono font-bold text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800">
+                           EDITANDO
+                         </span>
+                       )}
+                     </div>
+
+                      {programs.length > 1 && !isEditing && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent triggering the edit mode
+                            handleDeleteProgram(program.id);
+                          }}
+                          className="text-zinc-600 hover:text-red-400 p-1 transition-colors cursor-pointer"
+                          title="Excluir programa"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                     
+                     {/* Expand/Collapse Button */}
+                     <button
+                       onClick={(e) => {
+                         e.stopPropagation(); // Prevent triggering the edit mode
+                         setExpandedProgramId(expandedProgramId === program.id ? null : program.id);
+                       }}
+                       className="text-zinc-500 hover:text-zinc-300 p-1 transition-colors cursor-pointer"
+                       title={isExpanded ? 'Recolher detalhes' : 'Ver detalhes completos'}
+                     >
+                       {isExpanded ? (
+                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                         </svg>
+                       ) : (
+                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+                         </svg>
+                       )}
+                     </button>
+                   </div>
+
+                   <h3 className="text-lg font-bold text-zinc-100">{program.title}</h3>
+                   <p className="text-xs text-zinc-400 leading-relaxed">{program.description}</p>
+
+                   <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-2 border-t border-zinc-800/80">
+                     <div className="text-zinc-400">
+                       Apresentador: <strong className="text-zinc-200">{program.host || 'Apresentador'}</strong>
+                     </div>
+                     <div className="text-zinc-400">
+                       Duração Padrão: <strong className="text-zinc-200">{program.defaultDurationMin} min</strong>
+                     </div>
+                   </div>
+
+                   {program.editorialStyle && (
+                     <p className="text-[11px] text-zinc-400 bg-zinc-950 p-2.5 rounded-lg border border-zinc-850 italic">
+                       Estilo: {program.editorialStyle}
+                     </p>
+                   )}
+
+                   {/* Expanded Details */}
+                   {isExpanded && (
+                     <div className="mt-4 pt-4 border-t border-zinc-800/50">
+                       <div className="space-y-4">
+                         {/* First Row */}
+                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 text-sm">
+                           <div>
+                             <div className="text-xs text-zinc-500 mb-1">Duração padrão:</div>
+                             <div className="text-zinc-200 font-mono">{program.defaultDurationMin} min</div>
+                           </div>
+                           <div>
+                             <div className="text-xs text-zinc-500 mb-1">Estilo editorial:</div>
+                             <div className="text-zinc-200">{program.editorialStyle}</div>
+                           </div>
+                           <div>
+                             <div className="text-xs text-zinc-500 mb-1">Cenário:</div>
+                             <div className="text-zinc-200">{program.scenario}</div>
+                           </div>
+                           <div>
+                             <div className="text-xs text-zinc-500 mb-1">Câmeras configuradas:</div>
+                             <div className="text-zinc-200 font-mono">{program.cameras?.length || 0}</div>
+                           </div>
+                         </div>
+                         
+                         {/* Second Row */}
+                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 text-sm">
+                           <div>
+                             <div className="text-xs text-zinc-500 mb-1">Estrutura padrão:</div>
+                             <div className="text-zinc-200 space-y-1">
+                               {program.standardStructure.map((item, index) => (
+                                 <div key={index} className="flex items-center gap-1">
+                                   <div className="w-2 h-2 bg-amber-500/50 rounded"></div>
+                                   <span className="text-zinc-200">{item}</span>
+                                 </div>
+                               ))}
+                             </div>
+                           </div>
+                           <div className="space-y-2">
+                             <div>
+                               <div className="text-xs text-zinc-500 mb-1">Abertura padrão:</div>
+                               <div className="text-zinc-200">{program.defaultOpening}</div>
+                             </div>
+                             <div>
+                               <div className="text-xs text-zinc-500 mb-1">Fechamento padrão:</div>
+                               <div className="text-zinc-200">{program.defaultClosing}</div>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         {/* Third Row */}
+                         <div className="mt-4 pt-3 border-t border-zinc-800/30">
+                           <div className="text-xs text-zinc-500 mb-2">Datas:</div>
+                           <div className="grid grid-cols-1 gap-2 md:grid-cols-2 text-sm">
+                             <div>
+                               <div className="text-xs text-zinc-500 mb-1">Criado em:</div>
+                               <div className="text-zinc-200 font-mono">{new Date(program.createdAt).toLocaleDateString('pt-BR')}</div>
+                             </div>
+                             <div>
+                               <div className="text-xs text-zinc-500 mb-1">Atualizado em:</div>
+                               <div className="text-zinc-200 font-mono">{new Date(program.updatedAt).toLocaleDateString('pt-BR')}</div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   )}
+                 </div>
+
+                 <div className="pt-3 border-t border-zinc-800 flex items-center justify-between">
+                   <span className="text-xs font-mono text-zinc-500">
+                     {program.cameras?.length || 3} câmeras configuradas
+                   </span>
+
+                   {!isActive && !isEditing && (
+                     <button
+                       onClick={(e) => {
+                         e.stopPropagation(); // Prevent triggering the edit mode
+                         onSelectProgramId(program.id);
+                       }}
+                       className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
+                     >
+                       Tornar Programa Ativo
+                     </button>
+                   )}
+                 </div>
+               </div>
+             );
+           })}
+         </div>
+
+        {/* Edit Program Form */}
+        {editingProgramId !== null && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-lg p-6 space-y-4">
+              <h3 className="text-sm font-bold text-zinc-100">Editando Programa</h3>
+              <form onSubmit={handleSaveEdit} className="space-y-3">
+            <div>
+              <label className="block text-xs text-zinc-300 mb-1">Título do Programa</label>
+              <input
+                type="text"
+                required
+                value={editTitle}
+                onChange={(e) => {
+                  setEditTitle(e.target.value);
+                  validateEditTitle(e.target.value);
+                }}
+                 className={`w-full bg-zinc-950 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                   editTitleIsValid
+                     ? 'border-green-300 focus:border-green-500'
+                     : !editTitleIsValid && editTitle
+                     ? 'border-red-300 focus:border-red-500'
+                     : 'border-zinc-300'
+                 }`}
+              />
+              {!editTitleIsValid && (
+                <p className="text-xs text-red-500 mt-1">{editTitleError}</p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Apresentador Principal</label>
+                <input
+                  type="text"
+                  value={editHost}
+                  onChange={(e) => {
+                    setEditHost(e.target.value);
+                    validateEditHost(e.target.value);
+                  }}
+                  placeholder="Ex: Renan Vianna"
+                   className={`w-full bg-zinc-950 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                     editHostIsValid
+                       ? 'border-green-300 focus:border-green-500'
+                       : !editHostIsValid && editHost
+                       ? 'border-red-300 focus:border-red-500'
+                       : 'border-zinc-300'
+                   }`}
+                />
+                {editHost && !editHostIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{editHostError}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Formato</label>
+                <select
+                  value={editFormat}
+                  onChange={(e: any) => {
+                    setEditFormat(e.target.value);
+                    // Format is always valid as long as it's one of the predefined options
+                    setEditFormatIsValid(true);
+                    setEditFormatError('');
+                  }}
+                  className={`w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                    editFormatIsValid ? 'border-amber-500' : 'border-red-500'
+                  }`}
+                >
+                  <option value="Entrevista">Entrevista</option>
+                  <option value="Podcast/Videocast">Podcast/Videocast</option>
+                  <option value="Programa Solo">Programa Solo</option>
+                  <option value="Mesa Redonda">Mesa Redonda</option>
+                  <option value="Debate">Debate</option>
+                  <option value="Reportagem">Reportagem</option>
+                </select>
+                {editFormat && !editFormatIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{editFormatError}</p>
+                )}
+              </div>
+                </div>
+
+            <div>
+              <label className="block text-xs text-zinc-300 mb-1">Duração Estimada (min)</label>
+              <input
+                type="number"
+                min={10}
+                max={240}
+                value={editDefaultDurationMin}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setEditDefaultDurationMin(value);
+                  validateEditDuration(value);
+                }}
+                className={`w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                  editDurationIsValid ? 'border-amber-500' : !editDurationIsValid && editDefaultDurationMin !== '' ? 'border-red-500' : 'border-zinc-700'
+                }`}
+              />
+              {editDefaultDurationMin !== '' && !editDurationIsValid && (
+                <p className="text-xs text-red-500 mt-1">{editDurationError}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs text-zinc-300 mb-1">Descrição Editorial</label>
+              <textarea
+                rows={2}
+                value={editDescription}
+                onChange={(e) => {
+                  setEditDescription(e.target.value);
+                  validateEditDescription(e.target.value);
+                }}
+                placeholder="Ex: Entrevistas com líderes de negócios com foco na verdade dos bastidores..."
+                 className={`w-full bg-zinc-950 rounded-lg p-2.5 text-xs text-zinc-100 focus:outline-none ${
+                   editDescriptionIsValid
+                     ? 'border-green-300 focus:border-green-500'
+                     : !editDescriptionIsValid && editDescription
+                     ? 'border-red-300 focus:border-red-500'
+                     : 'border-zinc-300'
+                 }`}
+              />
+              {editDescription && !editDescriptionIsValid && (
+                <p className="text-xs text-red-500 mt-1">{editDescriptionError}</p>
+              )}
+            </div>
+
+                <div>
+                  <label className="block text-xs text-zinc-300 mb-1">Estilo & Cenário</label>
+                  <input
+                    type="text"
+                    value={editEditorialStyle}
+                    onChange={(e) => setEditEditorialStyle(e.target.value)}
+                    placeholder="Ex: Estúdio escuro com iluminação pontual e mesa rústica"
+                    className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                {saveError && (
+                  <div className="p-2.5 bg-red-900/50 border border-red-800/50 text-red-400 text-xs rounded-lg">
+                    {saveError}
+                  </div>
+                )}
+
+                {saveSuccess && (
+                  <div className="p-2.5 bg-green-900/50 border border-green-800/50 text-green-400 text-xs rounded-lg">
+                    {saveSuccess}
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-zinc-800">
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    disabled={isSaving}
+                    className={`px-3 py-1.5 bg-zinc-800 text-zinc-300 text-xs rounded-lg cursor-pointer ${
+                      isSaving ? 'opacity-50' : ''
+                    }`}
+                  >
+                    {isSaving ? 'Cancelando...' : 'Cancelar'}
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSaving || !(editTitleIsValid && editDescriptionIsValid && editHostIsValid && editDurationIsValid)}
+                    className={`px-4 py-1.5 bg-amber-500 text-zinc-950 font-bold text-xs rounded-lg cursor-pointer ${
+                      isSaving || !(editTitleIsValid && editDescriptionIsValid && editHostIsValid && editDurationIsValid) ? 'opacity-50' : ''
+                    }`}
+                  >
+                    {isSaving ? 'Atualizando...' : 'Salvar Alterações'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal Add Show */}
+       {programAddModal && (
+         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+           <div className="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-lg p-6 space-y-4">
+             <h3 className="text-sm font-bold text-zinc-100">Criar Novo Programa</h3>
+             <form onSubmit={handleCreate} className="space-y-3">
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Título do Programa</label>
+                 <input
+                   type="text"
+                   required
+                   value={title}
+                   onChange={(e) => {
+                     setTitle(e.target.value);
+                     validateTitle(e.target.value);
+                   }}
+                   placeholder="Ex: Mentes de Valor"
+                   className={`w-full bg-zinc-950 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                     titleIsValid
+                       ? 'border-green-300 focus:border-green-500'
+                       : !titleIsValid && title
+                       ? 'border-red-300 focus:border-red-500'
+                       : 'border-zinc-300'
+                   }`}
+                 />
+                {!titleIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{titleError}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Apresentador Principal</label>
+                <input
+                  type="text"
+                  value={host}
+                  onChange={(e) => {
+                    setHost(e.target.value);
+                    validateHost(e.target.value);
+                  }}
+                  placeholder="Ex: Renan Vianna"
+                   className={`w-full bg-zinc-950 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                     hostIsValid
+                       ? 'border-green-300 focus:border-green-500'
+                       : !hostIsValid && host
+                       ? 'border-red-300 focus:border-red-500'
+                       : 'border-zinc-300'
+                   }`}
+                />
+                {!hostIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{hostError}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Formato</label>
+                <select
+                  value={format}
+                  onChange={(e: any) => {
+                    setFormat(e.target.value);
+                    // Format is always valid as long as it's one of the predefined options
+                    setFormatIsValid(true);
+                    setFormatError('');
+                  }}
+                  className={`w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                    formatIsValid ? 'border-amber-500' : 'border-red-500'
+                  }`}
+                >
+                  <option value="Entrevista">Entrevista</option>
+                  <option value="Podcast/Videocast">Podcast/Videocast</option>
+                  <option value="Programa Solo">Programa Solo</option>
+                  <option value="Mesa Redonda">Mesa Redonda</option>
+                  <option value="Debate">Debate</option>
+                  <option value="Reportagem">Reportagem</option>
+                </select>
+                {!formatIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{formatError}</p>
+                )}
+              </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Duração Estimada (min)</label>
+                <input
+                  type="number"
+                  min={10}
+                  max={240}
+                  value={defaultDurationMin}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setDefaultDurationMin(value);
+                    validateDuration(value);
+                  }}
+                  className={`w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none ${
+                    durationIsValid ? 'border-amber-500' : !durationIsValid && defaultDurationMin !== '' ? 'border-red-500' : 'border-zinc-700'
+                  }`}
+                />
+                {!durationIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{durationError}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Descrição Editorial</label>
+                <textarea
+                  rows={2}
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                    validateDescription(e.target.value);
+                  }}
+                  placeholder="Ex: Entrevistas com líderes de negócios com foco na verdade dos bastidores..."
+                   className={`w-full bg-zinc-950 rounded-lg p-2.5 text-xs text-zinc-100 focus:outline-none ${
+                     descriptionIsValid
+                       ? 'border-green-300 focus:border-green-500'
+                       : !descriptionIsValid && description
+                       ? 'border-red-300 focus:border-red-500'
+                       : 'border-zinc-300'
+                   }`}
+                />
+                {!descriptionIsValid && (
+                  <p className="text-xs text-red-500 mt-1">{descriptionError}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs text-zinc-300 mb-1">Estilo & Cenário</label>
+                <input
+                  type="text"
+                  value={scenario}
+                  onChange={(e) => setScenario(e.target.value)}
+                  placeholder="Ex: Estúdio escuro com iluminação pontual e mesa rústica"
+                  className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-zinc-800">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProgramAddModal(false);
+                      // Reset validation states when cancelling
+                      setTitleIsValid(false);
+                      setDescriptionIsValid(false);
+                      setHostIsValid(false);
+                      setFormatIsValid(true);
+                      setDurationIsValid(true);
+                      setTitleError('');
+                      setDescriptionError('');
+                      setHostError('');
+                      setFormatError('');
+                      setDurationError('');
+                    }}
+                    className="px-3 py-1.5 bg-zinc-800 text-zinc-300 text-xs rounded-lg cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                 <button
+                   type="submit"
+                   disabled={!(titleIsValid && descriptionIsValid && hostIsValid && durationIsValid)}
+                   className={`px-4 py-1.5 bg-amber-500 text-zinc-950 font-bold text-xs rounded-lg cursor-pointer ${
+                     !(titleIsValid && descriptionIsValid && hostIsValid && durationIsValid) ? 'opacity-50' : ''
+                   }`}
+                 >
+                   Salvar Programa
+                 </button>
+               </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
