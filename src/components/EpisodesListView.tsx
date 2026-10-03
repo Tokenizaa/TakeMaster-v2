@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Episode, EpisodeStatus } from '../types';
 import { getStatusColorClass, getStatusLabel } from '../utils/format';
+import { ErrorMessage } from './ErrorMessage';
 
 interface EpisodesListViewProps {
   episodes: Episode[];
@@ -29,16 +30,25 @@ export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const filteredEpisodes = episodes.filter((ep) => {
-    const matchesSearch =
-      ep.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ep.guestName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ep.idea.toLowerCase().includes(searchTerm.toLowerCase());
+  const handleDeleteEpisode = async (id: string) => {
+    setDeleteError(null);
+    try {
+      await onDeleteEpisode(id);
+    } catch (err: any) {
+      setDeleteError(err.message || 'Falha ao excluir episódio. Por favor, tente novamente.');
+    }
+  };
 
-    const matchesStatus = statusFilter === 'all' || ep.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+   const filteredEpisodes = episodes.filter((ep) => {
+     const matchesSearch =
+       ep.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       ep.idea.toLowerCase().includes(searchTerm.toLowerCase());
+
+     const matchesStatus = statusFilter === 'all' || ep.status === statusFilter;
+     return matchesSearch && matchesStatus;
+   });
 
   return (
     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 max-w-7xl mx-auto w-full">
@@ -67,37 +77,44 @@ export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="relative max-w-md w-full">
           <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar por título, convidado ou tema..."
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
-          />
+           <input
+             type="text"
+             value={searchTerm}
+             onChange={(e) => setSearchTerm(e.target.value)}
+             placeholder="Buscar por título, ideia ou tema..."
+             className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+           />
         </div>
 
-        {/* Filter buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-          {[
-            { id: 'all', label: 'Todos' },
-            { id: 'ready', label: 'Pronto p/ Gravar' },
-            { id: 'scripting', label: 'Roteirizando' },
-            { id: 'outline', label: 'Em Pauta' },
-            { id: 'recorded', label: 'Gravados' },
-          ].map((flt) => (
-            <button
-              key={flt.id}
-              onClick={() => setStatusFilter(flt.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                statusFilter === flt.id
-                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
-              }`}
-            >
-              {flt.label}
-            </button>
-          ))}
-        </div>
+       {/* Filter buttons */}
+       <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+         {[
+           { id: 'all', label: 'Todos' },
+           { id: 'ready', label: 'Pronto p/ Gravar' },
+           { id: 'scripting', label: 'Roteirizando' },
+           { id: 'outline', label: 'Em Pauta' },
+           { id: 'recorded', label: 'Gravados' },
+         ].map((flt) => (
+           <button
+             key={flt.id}
+             onClick={() => setStatusFilter(flt.id)}
+             className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+               statusFilter === flt.id
+                 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold'
+                 : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+             }`}
+           >
+             {flt.label}
+           </button>
+         ))}
+       </div>
+       
+       {/* Delete Error Message */}
+       {deleteError && (
+         <div className="flex items-center justify-start w-full">
+           <ErrorMessage message={deleteError} onDismiss={() => setDeleteError(null)} />
+         </div>
+       )}
       </div>
 
       {/* Episodes Table / Cards */}
@@ -119,7 +136,7 @@ export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
               >
                 <div className="flex items-center gap-2.5">
                   <span className="font-mono text-xs font-bold text-amber-400">
-                    EP {String(ep.episodeNumber).padStart(3, '0')}
+                    EP {String(ep.episode_number).padStart(3, '0')}
                   </span>
                   <span className="text-zinc-600">·</span>
                   <span className="text-xs text-zinc-400 font-mono">{ep.format}</span>
@@ -133,13 +150,12 @@ export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
                   {ep.title}
                 </h3>
 
-                <p className="text-xs text-zinc-400 line-clamp-1">
-                  {ep.guestName ? <strong className="text-zinc-300">{ep.guestName} · </strong> : ''}
-                  {ep.idea}
-                </p>
+                 <p className="text-xs text-zinc-400 line-clamp-1">
+                   {ep.idea}
+                 </p>
 
                 <div className="flex items-center gap-4 text-xs font-mono text-zinc-500 pt-1">
-                  <span>⏱ {ep.targetDurationMin} min</span>
+                  <span>⏱ {ep.target_duration_min} min</span>
                   <span>·</span>
                   <span>{ep.outline?.length || 0} blocos</span>
                   <span>·</span>
@@ -169,7 +185,9 @@ export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
                 </button>
 
                 <button
-                  onClick={() => onDeleteEpisode(ep.id)}
+                  onClick={() => {
+                    handleDeleteEpisode(ep.id);
+                  }}
                   className="p-2 text-zinc-600 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors cursor-pointer"
                   title="Excluir episódio"
                 >

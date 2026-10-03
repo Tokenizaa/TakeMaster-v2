@@ -1,0 +1,170 @@
+- generic [ref=f26e3]:
+  - complementary [ref=f26e6]:
+    - generic [ref=f26e15]:
+      - heading "TakeMaster" [level=1] [ref=f26e16]
+      - paragraph [ref=f26e17]: Direção & Roteiro
+    - generic [ref=f26e18]:
+      - generic [ref=f26e19]: Programa Ativo
+      - combobox "Selecionar Programa Ativo" [ref=f26e20]:
+        - option "Updated Upsert Test (Entrevista)" [selected]
+        - option "Programa Teste (Entrevista)"
+        - option "Test Program (Entrevista)"
+        - option "Test5 (Entrevista)"
+        - option "Fallback Test Show (Podcast/Videocast)"
+        - option "Fallback Test Show (Podcast/Videocast)"
+        - option "Original Upsert Test (Entrevista)"
+        - option "Fallback Test Show (Podcast/Videocast)"
+        - option "Updated Upsert Test (Entrevista)"
+        - option "Field Validation Test Program (Debate)"
+        - option "Test Program for Validation (Entrevista)"
+        - option "Test Program for Validation (Entrevista)"
+        - option "Initial Program Title (Entrevista)"
+        - option "Field Validation Test Program (Debate)"
+        - option "Initial Program Title (Entrevista)"
+    - generic [ref=f26e21]:
+      - generic [ref=f26e22]:
+        - generic [ref=f26e23]: Navegação Geral
+        - navigation [ref=f26e24]:
+          - button "Dashboard" [ref=f26e25]
+          - button "Episódios" [ref=f26e32]
+          - button "Programas" [ref=f26e36]
+          - button "Convidados" [active] [ref=f26e41]
+          - button "Setup de Câmeras" [ref=f26e48]
+      - generic [ref=f26e51]:
+        - generic [ref=f26e52]:
+          - generic [ref=f26e53]: Produção Atual
+          - generic [ref=f26e54]: "EP #"
+        - generic [ref=f26e55]:
+          - paragraph [ref=f26e56]: Episódio Teste
+          - paragraph [ref=f26e57]: min
+        - button "Modo Estúdio (Gravação)" [ref=f26e58]
+        - navigation [ref=f26e63]:
+          - button "Visão Geral & IA" [ref=f26e64]
+          - button "Pesquisa Factual" [ref=f26e70]
+          - button "Pauta & Blocos" [ref=f26e75]
+          - button "Roteiro & Câmeras" [ref=f26e81]
+          - button "Mapa de Câmeras" [ref=f26e87]
+          - button "Materiais & B-Roll" [ref=f26e93]
+          - button "Cortes & Shorts" [ref=f26e98]
+          - button "Checklist Técnico" [ref=f26e107]
+          - button "Roteiro de Edição" [ref=f26e113]
+    - button "+ Novo Episódio" [ref=f26e121] [cursor=pointer]:
+      - generic [ref=f26e122]: +
+      - generic [ref=f26e123]: Novo Episódio
+  - generic [ref=f26e124]:
+    - banner [ref=f26e125]:
+      - generic [ref=f26e128]:
+        - generic [ref=f26e132]: Updated Upsert Test
+        - generic [ref=f26e133]: ·
+        - generic [ref=f26e134]: Entrevista
+      - generic [ref=f26e135]:
+        - generic [ref=f26e136]: Salvo no banco
+        - generic [ref=f26e140]: Estúdio Conectado
+        - generic [ref=f26e143]:
+          - button "+ Programa" [ref=f26e144] [cursor=pointer]
+          - button "Novo Episódio" [ref=f26e145] [cursor=pointer]
+    - main [ref=f26e148]:
+      - generic [ref=f26e149]:
+        - generic [ref=f26e150]:
+          - generic [ref=f26e151]:
+            - heading "Participantes / Convidados" [level=1] [ref=f26e158]
+            - paragraph [ref=f26e159]: Gerencie participantes, suas biografias, contatos e históricos de participação.
+          - generic [ref=f26e161]:
+            - paragraph [ref=f26e166]: Cannot read properties of undefined (reading 'unwrapList')
+            - button [ref=f26e167]
+          - button "Adicionar novo participante" [ref=f26e170] [cursor=pointer]:
+            - generic [ref=f26e172]: Novo Participante
+        - generic [ref=f26e173]:
+          - textbox "Buscar por nome, cargo, empresa ou bio..." [ref=f26e178]
+          - generic [ref=f26e179]:
+            - generic [ref=f26e180]:
+              - generic [ref=f26e181]: Tipo
+              - combobox [ref=f26e182]:
+                - option "Todos" [selected]
+                - option "Individual"
+                - option "Grupo"
+                - option "Banda"
+            - generic [ref=f26e183]:
+              - generic [ref=f26e184]: Tipo Grupo
+              - combobox [ref=f26e185]:
+                - option "Todos" [selected]
+                - option "Banda"
+                - option "Duo"
+                - option "Grupo"
+                - option "Choir"
+                - option "Tripulação"
+            - generic [ref=f26e186]:
+              - generic [ref=f26e187]: Cargo
+              - textbox [ref=f26e188]
+            - generic [ref=f26e189]:
+              - generic [ref=f26e190]: Tipo de Entidade
+              - combobox [ref=f26e191]:
+                - option "Todos" [selected]
+                - option "Individual"
+                - option "Grupo"
+                - option "Organização"
+                - option "Instituição"
+            - generic [ref=f26e192]:
+              - generic [ref=f26e193]: Empresa/Organização
+              - textbox [ref=f26e194]
+        - table [ref=f26e197]:
+          - rowgroup [ref=f26e198]:
+            - row [ref=f26e199]:
+              - columnheader "Nome" [ref=f26e200]
+              - columnheader "Tipo" [ref=f26e201]
+              - columnheader "Cargo" [ref=f26e202]
+              - columnheader "Empresa/Organização" [ref=f26e203]
+              - columnheader "Bio" [ref=f26e204]
+              - columnheader "Contatos" [ref=f26e205]
+              - columnheader "Ações" [ref=f26e206]
+          - rowgroup [ref=f26e207]:
+            - row [ref=f26e208] [cursor=pointer]:
+              - cell "Participante Teste" [ref=f26e209]
+              - cell "Individual" [ref=f26e210]
+              - cell "Especialista" [ref=f26e211]
+              - cell "Empresa Teste" [ref=f26e212]
+              - cell "Biografia do participante teste" [ref=f26e213]
+              - cell "contato@teste.com" [ref=f26e215]
+              - cell [ref=f26e217]:
+                - button "Editar participante" [ref=f26e218]
+                - button "Excluir participante" [ref=f26e221]
+            - row [ref=f26e225] [cursor=pointer]:
+              - cell "Test Participant Default" [ref=f26e226]
+              - cell "-" [ref=f26e227]
+              - cell "host" [ref=f26e228]
+              - cell "Test Co" [ref=f26e229]
+              - cell "Bio" [ref=f26e230]
+              - cell "-" [ref=f26e232]
+              - cell [ref=f26e233]:
+                - button "Editar participante" [ref=f26e234]
+                - button "Excluir participante" [ref=f26e237]
+            - row [ref=f26e241] [cursor=pointer]:
+              - cell "Test Participant Array" [ref=f26e242]
+              - cell "-" [ref=f26e243]
+              - cell "host" [ref=f26e244]
+              - cell "Test Co" [ref=f26e245]
+              - cell "Bio" [ref=f26e246]
+              - cell "-" [ref=f26e248]
+              - cell [ref=f26e249]:
+                - button "Editar participante" [ref=f26e250]
+                - button "Excluir participante" [ref=f26e253]
+            - row [ref=f26e257] [cursor=pointer]:
+              - cell "Test Participant 2" [ref=f26e258]
+              - cell "-" [ref=f26e259]
+              - cell "Host" [ref=f26e260]
+              - cell "Test Company" [ref=f26e261]
+              - cell "Test Bio 2" [ref=f26e262]
+              - 'cell "{}" [ref=f26e264]'
+              - cell [ref=f26e266]:
+                - button "Editar participante" [ref=f26e267]
+                - button "Excluir participante" [ref=f26e270]
+            - row [ref=f26e274] [cursor=pointer]:
+              - cell "Test Participant 3" [ref=f26e275]
+              - cell "-" [ref=f26e276]
+              - cell "Host" [ref=f26e277]
+              - cell "Test Company" [ref=f26e278]
+              - cell "Test Bio 3" [ref=f26e279]
+              - 'cell "{}" [ref=f26e281]'
+              - cell [ref=f26e283]:
+                - button "Editar participante" [ref=f26e284]
+                - button "Excluir participante" [ref=f26e287]

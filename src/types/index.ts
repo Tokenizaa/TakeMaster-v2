@@ -20,6 +20,11 @@ export type ShowFormat =
   | 'Especial'
   | 'Outro';
 
+// Participant/Guest types
+export type ParticipantType = 'individual' | 'group' | 'band';
+export type GroupType = 'band' | 'duo' | 'group' | 'crew' | 'choir';
+export type EntityType = 'individual' | 'group' | 'band';
+
 export interface CameraConfig {
   id: string;
   name: string;
@@ -29,7 +34,7 @@ export interface CameraConfig {
   active: boolean;
 }
 
-export interface Show {
+export interface Program {
   id: string;
   title: string;
   description: string;
@@ -48,16 +53,25 @@ export interface Show {
 
 export interface Guest {
   id: string;
+  legacy_id: string | null;
+  program_id: string | null;
   name: string;
+  type: ParticipantType;
+  group_type: GroupType | null;
   role: string;
   company: string;
+  company_or_group: string | null;
   bio: string;
   contacts: string;
-  links: string[];
   notes: string;
-  previousEpisodes: string[];
-  previousResearchSummary?: string;
-  createdAt: string;
+  links: string[];
+  members: string[];
+  entity_type: EntityType;
+  social_handles: Record<string, string>; // JSONB object
+  previous_episodes: string[]; // Array of episode IDs (text[] in DB)
+  previous_research_summary: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface EditorialDiagnosis {
@@ -200,39 +214,44 @@ export interface ScriptVersion {
   snapshot: any;
 }
 
-export interface Episode {
-  id: string;
-  showId: string;
-  episodeNumber: number;
-  title: string;
-  idea: string;
-  guestName: string;
-  guestId?: string;
-  host: string;
-  format: ShowFormat;
-  targetDurationMin: number;
-  objective?: string;
-  additionalInfo?: string;
-  status: EpisodeStatus;
-  diagnosis: EditorialDiagnosis;
-  research: ResearchData;
-  outline: OutlineBlock[];
-  questions: QuestionItem[];
-  script: ScriptItem[];
-  cameras: CameraConfig[];
-  assets: ProductionAsset[];
-  shorts: PlannedShort[];
-  recordingMarkers: RecordingMarker[];
-  technicalChecklist: TechnicalChecklist;
-  versions: ScriptVersion[];
-  editorScriptSynthesis?: string;
-  recordingTimeElapsed?: number;
-  createdAt: string;
-  updatedAt: string;
-}
+  export interface Episode {
+    id: string;
+    legacy_id: string | null;
+    program_id: string;
+    episode_number: number;
+    title: string;
+    idea: string;
+    topic: string;
+    synopsis: string;
+    format: ShowFormat;
+    target_duration_min: number;
+    target_duration_minutes: number;
+    presenter_name: string;
+    host: string;
+    tone: string;
+    objective: string | null;
+    additional_info: string | null;
+    status: EpisodeStatus;
+    diagnosis: EditorialDiagnosis;
+    research: ResearchData;
+    technical_checklist: TechnicalChecklist;
+    editorial_notes_for_post: string | null;
+    editor_script_synthesis: string | null;
+    recording_time_elapsed: number | null;
+    scheduled_date: string | null;
+    production_status: string;
+    version: number;
+    season_id: string | null;
+    created_at: string;
+    updated_at: string;
+    checklist: any[];
+    // Backward compatibility properties (not stored in database)
+    guest_name?: string;
+    guest_id?: string;
+  }
 
 export interface DatabaseState {
-  shows: Show[];
+  programs: Program[];
   episodes: Episode[];
   guests: Guest[];
 }
