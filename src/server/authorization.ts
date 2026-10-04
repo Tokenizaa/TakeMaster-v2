@@ -77,3 +77,18 @@ export async function assertProgramAccess(userId: string, programId: string): Pr
     }
   }
 }
+
+
+export async function getSingleOrganizationId(userId: string): Promise<string> {
+  const { data, error } = await getSupabaseAdmin()
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', userId)
+    .eq('active', true);
+
+  if (error) throw new AppError('Falha ao localizar organização do usuário', 'AUTHORIZATION_CHECK_FAILED', 500);
+  const ids = [...new Set((data ?? []).map(row => row.organization_id))];
+  if (ids.length === 0) throw new AppError('Usuário não pertence a nenhuma organização ativa', 'FORBIDDEN', 403);
+  if (ids.length > 1) throw new AppError('Contexto de organização é obrigatório para este usuário', 'ORGANIZATION_CONTEXT_REQUIRED', 409);
+  return ids[0];
+}
