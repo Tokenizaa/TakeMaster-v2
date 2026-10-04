@@ -384,7 +384,7 @@ useEffect(() => {
                        <p className="text-xs text-zinc-400">{p.format} • {p.host} • {new Date(p.created_at).toLocaleDateString('pt-BR')}</p>
                      </div>
                     ))
-                   </div>
+           </div>
                  </div>
                </div>
               {searchResults.episodes.length > 0 && (
