@@ -43,7 +43,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
   const questions = episode.questions || [];
 
   // Studio Timers
-  const [totalSecondsElapsed, setTotalSecondsElapsed] = useState(episode.recording_time_elapsed || 0);
+  const [totalSecondsElapsed, setTotalSecondsElapsed] = useState(episode.recordingTimeElapsed || 0);
   const [blockSecondsElapsed, setBlockSecondsElapsed] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
@@ -201,7 +201,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
           </div>
           <span className="text-zinc-700">|</span>
           <span className="text-xs font-mono font-bold text-zinc-300">
-            EP {String(episode.episode_number).padStart(3, '0')}
+            EP {String(episode.episodeNumber).padStart(3, '0')}
           </span>
           <span className="text-xs text-zinc-400 font-medium truncate max-w-xs sm:max-w-md">
             {episode.title}
@@ -219,7 +219,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
               </span>
               <span className="text-xs text-zinc-600">/</span>
               <span className="text-xs text-zinc-500">
-                {episode.target_duration_min}:00
+                {episode.targetDurationMin}:00
               </span>
             </div>
           </div>

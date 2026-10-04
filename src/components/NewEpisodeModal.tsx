@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import { Sparkles, X, Clapperboard, Clock, Target, Info, Loader2 } from 'lucide-react';
-import { Program, ShowFormat, Episode } from '../types';
+import { Sparkles, X, Clapperboard, Clock, User, Target, Info, Loader2 } from 'lucide-react';
+import { Show, ShowFormat, Episode } from '../types';
 
 interface NewEpisodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  activeShow: Program | null;
-  shows: Program[];
+  activeShow: Show | null;
+  shows: Show[];
   onCreateWithAi: (formData: {
-    programId: string;
+    showId: string;
     idea: string;
+    guestName: string;
     company?: string;
     format: ShowFormat;
     durationMin: number;
     objective?: string;
     additionalInfo?: string;
-    guest_name?: string;
-    guest_id?: string;
   }) => Promise<void>;
 }
 
@@ -27,17 +26,16 @@ export const NewEpisodeModal: React.FC<NewEpisodeModalProps> = ({
   shows,
   onCreateWithAi,
 }) => {
-   const [selectedShowId, setSelectedShowId] = useState(activeShow?.id || shows[0]?.id || '');
-const [idea, setIdea] = useState('');
-const [company, setCompany] = useState('');
-const [format, setFormat] = useState<ShowFormat>(activeShow?.format || 'Entrevista');
-const [durationMin, setDurationMin] = useState<number>(activeShow?.defaultDurationMin || 45);
-const [objective, setObjective] = useState('');
-const [additionalInfo, setAdditionalInfo] = useState('');
-const [guest_name, setGuestName] = useState('');
-const [guest_id, setGuestId] = useState('');
-   const [loading, setLoading] = useState(false);
-   const [error, setError] = useState<string | null>(null);
+  const [selectedShowId, setSelectedShowId] = useState(activeShow?.id || shows[0]?.id || '');
+  const [idea, setIdea] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [company, setCompany] = useState('');
+  const [format, setFormat] = useState<ShowFormat>(activeShow?.format || 'Entrevista');
+  const [durationMin, setDurationMin] = useState<number>(activeShow?.defaultDurationMin || 45);
+  const [objective, setObjective] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -50,17 +48,16 @@ const [guest_id, setGuestId] = useState('');
     setError(null);
     setLoading(true);
     try {
-        await onCreateWithAi({
-          programId: selectedShowId || shows[0]?.id,
-          idea,
-          company,
-          format,
-          durationMin: Number(durationMin) || 45,
-          objective,
-          additionalInfo,
-          guest_name: guest_name.trim() || undefined,
-          guest_id: guest_id.trim() || undefined,
-        });
+      await onCreateWithAi({
+        showId: selectedShowId || shows[0]?.id,
+        idea,
+        guestName,
+        company,
+        format,
+        durationMin: Number(durationMin) || 45,
+        objective,
+        additionalInfo,
+      });
       onClose();
     } catch (err: any) {
       setError(err.message || 'Falha ao iniciar produção do episódio.');
@@ -142,19 +139,35 @@ const [guest_id, setGuestId] = useState('');
             />
           </div>
 
-           {/* Company */}
-           <div>
-             <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-               Empresa / Cargo / Contexto
-             </label>
-             <input
-               type="text"
-               value={company}
-               onChange={(e) => setCompany(e.target.value)}
-               placeholder="Ex: Ferramentas Brasil S/A"
-               className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
-             />
-           </div>
+          {/* Guest and Company */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-300 mb-1.5">
+                <User className="w-3.5 h-3.5 text-zinc-400" />
+                <span>Nome do Convidado / Protagonista</span>
+              </label>
+              <input
+                type="text"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                placeholder="Ex: João Silva"
+                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
+                Empresa / Cargo / Contexto
+              </label>
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Ex: Ferramentas Brasil S/A"
+                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          </div>
 
           {/* Format and Target Duration */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -207,36 +220,6 @@ const [guest_id, setGuestId] = useState('');
               placeholder="Ex: Revelar como superar crises financeiras extremas com calo nas mãos."
               className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
             />
-          </div>
-
-          {/* Guest Link (Optional) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-300 mb-1.5">
-                <Info className="w-3.5 h-3.5 text-zinc-400" />
-                <span>Convidado (Nome) <span className="text-zinc-500">(Opcional)</span></span>
-              </label>
-              <input
-                type="text"
-                value={guest_name}
-                onChange={(e) => setGuestName(e.target.value)}
-                placeholder="Ex: João Silva"
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
-              />
-            </div>
-            <div>
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-300 mb-1.5">
-                <Info className="w-3.5 h-3.5 text-zinc-400" />
-                <span>Convidado (ID) <span className="text-zinc-500">(Opcional)</span></span>
-              </label>
-              <input
-                type="text"
-                value={guest_id}
-                onChange={(e) => setGuestId(e.target.value)}
-                placeholder="Ex: 123e4567-e89b-12d3-a456-426614174000"
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500"
-              />
-            </div>
           </div>
 
           {/* Additional Info */}
