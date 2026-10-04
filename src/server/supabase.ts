@@ -36,7 +36,6 @@ export async function checkSupabaseConnection() {
 
 
 export function getSupabaseForUser(accessToken: string) {
-  const { createClient } = require('@supabase/supabase-js') as typeof import('@supabase/supabase-js');
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) throw new Error('Supabase client configuration is missing');
