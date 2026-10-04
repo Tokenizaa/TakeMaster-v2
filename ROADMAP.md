@@ -202,9 +202,9 @@ A autenticação foi implementada, mas autenticação não substitui autorizaç�
 - erros;
 - smoke test da API.
 
-**Status:** PENDENTE.
+**Status:** PARCIAL.
 
-O RLS deverá possuir testes explícitos de acesso permitido e negado antes de considerar a camada segura. citeturn0search0
+Já foi executado smoke test de RLS para usuário membro e não-membro. Ainda faltam testes automatizados de contratos, persistência completa, operações INSERT/UPDATE/DELETE e cobertura das tabelas filhas. citeturn0search0
 
 ## Critério de saída da Fase 1
 
