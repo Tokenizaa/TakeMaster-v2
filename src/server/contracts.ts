@@ -62,5 +62,6 @@ export function validateGuestInput(value: unknown, partial = false): RecordInput
   stringField(input, 'name', !partial);
   stringField(input, 'role', !partial);
   stringField(input, 'company', !partial);
+  stringField(input, 'showId', false);
   return input;
 }
