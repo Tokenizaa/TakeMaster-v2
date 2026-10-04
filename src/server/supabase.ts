@@ -36,8 +36,9 @@ export async function checkSupabaseConnection() {
 
 
 export function getSupabaseForUser(accessToken: string) {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  const c = getServerConfig();
+  const url = c.supabaseUrl;
+  const key = c.supabasePublishableKey;
   if (!url || !key) throw new Error('Supabase client configuration is missing');
   return createClient(url, key, {
     global: { headers: { Authorization: `Bearer ${accessToken}` } },
