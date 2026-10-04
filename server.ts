@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-import { db } from './src/server/db';
 import { ai, parseAIJson } from './src/server/ai';
 import { requireAuth, AuthenticatedRequest } from './src/server/auth';
 import { validateEpisodeInput, validateGuestInput, validateShowInput } from './src/server/contracts';
@@ -153,7 +152,7 @@ app.put('/api/guests/:id', async (req: AuthenticatedRequest, res: Response) => {
     res.json(await persistence(req).saveParticipant({ ...existing, ...req.body, id: existing.id, showId }, await getSingleOrganizationId(req.user!.id)));
   } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
-\n// --- AI Endpoints using @google/genai (model: gemini-3.8-flash) ---
+// --- AI Endpoints using NVIDIA NIM ---
 
 // 1. Editorial Diagnosis
 app.post('/api/ai/diagnose', async (req: Request, res: Response) => {
@@ -207,7 +206,6 @@ Responda ESTRITAMENTE em formato JSON com o seguinte schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -307,7 +305,6 @@ Retorne ESTRITAMENTE em formato JSON com o seguinte schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -501,7 +498,6 @@ Retorne ESTRITAMENTE em formato JSON com o schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -575,7 +571,6 @@ Retorne ESTRITAMENTE em formato JSON com o schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -645,7 +640,6 @@ Retorne em formato JSON:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -712,7 +706,6 @@ Retorne em formato JSON:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -769,7 +762,6 @@ Retorne ESTRITAMENTE em formato JSON:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -837,7 +829,6 @@ Retorne em formato JSON:
 }`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
