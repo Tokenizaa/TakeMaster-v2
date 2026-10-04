@@ -161,11 +161,11 @@ Já existe tratamento de erro e parsing estrito de IA. A validação completa do
 - autosave/persistência confiável;
 - evitar dependência direta da UI no schema.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA CAMADA PRINCIPAL; VALIDAÇÃO E LIMPEZA PENDENTES.
 
-Atualmente o CRUD existente ainda usa JSON local.
+O CRUD principal de Shows, Episodes e Guests já usa `SupabasePersistence` com cliente Supabase escopado ao usuário. O adapter possui mappings para Program, Episode e Participant contra o schema live validado. O JSON legado ainda existe em `src/server/db.ts`, mas não é mais usado pelo `server.ts`.
 
-**Bloqueio:** depende do 0.5.
+**Próximo fechamento:** validar operações completas, relacionamentos filhos do Episode e remover o legado somente após confirmar ausência de consumidores.
 
 ## 1.7 — Autorização, organização e programas
 **Escopo:**
@@ -178,7 +178,7 @@ Atualmente o CRUD existente ainda usa JSON local.
 - grants mínimos;
 - testes allow/deny.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA BASE; MATRIZ DE ROLES E TESTES COMPLETOS PENDENTES.
 
 A autenticação foi implementada, mas autenticação não substitui autorização. O acesso aos dados deverá ser protegido também no banco, combinando grants e RLS. citeturn0search0turn0search1
 
@@ -202,9 +202,9 @@ A autenticação foi implementada, mas autenticação não substitui autorizaç�
 - erros;
 - smoke test da API.
 
-**Status:** PARCIAL.
+**Status:** INCOMPLETA.
 
-Já foi executado smoke test de RLS para usuário membro e não-membro. Ainda faltam testes automatizados de contratos, persistência completa, operações INSERT/UPDATE/DELETE e cobertura das tabelas filhas. citeturn0search0
+O `npm test` atualmente executa somente `tsc --noEmit`; existem testes no repositório, mas não há suíte canônica configurada para Jest/Playwright nem execução automatizada completa de persistence/RLS/authz. Ainda faltam testes automatizados de contratos, persistência completa, operações INSERT/UPDATE/DELETE e cobertura das tabelas filhas. citeturn0search0
 
 ## Critério de saída da Fase 1
 
@@ -335,7 +335,9 @@ Reconstruir as capacidades operacionais que amadureceram no V1 e transformá-las
 ### 3.4 — Library
 **Escopo:** organização e acesso aos materiais de produção.
 
-**Status:** PLANEJADA.
+**Status:** PENDENTE.
+
+O PR #5 continha uma implementação anterior de Library, mas ela dependia de endpoints e contratos que não fazem parte do backend canônico atual. Essa implementação não será reaplicada como código legado. A Library deve ser reconstruída sobre a arquitetura Supabase atual.
 
 ### 3.5 — Dashboard
 **Escopo:** visão consolidada de produção, pendências e estado dos episódios.
@@ -345,7 +347,9 @@ Reconstruir as capacidades operacionais que amadureceram no V1 e transformá-las
 ### 3.6 — History / Context
 **Escopo:** histórico e recuperação de contexto relevante.
 
-**Status:** PLANEJADA.
+**Status:** UI RESTAURADA; PERSISTÊNCIA DE VERSIONAMENTO PENDENTE.
+
+A aba `VersionHistoryTab` foi recuperada do PR #5 e integrada ao editor canônico. O versionamento ainda depende de persistência real de snapshots/versões.
 
 ### 3.7 — Operational Onboarding
 **Escopo:** preparação inicial de organizações, programas, usuários e contexto operacional.
@@ -522,6 +526,10 @@ O projeto não deve avançar apenas porque código foi implementado.
 
 **Concluído:**
 - baseline arquitetural;
+- CRUD principal direcionado ao Supabase;
+- camada base de autorização Organization/Program;
+- integração NVIDIA NIM;
+- UI de histórico de versões restaurada no editor;
 - decisões estruturais;
 - branch/PR de Phase 1;
 - configuração Supabase/NVIDIA;
@@ -535,16 +543,17 @@ O projeto não deve avançar apenas porque código foi implementado.
 - health endpoint.
 
 **Em andamento:**
-- Fase 1.
+- fechamento de 1.6/1.7/1.9;
+- reconstrução canônica de Library;
+- persistência real de History/Context;
 
 **Ainda bloqueado:**
-- inspeção confiável do Supabase compartilhado;
-- schema definitivo;
-- RLS/grants;
-- autorização Organization/Program;
-- adapter de persistência Supabase;
-- remoção do JSON como fonte de verdade;
-- testes completos.
+- relacionamentos filhos do Episode;
+- matriz completa de roles e testes RLS/authz;
+- remoção segura de `src/server/db.ts` e dados JSON legados;
+- persistência de versões;
+- Library sobre backend canônico;
+- suíte de testes automatizada.
 
 **Regra para a próxima execução:**
 
