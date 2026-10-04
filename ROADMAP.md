@@ -84,9 +84,9 @@ Decisões registradas:
 ### 0.5 — Gate de banco compartilhado
 **Escopo:** validar schema real, tabelas, relacionamentos, constraints, migrations, dados, RLS, grants, funções e dependências do Supabase do V1.
 
-**Status:** PENDENTE / BLOQUEADOR.
+**Status:** VALIDADO.
 
-A tentativa de inspeção live do banco sofreu timeout. Não será feita inferência do schema.
+O schema live do projeto Supabase correto foi validado e a base de RLS/grants utilizada pelo V2 está registrada nos documentos canônicos. O fechamento de autorização e testes permanece na Fase 1.
 
 **Critério de saída:** schema e regras de autorização documentados e reproduzíveis.
 
@@ -147,9 +147,9 @@ Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda 
 - normalização somente nas bordas;
 - impedir payloads incompatíveis de contaminarem o domínio.
 
-**Status:** PARCIAL.
+**Status:** IMPLEMENTADA NA BASE.
 
-Já existe tratamento de erro e parsing estrito de IA. A validação completa dos contratos de domínio/API ainda falta.
+Contratos de entrada e validação já estão aplicados às rotas CRUD principais. A validação estrutural completa das respostas de IA permanece na Fase 4.
 
 ## 1.6 — Persistência Supabase
 **Escopo:**
@@ -498,7 +498,7 @@ O projeto não deve avançar apenas porque código foi implementado.
 ### Gate A — Arquitetura
 **Condição:** Fase 0 concluída.
 
-**Estado atual:** PASSOU, exceto validação live do banco.
+**Estado atual:** PASSOU.
 
 ### Gate B — Banco e segurança
 **Condição:** schema + dados + grants + RLS + autorização validados.
