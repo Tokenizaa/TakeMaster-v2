@@ -33,3 +33,15 @@ export async function checkSupabaseConnection() {
     return { connected: false, latencyMs: Date.now() - started, error: error instanceof Error ? error.message : String(error) };
   }
 }
+
+
+export function getSupabaseForUser(accessToken: string) {
+  const { createClient } = require('@supabase/supabase-js') as typeof import('@supabase/supabase-js');
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) throw new Error('Supabase client configuration is missing');
+  return createClient(url, key, {
+    global: { headers: { Authorization: `Bearer ${accessToken}` } },
+    auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+  });
+}
