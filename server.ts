@@ -3,8 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import { db } from './src/server/db';
 import { ai, parseAIJson } from './src/server/ai';
-import { requireAuth } from './src/server/auth';
+import { requireAuth, AuthenticatedRequest } from './src/server/auth';
 import { validateEpisodeInput, validateGuestInput, validateShowInput } from './src/server/contracts';
+import { getSupabaseForUser } from './src/server/supabase';
+import { SupabasePersistence } from './src/server/persistence';
+import { assertOrganizationRole, assertProgramAccess, getSingleOrganizationId } from './src/server/authorization';
 import { Episode, EditorialDiagnosis, ResearchData, OutlineBlock, QuestionItem, ScriptItem, PlannedShort, FollowUpItem } from './src/types';
 
 const app = express();
@@ -20,97 +23,137 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 
 app.use('/api', requireAuth);
 
-// --- REST Endpoints: Shows ---
-app.get('/api/shows', (req: Request, res: Response) => {
-  res.json(db.getShows());
+// --- REST Endpoints: Supabase-backed editorial data ---
+function persistence(req: AuthenticatedRequest) {
+  if (!req.accessToken) throw new Error('Authenticated access token missing');
+  return new SupabasePersistence(getSupabaseForUser(req.accessToken));
+}
+
+app.get('/api/shows', async (req: AuthenticatedRequest, res: Response) => {
+  try { res.json(await persistence(req).listPrograms()); }
+  catch (error) { res.status(500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.get('/api/shows/:id', (req: Request, res: Response) => {
-  const show = db.getShow(req.params.id);
-  if (!show) return res.status(404).json({ error: 'Show not found' });
-  res.json(show);
+app.get('/api/shows/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const show = await persistence(req).getProgram(req.params.id);
+    if (!show) return res.status(404).json({ error: 'Show not found' });
+    res.json(show);
+  } catch (error) { res.status(500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.post('/api/shows', (req: Request, res: Response) => {
-  validateShowInput(req.body);
-  const newShow = {
-    ...req.body,
-    id: req.body.id || `show-${Date.now()}`,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-  db.saveShow(newShow);
-  res.status(201).json(newShow);
+app.post('/api/shows', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateShowInput(req.body);
+    const orgId = await getSingleOrganizationId(req.user!.id);
+    await assertOrganizationRole(req.user!.id, orgId, ['owner', 'admin']);
+    const show = await persistence(req).saveProgram({
+      ...req.body,
+      id: req.body.id || `show-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }, orgId);
+    res.status(201).json(show);
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.put('/api/shows/:id', (req: Request, res: Response) => {
-  validateShowInput(req.body, true);
-  const updated = db.saveShow({ ...req.body, id: req.params.id });
-  res.json(updated);
+app.put('/api/shows/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateShowInput(req.body, true);
+    await assertProgramAccess(req.user!.id, req.params.id);
+    const existing = await persistence(req).getProgram(req.params.id);
+    if (!existing) return res.status(404).json({ error: 'Show not found' });
+    const orgId = await getSingleOrganizationId(req.user!.id);
+    await assertOrganizationRole(req.user!.id, orgId, ['owner', 'admin']);
+    res.json(await persistence(req).saveProgram({ ...existing, ...req.body, id: existing.id }, orgId));
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.delete('/api/shows/:id', (req: Request, res: Response) => {
-  const success = db.deleteShow(req.params.id);
-  res.json({ success });
+app.delete('/api/shows/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    await assertProgramAccess(req.user!.id, req.params.id);
+    const orgId = await getSingleOrganizationId(req.user!.id);
+    await assertOrganizationRole(req.user!.id, orgId, ['owner', 'admin']);
+    await persistence(req).deleteProgram(req.params.id);
+    res.json({ success: true });
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-// --- REST Endpoints: Episodes ---
-app.get('/api/episodes', (req: Request, res: Response) => {
-  res.json(db.getEpisodes());
+app.get('/api/episodes', async (req: AuthenticatedRequest, res: Response) => {
+  try { res.json(await persistence(req).listEpisodes(typeof req.query.programId === 'string' ? req.query.programId : undefined)); }
+  catch (error) { res.status(500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.get('/api/episodes/:id', (req: Request, res: Response) => {
-  const ep = db.getEpisode(req.params.id);
-  if (!ep) return res.status(404).json({ error: 'Episode not found' });
-  res.json(ep);
+app.get('/api/episodes/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const ep = await persistence(req).getEpisode(req.params.id);
+    if (!ep) return res.status(404).json({ error: 'Episode not found' });
+    await assertProgramAccess(req.user!.id, ep.showId);
+    res.json(ep);
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.post('/api/episodes', (req: Request, res: Response) => {
-  validateEpisodeInput(req.body);
-  const ep = req.body as Episode;
-  const created = db.saveEpisode({
-    ...ep,
-    id: ep.id || `ep-${Date.now()}`,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  });
-  res.status(201).json(created);
+app.post('/api/episodes', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateEpisodeInput(req.body);
+    await assertProgramAccess(req.user!.id, req.body.showId);
+    const ep = await persistence(req).saveEpisode({
+      ...req.body, id: req.body.id || `ep-${Date.now()}`,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    } as Episode, await getSingleOrganizationId(req.user!.id));
+    res.status(201).json(ep);
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.put('/api/episodes/:id', (req: Request, res: Response) => {
-  validateEpisodeInput(req.body, true);
-  const updated = db.saveEpisode({ ...req.body, id: req.params.id });
-  res.json(updated);
+app.put('/api/episodes/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateEpisodeInput(req.body, true);
+    const existing = await persistence(req).getEpisode(req.params.id);
+    if (!existing) return res.status(404).json({ error: 'Episode not found' });
+    await assertProgramAccess(req.user!.id, existing.showId);
+    res.json(await persistence(req).saveEpisode({ ...existing, ...req.body, id: existing.id }, await getSingleOrganizationId(req.user!.id)));
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.delete('/api/episodes/:id', (req: Request, res: Response) => {
-  const success = db.deleteEpisode(req.params.id);
-  res.json({ success });
+app.delete('/api/episodes/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const existing = await persistence(req).getEpisode(req.params.id);
+    if (!existing) return res.status(404).json({ error: 'Episode not found' });
+    await assertProgramAccess(req.user!.id, existing.showId);
+    await persistence(req).deleteEpisode(existing.id);
+    res.json({ success: true });
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-// --- REST Endpoints: Guests ---
-app.get('/api/guests', (req: Request, res: Response) => {
-  res.json(db.getGuests());
+app.get('/api/guests', async (req: AuthenticatedRequest, res: Response) => {
+  try { res.json(await persistence(req).listParticipants()); }
+  catch (error) { res.status(500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.post('/api/guests', (req: Request, res: Response) => {
-  validateGuestInput(req.body);
-  const guest = req.body;
-  const created = db.saveGuest({
-    ...guest,
-    id: guest.id || `guest-${Date.now()}`,
-    createdAt: new Date().toISOString(),
-  });
-  res.status(201).json(created);
+app.post('/api/guests', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateGuestInput(req.body);
+    if (!req.body.showId) throw new Error('showId é obrigatório para Participant');
+    await assertProgramAccess(req.user!.id, req.body.showId);
+    const guest = await persistence(req).saveParticipant({
+      ...req.body, id: req.body.id || `guest-${Date.now()}`, createdAt: new Date().toISOString(),
+    }, await getSingleOrganizationId(req.user!.id));
+    res.status(201).json(guest);
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
 
-app.put('/api/guests/:id', (req: Request, res: Response) => {
-  validateGuestInput(req.body, true);
-  const updated = db.saveGuest({ ...req.body, id: req.params.id });
-  res.json(updated);
+app.put('/api/guests/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    validateGuestInput(req.body, true);
+    const existing = (await persistence(req).listParticipants()).find(g => g.id === req.params.id);
+    if (!existing) return res.status(404).json({ error: 'Guest not found' });
+    const showId = req.body.showId || existing.showId;
+    if (!showId) throw new Error('showId é obrigatório para Participant');
+    await assertProgramAccess(req.user!.id, showId);
+    res.json(await persistence(req).saveParticipant({ ...existing, ...req.body, id: existing.id, showId }, await getSingleOrganizationId(req.user!.id)));
+  } catch (error) { res.status(error instanceof Error && 'status' in error ? Number((error as any).status) : 500).json({ error: error instanceof Error ? error.message : String(error) }); }
 });
-
-// --- AI Endpoints using @google/genai (model: gemini-3.8-flash) ---
+\n// --- AI Endpoints using @google/genai (model: gemini-3.8-flash) ---
 
 // 1. Editorial Diagnosis
 app.post('/api/ai/diagnose', async (req: Request, res: Response) => {
