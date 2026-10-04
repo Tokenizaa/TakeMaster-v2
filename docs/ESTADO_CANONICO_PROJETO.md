@@ -19,13 +19,13 @@ TakeMaster V2 é uma reconstrução deliberada do produto, não uma continuaçã
 ## 3. Estado Atual (Baseado na documentação)
 
 ### 3.1 Fase 0 — Baseline Arquitetural
-- Status: Concluída, com gate de banco pendente.
+- Status: Concluída.
 - Vocabulário canônico definido: Show → Program, Guest → Participant, OutlineBlock → Segment.
 - Arquitetura-alvo definida: UI → Application/API → Domain → Persistence/AI/External Services.
 - ADRs registradas para decisões estruturais.
 
 ### 3.2 Fase 1 — Fundação de Dados, Segurança e Contratos
-- Status: Em andamento, bloqueada pela validação live do banco compartilhado.
+- Status: Em andamento, com schema live já validado e fechamento de persistência/authz/testes pendente.
 - Implementado:
   - Limite de servidor Supabase usando a configuração existente do projeto V1.
   - Validação de usuário autenticado no servidor.
@@ -38,20 +38,15 @@ TakeMaster V2 é uma reconstrução deliberada do produto, não uma continuaçã
   - Manuseio de modelo primário/fallback do NIM e timeout.
   - Parsing estrito de JSON da IA: saída inválida é um erro, não fallback de dados silenciosos.
   - Modelo de ambiente para o projeto Supabase compartilhado e configuração do NVIDIA.
-- Ainda não habilitado:
-  - Endpoints CRUD existentes ainda são apoiados pelo banco de dados JSON do V2. Eles ainda não foram trocados para o banco de dados de produção compartilhado.
-  - A interface do usuário agora é fechada pela autenticação Supabase, e as rotas de API exigem um token Bearer validado. A autorização do banco de dados/RLS ainda não foi verificada ao vivo.
-  - Nenhuma migração de esquema de produção foi aplicada.
-- Motivo: O projeto Supabase conectado sofreu timeout durante a inspeção ao vivo do schema. Como o V2 compartilhará a fonte de dados de produção do V1, a Fase 1 não deve adivinhar o esquema ou escrever migrações contra um estado não verificado.
-- Próximo gate necessário:
-  1. Obter uma conexão live bem-sucedida com o Supabase.
-  2. Capturar tabelas, colunas, chaves estrangeiras, políticas RLS, grants, funções/RPCs e histórico de migrações.
-  3. Reconciliar esse instantâneo com as migrações do repositório V1 e a camada de persistência.
-  4. Definir o adaptador de persistência V2 e os predicados de autorização.
-  5. Adicionar testes de banco de dados para comportamento allow/deny.
-  6. Só então mudar o CRUD do V2 de JSON para Supabase.
+- Estado atual:
+  - CRUD principal de Shows, Episodes e Guests já usa SupabasePersistence.
+  - Schema live do projeto correto foi validado.
+  - Authorization base Organization/Program e RLS/grants centrais estão presentes.
+  - O legado JSON foi isolado e não é mais usado pelo server.ts; o módulo src/server/db.ts foi removido nesta reconciliação.
+  - Ainda faltam relacionamentos filhos do Episode, matriz completa de roles e testes automatizados allow/deny.
+  - Library e History/Context ainda precisam de implementação/persistência canônica completa.
 
-### 3.3 Dependências e Configuração
+## 3.3 Dependências e Configuração
 - O projeto usa Supabase como sistema persistente de registro.
 - O projeto usa NVIDIA NIM como provedor de IA.
 - O projeto terá um novo deployment Cloudflare (ainda não implantado).
@@ -78,7 +73,7 @@ O projeto não deve avançar apenas porque código foi implementado. Os gates ob
 
 ### Gate A — Arquitetura
 - Condição: Fase 0 concluída.
-- Estado atual: PASSOU, exceto validação live do banco.
+- Estado atual: PASSOU.
 
 ### Gate B — Banco e Segurança
 - Condição: schema + dados + grants + RLS + autorização validados.
@@ -86,7 +81,7 @@ O projeto não deve avançar apenas porque código foi implementado. Os gates ob
 
 ### Gate C — Persistência
 - Condição: Supabase é a fonte de verdade do V2.
-- Estado atual: NÃO PASSOU; adapter está pronto para as entidades raiz, mas JSON local ainda é a fonte de verdade.
+- Estado atual: PARCIALMENTE PASSOU; CRUD principal usa Supabase, mas relacionamentos filhos, versionamento e testes de persistência ainda não estão fechados.
 
 ### Gate D — Editorial
 - Condição: fluxo completo de episódio funcional.
@@ -128,15 +123,9 @@ O projeto não deve avançar apenas porque código foi implementado. Os gates ob
 
 ## 7. Próximos Passos
 
-Para avançar para o Gate B (Banco e Segurança) e Gate C (Persistência), é necessário:
-1. Estabelecer uma conexão live com o Supabase.
-2. Validar o schema live do banco de dados.
-3. Reconciliar o schema live com as migrações do repositório.
-4. Definir o adaptador de persistência V2 e os predicados de autorização.
-5. Ativar a persistência Supabase nas rotas CRUD.
-6. Implementar testes de banco de dados para comportamento allow/deny.
-7. Remover o JSON local como fonte de verdade.
-8. Concluir a matriz de roles Organization/Program.
-9. Executar testes RLS allow/deny com identidades reais.
-
-Este estado canônico deve ser mantido atualizado conforme o projeto avança através das fases e gates.
+1. Fechar relacionamentos filhos do Episode no SupabasePersistence.
+2. Fechar matriz de roles Organization/Program e testes allow/deny.
+3. Estabelecer suíte automatizada de persistence/RLS/authz e contratos.
+4. Implementar persistência real de History/Context.
+5. Reconstruir Library sobre a arquitetura Supabase atual, sem reaplicar o backend legado do PR #5.
+6. Só então avançar para a Fase 2 e posteriormente produção.
