@@ -2,12 +2,12 @@
 
 ## Objetivo do projeto
 
-Reconstruir o TakeMaster V2 como uma plataforma estável, coerente e evolutiva, usando o V2 como base limpa e incorporando apenas melhorias comprovadas do V1.
+Consolidar e colocar em produção o TakeMaster V2 original, preservando sua superfície de produto e incorporando somente infraestrutura e melhorias comprovadas da reconstrução posterior (V1).
 
 Princípios fixos:
 
-- V2 é uma reconstrução, não um fork do V1.
-- V1 continua sendo referência de comportamento e fonte de funcionalidades comprovadas.
+- V2 é o produto original, cuja superfície está documentada no commit `68b8ca2`.
+- V1 é a reconstrução arquitetural posterior anteriormente rotulada como V2; pode fornecer infraestrutura reutilizável, mas não redefine o produto.
 - V2 usará o mesmo Supabase/Postgres do V1.
 - V2 continuará usando NVIDIA NIM como provedor de IA.
 - V2 terá uma nova implantação Cloudflare.
@@ -34,10 +34,10 @@ Princípios fixos:
 
 ## Objetivo
 
-Entender exatamente o que existe em V1 e V2, separar valor comprovado de dívida histórica e definir a arquitetura-alvo antes de migrar funcionalidades.
+Preservar e entregar o produto V2 original, separando sua superfície canônica da infraestrutura da reconstrução V1 e incorporando somente o que for necessário para fazê-lo funcionar em produção.
 
 ### 0.1 — Inventário V1 × V2
-**Escopo:** comparar entidades, telas, APIs, persistência, autenticação, IA, operações e infraestrutura.
+**Escopo:** comparar entidades, telas, APIs, persistência, autenticação, IA, operações e infraestrutura, preservando o V2 como produto canônico.
 
 **Status:** CONCLUÍDA.
 
@@ -74,19 +74,19 @@ Regra: UI não é camada de segurança; domínio não depende do formato das tab
 **Status:** CONCLUÍDA.
 
 Decisões registradas:
-- reconstrução em vez de fork;
+- V2 como produto original e V1 como reconstrução arquitetural posterior;
 - banco Supabase existente;
 - NVIDIA NIM;
-- novo deployment Cloudflare;
+- deployment Cloudflare do V2;
 - domínio canônico;
 - compatibilidade explícita e temporária.
 
 ### 0.5 — Gate de banco compartilhado
 **Escopo:** validar schema real, tabelas, relacionamentos, constraints, migrations, dados, RLS, grants, funções e dependências do Supabase do V1.
 
-**Status:** PENDENTE / BLOQUEADOR.
+**Status:** VALIDADO.
 
-A tentativa de inspeção live do banco sofreu timeout. Não será feita inferência do schema.
+O schema live do projeto Supabase correto foi validado e a base de RLS/grants utilizada pelo V2 está registrada nos documentos canônicos. O fechamento de autorização e testes permanece na Fase 1.
 
 **Critério de saída:** schema e regras de autorização documentados e reproduzíveis.
 
@@ -96,7 +96,7 @@ A tentativa de inspeção live do banco sofreu timeout. Não será feita inferê
 
 ## Objetivo
 
-Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda assumir que o JSON local é a persistência definitiva.
+Fechar a fundação técnica necessária para colocar o produto V2 original em operação, sem substituir sua UI/fluxos e sem assumir o JSON local como persistência definitiva.
 
 ## 1.1 — Configuração e boundaries externos
 **Escopo:**
@@ -147,9 +147,9 @@ Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda 
 - normalização somente nas bordas;
 - impedir payloads incompatíveis de contaminarem o domínio.
 
-**Status:** PARCIAL.
+**Status:** IMPLEMENTADA NA BASE.
 
-Já existe tratamento de erro e parsing estrito de IA. A validação completa dos contratos de domínio/API ainda falta.
+Contratos de entrada e validação já estão aplicados às rotas CRUD principais. A validação estrutural completa das respostas de IA permanece na Fase 4.
 
 ## 1.6 — Persistência Supabase
 **Escopo:**
@@ -161,11 +161,11 @@ Já existe tratamento de erro e parsing estrito de IA. A validação completa do
 - autosave/persistência confiável;
 - evitar dependência direta da UI no schema.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA CAMADA PRINCIPAL; VALIDAÇÃO E LIMPEZA PENDENTES.
 
-Atualmente o CRUD existente ainda usa JSON local.
+O CRUD principal de Shows, Episodes e Guests já usa `SupabasePersistence` com cliente Supabase escopado ao usuário. O adapter possui mappings para Program, Episode e Participant contra o schema live validado. O JSON legado ainda existe em `src/server/db.ts`, mas não é mais usado pelo `server.ts`.
 
-**Bloqueio:** depende do 0.5.
+**Próximo fechamento:** validar operações completas, relacionamentos filhos do Episode e remover o legado somente após confirmar ausência de consumidores.
 
 ## 1.7 — Autorização, organização e programas
 **Escopo:**
@@ -178,7 +178,7 @@ Atualmente o CRUD existente ainda usa JSON local.
 - grants mínimos;
 - testes allow/deny.
 
-**Status:** PENDENTE.
+**Status:** IMPLEMENTADA NA BASE; MATRIZ DE ROLES E TESTES COMPLETOS PENDENTES.
 
 A autenticação foi implementada, mas autenticação não substitui autorização. O acesso aos dados deverá ser protegido também no banco, combinando grants e RLS. citeturn0search0turn0search1
 
@@ -202,9 +202,9 @@ A autenticação foi implementada, mas autenticação não substitui autorizaç�
 - erros;
 - smoke test da API.
 
-**Status:** PARCIAL.
+**Status:** INCOMPLETA.
 
-Já foi executado smoke test de RLS para usuário membro e não-membro. Ainda faltam testes automatizados de contratos, persistência completa, operações INSERT/UPDATE/DELETE e cobertura das tabelas filhas. citeturn0search0
+O `npm test` atualmente executa somente `tsc --noEmit`; existem testes no repositório, mas não há suíte canônica configurada para Jest/Playwright nem execução automatizada completa de persistence/RLS/authz. Ainda faltam testes automatizados de contratos, persistência completa, operações INSERT/UPDATE/DELETE e cobertura das tabelas filhas. citeturn0search0
 
 ## Critério de saída da Fase 1
 
@@ -228,82 +228,82 @@ Reconstruir o fluxo principal de criação e produção de episódios.
 ### 2.1 — Programs / Shows
 **Escopo:** criação, edição, seleção, configuração e contexto do programa.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.2 — Episodes
 **Escopo:** ciclo de vida do episódio, metadados, status, contexto e persistência.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.3 — Participants / Guests
 **Escopo:** cadastro, vínculo ao episódio e histórico contextual.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.4 — Diagnosis
 **Escopo:** diagnóstico editorial da ideia/episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação de produção pendente.
 
 ### 2.5 — Research
 **Escopo:** pesquisa, fontes, contexto e material de preparação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação de produção pendente.
 
 ### 2.6 — Outline / Segments
 **Escopo:** estrutura editorial do episódio e segmentos.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/integração pendente.
 
 ### 2.7 — Questions
 **Escopo:** perguntas principais, ordem, agrupamento e edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/integração pendente.
 
 ### 2.8 — Follow-ups
 **Escopo:** repiques ligados às perguntas e contexto editorial.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação pendente.
 
 ### 2.9 — Script
 **Escopo:** roteiro, blocos, versões e edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/versionamento pendente.
 
 ### 2.10 — Cameras
 **Escopo:** configuração e contexto de câmeras/produção.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/validação pendente.
 
 ### 2.11 — Assets / Production Assets
 **Escopo:** materiais, referências e assets vinculados ao episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.12 — Shorts
 **Escopo:** planejamento de cortes/shorts derivados do episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação pendente.
 
 ### 2.13 — Recording Markers
 **Escopo:** marcações de gravação e pontos relevantes para edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.14 — Technical Checklist
 **Escopo:** checklist técnico de gravação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.15 — Script Versions
 **Escopo:** histórico e versionamento do roteiro.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.16 — Studio Mode
 **Escopo:** modo operacional para uso durante gravação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; validação operacional pendente.
 
 ## Critério de saída da Fase 2
 
@@ -335,7 +335,9 @@ Reconstruir as capacidades operacionais que amadureceram no V1 e transformá-las
 ### 3.4 — Library
 **Escopo:** organização e acesso aos materiais de produção.
 
-**Status:** PLANEJADA.
+**Status:** PENDENTE.
+
+O PR #5 continha uma implementação anterior de Library, mas ela dependia de endpoints e contratos que não fazem parte do backend canônico atual. Essa implementação não será reaplicada como código legado. A Library deve ser reconstruída sobre a arquitetura Supabase atual.
 
 ### 3.5 — Dashboard
 **Escopo:** visão consolidada de produção, pendências e estado dos episódios.
@@ -345,7 +347,9 @@ Reconstruir as capacidades operacionais que amadureceram no V1 e transformá-las
 ### 3.6 — History / Context
 **Escopo:** histórico e recuperação de contexto relevante.
 
-**Status:** PLANEJADA.
+**Status:** UI RESTAURADA; PERSISTÊNCIA DE VERSIONAMENTO PENDENTE.
+
+A aba `VersionHistoryTab` foi recuperada do PR #5 e integrada ao editor canônico. O versionamento ainda depende de persistência real de snapshots/versões.
 
 ### 3.7 — Operational Onboarding
 **Escopo:** preparação inicial de organizações, programas, usuários e contexto operacional.
@@ -494,7 +498,7 @@ O projeto não deve avançar apenas porque código foi implementado.
 ### Gate A — Arquitetura
 **Condição:** Fase 0 concluída.
 
-**Estado atual:** PASSOU, exceto validação live do banco.
+**Estado atual:** PASSOU.
 
 ### Gate B — Banco e segurança
 **Condição:** schema + dados + grants + RLS + autorização validados.
@@ -522,6 +526,10 @@ O projeto não deve avançar apenas porque código foi implementado.
 
 **Concluído:**
 - baseline arquitetural;
+- CRUD principal direcionado ao Supabase;
+- camada base de autorização Organization/Program;
+- integração NVIDIA NIM;
+- UI de histórico de versões restaurada no editor;
 - decisões estruturais;
 - branch/PR de Phase 1;
 - configuração Supabase/NVIDIA;
@@ -535,16 +543,17 @@ O projeto não deve avançar apenas porque código foi implementado.
 - health endpoint.
 
 **Em andamento:**
-- Fase 1.
+- fechamento de 1.6/1.7/1.9;
+- reconstrução canônica de Library;
+- persistência real de History/Context;
 
 **Ainda bloqueado:**
-- inspeção confiável do Supabase compartilhado;
-- schema definitivo;
-- RLS/grants;
-- autorização Organization/Program;
-- adapter de persistência Supabase;
-- remoção do JSON como fonte de verdade;
-- testes completos.
+- relacionamentos filhos do Episode;
+- matriz completa de roles e testes RLS/authz;
+- remoção segura de `src/server/db.ts` e dados JSON legados;
+- persistência de versões;
+- Library sobre backend canônico;
+- suíte de testes automatizada.
 
 **Regra para a próxima execução:**
 

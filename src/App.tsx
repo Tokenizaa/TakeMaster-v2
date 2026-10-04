@@ -21,6 +21,7 @@ import { AssetsTab } from './components/EpisodeEditor/AssetsTab';
 import { ShortsTab } from './components/EpisodeEditor/ShortsTab';
 import { RecordingPrepTab } from './components/EpisodeEditor/RecordingPrepTab';
 import { EditorTab } from './components/EpisodeEditor/EditorTab';
+import { VersionHistoryTab } from './components/EpisodeEditor/VersionHistoryTab';
 import { StudioModeModal } from './components/StudioMode/StudioModeModal';
 import { ExportModal } from './components/ExportModal';
 import { NewEpisodeModal } from './components/NewEpisodeModal';
@@ -527,6 +528,14 @@ export default function App() {
                     episode={activeEpisode}
                     onUpdateEpisode={handleUpdateEpisode}
                     onAdvanceToNextTab={() => setActiveEpisodeTab('shorts')}
+                  />
+                )}
+
+                {activeEpisodeTab === 'history' && (
+                  <VersionHistoryTab
+                    episode={activeEpisode}
+                    onUpdateEpisode={handleUpdateEpisode}
+                    onAdvanceToNextTab={() => setActiveEpisodeTab('editor')}
                   />
                 )}
 

@@ -47,6 +47,7 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
     { id: 'script', label: '4. Roteiro & 3 Câmeras' },
     { id: 'cameras', label: '5. Setup Câmeras' },
     { id: 'assets', label: '6. Materiais / B-Roll' },
+    { id: 'history', label: '10. Histórico de Versões' },
     { id: 'shorts', label: '7. Cortes / Shorts' },
     { id: 'prep', label: '8. Checklist Gravação' },
     { id: 'editor', label: '9. Roteiro de Edição' },

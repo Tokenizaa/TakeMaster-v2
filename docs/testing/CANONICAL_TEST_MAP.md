@@ -34,26 +34,22 @@ Testes devem ser organizados por domínio de negócio:
 
 ## 3. Estado Atual dos Testes
 
-Baseado na documentação existente (`TEST_SUMMARY.md` e related files):
+O estado real do repositório não corresponde a uma suíte Jest/Playwright configurada.
 
-### 3.1 Testes Implementados
-- **Backend**:
-  - Unit tests para EpisodesService (9 casos de teste)
-  - Unit tests para EpisodesValidators (diversos casos de validação)
-  - API Integration tests para episódios (mockados)
-- **Frontend**:
-  - Unit tests para EpisodesListView component
-  - Unit tests para NewEpisodeModal component
+### 3.1 Execução canônica disponível
+- `npm test` executa `tsc --noEmit`.
+- `npm run lint` também executa `tsc --noEmit`.
+- Não existem scripts `test:unit`, `test:integracao`, `test:e2e`, `test:performance` ou `test:seguranca` no `package.json`.
+- Existem arquivos de teste históricos no repositório, mas eles não devem ser considerados uma suíte canônica executável até serem validados contra a arquitetura atual.
 
-### 3.2 Testes Pendentes ou Necessários
-- Testes de persistência real com Supabase (não mockados)
-- Testes de RLS (Row Level Security)
-- Testes de autorização e permissões
-- Testes de integração com NVIDIA NIM (não mockados)
-- Testes E2E de fluxos completos de usuário
-- Testes de performance e carga
-- Testes de segurança (OWASP Top 10)
-- Testes para outros domínios além de episodes (programs, participants, etc.)
+### 3.2 Lacunas reais
+- Testes automatizados de persistence Supabase.
+- Testes de RLS e autorização allow/deny.
+- Testes de contratos e erros da API.
+- Testes de integração NVIDIA NIM.
+- Testes E2E dos fluxos críticos.
+- Cobertura dos relacionamentos filhos do Episode.
+- Testes de History/Library após suas implementações canônicas.
 
 ## 4. Critérios de Saída para Testes Canônicos
 
@@ -116,13 +112,16 @@ Para executar os testes canônicos, o projeto deve ter:
 
 ## 7. Executando Testes Canônicos
 
-Os scripts necessários devem estar disponíveis no `package.json`:
-- `npm run test:unit`: Executa todos os testes unitários.
-- `npm run test:integracao`: Executa testes de integração (pode exigir setup de banco de teste).
-- `npm run test:e2e`: Executa testes end-to-end (exige Playwright/Cypress e ambiente configurado).
-- `npm run test:performance`: Executa testes de performance.
-- `npm run test:seguranca`: Executa auditoria de segurança.
-- `npm run test`: Executa todos os testes aplicáveis (pode pular os que exigem setup externo).
+### Disponível agora
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+Esses comandos validam TypeScript e build. Eles não substituem testes unitários, integração, RLS ou E2E.
+
+Os scripts específicos de cada nível só devem ser adicionados quando houver uma suíte realmente configurada e executável.
 
 ## 8. Manutenção do Mapa
 
@@ -134,22 +133,11 @@ Este mapa deve ser revisado e atualizado:
 
 ## 9. Estado de Conformidade Atual
 
-Com base na análise atual:
-- **Testes Unitários de Backend**: Parcialmente implementados (apenas para episodes service e validators).
-- **Testes Unitários de Frontend**: Parcialmente implementados (apenas para dois componentes).
-- **Testes de Integração Real**: Não implementados (todos os testes de integração atuais são mockados).
-- **Testes E2E**: Não implementados.
-- **Testes de Persistência Real**: Não implementados.
-- **Testes de RLS e Autorização**: Não implementados.
-- **Testes de IA Real**: Não implementados (uso de mocks ou fallback).
-- **Testes de Outros Domínios**: Não implementados.
+- **TypeScript/build:** executáveis.
+- **Unitários:** presentes de forma histórica/parcial, sem suíte canônica configurada.
+- **Integração real:** não estabelecida como suíte canônica.
+- **E2E:** não estabelecido.
+- **Persistência/RLS/Authz:** ainda precisam de testes automatizados.
+- **NVIDIA NIM:** integração existe, cobertura automatizada ainda não fechada.
 
-Para atingir a conformidade com o mapa canônico de testes, é necessário:
-1. Implementar testes unitários para todos os services e validators em todos os domínios.
-2. Implementar testes de integração reais que utilizem o Supabase e NVIDIA reais (em ambiente de teste).
-3. Implementar testes E2E para fluxos críticos de usuário.
-4. Implementar testes de persistência, RLS e autorização.
-5. Estabelecer scripts no package.json para executar esses testes.
-6. Garantir que os testes sejam executáveis em CI com configuração adequada.
-
-Este mapa deve ser considerado o contrato mínimo para qualidade e confiabilidade do sistema.
+Este documento descreve o alvo de qualidade; não deve afirmar que um teste existe ou é executável sem que o `package.json` e a execução local/CI comprovem isso.

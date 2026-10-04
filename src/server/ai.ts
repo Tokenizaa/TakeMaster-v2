@@ -35,10 +35,19 @@ async function generateWithFallback(options: GenerateOptions): Promise<GenerateR
 
 export const ai = { models: { generateContent: generateWithFallback } };
 
-export function parseAIJson<T>(rawText: string | undefined): T {
-  if (!rawText) throw new Error('A IA retornou uma resposta vazia.');
+export function parseAIJson<T>(rawText: string | undefined, fallback?: T): T {
+  if (!rawText) {
+    if (fallback !== undefined) return fallback;
+    throw new Error('A IA retornou uma resposta vazia.');
+  }
+
   let cleaned = rawText.trim();
   cleaned = cleaned.replace(/^\x60\x60\x60json\s*/, '').replace(/^\x60\x60\x60\s*/, '').replace(/\s*\x60\x60\x60$/, '').trim();
-  try { return JSON.parse(cleaned) as T; }
-  catch { throw new Error('A IA retornou JSON inválido.'); }
+
+  try {
+    return JSON.parse(cleaned) as T;
+  } catch {
+    if (fallback !== undefined) return fallback;
+    throw new Error('A IA retornou JSON inválido.');
+  }
 }

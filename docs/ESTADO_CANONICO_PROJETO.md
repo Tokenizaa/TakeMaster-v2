@@ -1,142 +1,104 @@
 # Estado Canônico do Projeto TakeMaster V2
 
-Este documento descreve o estado canônico (de referência) do projeto TakeMaster V2, baseado na documentação existente e nas decisões arquiteturais tomadas.
+Este documento descreve o estado canônico do **produto TakeMaster V2** e sua base técnica atual.
 
 ## 1. Visão Geral
 
-TakeMaster V2 é uma reconstrução deliberada do produto, não uma continuação ou fork cego do V1. Ele preserva o modelo editorial comprovado, reutiliza o existente Supabase/Postgres como fonte de dados de produção, continua usando NVIDIA como provedor de IA e receberá uma nova implantação Cloudflare.
+O **TakeMaster V2 é o produto/frontend original**. Sua linhagem foi inicializada no commit `68b8ca2659772d38e2b62146da7f87bddb4e7207` (`feat: initialize TakeMaster-v2 project scaffolding`) e contém a superfície original do produto: Dashboard, Episodes, Shows, Guests, Studio, editor de episódio e fluxos editoriais/assistidos por IA.
 
-## 2. Decisões Arquiteturais Principais (ADRs)
+A documentação anterior inverteu as identidades: uma reconstrução arquitetural posterior foi chamada de V2. Essa reconstrução deve ser tratada como **V1** para fins de versionamento histórico. Sua arquitetura e infraestrutura podem ser reaproveitadas quando compatíveis, mas ela não substitui a superfície do produto V2.
 
-- **ADR-001**: V2 é uma reconstrução, não um fork do V1.
-- **ADR-002**: O banco de dados Supabase/Postgres existente permanece como fonte de dados de produção.
-- **ADR-003**: NVIDIA NIM permanece como provedor de IA.
-- **ADR-004**: V2 receberá um novo deployment Cloudflare, separado do V1.
-- **ADR-005**: Vocabulário de domínio canônico: Program, Participant, Segment, Episode.
-- **ADR-006**: Compatibilidade é temporária e explícita.
-- **ADR-007**: Verificação ao vivo do schema do banco de dados é um pré-requisito para writes de produção.
+## 2. Identidade de Versões
 
-## 3. Estado Atual (Baseado na documentação)
+- **V2:** produto original TakeMaster, incluindo sua UI, fluxos e comportamento de produto.
+- **V1:** reconstrução arquitetural posterior anteriormente rotulada como V2.
+- **Commit histórico de referência do V2:** `68b8ca2`.
+- **Regra:** infraestrutura V1 pode sustentar o V2; V1 não pode redefinir ou substituir o produto V2.
 
-### 3.1 Fase 0 — Baseline Arquitetural
-- Status: Concluída, com gate de banco pendente.
-- Vocabulário canônico definido: Show → Program, Guest → Participant, OutlineBlock → Segment.
-- Arquitetura-alvo definida: UI → Application/API → Domain → Persistence/AI/External Services.
-- ADRs registradas para decisões estruturais.
+A decisão formal está registrada em **ADR-011 — Identidade Canônica entre V1 e V2**.
 
-### 3.2 Fase 1 — Fundação de Dados, Segurança e Contratos
-- Status: Em andamento, bloqueada pela validação live do banco compartilhado.
-- Implementado:
-  - Limite de servidor Supabase usando a configuração existente do projeto V1.
-  - Validação de usuário autenticado no servidor.
-  - Configuração centralizada do servidor para Supabase e NVIDIA.
-  - Endpoint de saúde com status de conectividade do Supabase e configuração do NVIDIA.
-  - Primitivas de erro de aplicação explícitas.
-  - Auxiliar de sessão Supabase para o cliente.
-  - Auxiliar de busca de API do cliente que pode anexar o token de acesso Supabase atual.
-  - Integração NVIDIA NIM substituindo a dependência V2 Gemini.
-  - Manuseio de modelo primário/fallback do NIM e timeout.
-  - Parsing estrito de JSON da IA: saída inválida é um erro, não fallback de dados silenciosos.
-  - Modelo de ambiente para o projeto Supabase compartilhado e configuração do NVIDIA.
-- Ainda não habilitado:
-  - Endpoints CRUD existentes ainda são apoiados pelo banco de dados JSON do V2. Eles ainda não foram trocados para o banco de dados de produção compartilhado.
-  - A interface do usuário agora é fechada pela autenticação Supabase, e as rotas de API exigem um token Bearer validado. A autorização do banco de dados/RLS ainda não foi verificada ao vivo.
-  - Nenhuma migração de esquema de produção foi aplicada.
-- Motivo: O projeto Supabase conectado sofreu timeout durante a inspeção ao vivo do schema. Como o V2 compartilhará a fonte de dados de produção do V1, a Fase 1 não deve adivinhar o esquema ou escrever migrações contra um estado não verificado.
-- Próximo gate necessário:
-  1. Obter uma conexão live bem-sucedida com o Supabase.
-  2. Capturar tabelas, colunas, chaves estrangeiras, políticas RLS, grants, funções/RPCs e histórico de migrações.
-  3. Reconciliar esse instantâneo com as migrações do repositório V1 e a camada de persistência.
-  4. Definir o adaptador de persistência V2 e os predicados de autorização.
-  5. Adicionar testes de banco de dados para comportamento allow/deny.
-  6. Só então mudar o CRUD do V2 de JSON para Supabase.
+## 3. Decisões Arquiteturais Principais
 
-### 3.3 Dependências e Configuração
-- O projeto usa Supabase como sistema persistente de registro.
-- O projeto usa NVIDIA NIM como provedor de IA.
-- O projeto terá um novo deployment Cloudflare (ainda não implantado).
-- O vocabulário canônico foi definido e está sendo usado no código.
+- **ADR-001:** arquitetura e decisões devem servir ao produto canônico.
+- **ADR-002:** o banco de dados Supabase/Postgres existente permanece como fonte de dados de produção.
+- **ADR-003:** NVIDIA NIM permanece como provedor de IA.
+- **ADR-004:** o V2 receberá deployment Cloudflare compatível com sua superfície e backend.
+- **ADR-005:** vocabulário de domínio canônico: Program, Participant, Segment, Episode.
+- **ADR-006:** compatibilidade é temporária e explícita.
+- **ADR-007:** verificação ao vivo do schema do banco de dados é pré-requisito para writes de produção.
+- **ADR-011:** corrige a identidade V1/V2 e impede que a reconstrução posterior substitua o produto V2.
 
-## 4. Estrutura do Projeto
+## 4. Estado Técnico Atual
 
-### 4.1 Diretórios Principais
-- `src/`: Código fonte da aplicação (React/Vite frontend, Node.js/Express backend).
-- `supabase/`: Arquivos relacionados ao Supabase (migrações, funções, etc.).
-- `plan/`: Contém o estado operacional das features e o ship log.
-- `loop/`: Contém a configuração e o estado do Loop Engineering.
-- `docs/`: Documentação viva, incluindo este arquivo e mapas de teste canônicos.
+A base técnica atual preserva a superfície do produto V2 e incorpora partes da infraestrutura desenvolvida na reconstrução posterior.
 
-### 4.2 Arquivos de Configuração
-- `package.json`: Definições de dependência e scripts.
-- `tsconfig.json`: Configuração do TypeScript.
-- `vite.config.ts`: Configuração do Vite para o frontend.
-- `.env.example`: Modelo de variáveis de ambiente.
+### Fase 0 — Baseline Arquitetural
+- Status: concluída.
+- Vocabulário canônico definido.
+- Arquitetura-alvo: UI → Application/API → Domain → Persistence/AI/External Services.
+- ADRs estruturais registradas.
 
-## 5. Gates Obrigatórios
+### Fase 1 — Fundação de Dados, Segurança e Contratos
+- Status: em andamento.
+- Supabase/Postgres permanece como persistência.
+- Autenticação server-side e proteção das rotas API estão presentes.
+- Integração NVIDIA NIM está presente.
+- CRUD principal de Shows, Episodes e Guests usa SupabasePersistence.
+- Schema live do projeto correto foi validado.
+- Authorization base Organization/Program e RLS/grants centrais estão presentes.
+- Ainda faltam relacionamentos filhos do Episode, matriz completa de roles, testes allow/deny, Library e persistência canônica completa de History/Context.
 
-O projeto não deve avançar apenas porque código foi implementado. Os gates obrigatórios são:
+## 5. Estrutura do Projeto
+
+- `src/`: frontend React/Vite e backend atual.
+- `supabase/`: migrações e artefatos relacionados ao Supabase.
+- `plan/`: estado operacional das features e ship log.
+- `loop/`: configuração e estado do Loop Engineering.
+- `docs/`: documentação viva, ADRs e mapas de teste.
+
+## 6. Gates Obrigatórios
 
 ### Gate A — Arquitetura
-- Condição: Fase 0 concluída.
-- Estado atual: PASSOU, exceto validação live do banco.
+- Estado: PASSOU.
 
 ### Gate B — Banco e Segurança
-- Condição: schema + dados + grants + RLS + autorização validados.
-- Estado atual: PARCIALMENTE PASSOU — schema/RLS/grants centrais validados e hardening aplicado; falta matriz de roles + testes com identidades reais.
+- Estado: PARCIALMENTE PASSOU — schema/RLS/grants centrais validados; matriz de roles e testes com identidades reais ainda pendentes.
 
 ### Gate C — Persistência
-- Condição: Supabase é a fonte de verdade do V2.
-- Estado atual: NÃO PASSOU; adapter está pronto para as entidades raiz, mas JSON local ainda é a fonte de verdade.
+- Estado: PARCIALMENTE PASSOU — CRUD principal usa Supabase; relacionamentos filhos, versionamento e testes ainda pendentes.
 
 ### Gate D — Editorial
-- Condição: fluxo completo de episódio funcional.
-- Estado atual: NÃO PASSOU.
+- Estado: NÃO PASSOU — fluxo completo de episódio ainda precisa ser validado.
 
 ### Gate E — Prontidão para Produção
-- Condição: testes, observabilidade, deployment, recovery e rollback.
-- Estado atual: NÃO PASSOU.
-
-## 6. Estado Real Neste Momento
-
-**Concluído:**
-- baseline arquitetural;
-- decisões estruturais;
-- branch/PR de Fase 1;
-- configuração Supabase/NVIDIA;
-- AuthGate;
-- autenticação server-side;
-- autenticação nas chamadas da API;
-- proteção das rotas API;
-- integração base NVIDIA NIM;
-- fallback de modelo;
-- parsing estrito de JSON da IA;
-- health endpoint.
-
-**Em andamento:**
-- Fase 1 — 1.5 implementada na base; 1.6 e 1.7 parcialmente implementadas, com ativação final bloqueada pela validação live do banco compartilhado.
-
-**Ainda bloqueado:**
-- ativação da persistência Supabase nas rotas CRUD;
-- conclusão dos relacionamentos filhos do Episode;
-- matriz de roles Organization/Program;
-- testes RLS allow/deny com identidades reais;
-- remoção do JSON como fonte de verdade;
-- testes completos.
-
-**Regra para a próxima execução:**
-> Não iniciar a reconstrução ampla da Fase 2 antes de fechar os gates de banco, segurança e persistência da Fase 1.
+- Estado: NÃO PASSOU — testes, observabilidade, deployment, recovery e rollback ainda precisam ser fechados.
 
 ## 7. Próximos Passos
 
-Para avançar para o Gate B (Banco e Segurança) e Gate C (Persistência), é necessário:
-1. Estabelecer uma conexão live com o Supabase.
-2. Validar o schema live do banco de dados.
-3. Reconciliar o schema live com as migrações do repositório.
-4. Definir o adaptador de persistência V2 e os predicados de autorização.
-5. Ativar a persistência Supabase nas rotas CRUD.
-6. Implementar testes de banco de dados para comportamento allow/deny.
-7. Remover o JSON local como fonte de verdade.
-8. Concluir a matriz de roles Organization/Program.
-9. Executar testes RLS allow/deny com identidades reais.
+1. Fechar relacionamentos filhos do Episode no SupabasePersistence.
+2. Fechar matriz de roles Organization/Program e testes allow/deny.
+3. Estabelecer suíte automatizada de persistence/RLS/authz e contratos.
+4. Implementar persistência real de History/Context.
+5. Reconstruir Library sobre a arquitetura Supabase atual, sem reaplicar cegamente o backend legado.
+6. Validar o fluxo editorial completo do V2.
+7. Preparar e validar o deployment Cloudflare do V2.
 
-Este estado canônico deve ser mantido atualizado conforme o projeto avança através das fases e gates.
+## 8. Proteção contra Regressão de Versão
+
+A regra canônica é:
+
+> **V2 é o produto original. V1 é a reconstrução arquitetural posterior anteriormente rotulada como V2.**
+
+Portanto:
+
+- não substituir a UI do V2 por uma “nova UI V2”;
+- não remover componentes do produto original por serem considerados “legados” sem análise explícita;
+- não copiar V1 indiscriminadamente;
+- reutilizar infraestrutura V1 somente quando ela for compatível com o produto V2;
+- documentar qualquer conflito antes de alterar a superfície do produto.
+
+A branch `reconcile/canonical-main` é a base atual de reconciliação. O estado e os gates acima descrevem o que está implementado e o que ainda precisa ser validado; não autorizam uma reconstrução da UI.
+
+## 9. Cloudflare
+
+O deployment de produção é exclusivamente do TakeMaster V2 e deverá ser compatível com a arquitetura atual. O fato de a infraestrutura Cloudflare ainda precisar ser implementada não autoriza importar automaticamente o runtime ou a estrutura da reconstrução V1.
