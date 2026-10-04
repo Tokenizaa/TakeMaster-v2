@@ -1,61 +1,67 @@
-# ADR-011 — Limite Canônico entre V1 e V2
+# ADR-011 — Identidade Canônica entre V1 e V2
 
 - **Status:** Aceita
 - **Data:** 2026-10-04
-- **Escopo:** governança de arquitetura e recuperação contra regressão
+- **Escopo:** governança de versão, arquitetura e prevenção de regressão
 - **Branch de referência:** `reconcile/canonical-main`
 
 ## Contexto
 
-O TakeMaster V2 é uma reconstrução deliberada. O V1 pode fornecer comportamento comprovado, funcionalidades e referências de domínio, mas não é a implementação-base do V2.
+A investigação do histórico do repositório corrigiu uma inversão de nomenclatura presente na documentação anterior.
 
-Durante a execução recente houve risco de confusão entre as duas gerações do produto. Essa situação precisa ser explicitamente bloqueada para impedir que uma implementação legada seja tratada como arquitetura canônica do V2.
+O **TakeMaster V2 é o produto/frontend original**, cuja linhagem está documentada no commit `68b8ca2659772d38e2b62146da7f87bddb4e7207` (`feat: initialize TakeMaster-v2 project scaffolding`). Essa base contém a superfície original do produto: Dashboard, Episodes, Shows, Guests, Studio, editor de episódio e os fluxos editoriais/assistidos por IA.
+
+A linhagem posterior de reconstrução arquitetural, persistência e autorização foi anteriormente descrita como “V2”. Essa identificação estava invertida. Essa linhagem deve ser tratada como **V1** para fins de versionamento histórico e não pode substituir ou redefinir a identidade do produto V2.
 
 ## Decisão
 
-O V2 é a única fonte de verdade para sua arquitetura, contratos, vocabulário, organização do código e decisões de implementação.
+A partir desta ADR:
 
-O V1 pode ser consultado somente como **fonte de referência de comportamento/funcionalidade comprovada**, quando uma tarefa do V2 determinar explicitamente que essa funcionalidade deve ser recuperada.
+1. **V2 = produto original TakeMaster V2**, incluindo sua UI, fluxos e comportamento de produto comprovados pelo histórico.
+2. **V1 = reconstrução arquitetural posterior que foi anteriormente rotulada como V2**.
+3. A UI e o comportamento do V2 são a referência canônica para a superfície do produto.
+4. A arquitetura, persistência, autorização, contratos e demais melhorias válidas desenvolvidas na linhagem V1 podem ser reutilizadas no V2 quando forem compatíveis, mas não podem redefinir, remover ou simplificar a superfície do V2.
+5. Componentes do V2 não devem ser removidos ou classificados como “legados” apenas por terem origem no commit `68b8ca2`.
+6. Conflitos entre o produto V2 e a reconstrução V1 devem ser resolvidos preservando o comportamento e a superfície do V2, enquanto a infraestrutura tecnicamente válida da V1 pode ser adaptada para sustentá-los.
+7. O deployment de produção é do **TakeMaster V2**. A infraestrutura de deployment da linhagem V1 não deve ser importada cegamente.
+8. Nenhuma alteração de versão, UI ou arquitetura deve ser feita com base na nomenclatura anterior sem verificar esta ADR.
 
-Isso significa:
+## Evidência histórica
 
-1. V2 não é um fork do V1.
-2. Código do V1 não deve ser copiado para o V2 apenas porque já existia.
-3. Código legado só pode entrar no V2 após validação de compatibilidade com os contratos e arquitetura canônicos do V2.
-4. O vocabulário canônico do V2 prevalece sobre nomes legados.
-5. Supabase/Postgres compartilhado e NVIDIA NIM permanecem decisões do V2 já registradas.
-6. O novo deployment Cloudflare pertence ao V2 e não deve recuperar a infraestrutura de deployment do V1.
-7. Uma tarefa que encontrar conflito V1 × V2 deve parar antes de implementar e registrar o conflito.
-8. Nenhuma restauração deve ser feita por comparação visual ou por suposição de que “o V1 funcionava”; a origem, o contrato e o impacto precisam ser verificados.
+A identidade foi confirmada pela sequência histórica:
+
+- `68b8ca2` — inicialização do projeto TakeMaster-v2 com a superfície completa do produto.
+- `5845d91` — início da documentação que passou a chamar a reconstrução arquitetural de V2.
+- `0fc4b68`, `7af1f46` e `22a9b5f` — evolução da linhagem arquitetural posteriormente rotulada como V2.
+- A busca pelo histórico não encontrou uma linhagem de commits denominada “V1” correspondente ao produto original; a inversão ocorreu na documentação/organização posterior.
 
 ## Fonte de verdade
 
-Para trabalho no V2, a ordem de precedência é:
+Para o produto V2, a precedência é:
 
-1. código e contratos canônicos da branch de trabalho do V2;
-2. ADRs e documentação canônica do V2;
-3. schema/estado real do Supabase validado para o V2;
-4. histórico de commits e PRs do próprio V2;
-5. V1 somente como referência de comportamento/funcionalidade explicitamente solicitada.
+1. superfície e comportamento do produto V2;
+2. contratos e decisões arquiteturais compatíveis com essa superfície;
+3. ADRs e documentação corrigidas;
+4. schema/estado real do Supabase validado;
+5. histórico de commits e PRs;
+6. V1 somente como fonte de infraestrutura, arquitetura ou comportamento que seja explicitamente compatível e portável para o V2.
 
 ## Regra operacional para agentes
 
-Antes de modificar código do TakeMaster V2, o agente deve identificar:
+Antes de modificar o TakeMaster V2, o agente deve:
 
-- qual fase do V2 está sendo executada;
-- qual contrato/ADR fundamenta a alteração;
-- se a referência usada pertence ao V2 ou ao V1.
+- identificar que está trabalhando no **produto V2**;
+- preservar a superfície existente do V2;
+- identificar se a referência encontrada pertence à linhagem V1 ou V2;
+- reutilizar infraestrutura V1 somente quando ela servir ao produto V2 sem substituir seus fluxos;
+- parar e registrar qualquer conflito que exija remover ou redesenhar comportamento do V2.
 
-Se a implementação proposta vier do V1 e não houver uma decisão explícita de portabilidade para o V2, **não implementar**.
+É proibido interpretar “V2” como “reconstrução posterior” ou usar essa interpretação para substituir a UI original.
 
 ## Relação com Cloudflare
 
-A decisão de deployment do V2 permanece independente da infraestrutura do V1:
-
-`React/Vite → Cloudflare → API/Worker → Supabase/NVIDIA`
-
-A implementação concreta dessa arquitetura será tratada em etapa própria, depois do fechamento do diagnóstico e sem importar automaticamente o runtime do V1.
+A produção alvo é do TakeMaster V2. A arquitetura Cloudflare deve ser implementada para servir o produto V2 e seus contratos, sem importar automaticamente o runtime da reconstrução V1.
 
 ## Consequência
 
-A prioridade imediata é preservar o estado canônico atual do V2 e evitar novas regressões. Qualquer restauração de funcionalidade deverá ocorrer em tarefa específica, documentada e validada contra esta ADR.
+A prioridade imediata é preservar a superfície original do V2 e corrigir toda documentação que ainda apresente a reconstrução posterior como V2. Depois da correção documental, as etapas de implementação podem ser retomadas sobre essa identidade única e sem novas regressões de versão.
