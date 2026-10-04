@@ -2,12 +2,12 @@
 
 ## Objetivo do projeto
 
-Reconstruir o TakeMaster V2 como uma plataforma estável, coerente e evolutiva, usando o V2 como base limpa e incorporando apenas melhorias comprovadas do V1.
+Consolidar e colocar em produção o TakeMaster V2 original, preservando sua superfície de produto e incorporando somente infraestrutura e melhorias comprovadas da reconstrução posterior (V1).
 
 Princípios fixos:
 
-- V2 é uma reconstrução, não um fork do V1.
-- V1 continua sendo referência de comportamento e fonte de funcionalidades comprovadas.
+- V2 é o produto original, cuja superfície está documentada no commit `68b8ca2`.
+- V1 é a reconstrução arquitetural posterior anteriormente rotulada como V2; pode fornecer infraestrutura reutilizável, mas não redefine o produto.
 - V2 usará o mesmo Supabase/Postgres do V1.
 - V2 continuará usando NVIDIA NIM como provedor de IA.
 - V2 terá uma nova implantação Cloudflare.
@@ -34,10 +34,10 @@ Princípios fixos:
 
 ## Objetivo
 
-Entender exatamente o que existe em V1 e V2, separar valor comprovado de dívida histórica e definir a arquitetura-alvo antes de migrar funcionalidades.
+Preservar e entregar o produto V2 original, separando sua superfície canônica da infraestrutura da reconstrução V1 e incorporando somente o que for necessário para fazê-lo funcionar em produção.
 
 ### 0.1 — Inventário V1 × V2
-**Escopo:** comparar entidades, telas, APIs, persistência, autenticação, IA, operações e infraestrutura.
+**Escopo:** comparar entidades, telas, APIs, persistência, autenticação, IA, operações e infraestrutura, preservando o V2 como produto canônico.
 
 **Status:** CONCLUÍDA.
 
@@ -74,10 +74,10 @@ Regra: UI não é camada de segurança; domínio não depende do formato das tab
 **Status:** CONCLUÍDA.
 
 Decisões registradas:
-- reconstrução em vez de fork;
+- V2 como produto original e V1 como reconstrução arquitetural posterior;
 - banco Supabase existente;
 - NVIDIA NIM;
-- novo deployment Cloudflare;
+- deployment Cloudflare do V2;
 - domínio canônico;
 - compatibilidade explícita e temporária.
 
@@ -96,7 +96,7 @@ O schema live do projeto Supabase correto foi validado e a base de RLS/grants ut
 
 ## Objetivo
 
-Criar a fundação técnica sobre a qual todo o V2 será construído, sem ainda assumir que o JSON local é a persistência definitiva.
+Fechar a fundação técnica necessária para colocar o produto V2 original em operação, sem substituir sua UI/fluxos e sem assumir o JSON local como persistência definitiva.
 
 ## 1.1 — Configuração e boundaries externos
 **Escopo:**
@@ -228,82 +228,82 @@ Reconstruir o fluxo principal de criação e produção de episódios.
 ### 2.1 — Programs / Shows
 **Escopo:** criação, edição, seleção, configuração e contexto do programa.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.2 — Episodes
 **Escopo:** ciclo de vida do episódio, metadados, status, contexto e persistência.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.3 — Participants / Guests
 **Escopo:** cadastro, vínculo ao episódio e histórico contextual.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; FECHAMENTO FUNCIONAL/PERSISTÊNCIA PENDENTE.
 
 ### 2.4 — Diagnosis
 **Escopo:** diagnóstico editorial da ideia/episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação de produção pendente.
 
 ### 2.5 — Research
 **Escopo:** pesquisa, fontes, contexto e material de preparação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação de produção pendente.
 
 ### 2.6 — Outline / Segments
 **Escopo:** estrutura editorial do episódio e segmentos.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/integração pendente.
 
 ### 2.7 — Questions
 **Escopo:** perguntas principais, ordem, agrupamento e edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/integração pendente.
 
 ### 2.8 — Follow-ups
 **Escopo:** repiques ligados às perguntas e contexto editorial.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação pendente.
 
 ### 2.9 — Script
 **Escopo:** roteiro, blocos, versões e edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/versionamento pendente.
 
 ### 2.10 — Cameras
 **Escopo:** configuração e contexto de câmeras/produção.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência/validação pendente.
 
 ### 2.11 — Assets / Production Assets
 **Escopo:** materiais, referências e assets vinculados ao episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.12 — Shorts
 **Escopo:** planejamento de cortes/shorts derivados do episódio.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; integração/validação pendente.
 
 ### 2.13 — Recording Markers
 **Escopo:** marcações de gravação e pontos relevantes para edição.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.14 — Technical Checklist
 **Escopo:** checklist técnico de gravação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.15 — Script Versions
 **Escopo:** histórico e versionamento do roteiro.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; persistência pendente.
 
 ### 2.16 — Studio Mode
 **Escopo:** modo operacional para uso durante gravação.
 
-**Status:** PLANEJADA.
+**Status:** EXISTENTE NA UI; validação operacional pendente.
 
 ## Critério de saída da Fase 2
 
