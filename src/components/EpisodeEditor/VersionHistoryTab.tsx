@@ -133,17 +133,7 @@ export const VersionHistoryTab: React.FC<VersionHistoryTabProps> = ({
 
               <div className="mt-3 pt-2 border-t border-zinc-800/50 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs">
-                  {version.changed_by ? (
-                    <>
-                      <User className="w-3 h-3 text-zinc-400" />
-                      <span>Alterado por</span>
-                    </>
-                  ) : (
-                    <>
-                      <User className="w-3 h-3 text-zinc-400 opacity-50" />
-                      <span>Sistema</span>
-                    </>
-                  )}
+                  <><User className="w-3 h-3 text-zinc-400 opacity-50" /><span>Sistema</span></>
                 </div>
                 <button
                   onClick={(e) => {
@@ -206,7 +196,7 @@ export const VersionHistoryTab: React.FC<VersionHistoryTabProps> = ({
               <div className="space-y-2">
                 <p className="text-xs text-zinc-400 font-mono uppercase">Alterado por:</p>
                 <p className="text-zinc-300">
-                  {selectedVersion.changed_by || 'Sistema'}
+                  Sistema
                 </p>
               </div>
 
