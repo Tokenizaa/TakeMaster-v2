@@ -55,8 +55,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     switch (activeExportType) {
       case 'script_full':
         text += `TAKEMASTER - ROTEIRO TÉCNICO COMPLETO\n`;
-        text += `EPISÓDIO #${episode.episode_number}: ${episode.title}\n`;
-         text += `FORMATO: ${episode.format} | META: ${episode.target_duration_min} MIN\n`;
+        text += `EPISÓDIO #${episode.episodeNumber}: ${episode.title}\n`;
+        text += `CONVIDADO: ${episode.guestName || 'Solo'} | FORMATO: ${episode.format} | META: ${episode.targetDurationMin} MIN\n`;
         text += divider;
         (episode.script || []).forEach((item) => {
           text += `\n[${item.timestamp}] - ${item.camera} (${item.speaker})\n`;
@@ -81,7 +81,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
       case 'host_sheet':
         text += `TAKEMASTER - FOLHA DE BANCADA DO APRESENTADOR\n`;
-         text += `APRESENTADOR: ${episode.host || 'Apresentador'}\n`;
+        text += `APRESENTADOR: ${episode.host || 'Apresentador'} | CONVIDADO: ${episode.guestName}\n`;
         text += divider;
         (episode.questions || []).forEach((q, idx) => {
           text += `\nPERGUNTA #${idx + 1} (${q.suggestedCamera}):\n`;
@@ -98,9 +98,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
       case 'guest_sheet':
         text += `TAKEMASTER - BRIEFING PARA O CONVIDADO\n`;
-         text += `OLÁ, CONVIDADO! BEM-VINDO AO NOSSO ESTÚDIO.\n`;
+        text += `OLÁ, ${episode.guestName?.toUpperCase() || 'CONVIDADO'}! BEM-VINDO AO NOSSO ESTÚDIO.\n`;
         text += `PROGRAMA: ${episode.title}\n`;
-        text += `DURAÇÃO PREVISTA: ~${episode.target_duration_min} minutos de gravação.\n`;
+        text += `DURAÇÃO PREVISTA: ~${episode.targetDurationMin} minutos de gravação.\n`;
         text += divider;
         text += `\nTEMAS QUE IREMOS PERCORRER NA CONVERSA:\n`;
         (episode.outline || []).forEach((b) => {
@@ -120,7 +120,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         break;
 
       case 'editor_script':
-        text += episode.editor_script_synthesis || `ROTEIRO DE EDIÇÃO\nNenhum roteiro sintetizado ainda.`;
+        text += episode.editorScriptSynthesis || `ROTEIRO DE EDIÇÃO\nNenhum roteiro sintetizado ainda.`;
         break;
 
       case 'shorts_plan':
@@ -150,7 +150,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${activeExportType}_ep_${episode.episode_number}.txt`;
+    a.download = `${activeExportType}_ep_${episode.episodeNumber}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };

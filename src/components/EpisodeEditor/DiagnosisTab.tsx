@@ -42,24 +42,25 @@ export const DiagnosisTab: React.FC<DiagnosisTabProps> = ({
     }
   );
 
-     const handleRegenerate = async () => {
-     setLoading(true);
-     try {
-       const diagnosis = await api.aiDiagnose({
-         idea: episode.idea,
-         format: episode.format,
-         durationMin: episode.target_duration_min,
-         objective: episode.objective,
-         additionalInfo: episode.additional_info,
-       });
-       setLocalDiagnosis(diagnosis);
-       onUpdateEpisode({ diagnosis });
-     } catch (err) {
-       console.error('Failed to regenerate diagnosis:', err);
-     } finally {
-       setLoading(false);
-     }
-   };
+  const handleRegenerate = async () => {
+    setLoading(true);
+    try {
+      const diagnosis = await api.aiDiagnose({
+        idea: episode.idea,
+        guestName: episode.guestName,
+        format: episode.format,
+        durationMin: episode.targetDurationMin,
+        objective: episode.objective,
+        additionalInfo: episode.additionalInfo,
+      });
+      setLocalDiagnosis(diagnosis);
+      onUpdateEpisode({ diagnosis });
+    } catch (err) {
+      console.error('Failed to regenerate diagnosis:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleApprove = () => {
     const updated = { ...localDiagnosis, approved: true };
@@ -129,11 +130,13 @@ export const DiagnosisTab: React.FC<DiagnosisTabProps> = ({
         <p className="text-sm text-zinc-200 leading-relaxed italic">
           "{episode.idea}"
         </p>
-         <div className="flex flex-wrap items-center gap-3 mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-400 font-mono">
-           <span>Formato: <strong className="text-zinc-200">{episode.format}</strong></span>
-           <span>·</span>
-           <span>Duração Alvo: <strong className="text-zinc-200">{episode.target_duration_min} min</strong></span>
-         </div>
+        <div className="flex flex-wrap items-center gap-3 mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-400 font-mono">
+          <span>Convidado: <strong className="text-zinc-200">{episode.guestName || 'Solo'}</strong></span>
+          <span>·</span>
+          <span>Formato: <strong className="text-zinc-200">{episode.format}</strong></span>
+          <span>·</span>
+          <span>Duração Alvo: <strong className="text-zinc-200">{episode.targetDurationMin} min</strong></span>
+        </div>
       </div>
 
       {/* Editorial Diagnosis Grid */}

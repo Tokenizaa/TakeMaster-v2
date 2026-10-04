@@ -9,14 +9,11 @@ async function callNim(model: string, contents: string, responseMimeType?: strin
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), c.nimTimeoutMs);
   try {
-    const response = await fetch(c.nimBaseUrl + '/v1/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + c.nimApiKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ model, messages: [{ role: 'user', content: contents }], temperature: 0.4, max_tokens: 4096, ...(responseMimeType === 'application/json' ? { response_format: { type: 'json_object' } } : {}) }), signal: controller.signal });
+    const response = await fetch(c.nimBaseUrl + '/v1/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + c.nimApiKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ model, messages: [{ role: 'user', content: contents }], temperature: 0.4, ...(responseMimeType === 'application/json' ? { response_format: { type: 'json_object' } } : {}) }), signal: controller.signal });
     const raw = await response.text();
     if (!response.ok) throw new Error('NVIDIA NIM HTTP ' + response.status);
     const data = JSON.parse(raw);
-    const message = data?.choices?.[0]?.message;
-    // Nemotron é modelo "reasoning": consome tokens em reasoning_content antes de emitir content.
-    // Se max_tokens esgota no raciocínio, content chega null — aí o reasoning é a única saída.
-    const text = message?.content ?? message?.reasoning_content;
+    const text = data?.choices?.[0]?.message?.content;
     if (!text || typeof text !== 'string') throw new Error('NVIDIA NIM retornou uma resposta sem conteúdo.');
     return { text };
   } catch (error: any) {

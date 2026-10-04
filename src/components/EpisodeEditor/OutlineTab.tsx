@@ -42,18 +42,19 @@ export const OutlineTab: React.FC<OutlineTabProps> = ({
     (acc, b) => acc + (Number(b.estimatedDurationMin) || 0),
     0
   );
-  const targetMinutes = episode.target_duration_min || 45;
+  const targetMinutes = episode.targetDurationMin || 45;
   const diffMinutes = plannedTotalMinutes - targetMinutes;
 
-     const handleGenerateOutlineWithAi = async () => {
-     setLoading(true);
-     try {
-       const result = await api.aiOutline({
-         idea: episode.idea,
-         targetDurationMin: episode.target_duration_min,
-         diagnosis: episode.diagnosis,
-         research: episode.research,
-       });
+  const handleGenerateOutlineWithAi = async () => {
+    setLoading(true);
+    try {
+      const result = await api.aiOutline({
+        idea: episode.idea,
+        guestName: episode.guestName || 'Convidado',
+        targetDurationMin: episode.targetDurationMin,
+        diagnosis: episode.diagnosis,
+        research: episode.research,
+      });
 
       onUpdateEpisode({
         outline: result.outline,

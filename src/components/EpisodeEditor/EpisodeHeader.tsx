@@ -38,7 +38,7 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
     (acc, b) => acc + (b.estimatedDurationMin || 0),
     0
   );
-  const diffMinutes = plannedMinutes - episode.target_duration_min;
+  const diffMinutes = plannedMinutes - episode.targetDurationMin;
 
   const tabs = [
     { id: 'diagnosis', label: '1. Visão Geral & Conceito' },
@@ -47,7 +47,6 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
     { id: 'script', label: '4. Roteiro & 3 Câmeras' },
     { id: 'cameras', label: '5. Setup Câmeras' },
     { id: 'assets', label: '6. Materiais / B-Roll' },
-    { id: 'history', label: '10. Histórico de Versões' },
     { id: 'shorts', label: '7. Cortes / Shorts' },
     { id: 'prep', label: '8. Checklist Gravação' },
     { id: 'editor', label: '9. Roteiro de Edição' },
@@ -83,7 +82,7 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-mono font-bold text-amber-400">
-                EP {String(episode.episode_number).padStart(3, '0')}
+                EP {String(episode.episodeNumber).padStart(3, '0')}
               </span>
               <span className="text-zinc-600">·</span>
               <span className="text-xs text-zinc-400 font-medium">{episode.format}</span>
@@ -123,7 +122,7 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
             <Clock className="w-3.5 h-3.5 text-zinc-400" />
             <div className="flex items-center gap-1.5">
               <span className="text-zinc-400">Meta:</span>
-              <span className="text-zinc-200 font-bold">{episode.target_duration_min} min</span>
+              <span className="text-zinc-200 font-bold">{episode.targetDurationMin} min</span>
               <span className="text-zinc-600">/</span>
               <span className="text-zinc-400">Pauta:</span>
               <span
