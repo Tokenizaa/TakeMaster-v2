@@ -129,3 +129,29 @@ O projeto não deve avançar apenas porque código foi implementado. Os gates ob
 4. Implementar persistência real de History/Context.
 5. Reconstruir Library sobre a arquitetura Supabase atual, sem reaplicar o backend legado do PR #5.
 6. Só então avançar para a Fase 2 e posteriormente produção.
+
+## 8. Proteção contra regressão V1 → V2
+
+O V2 é uma reconstrução deliberada e não deve ser tratado como fork ou continuação do código do V1. O V1 pode ser usado como referência de comportamento e funcionalidades comprovadas, mas sua implementação não é a fonte de verdade do V2.
+
+A regra canônica está registrada em **ADR-011 — Limite Canônico entre V1 e V2** (`docs/adr/ADR-011-v1-v2-canonical-boundary.md`).
+
+### Fonte de verdade para implementação
+
+1. Código e contratos canônicos do V2.
+2. ADRs e documentação canônica do V2.
+3. Schema/estado real do Supabase validado para o V2.
+4. Histórico de commits e PRs do próprio V2.
+5. V1 somente como referência explícita de comportamento/funcionalidade a ser portada.
+
+### Regra de contenção
+
+Se uma tarefa encontrar divergência entre V1 e V2, não deve escolher automaticamente a implementação do V1. O conflito deve ser identificado, documentado e resolvido antes da alteração de código.
+
+Nenhuma implementação legada deve ser reincorporada apenas porque existia no V1 ou porque parece funcionar. Toda recuperação precisa ser validada contra os contratos e decisões do V2.
+
+### Estado da branch canônica
+
+A branch `reconcile/canonical-main` contém a reconciliação da base V2 e está **14 commits à frente de `main` e 0 atrás**, no momento deste registro. As alterações de reconciliação incluem a recuperação compatível da UI de History, a remoção do `src/server/db.ts` legado, a limpeza de referências obsoletas e a atualização da documentação canônica.
+
+O deployment Cloudflare ainda é uma etapa do V2 e não deve ser implementado importando automaticamente a infraestrutura ou runtime do V1.
