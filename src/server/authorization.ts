@@ -36,48 +36,39 @@ export async function assertOrganizationRole(
 }
 
 export async function assertProgramAccess(userId: string, programId: string): Promise<void> {
-  const { data: relation, error: relationError } = await getSupabaseAdmin()
-    .from('organization_programs')
-    .select('organization_id,catalog_program_id')
-    .eq('program_id', programId)
-    .eq('status', 'active')
+  const { data: program, error: programError } = await getSupabaseAdmin()
+    .from('programs')
+    .select('id,organization_id,catalog_program_id')
+    .or(`id.eq.${programId},legacy_id.eq.${programId}`)
     .maybeSingle();
 
-  if (relationError) {
-    throw new AppError('Falha ao verificar vínculo do programa', 'AUTHORIZATION_CHECK_FAILED', 500);
-  }
-  if (!relation) throw new AppError('Programa não encontrado ou inativo', 'FORBIDDEN', 403);
+  if (programError) throw new AppError('Falha ao verificar programa', 'AUTHORIZATION_CHECK_FAILED', 500);
+  if (!program) throw new AppError('Programa não encontrado', 'NOT_FOUND', 404);
 
-  await assertOrganizationMember(userId, relation.organization_id);
+  if (program.organization_id) {
+    try {
+      await assertOrganizationMember(userId, program.organization_id);
+      return;
+    } catch (error) {
+      if (!(error instanceof AppError) || error.code !== 'FORBIDDEN') throw error;
+    }
+  }
+
+  if (!program.catalog_program_id) {
+    throw new AppError('Usuário sem acesso ao programa', 'FORBIDDEN', 403);
+  }
 
   const { data: directAccess, error: accessError } = await getSupabaseAdmin()
     .from('program_user_access')
     .select('user_id')
     .eq('user_id', userId)
-    .eq('catalog_program_id', relation.catalog_program_id)
+    .eq('catalog_program_id', program.catalog_program_id)
     .eq('status', 'active')
     .maybeSingle();
 
-  if (accessError) {
-    throw new AppError('Falha ao verificar acesso ao programa', 'AUTHORIZATION_CHECK_FAILED', 500);
-  }
-
-  if (!directAccess) {
-    const { data: roleAccess, error: roleError } = await getSupabaseAdmin()
-      .from('organization_members')
-      .select('role')
-      .eq('organization_id', relation.organization_id)
-      .eq('user_id', userId)
-      .eq('active', true)
-      .maybeSingle();
-
-    if (roleError) throw new AppError('Falha ao verificar papel do usuário', 'AUTHORIZATION_CHECK_FAILED', 500);
-    if (!roleAccess || !['owner', 'admin'].includes(roleAccess.role)) {
-      throw new AppError('Usuário sem acesso ao programa', 'FORBIDDEN', 403);
-    }
-  }
+  if (accessError) throw new AppError('Falha ao verificar acesso ao programa', 'AUTHORIZATION_CHECK_FAILED', 500);
+  if (!directAccess) throw new AppError('Usuário sem acesso ao programa', 'FORBIDDEN', 403);
 }
-
 
 export async function getSingleOrganizationId(userId: string): Promise<string> {
   const { data, error } = await getSupabaseAdmin()
