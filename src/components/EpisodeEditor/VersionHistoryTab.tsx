@@ -49,8 +49,6 @@ export const VersionHistoryTab: React.FC<VersionHistoryTabProps> = ({
         ...episode,
         title: version.snapshot.title || episode.title,
         idea: version.snapshot.idea || episode.idea,
-        topic: version.snapshot.topic || episode.topic,
-        synopsis: version.snapshot.synopsis || episode.synopsis,
       };
 
       await onUpdateEpisode(episodeToRestore);
