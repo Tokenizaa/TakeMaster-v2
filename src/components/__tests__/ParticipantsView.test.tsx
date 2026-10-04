@@ -453,7 +453,7 @@ describe('ParticipantsView', () => {
     
     render(
       <ParticipantsView
-        participants=[]
+        participants={[]}
         onGetParticipants={mockOnGetParticipantsWithError}
         onSaveParticipant={mockOnSaveParticipant}
         onDeleteParticipant={mockOnDeleteParticipant}

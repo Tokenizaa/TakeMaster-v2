@@ -23,6 +23,12 @@ import {
   Save,
   X,
   Search,
+  Plus,
+  Filter,
+  ChevronDown,
+  ChevronUp,
+  Save,
+  X,
   AlertTriangle,
 } from 'lucide-react';
 import { Program, Episode, Guest, ProductionAsset } from '../types/domain';
@@ -67,6 +73,8 @@ interface PaginatedResult<T> {
   totalPages: number;
 }
 
+type TabType = 'programs' | 'episodes' | 'participants' | 'assets';
+
 const STATUS_STYLES: Record<string, string> = {
   draft: 'bg-gray-800 text-zinc-400',
   diagnosis: 'bg-blue-900/30 text-blue-300',
@@ -98,9 +106,13 @@ export const CatalogView: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<any>(null);
   const [searchResults, setSearchResults] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const [pagination, setPagination] = useState({ page: 1, pageSize: 20, totalPages: 1, count: 0 });
+  const [loading, setLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState<any>(null);
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -362,18 +374,19 @@ useEffect(() => {
             <button onClick={() => setShowSearchResults(false)} className="text-zinc-400 hover:text-zinc-200">✕</button>
           </div>
           <div className="space-y-4 max-h-[60vh] overflow-y-auto">
-              {searchResults.programs.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2">Programas ({searchResults.programs.length})</h4>
-                  <div className="space-y-2">
-                    {searchResults.programs.slice(0, 5).map((p: any) => (
-                      <div key={p.id} className="p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 cursor-pointer">
-                        <p className="text-sm font-medium text-zinc-100">{p.name}</p>
-                         <p className="text-xs text-zinc-400">{p.type} • {p.role} • {p.company || 'Sem empresa'}</p>
-                      </div>
+            {searchResults.programs.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-amber-400 mb-2">Programas ({searchResults.programs.length})</h4>
+                <div className="space-y-2">
+                  {searchResults.programs.slice(0, 5).map((p: any) => (
+                    <div key={p.id} className="p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 cursor-pointer">
+                       <p className="text-sm font-medium text-zinc-100">{p.title || 'Sem titulo'}</p>
+                       <p className="text-xs text-zinc-400">{p.format} • {p.host} • {new Date(p.created_at).toLocaleDateString('pt-BR')}</p>
+                     </div>
                     ))
-                    }</div>
-                )}
+                   </div>
+                 </div>
+               </div>
               {searchResults.episodes.length > 0 && (
               <div>
                 <h4 className="text-sm font-semibold text-amber-400 mb-2 mt-4">Episódios ({searchResults.episodes.length})</h4>
@@ -381,30 +394,29 @@ useEffect(() => {
                   {searchResults.episodes.slice(0, 5).map((ep: any) => (
                     <div key={ep.id} className="p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 cursor-pointer">
                       <p className="text-sm font-medium text-zinc-100">{ep.title || 'Sem título'}</p>
-                       <p className="text-xs text-zinc-400">{ep.status} • {new Date(ep.created_at).toLocaleDateString('pt-BR')}</p>
-                     </div>
-                   ))
-                  </div>
-               </div>)}
-             {searchResults.participants.length > 0 && (
-               <div>
-                 <h4 className="text-sm font-semibold text-amber-400 mb-2 mt-4">Participantes ({searchResults.participants.length})</h4>
-                 <div className="space-y-2">
-                   {searchResults.participants.slice(0, 5).map((p: any) => (
-                      <div key={p.id} className="p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 cursor-pointer">
-                        <p className="text-sm font-medium text-zinc-100">{p.name}</p>
-                         <p className="text-xs text-zinc-400">{p.type} • {p.role} • {p.company || 'Sem empresa'}</p>
-                      </div>
-                    ))
-                   }</div>
-                )}
-              </div>
+                      <p className="text-xs text-zinc-400">{ep.status} • {new Date(ep.created_at).toLocaleDateString('pt-BR')}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            {searchResults.participants.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-amber-400 mb-2 mt-4">Participantes ({searchResults.participants.length})</h4>
+                <div className="space-y-2">
+                  {searchResults.participants.slice(0, 5).map((p: any) => (
+                    <div key={p.id} className="p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 cursor-pointer">
+                      <p className="text-sm font-medium text-zinc-100">{p.name}</p>
+                      <p className="text-xs text-zinc-400">{p.type} • {p.role} • {p.company || 'Sem empresa'}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
   };
-
 
   return (
     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 max-w-7xl mx-auto w-full">
@@ -423,7 +435,7 @@ useEffect(() => {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={handleSearchChange}
               placeholder="Buscar programas, episódios, participantes..."
               className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
             />
@@ -447,7 +459,8 @@ useEffect(() => {
             <StatCard label="Shorts" value={stats.totalShorts} icon={<Scissors className="w-5 h-5" />} color="text-pink-400" />
             <StatCard label="Segmentos" value={stats.totalSegments} icon={<Clapperboard className="w-5 h-5" />} color="text-purple-400" />
                  </div>
-               )}
+               </div>
+               })
 
         {/* Search Results Modal */}
         {showSearchResults && renderSearchResults()}
@@ -489,7 +502,7 @@ useEffect(() => {
                     <tr className="border-b border-zinc-800 bg-zinc-950/50">
                       {TAB_CONFIG[activeTab].columns.map((col, i) => (
                         <th key={i} className="px-4 py-3 text-left text-xs font-semibold text-zinc-400 uppercase tracking-wider">{col}</th>
-                      ))))))))))))))))))))))))))}
+                      }}})}
                     </tr>
                   </thead>
                   <tbody>
@@ -497,7 +510,7 @@ useEffect(() => {
                   </tbody>
                 </table>
               </div>
-            </>
+            </div>
 
             {/* Pagination */}
             {pagination.totalPages > 1 && (
@@ -539,6 +552,7 @@ useEffect(() => {
 
             {showSearchResults && renderSearchResults()}
 
+          </div>
         </div>
       </div>
     );
@@ -558,4 +572,5 @@ const StatCard: React.FC<{ label: string; value: number; icon: React.ReactNode; 
   </div>
 );
 
-export default CatalogView;
+export default CatalogView;'.replace(/  }}/g, '}');
+EOF

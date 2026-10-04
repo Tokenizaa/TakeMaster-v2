@@ -1,0 +1,20 @@
+{
+  "current_gate": "G0",
+  "phases": ["G0", "G1", "G2", "G3", "G4", "G5"],
+  "features": [
+    {
+      "id": "feature-001",
+      "name": "Onboarding Flow",
+      "state": "NOT_RUN",
+      "passes": false,
+      "evidence": []
+    },
+    {
+      "id": "feature-002",
+      "name": "Payment Integration",
+      "state": "NOT_RUN",
+      "passes": false,
+      "evidence": []
+    }
+  ]
+}

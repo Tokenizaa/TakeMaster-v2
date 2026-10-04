@@ -1,0 +1,10 @@
+{
+  "max_sessions_per_day": 12,
+  "main_checkout": ".",
+  "smoke": "npm run lint && npm test",
+  "max_attempts": 3,
+  "human_gate_required": true,
+  "one_feature_per_session": true,
+  "required_verifier": true,
+  "required_hash_check": true
+}

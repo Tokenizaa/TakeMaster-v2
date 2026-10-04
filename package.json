@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "governance:check": "node scripts/governance-check.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",
