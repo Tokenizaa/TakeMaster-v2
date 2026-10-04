@@ -48,6 +48,7 @@ export interface Show {
 
 export interface Guest {
   id: string;
+  showId?: string;
   name: string;
   role: string;
   company: string;
