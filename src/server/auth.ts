@@ -58,9 +58,9 @@ export function verifySessionToken(
   }
 }
 
-export function buildAuthSession(userId: string, organizationId?: string): AuthSession {
+export async function await buildAuthSession(userId: string, organizationId?: string): AuthSession {
   if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
-  const { users } = listUsersAndOrganizations();
+  const { users } = await listUsersAndOrganizations();
   const user = users.find((u) => u.id === userId);
   if (!user) {
     throw new AppError(401, 'UNAUTHORIZED', 'Usuário não encontrado na base de autenticação.');
@@ -74,7 +74,7 @@ export function buildAuthSession(userId: string, organizationId?: string): AuthS
     );
   }
 
-  const memberships = getUserMemberships(user.id);
+  const memberships = await getUserMemberships(user.id);
   if (memberships.length === 0) {
     throw new AppError(
       403,
@@ -88,14 +88,14 @@ export function buildAuthSession(userId: string, organizationId?: string): AuthS
       ? organizationId
       : organizationId || memberships[0].organizationId;
 
-  const { organization, role } = verifyUserOrganizationAccess(user.id, targetOrgId);
-  const { isFullAccessAdmin, allowedShowIds, permissions } = getEffectiveAllowedShowIds(
+  const { organization, role } = await verifyUserOrganizationAccess(user.id, targetOrgId);
+  const { isFullAccessAdmin, allowedShowIds, permissions } = await getEffectiveAllowedShowIds(
     organization.id,
     user.id,
     role
   );
 
-  const subscriptions = listOrganizationSubscriptions(organization.id);
+  const subscriptions = await listOrganizationSubscriptions(organization.id);
   const activeSubscription = subscriptions[0];
 
   const token = signSessionPayload({ userId: user.id, organizationId: organization.id });
@@ -117,12 +117,12 @@ export function buildAuthSession(userId: string, organizationId?: string): AuthS
   };
 }
 
-export function loginWithEmailOrUserId(
+export async function await loginWithEmailOrUserId(
   identifier: string,
   organizationId?: string,
   loginCode?: string
 ): AuthSession {
-  const { users } = listUsersAndOrganizations();
+  const { users } = await listUsersAndOrganizations();
   const clean = (identifier || '').trim().toLowerCase();
   const matchedUser = users.find(
     (u) => u.id.toLowerCase() === clean || u.email.toLowerCase() === clean
@@ -147,7 +147,7 @@ export function loginWithEmailOrUserId(
     );
   }
 
-  return buildAuthSession(matchedUser.id, organizationId);
+  return await buildAuthSession(matchedUser.id, organizationId);
 }
 
 /**
@@ -155,7 +155,7 @@ export function loginWithEmailOrUserId(
  * - If Authorization Bearer token is present, strictly validates signature, membership, and program permissions.
  * - If X-Organization-Id header overrides context, strictly verifies membership in that org.
  */
-export function resolveRequestAuthContext(req: Request): AuthenticatedContext {
+export async function resolveRequestAuthContext(req: Request): AuthenticatedContext {
   const authHeader = req.headers.authorization;
   const headerOrgId = req.headers['x-organization-id'] as string | undefined;
 
@@ -168,7 +168,7 @@ export function resolveRequestAuthContext(req: Request): AuthenticatedContext {
     }
 
     const effectiveOrgId = headerOrgId || verified.organizationId;
-    const session = buildAuthSession(verified.userId, effectiveOrgId);
+    const session = await buildAuthSession(verified.userId, effectiveOrgId);
     return {
       token: session.token,
       userId: session.user.id,
@@ -187,9 +187,9 @@ export function resolveRequestAuthContext(req: Request): AuthenticatedContext {
   throw new AppError(401, 'UNAUTHORIZED', 'Autenticação obrigatória: cabeçalho Authorization Bearer ausente.');
 }
 
-export function requireAuth(req: Request, _res: Response, next: NextFunction) {
+export async function requireAuth(req: Request, _res: Response, next: NextFunction) {
   try {
-    const ctx = resolveRequestAuthContext(req);
+    const ctx = await resolveRequestAuthContext(req);
     (req as any).auth = ctx;
     next();
   } catch (err) {
@@ -197,7 +197,7 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction) {
   }
 }
 
-export function requireStrictBearerAuth(req: Request, _res: Response, next: NextFunction) {
+export async function requireStrictBearerAuth(req: Request, _res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -216,7 +216,7 @@ export function requireStrictBearerAuth(req: Request, _res: Response, next: Next
   }
 }
 
-export function getAuthContext(req: Request): AuthenticatedContext {
+export async function await getAuthContext(req: Request): AuthenticatedContext {
   if ((req as any).auth) {
     return (req as any).auth as AuthenticatedContext;
   }
