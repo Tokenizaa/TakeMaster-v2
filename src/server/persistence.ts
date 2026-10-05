@@ -174,8 +174,23 @@ export async function listUsersAndOrganizations(){const [users,orgs]=await Promi
 export async function getUserMemberships(userId:string){const r=await db.from('organization_members').select('organization_id,role,organizations(name,slug)').eq('user_id',userId).eq('active',true);fail(r);return (r.data||[]).map((x:any):OrganizationMembership=>({organizationId:x.organization_id,organizationName:x.organizations?.name||'',organizationSlug:x.organizations?.slug||'',role:x.role}));}
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
 export async function verifyUserOrganizationAccess(userId:string,orgId:string){const [o,m]=await Promise.all([getOrganizationById(orgId),db.from('organization_members').select('*').eq('organization_id',orgId).eq('user_id',userId).eq('active',true).single()]);if(!o||m.error)throw new AppError(403,'FORBIDDEN_CONTEXT','Usuário não pertence à organização.');return {organization:o,role:m.data.role as OrganizationRole};}
-export async function getUserShowPermissions(orgId:string,userId:string){return [] as UserShowPermission[];}
-export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){if(['owner','admin','producer'].includes(role))return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:[] as UserShowPermission[]};const r=await db.from('program_user_access').select('catalog_program_id').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');const catalogIds=(r.data||[]).map((x:any)=>x.catalog_program_id);if(!catalogIds.length)return {isFullAccessAdmin:false,allowedShowIds:[] as string[],permissions:[] as UserShowPermission[]};const p=await db.from('programs').select('legacy_id,catalog_program_id').eq('organization_id',orgId).in('catalog_program_id',catalogIds);return {isFullAccessAdmin:false,allowedShowIds:(p.data||[]).map((x:any)=>x.legacy_id),permissions:[] as UserShowPermission[]};}
+export async function getUserShowPermissions(orgId:string,userId:string){
+  const r=await db.from('program_user_access').select('catalog_program_id,role,status,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(r);
+  const rows:any[] = r.data || [];
+  const out:UserShowPermission[]=[];
+  for(const x of rows){
+    const p=await db.from('programs').select('legacy_id,title').eq('organization_id',orgId).eq('catalog_program_id',x.catalog_program_id).limit(1);
+    const program=p.data?.[0];
+    if(!program) continue;
+    const full=['admin','producer'].includes(x.role);
+    out.push({id:`${userId}:${program.legacy_id}`,organizationId:orgId,userId,showId:program.legacy_id,showTitle:program.title,
+      canView:true,canEditEditorial:full,canEditScript:full,canOperateStudio:full,canManageSchedule:full,canManageAssets:full,canExport:true,
+      createdAt:x.created_at,updatedAt:x.updated_at});
+  }
+  return out;
+}
+export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){if(['owner','admin','producer'].includes(role))return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:[] as UserShowPermission[]};const permissions=await getUserShowPermissions(orgId,userId); const catalogIds=permissions.map(x=>x.showId); if(!catalogIds.length)return {isFullAccessAdmin:false,allowedShowIds:[] as string[],permissions};return {isFullAccessAdmin:false,allowedShowIds:catalogIds,permissions};}
 export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='view'){const u=await getEffectiveAllowedShowIds(orgId,userId,role);if(u.isFullAccessAdmin)return true;if(u.allowedShowIds.includes(showId))return true;throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');}
 export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users=await authUsers();return Promise.all((r.data||[]).map((m:any)=>mapUser(users.find(u=>u.id===m.user_id)||{},orgId)));}
 export async function createOrganizationUserWithShowPermissions(orgId:string,input:any){const r=await db.auth.admin.createUser({email:input.email,password:input.loginCode||cryptoRandom(),email_confirm:true,user_metadata:{name:input.name,jobTitle:input.jobTitle}});if(r.error)throw new Error(r.error.message);await db.from('organization_members').insert({organization_id:orgId,user_id:r.data.user.id,role:input.role||'editor',active:true});return mapUser(r.data.user,orgId);}
