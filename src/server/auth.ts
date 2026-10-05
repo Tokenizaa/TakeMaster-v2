@@ -58,7 +58,7 @@ export function verifySessionToken(
   }
 }
 
-export async function await buildAuthSession(userId: string, organizationId?: string): AuthSession {
+export async function buildAuthSession(userId: string, organizationId?: string): Promise<AuthSession> {
   if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
   const { users } = await listUsersAndOrganizations();
   const user = users.find((u) => u.id === userId);
