@@ -1,4 +1,3 @@
-import { GoogleGenAI } from '@google/genai';
 import { getServerConfig } from './config';
 import {
   EditorialDiagnosis,
@@ -29,8 +28,6 @@ import {
 import { buildProgramEditorialAiContext } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
 
-const GEMINI_MODEL_NAME = 'gemini-3-flash-preview';
-
 type GenerateOptions = {
   model?: string;
   contents: string;
@@ -38,14 +35,9 @@ type GenerateOptions = {
 };
 type GenerateResponse = { text?: string };
 
-export function isGeminiConfigured(): boolean {
-  const geminiKey = process.env.GEMINI_API_KEY;
-  const hasGemini = Boolean(
-    geminiKey && geminiKey !== 'MY_GEMINI_API_KEY' && geminiKey.trim().length > 5
-  );
+export function isAiConfigured(): boolean {
   const c = getServerConfig();
-  const hasNim = Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5);
-  return hasGemini || hasNim;
+  return Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5);
 }
 
 export function getNimModelConfig() {
@@ -56,12 +48,6 @@ export function getNimModelConfig() {
     fallbackModel: c.nimFallbackModel,
     baseUrl: c.nimBaseUrl,
   };
-}
-
-function getGeminiClient(): GoogleGenAI | null {
-  const key = process.env.GEMINI_API_KEY;
-  if (!key || key === 'MY_GEMINI_API_KEY' || key.trim().length <= 5) return null;
-  return new GoogleGenAI({ apiKey: key });
 }
 
 async function callNim(
@@ -109,18 +95,6 @@ async function callNim(
 }
 
 async function generateWithFallback(options: GenerateOptions): Promise<GenerateResponse> {
-  const gemini = getGeminiClient();
-  if (gemini) {
-    const response = await gemini.models.generateContent({
-      model: options.model || GEMINI_MODEL_NAME,
-      contents: options.contents,
-      config: options.config?.responseMimeType
-        ? { responseMimeType: options.config.responseMimeType }
-        : undefined,
-    });
-    return { text: response.text };
-  }
-
   const c = getServerConfig();
   const primary = c.nimPrimaryModel;
   try {
@@ -207,7 +181,7 @@ centralTheme (string), potentialStory (string), primaryConflict (string), primar
       config: { responseMimeType: 'application/json' },
     });
     const parsed = parseAIJson<EditorialDiagnosis>(response.text);
-    return validateDiagnosisOutput(parsed, fallback, 'gemini').data;
+    return validateDiagnosisOutput(parsed, fallback, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
     logStructured('WARN', 'ai_diagnosis_fallback', { error: String(err?.message || err) });
@@ -283,7 +257,7 @@ aboutGuest, trajectory, company, keyDatesAndNumbers, previousInterviews, recurri
       config: { responseMimeType: 'application/json' },
     });
     const parsed = parseAIJson<ResearchData>(response.text);
-    return validateResearchOutput(parsed, fallback, 'gemini').data;
+    return validateResearchOutput(parsed, fallback, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
     logStructured('WARN', 'ai_research_fallback', { error: String(err?.message || err) });
@@ -411,7 +385,7 @@ Retorne APENAS JSON no formato:
     return validateOutlineOutput(
       parsed,
       { outline: fallbackOutline, questions: fallbackQuestions },
-      'gemini'
+      'nim'
     ).data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
@@ -513,7 +487,7 @@ id, blockId, timestamp, type ('cold_open'|'opening'|'vinheta'|'transition'|'ques
       config: { responseMimeType: 'application/json' },
     });
     const parsed = parseAIJson<{ script: ScriptItem[] }>(response.text);
-    return validateScriptOutput(parsed, fallbackScript, 'gemini').data;
+    return validateScriptOutput(parsed, fallbackScript, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
     logStructured('WARN', 'ai_script_fallback', { error: String(err?.message || err) });
@@ -623,7 +597,7 @@ Retorne APENAS JSON: { "shorts": [{ "id": "...", "title": "...", "hook": "...", 
       config: { responseMimeType: 'application/json' },
     });
     const parsed = parseAIJson<{ shorts: PlannedShort[] }>(response.text);
-    return validateShortsOutput(parsed, fallback, 'gemini').data;
+    return validateShortsOutput(parsed, fallback, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
     return validateShortsOutput({ shorts: fallback }, fallback, 'fallback').data;
