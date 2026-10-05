@@ -1,20 +1,9 @@
 {
-  "current_gate": "G0",
-  "phases": ["G0", "G1", "G2", "G3", "G4", "G5"],
+  "current_focus": "P0/P1/P2",
   "features": [
-    {
-      "id": "feature-001",
-      "name": "Onboarding Flow",
-      "state": "NOT_RUN",
-      "passes": false,
-      "evidence": []
-    },
-    {
-      "id": "feature-002",
-      "name": "Payment Integration",
-      "state": "NOT_RUN",
-      "passes": false,
-      "evidence": []
-    }
+    {"id":"p0-api-audit","name":"Auditoria frontend/API","state":"IN_PROGRESS"},
+    {"id":"p1-rsplay-crosswalk","name":"Crosswalk catálogo RS Play ↔ programa ↔ knowledge base","state":"PENDING"},
+    {"id":"p1-editorial-flow","name":"Programa → Identidade → Pautas → Episódio","state":"IN_PROGRESS"},
+    {"id":"p2-e2e","name":"E2E Login → Programa → Identidade → Pauta → Episódio → Save → Reload","state":"PENDING"}
   ]
 }
