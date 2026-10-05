@@ -1,18 +1,14 @@
-# Loop Inbox Items
+# Loop Inbox
 
-Este arquivo contém os itens de entrada (inbox) para o Loop Engineering.
+Somente tarefas reais entram nesta lista.
 
-Formato:
-- ID
-- Descrição
-- Prioridade
-- Status (pendente, em_progresso, concluído)
-- Data de criação
-- Data de atualização
+- [ ] p0-api-audit: auditar contratos frontend/API e eliminar divergências reais.
+- [ ] p1-rsplay-crosswalk: validar Programa operacional ↔ catálogo RS Play ↔ knowledge base.
+- [ ] p1-editorial-flow: validar Identidade → Pautas → Episódio.
+- [ ] p2-e2e: executar fluxo completo com persistência e reload.
 
-Exemplo:
-- [ ] item-001: Definir critérios de sucesso para G0
-  - Prioridade: alta
-  - Status: pendente
-  - Criado: 2026-10-03
-  - Atualizado: 2026-10-03
+## Regras
+
+- Não reabrir tarefa sem evidência de regressão.
+- Não criar tarefa para arquitetura já resolvida.
+- Não iniciar feature nova enquanto P0 estiver aberto.
