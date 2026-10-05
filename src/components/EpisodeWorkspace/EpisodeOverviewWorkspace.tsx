@@ -122,8 +122,6 @@ export const EpisodeOverviewWorkspace: React.FC<EpisodeOverviewWorkspaceProps> =
     try {
       const res = await api.aiResearch({
         guestName: participants.find(p => p.type !== 'Apresentador')?.name || 'Participantes',
-        programTitle: episode.title,
-        format: episode.format,
         idea: episode.idea || episode.topic || '',
         diagnosis: episode.diagnosis,
       });
