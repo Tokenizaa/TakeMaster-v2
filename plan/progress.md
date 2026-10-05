@@ -1,24 +1,31 @@
-# Plan Progress
+# TakeMaster V2 — Progresso
 
-This is the ship log for the project. It tracks what has been shipped, what is in progress, and the overall status of features.
+## Estado
 
-## Current Status
+Baseline técnico estável.
 
-- **Onboarding Flow**: Not started
-- **Payment Integration**: Not started
+- lint: PASS
+- testes: 4/4 PASS
+- build: PASS
 
-## Next Steps
+## P0 — Em andamento
 
-- Begin implementation of Onboarding Flow feature
-- Review plan/features.json for completeness
+- Auditoria frontend/API.
+- Auditoria dos contratos reais.
+- Validação final de isolamento e registros órfãos.
 
-## Features
+## P1 — Em andamento
 
-- **feature-001**: Onboarding Flow - NOT_RUN
-- **feature-002**: Payment Integration - NOT_RUN
+- Crosswalk Programa operacional ↔ catálogo RS Play ↔ knowledge base.
+- Programa → Identidade → Pautas → Episódio.
+- Persistência das gerações em `ai_generations`.
 
-## Notes
+## P2 — Pendente
 
-- All features are in initial state
-- No evidence of completion for any feature
-- This file should be updated as features progress
+- Estados de UI.
+- Remoção de mocks/localStorage/fallbacks restantes.
+- E2E Login → Programa → Identidade → Pauta → Episódio → Save → Reload.
+
+## Regra
+
+Não iniciar feature nova enquanto houver trabalho P0 bloqueante.
