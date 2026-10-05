@@ -155,7 +155,7 @@ export async function loginWithEmailOrUserId(
  * - If Authorization Bearer token is present, strictly validates signature, membership, and program permissions.
  * - If X-Organization-Id header overrides context, strictly verifies membership in that org.
  */
-export async function resolveRequestAuthContext(req: Request): AuthenticatedContext {
+export async function resolveRequestAuthContext(req: Request): Promise<AuthenticatedContext> {
   const authHeader = req.headers.authorization;
   const headerOrgId = req.headers['x-organization-id'] as string | undefined;
 
