@@ -18,7 +18,6 @@ import {
   deleteProduction,
   deleteScheduleEvent,
   deleteShow,
-  getDbConnection,
   getEpisodeById,
   getShowById,
   listAuditLogs,
