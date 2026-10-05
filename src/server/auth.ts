@@ -117,7 +117,7 @@ export async function buildAuthSession(userId: string, organizationId?: string):
   };
 }
 
-export async function await loginWithEmailOrUserId(
+export async function loginWithEmailOrUserId(
   identifier: string,
   organizationId?: string,
   loginCode?: string
