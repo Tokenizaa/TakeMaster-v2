@@ -24,6 +24,7 @@ export function assertServerConfig() {
     !c.supabaseUrl && 'SUPABASE_URL',
     !c.supabaseServiceRoleKey && 'SUPABASE_SERVICE_ROLE_KEY',
     !c.nimApiKey && 'NIM_API_KEY',
+    !process.env.INTERNAL_SESSION_KEY && 'INTERNAL_SESSION_KEY',
   ].filter(Boolean) as string[];
   if (missing.length) throw new Error(`Server configuration missing: ${missing.join(', ')}`);
   return c;
