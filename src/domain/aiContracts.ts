@@ -204,7 +204,7 @@ export function validateFollowUps(rawList: unknown, fallback: FollowUpItem[] = [
 export function validateOutlineOutput(
   raw: any,
   fallback: { outline: OutlineBlock[]; questions: QuestionItem[] },
-  source: 'gemini' | 'fallback'
+  source: 'nim' | 'gemini' | 'fallback'
 ): ValidatedAIResult<{ outline: OutlineBlock[]; questions: QuestionItem[] }> {
   const warnings: string[] = [];
   if (!raw || typeof raw !== 'object') {
@@ -276,7 +276,7 @@ const VALID_SCRIPT_TYPES: ScriptItem['type'][] = [
 export function validateScriptOutput(
   raw: any,
   fallback: ScriptItem[],
-  source: 'gemini' | 'fallback'
+  source: 'nim' | 'gemini' | 'fallback'
 ): ValidatedAIResult<{ script: ScriptItem[] }> {
   const warnings: string[] = [];
   const rawList = raw && Array.isArray(raw.script) && raw.script.length > 0 ? raw.script : fallback;
@@ -332,7 +332,7 @@ const VALID_SHORT_STATUSES: PlannedShort['status'][] = [
 export function validateShortsOutput(
   raw: any,
   fallback: PlannedShort[],
-  source: 'gemini' | 'fallback'
+  source: 'nim' | 'gemini' | 'fallback'
 ): ValidatedAIResult<{ shorts: PlannedShort[] }> {
   const rawList = raw && Array.isArray(raw.shorts) && raw.shorts.length > 0 ? raw.shorts : fallback;
   const shorts: PlannedShort[] = rawList
