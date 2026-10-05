@@ -1,7 +1,10 @@
 # Loop Checkpoints
 
-This directory contains checkpoint records for the Loop Engineering process.
+Checkpoints são evidências curtas de execução do Agent.
 
-Each checkpoint captures the state of the system at a specific point in time during a loop session.
+Não substituem:
+- `docs/CANONICAL_STATE.md`;
+- `docs/ROADMAP.md`;
+- `docs/ADR.md`.
 
-See CHECKPOINT.md for the format.
+Use checkpoints somente para registrar execução verificável.
