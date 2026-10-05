@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
 import { AuthSession, OrganizationRole, UserShowPermission } from '../domain/contracts';
 import { AppError } from '../domain/validation';
 import {
@@ -25,6 +26,9 @@ export interface AuthenticatedContext {
 }
 
 const INTERNAL_SESSION_KEY = process.env.INTERNAL_SESSION_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || '';
+const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || '';
+const authClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false } }) : null;
 
 function signSessionPayload(payload: { userId: string; organizationId: string }): string {
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
