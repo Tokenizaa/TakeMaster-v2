@@ -208,7 +208,7 @@ export async function requireStrictBearerAuth(req: Request, _res: Response, next
         'Autenticação obrigatória: cabeçalho Authorization Bearer ausente.'
       );
     }
-    const ctx = resolveRequestAuthContext(req);
+    const ctx = await resolveRequestAuthContext(req);
     (req as any).auth = ctx;
     next();
   } catch (err) {
