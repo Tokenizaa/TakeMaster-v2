@@ -27,7 +27,7 @@ export const PROMPT_VERSIONS = {
 
 export interface AIValidationMeta {
   promptVersion: string;
-  source: 'gemini' | 'fallback';
+  source: 'nim' | 'gemini' | 'fallback';
   validated: boolean;
   warnings: string[];
   generatedAt: string;
@@ -57,7 +57,7 @@ function asStringArray(val: unknown, fallback: string[], maxItems = 15): string[
 export function validateDiagnosisOutput(
   raw: any,
   fallback: EditorialDiagnosis,
-  source: 'gemini' | 'fallback'
+  source: 'nim' | 'gemini' | 'fallback'
 ): ValidatedAIResult<EditorialDiagnosis> {
   const warnings: string[] = [];
   if (!raw || typeof raw !== 'object') {
