@@ -11,7 +11,7 @@ export function getServerConfig() {
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
     nimBaseUrl: (process.env.NIM_BASE_URL || 'https://integrate.api.nvidia.com').replace(/\/$/, ''),
     nimApiKey: process.env.NIM_API_KEY || process.env.NVIDIA_API_KEY || '',
-    nimPrimaryModel: process.env.NIM_PRIMARY_MODEL || 'nvidia/llama-3.3-nemotron-super-49b-v1',
+    nimPrimaryModel: process.env.NIM_PRIMARY_MODEL || 'nvidia/nemotron-3-super-120b-a12b',
     nimFallbackModel:
       process.env.NIM_FALLBACK_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b',
     nimTimeoutMs: Number(process.env.NIM_TIMEOUT_MS || 60000),
