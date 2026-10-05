@@ -847,7 +847,7 @@ export function createApiApp() {
 
   app.post('/api/seed/reset', requireAuth, async (_req, _res, next) => {
     next(new AppError(403, 'FORBIDDEN_CONTEXT', 'Seed/reset de dados de produção está desabilitado.'));
-  });;
+  });
 
   // --- RELIABLE AI GENERATION ENDPOINTS (Phase 4) ---
   app.post('/api/ai/diagnosis', requireAuth, async (req, res, next) => {
