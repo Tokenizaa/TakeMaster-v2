@@ -672,7 +672,7 @@ export function createApiApp() {
   });
 
   // --- PARTICIPANTS / GUESTS (Phase 1 & 2) ---
-  const handleListGuests = (req: Request, res: Response, next: NextFunction) => {
+  const handleListGuests = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await getAuthContext(req);
       res.json(await listParticipants(auth.organizationId));
@@ -681,7 +681,7 @@ export function createApiApp() {
     }
   };
 
-  const handleCreateGuest = (req: Request, res: Response, next: NextFunction) => {
+  const handleCreateGuest = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await getAuthContext(req);
       const validated = validateParticipantPayload(req.body, false);
@@ -692,7 +692,7 @@ export function createApiApp() {
     }
   };
 
-  const handleUpdateGuest = (req: Request, res: Response, next: NextFunction) => {
+  const handleUpdateGuest = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await getAuthContext(req);
       const validated = validateParticipantPayload(req.body, true);
@@ -703,7 +703,7 @@ export function createApiApp() {
     }
   };
 
-  const handleDeleteGuest = (req: Request, res: Response, next: NextFunction) => {
+  const handleDeleteGuest = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await getAuthContext(req);
       await deleteParticipant(auth.organizationId, req.params.id, auth.userId);
