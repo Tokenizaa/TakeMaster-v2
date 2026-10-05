@@ -58,9 +58,10 @@ export function verifySessionToken(
   }
 }
 
-export function buildAuthSession(userId: string, organizationId?: string): AuthSession {\n  if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
+export function buildAuthSession(userId: string, organizationId?: string): AuthSession {
+  if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
   const { users } = listUsersAndOrganizations();
-  const user = users.find((u) => u.id === userId) || users[0];
+  const user = users.find((u) => u.id === userId);
   if (!user) {
     throw new AppError(401, 'UNAUTHORIZED', 'Usuário não encontrado na base de autenticação.');
   }
@@ -123,9 +124,9 @@ export function loginWithEmailOrUserId(
 ): AuthSession {
   const { users } = listUsersAndOrganizations();
   const clean = (identifier || '').trim().toLowerCase();
-  const matchedUser =
-    users.find((u) => u.id.toLowerCase() === clean || u.email.toLowerCase() === clean) ||
-    (!clean ? users[0] : undefined);
+  const matchedUser = users.find(
+    (u) => u.id.toLowerCase() === clean || u.email.toLowerCase() === clean
+  );
 
   if (!matchedUser) {
     incrementMetric('authFailuresTotal');
@@ -182,19 +183,8 @@ export function resolveRequestAuthContext(req: Request): AuthenticatedContext {
     };
   }
 
-  incrementMetric('authFailuresTotal');\n  throw new AppError(401, 'UNAUTHORIZED', 'Autenticação obrigatória: cabeçalho Authorization Bearer ausente.');
-  return {
-    token: defaultSession.token,
-    userId: defaultSession.user.id,
-    userEmail: defaultSession.user.email,
-    userName: defaultSession.user.name,
-    organizationId: defaultSession.activeOrganization.id,
-    organizationName: defaultSession.activeOrganization.name,
-    role: defaultSession.role,
-    isFullAccessAdmin: defaultSession.isFullAccessAdmin,
-    allowedShowIds: defaultSession.allowedShowIds,
-    showPermissions: defaultSession.showPermissions,
-  };
+  incrementMetric('authFailuresTotal');
+  throw new AppError(401, 'UNAUTHORIZED', 'Autenticação obrigatória: cabeçalho Authorization Bearer ausente.');
 }
 
 export function requireAuth(req: Request, _res: Response, next: NextFunction) {
