@@ -459,7 +459,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/shows/:id/editorial-identity', requireAuth, async async (req, res, next) => {
+  app.post('/api/shows/:id/editorial-identity', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -499,7 +499,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/shows/:id/suggest-pautas', requireAuth, async async (req, res, next) => {
+  app.post('/api/shows/:id/suggest-pautas', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -878,7 +878,7 @@ export function createApiApp() {
   });
 
   // --- RELIABLE AI GENERATION ENDPOINTS (Phase 4) ---
-  app.post('/api/ai/diagnosis', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/diagnosis', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const diagnosis = await generateEditorialDiagnosis(req.body || {});
@@ -891,7 +891,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/research', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/research', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const research = await generateEditorialResearch(req.body || {});
@@ -904,7 +904,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/outline', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/outline', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const result = await generateSmartOutline(req.body || {});
@@ -917,7 +917,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/script', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/script', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const result = await generateStudioScript(req.body || {});
@@ -930,7 +930,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/repiques', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/repiques', requireAuth, async (req, res, next) => {
     try {
       const result = await generateFollowUpRepiques(req.body || {});
       res.json({ followUps: result });
@@ -939,7 +939,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/shorts', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/shorts', requireAuth, async (req, res, next) => {
     try {
       const result = await generatePlannedShorts(req.body || {});
       res.json(result);
@@ -948,7 +948,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/editor-script', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/editor-script', requireAuth, async (req, res, next) => {
     try {
       const result = await generateEditorScriptSynthesis(req.body || {});
       res.json(result);
@@ -957,7 +957,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/assist', requireAuth, async async (req, res, next) => {
+  app.post('/api/ai/assist', requireAuth, async (req, res, next) => {
     try {
       const result = await generateContextualAssist(req.body || {});
       res.json(result);
