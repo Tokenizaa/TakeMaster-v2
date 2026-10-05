@@ -56,7 +56,7 @@ async function mapProduction(r:any): Promise<Production> {
   const p = await one('programs', r.program_id);
   return { id:r.id, organizationId:p?.organization_id || '', showId:legacyId(p)||r.program_id, title:r.title||'',
     seasonNumber:r.number||0, status:r.status||'planning', targetEpisodesCount:r.target_episodes_count||0, executiveProducer:r.executive_producer||'',
-    startDate:r.start_date||undefined, endDate:r.end_date||undefined, notes:'', createdAt:r.created_at, updatedAt:r.updated_at };
+    startDate:r.start_date||undefined, endDate:r.end_date||undefined, notes:r.notes||'', createdAt:r.created_at, updatedAt:r.updated_at };
 }
 async function mapEpisode(r:any): Promise<Episode> {
   const p = await one('programs', r.program_id);
