@@ -14,20 +14,20 @@ Implemented in this branch:
 - Environment template for the shared Supabase project and NVIDIA.
 
 Not yet enabled:
-- Existing CRUD endpoints are still backed by the V2 JSON database. They are not switched to the shared production database yet.
-- UI is now gated by Supabase authentication, and API routes require a validated Bearer token. Database/RLS authorization is still not live-verified.
+- Live Supabase schema inspection is now available and confirms the shared production schema includes programs, seasons, episodes, participants, agenda, library, AI generations, commercial plans and organization/program access structures.
+- Existing CRUD endpoints are still backed by the V2 SQLite database. The persistence switch is the next implementation gate; no guessed migration was applied.
+- API routes now require a validated Bearer token; the development/default-user fallback was removed. Database/RLS authorization still needs live verification against the current schema.
 - No production schema migration has been applied.
 
 Reason:
 The connected Supabase project timed out during live schema inspection. Because V2 will share the V1 production data source, Phase 1 must not guess the schema or write migrations against an unverified state.
 
 Required next gate:
-1. Obtain a successful live Supabase connection.
-2. Snapshot tables, columns, foreign keys, RLS policies, grants, functions/RPCs and migration history.
-3. Reconcile that snapshot with the V1 repository migrations and persistence layer.
-4. Define the V2 persistence adapter and authorization predicates.
-5. Add database tests for allow/deny behavior.
-6. Only then switch V2 CRUD from JSON to Supabase.
+1. Reconcile the live schema snapshot with the current V2 contracts and persistence functions.
+2. Define the minimal V2 persistence adapter using the existing Supabase tables and legacy_id compatibility.
+3. Migrate reads first, then writes, without changing frontend contracts.
+4. Add database tests for allow/deny behavior and program/organization isolation.
+5. Switch V2 CRUD from SQLite to Supabase only after read/write verification.
 
 Security note:
 The Supabase service-role credential is server-only. The browser receives only the publishable key. Authorization must be enforced server-side and/or through RLS; authentication in the UI is not treated as authorization.
