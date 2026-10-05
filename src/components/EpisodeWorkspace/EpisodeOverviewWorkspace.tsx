@@ -92,6 +92,7 @@ export const EpisodeOverviewWorkspace: React.FC<EpisodeOverviewWorkspaceProps> =
       roleInEpisode: 'main_guest',
       confirmationStatus: 'invited',
       notes: '',
+      createdAt: new Date().toISOString(),
     };
 
     const updated = [...participants, newParticipant];
@@ -120,7 +121,7 @@ export const EpisodeOverviewWorkspace: React.FC<EpisodeOverviewWorkspaceProps> =
     setLoadingAi(true);
     try {
       const res = await api.aiResearch({
-        participants,
+        guestName: participants.find(p => p.type !== 'Apresentador')?.name || 'Participantes',
         programTitle: episode.title,
         format: episode.format,
         idea: episode.idea || episode.topic || '',
