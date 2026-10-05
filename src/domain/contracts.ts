@@ -284,7 +284,7 @@ export interface Guest {
   contacts: string;
   links: string[];
   notes: string;
-  previousEpisodes: string[];
+  previousEpisodes: string[] | number;
   previousResearchSummary?: string;
   createdAt: string;
   updatedAt?: string;
