@@ -223,6 +223,7 @@ export interface AuthSession {
 }
 
 export interface CameraConfig {
+  [key: string]: any;
   id: string;
   name: string;
   label: string;
@@ -271,6 +272,7 @@ export interface Production {
 }
 
 export interface Guest {
+  [key: string]: any;
   id: string;
   organizationId?: string;
   name: string;
@@ -288,7 +290,30 @@ export interface Guest {
 
 export type Participant = Guest;
 
+export type Program = Show;
+export type ParticipantType = string;
+export type ProductionMaterial = ProductionAsset;
+export interface ChecklistItem {
+  [key: string]: any;
+  id: string;
+  task: string;
+  category: string;
+  completed: boolean;
+  assignedTo?: string;
+}
+export type Segment = OutlineBlock;
+export interface AgendaEvent {
+  id: string;
+  title: string;
+  type: 'recording' | 'rehearsal' | 'meeting' | 'deadline' | string;
+  scheduledDate: string;
+  scheduledTime: string;
+  episodeId?: string;
+  notes: string;
+}
+
 export interface EpisodeParticipant {
+  [key: string]: any;
   id: string;
   organizationId: string;
   episodeId: string;
@@ -343,6 +368,7 @@ export interface ResearchData {
 }
 
 export interface OutlineBlock {
+  [key: string]: any;
   id: string;
   blockNumber: number;
   title: string;
@@ -353,6 +379,7 @@ export interface OutlineBlock {
 }
 
 export interface FollowUpItem {
+  [key: string]: any;
   id: string;
   triggerCondition: string;
   actionOrQuestion: string;
@@ -378,6 +405,7 @@ export interface QuestionItem {
 }
 
 export interface ScriptItem {
+  [key: string]: any;
   id: string;
   blockId?: string;
   timestamp: string;
@@ -403,6 +431,7 @@ export interface ScriptItem {
 }
 
 export interface PlannedShort {
+  [key: string]: any;
   id: string;
   title: string;
   hook: string;
@@ -483,6 +512,7 @@ export interface ScriptVersion {
 }
 
 export interface Episode {
+  [key: string]: any;
   id: string;
   organizationId?: string;
   showId: string;
@@ -512,6 +542,16 @@ export interface Episode {
   versions: ScriptVersion[];
   editorScriptSynthesis?: string;
   recordingTimeElapsed?: number;
+  topic?: string;
+  synopsis?: string;
+  presenterName?: string;
+  tone?: string;
+  targetDurationMinutes?: number;
+  segments?: any[];
+  checklist?: ChecklistItem[];
+  plannedShorts?: PlannedShort[];
+  materials?: ProductionMaterial[];
+  editorialNotesForPost?: string;
   createdBy?: string;
   updatedBy?: string;
   createdAt: string;
