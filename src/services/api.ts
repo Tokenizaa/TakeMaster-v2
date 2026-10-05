@@ -487,6 +487,27 @@ export const api = {
       body: JSON.stringify({ episode: 'episode' in episode ? episode.episode : episode }),
     }),
 
+  generateScript: (params: any) =>
+    request<{ script: ScriptItem[] }>('/api/ai/script', {
+      method: 'POST',
+      body: JSON.stringify({
+        episode: {
+          title: params.topic || '',
+          idea: params.topic || '',
+          host: params.presenterName || 'Apresentador',
+          presenterName: params.presenterName || 'Apresentador',
+          tone: params.tone || '',
+          format: params.format || 'Entrevista',
+          participants: params.participants || [],
+          segments: params.segments || [],
+          outline: params.segments || [],
+          diagnosis: params.diagnosis,
+          cameras: params.availableCameras || [],
+          targetDurationMin: 45,
+        },
+      }),
+    }),
+
   aiRepiques: (params: {
     questionText: string;
     context?: string;
