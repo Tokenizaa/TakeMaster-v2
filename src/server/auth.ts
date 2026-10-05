@@ -121,7 +121,7 @@ export async function loginWithEmailOrUserId(
   identifier: string,
   organizationId?: string,
   loginCode?: string
-): AuthSession {
+): Promise<AuthSession> {
   const { users } = await listUsersAndOrganizations();
   const clean = (identifier || '').trim().toLowerCase();
   const matchedUser = users.find(
