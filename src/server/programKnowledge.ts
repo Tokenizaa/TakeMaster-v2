@@ -241,35 +241,7 @@ export function buildGroundedEditorialIdentity(
   }
 
   const temas = cleanStringList(profile.temasAbordados);
-  // Also extract explicit thematic keywords mentioned in the media kit sections if present
-  if (proposta) {
-    const lowerProp = proposta.toLowerCase();
-    if (lowerProp.includes('direito previdenciário') && !temas.includes('Direito Previdenciário')) {
-      temas.push('Direito Previdenciário');
-    }
-    if (
-      lowerProp.includes('planejamento previdenciário') &&
-      !temas.includes('Planejamento Previdenciário')
-    ) {
-      temas.push('Planejamento Previdenciário');
-    }
-    if (lowerProp.includes('liderança feminina') && !temas.includes('Liderança Feminina')) {
-      temas.push('Liderança Feminina');
-    }
-    if (lowerProp.includes('flamenco') && !temas.includes('Cultura & Dança Flamenca')) {
-      temas.push('Cultura & Dança Flamenca');
-    }
-    if (lowerProp.includes('impacto social') && !temas.includes('Impacto Social')) {
-      temas.push('Impacto Social');
-    }
-    if (lowerProp.includes('sustentabilidade') && !temas.includes('Sustentabilidade')) {
-      temas.push('Sustentabilidade');
-    }
-    if (lowerProp.includes('cultura') && !temas.includes('Cultura & Propósito')) {
-      temas.push('Cultura & Propósito');
-    }
-  }
-  if (temas.length === 0 && descricao) {
+  // Temas devem vir exclusivamente dos campos estruturados da fonte.\n  // Não adicionar palavras-chave programáticas específicas aqui.\n  if (temas.length === 0 && descricao) {
     if (/saúde|bem-estar|qualidade de vida/i.test(descricao)) {
       temas.push('Saúde', 'Bem-estar', 'Qualidade de Vida com Ciência');
     }
