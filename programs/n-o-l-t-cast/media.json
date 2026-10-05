@@ -1,0 +1,119 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/noltcast-20260806152745-4207bc0a.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "N.O.L.T CAST",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — N.O.L.T CAST",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/logo-nolt.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt9.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/embalos-da-vida.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "Embalos da Vida — as músicas que tocaram e embalaram a sua história",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/nolt/nolt10.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/noltcast.html",
+    "altText": "N.O.L.T CAST — Ricardo Rizzo Campos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "N.O.L.T CAST"
+  }
+]

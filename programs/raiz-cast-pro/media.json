@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/raiz.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "RAIZ CAST PRO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — RAIZ CAST PRO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "Rodrigo - Raizcast Pro",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast7.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast8.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/raizcast/raizcast9.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/raizcastpro.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RAIZ CAST PRO"
+  }
+]

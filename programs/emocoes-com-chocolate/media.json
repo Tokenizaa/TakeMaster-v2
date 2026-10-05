@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/nicole_ferreira-20260824135206-9db213d6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "EMOÇÕES COM CHOCOLATE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — EMOÇÕES COM CHOCOLATE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/programas/emo%C3%A7%C3%B5es-com-chocolate-com-Nicole-Ferrari.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "EMOÇÕES COM CHOCOLATE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — EMOÇÕES COM CHOCOLATE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/logo-chocolate.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "EMOÇÕES COM CHOCOLATE — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/nicole.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "Nicole Ferrari",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/choc-g1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "Nicole Ferrari",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/choc-g2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "Nicole Ferrari",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/choc-g6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "Nicole Ferrari",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/chocolate/choc-g8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "altText": "Nicole Ferrari",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE"
+  }
+]

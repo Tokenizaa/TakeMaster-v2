@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CARINA DOS SANTOS LENTZ",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"carina_lentz\",\"title\":\"CARINA DOS SANTOS LENTZ\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/CARINA%20DOS%20SANTOS%20LENTZ.png\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  }
+]

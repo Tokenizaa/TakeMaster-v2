@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DESABAFO FINAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"desabafo_final\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"desabafo_final\",\"title\":\"DESABAFO FINAL\",\"host\":\"Eduardo Kappel\",\"description\":\"O seu espaço para debates francos e opiniões fortes com Eduardo Kappel.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/desabafo/desabafo_final.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://rsplay.com.br/desabafo.html\",\"mediaKitFile\":\"desabafo.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Opinião\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DESABAFO FINAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"desabafo_final\",\"title\":\"DESABAFO FINAL\",\"host\":\"Eduardo Kappel\",\"description\":\"O seu espaço para debates francos e opiniões fortes com Eduardo Kappel.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/desabafo/desabafo_final.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/desabafo.html",
+    "urlCanonica": "https://www.rsplay.com.br/desabafo.html",
+    "tituloDaPagina": "Mídia Kit Oficial — PROGRAMA DESABAFO FINAL com Eduardo Kappel",
+    "dataHoraScrape": "2026-10-05T02:06:31.579Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DESABAFO FINAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — DESABAFO",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Mídia Kit Oficial\n★ ★ ★ ★ ★\nPROGRAMA\nDESABAFO\nFINAL\nBY EDUARDO KAPPEL\n2026\nO Debate Livre, Pluralista e Sem Filtros\n\"Um espaço construído para discutir ativamente os temas mais estratégicos da nossa sociedade com transparência, impacto e verdade.\"\nSegurança Pública\n•\nDireito Criminal e Trabalhista\n•\nSaúde & Gestão\n•\nMídia Paga"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: O CONCEITO DO PROGRAMA — Discussões que movem a opinião pública",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "A Bancada do Desabafo\nDiscussões que movem\na opinião pública\nO Programa Desabafo Final é uma mesa redonda televisiva de debate político, jurídico e social de alto impacto. Conduzido semanalmente, reúne deputados, juristas especializados, médicos e empresários renomados de diversos segmentos para discutir os assuntos que afetam o cotidiano de todos.\nUnindo visões conflitantes e complementares com total liberdade de expressão, o programa atua como um fórum pluralista e independente, conquistando a audiência com debates construtivos, análises de mercado e discussões profundas sobre as realidades do país.\nPluralidade e Volume\nSeja analisando leis de abrigamento por insecurity, projetos de desoneração fiscal para saúde pública ou o posicionamento digital de empresas, nossa bancada simplifica temas jurídicos e técnicos complexos, levando-os diretamente ao senso comum com transparência e clareza."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O APRESENTADOR & LÍDER (EDUARDO KAPPEL) — Eduardo Kappel",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Advogado Criminal\nFaixa Preta de Judô\nInstrutor de Armamento e Tiro\nO Comandante da Bancada\nEduardo Kappel\nLíder nato e mediador experiente, Eduardo Kappel conduz os blocos de discussão do Desabafo Final com imparcialidade, dinamismo e grande habilidade retórica.\nCom trânsito livre nos setores comercial, político e jurídico do estado, Kappel constrói conexões de prestígio entre os líderes de opinião, pautando o programa com temas de forte impacto na sociedade.\nMediação Firme\nDomínio do tempo e foco na verdade\nPluralidade\nDiálogo aberto entre diferentes lados\nEngajamento\nPautas conectadas às dores do público\nCredibilidade\nPresença influente no cenário estadual"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: PILARES DE CONTEÚDO — Pilares de Debate",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Pilares de Debate\n\"Um panorama abrangente que transita entre leis, economia, saúde e segurança pública.\"\nPilar Social\nSegurança Pública\nDebates sobre o controle das forças, inteligência policial, armamentos e o combate à criminalidade urbana.\nPilar Jurídico\nDireito Criminal e Trabalhista\nAnálises profundas sobre o Código Penal, Processo Penal, direitos do trabalhador e o impacto das reformas na sociedade moderna.\nPilar de Gestão\nSaúde & Planejamento\nA cruzada pelo planejamento familiar voluntário e a desoneração de ICMS para projetos em hospitais.\nPilar Comercial\nMarketing & Performance\nA relevância estratégica da mídia paga e o correto posicionamento digital para venda de marcas.\nGrade de Exibição\nRS PLAY — Emissora Multiplataforma\nO Desabafo Final é transmitido todos os domingos às 22h00 na grade de exibição e simultaneamente em canais do YouTube.\nDia\nDomingos\nHorário\n22h00"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE E ECOSSISTEMA RS PLAY — Alcance e Distribuição",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Alcance e Distribuição\nSólida audiência com excelente índice de engajamento em todo o território nacional.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma\n2M\nClaro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: PARCERIAS, PATROCÍNIOS & NOVAS EXPERIÊNCIAS — Experiência & Parcerias",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Experiência & Parcerias\n\"Uma rede de patrocinadores líderes de mercado e episódios físicos dinâmicos.\"\nNossos Apoiadores\nPatrocínio Master\nKing Force Energéticos\n● FAL Armas\n● CTK Franquias\n● Forasteiro Barbearia\n● JET POA BEACH CLUB\n● Mídia Grove\nPróximos Destinos Especiais\nO Desabafo Final ultrapassa as barreiras do estúdio fixo. Nossas próximas filmagens contarão com infraestruturas móveis para cobertura in loco:\n✔ Cobertura de Automobilismo no Autódromo de Tarumã\n✔ Voos de Monomotores com decolagem no Aeroclube\n✔ Gravações de Prática de Judô e Jiu-Jitsu no estúdio\n✔ Debates diretamente de Clubes de Tiro parceiros\nBenefícios para sua Marca\n✔ Credibilidade\nExposição em bancada de alto nível\n✔ Engajamento\nAcesso direto ao tomador de decisão\n✔ Ativação Prática\nPosicionamento real em campo\n✔ Networking\nConexão com líderes do estado"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO COMERCIAL — Bancada Independente",
+        "origemDoTrecho": "https://www.rsplay.com.br/desabafo.html",
+        "textoOriginal": "Bancada Independente\nSua marca presente nas discussões que ditam o rumo do mercado e da sociedade.\nPrograma Desabafo Final\nGrade RS Play — Todos os Domingos às 22h00\nLíder da Bancada\nEduardo Kappel\n@rsplaynodigital\nMídia Kit: Eduardo Kappel\n•\nDesabafo Final na RS Play\n•\n© 2026"
+      }
+    ]
+  }
+]

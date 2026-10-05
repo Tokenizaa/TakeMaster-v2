@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "EM MOVIMENTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"em_movimento\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"em_movimento\",\"title\":\"EM MOVIMENTO\",\"host\":\"Tamara Mucenic\",\"description\":\"Interseção entre ciência, escolhas diárias e vida real.\",\"schedule\":\"Domingo | 20h30\",\"image\":\"https://rsplay.com.br/img/mediakit/emmovimento/emmovimento.jpg\",\"colorHex\":\"#db2777\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/emmovimento.html\",\"mediaKitFile\":\"emmovimento.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Saúde\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "EM MOVIMENTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"em_movimento\",\"title\":\"EM MOVIMENTO\",\"host\":\"Tamara Mucenic\",\"description\":\"Interseção entre ciência, escolhas diárias e vida real.\",\"schedule\":\"Domingo | 20h30\",\"image\":\"https://rsplay.com.br/img/mediakit/emmovimento/emmovimento.jpg\",\"colorHex\":\"#db2777\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "EM MOVIMENTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"em_movimento\",\"title\":\"EM MOVIMENTO\",\"host\":\"Tamara Mucenic\",\"description\":\"Interseção entre ciência, escolhas diárias e vida real.\",\"schedule\":\"Domingo | 20h30\",\"image\":\"https://rsplay.com.br/img/mediakit/emmovimento/emmovimento.jpg\",\"colorHex\":\"#db2777\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/emmovimento.html",
+    "urlCanonica": "https://www.rsplay.com.br/emmovimento.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Dra. Tamara Mucenic",
+    "dataHoraScrape": "2026-10-05T02:06:29.284Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "EM MOVIMENTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Dra. Tamara Mucenic",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Mídia Kit Oficial\nDra. Tamara\nMucenic\nCiência\n•\nEscolhas\n•\nVida Real\n•\nSaúde"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE — Sobre Dra. Tamara",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Médica & Pesquisadora\nSobre\nDra. Tamara\nMédica reumatologista, atua no consultório privado e em pesquisa clínica, com foco em doenças inflamatórias sistêmicas e saúde ao longo da vida.\nSeu trabalho assistencial valoriza o movimento, a autonomia, o sono e o manejo do estresse. Tamara promove decisões conscientes, sempre embasadas em evidências científicas e escuta clínica qualificada.\nInvestigadora principal em estudos clínicos e speaker em eventos científicos, ela integra ciência e vida real no cuidado dos pacientes, atuando na interface entre medicina, complexidade e inovação .\nReumatologia\nLongevidade"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O NEGÓCIO & O PROGRAMA — Prática Clínica & O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Prática Clínica &\nO Programa\nConsultório & Pesquisa\nUma prática médica sólida, ética e sustentável. Tamara lidera projetos em saúde e dedica-se à formação e mentoria de médicos que buscam clareza, autonomia e visão de longo prazo na profissão.\nEm Movimento\nO programa \"Em Movimento, com Dra. Tamara\" traz a interseção entre ciência, escolhas diárias e vida real. Um espaço para debater saúde integral com profundidade e acessibilidade.\nMedicina baseada em evidência\nAutonomia do paciente\nInovação em saúde\nMédica &\nPesquisadora"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: COMMUNITY & METRICS — Autoridade Médica",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Autoridade Médica\nConexão, Ciência e Credibilidade\nReferência\nNa Área Médica\nInvestigadora principal em estudos clínicos e speaker reconhecida.\nMentora\nDe Médicos\nFormação e mentoria para construção de carreiras sólidas.\nEducação\nBaseada em Evidência\nConteúdo que traduz a complexidade da ciência para a vida real.\nAlcance e Performance\nA vitrine multiplataforma que fala diretamente com o seu público.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas\nPerfil do Público\nSaúde Integral\nMedicina\nBem-estar\nCiência\nLongevidade"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: SERVICES — Palestras & Projetos",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "O que oferecemos\nPalestras &\nProjetos\nDra. Tamara atua como ponte entre a medicina científica e a prática diária, oferecendo conhecimento de ponta com linguagem acessível.\nConsultoria & Mentoria\nOrientação para médicos e profissionais que buscam excelência, ética e construção de carreira.\nSpeaker & Palestras\nApresentações em eventos científicos e corporativos sobre saúde, estresse e inovação.\nPesquisa Clínica\nLiderança em estudos clínicos e desenvolvimento de projetos inovadores em saúde.\nEducação Médica\nWorkshops e treinamentos focados em doenças inflamatórias, reumatologia e autonomia."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALLERY / LIFESTYLE — Vida & Medicina",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Vida & Medicina\nUm olhar sobre a rotina profissional e a visão de mundo da Dra. Tamara."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Vamos colaborar?",
+        "origemDoTrecho": "https://www.rsplay.com.br/emmovimento.html",
+        "textoOriginal": "Vamos colaborar?\nEm Movimento © 2026 Dra. Tamara Mucenic"
+      }
+    ]
+  }
+]

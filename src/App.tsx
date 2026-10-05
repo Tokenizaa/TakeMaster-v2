@@ -6,11 +6,15 @@ import {
   Guest,
   LibraryAsset,
   Production,
+  ProgramPitchSuggestion,
+  SaaSRegistrationPayload,
   ScheduleEvent,
   Show,
   User,
 } from './types';
 import { api } from './services/api';
+import { usePermissions } from './hooks/usePermissions';
+import { ShowPermissionGuard } from './components/ShowPermissionGuard';
 import { Sidebar, NavSection } from './components/Sidebar';
 import { Header } from './components/Header';
 import { DashboardView } from './components/DashboardView';
@@ -71,6 +75,43 @@ export function App() {
   const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const activeEpisodeRaw = useMemo(
+    () => episodes.find((e) => e.id === activeEpisodeId) || null,
+    [episodes, activeEpisodeId]
+  );
+
+  // Validate show-level permissions for the active episode or selected show filter
+  const permissions = usePermissions(
+    session,
+    activeEpisodeRaw?.showId || selectedShowId
+  );
+
+  // Enforce strict client-side content isolation via usePermissions before rendering any lists
+  const accessibleShows = useMemo(
+    () => permissions.filterAccessibleShows(shows),
+    [permissions, shows]
+  );
+
+  const accessibleProductions = useMemo(
+    () => permissions.filterAccessibleByShow(productions, 'canView'),
+    [permissions, productions]
+  );
+
+  const accessibleEpisodes = useMemo(
+    () => permissions.filterAccessibleByShow(episodes, 'canView'),
+    [permissions, episodes]
+  );
+
+  const accessibleScheduleEvents = useMemo(
+    () => permissions.filterAccessibleByShow(scheduleEvents, 'canView'),
+    [permissions, scheduleEvents]
+  );
+
+  const accessibleLibraryAssets = useMemo(
+    () => permissions.filterAccessibleByShow(libraryAssets, 'canView'),
+    [permissions, libraryAssets]
+  );
+
   const loadWorkspaceState = async () => {
     setLoading(true);
     try {
@@ -98,12 +139,35 @@ export function App() {
     loadWorkspaceState();
   }, []);
 
-  const handleLoginProfile = async (emailOrUserId: string, loginCode?: string) => {
+  const handleLoginProfile = async (
+    emailOrUserId: string,
+    orgOrCode?: string,
+    maybeCode?: string
+  ) => {
     setLoading(true);
     setActiveEpisodeId(null);
     setSelectedShowId('ALL');
     try {
-      await api.login(emailOrUserId, session?.activeOrganization.id, loginCode);
+      const isOrgId = orgOrCode && orgOrCode.startsWith('org-');
+      const orgId = isOrgId ? orgOrCode : session?.activeOrganization.id;
+      const loginCode = isOrgId ? maybeCode : orgOrCode;
+      await api.login(emailOrUserId, orgId, loginCode);
+      await loadWorkspaceState();
+    } catch (err: any) {
+      setLoading(false);
+      throw err;
+    }
+  };
+
+  const handleRegisterAccount = async (payload: SaaSRegistrationPayload) => {
+    setLoading(true);
+    setActiveEpisodeId(null);
+    setSelectedShowId('ALL');
+    try {
+      await api.registerAccount({
+        ...payload,
+        organizationId: session?.activeOrganization.id || 'org-takemaster-studio',
+      });
       await loadWorkspaceState();
     } catch (err: any) {
       setLoading(false);
@@ -146,7 +210,7 @@ export function App() {
   };
 
   const filteredEpisodes = useMemo(() => {
-    return episodes.filter((ep) => {
+    return accessibleEpisodes.filter((ep) => {
       const matchesShow = selectedShowId === 'ALL' || ep.showId === selectedShowId;
       const q = searchQuery.toLowerCase().trim();
       if (!q) return matchesShow;
@@ -156,7 +220,7 @@ export function App() {
         ep.idea.toLowerCase().includes(q);
       return matchesShow && matchesQuery;
     });
-  }, [episodes, selectedShowId, searchQuery]);
+  }, [accessibleEpisodes, selectedShowId, searchQuery]);
 
   const activeEpisode = useMemo(
     () => episodes.find((e) => e.id === activeEpisodeId) || null,
@@ -174,6 +238,13 @@ export function App() {
 
     const current = episodes.find((e) => e.id === targetId);
     if (!current) return;
+
+    // Validate permission before mutating episode state
+    if (!permissions.canAccessEpisode(current, 'canView')) {
+      setSaveStatus('error');
+      setSaveErrorMessage('Seu perfil não possui permissão para alterar este programa.');
+      return;
+    }
 
     const merged: Episode = {
       ...current,
@@ -223,6 +294,34 @@ export function App() {
       setSaveErrorMessage(err?.message || 'Erro ao criar episódio');
       throw err;
     }
+  };
+
+  const handleUsePitchInProduction = async (show: Show, pitch: ProgramPitchSuggestion) => {
+    const showProductions = productions.filter((p) => p.showId === show.id);
+    const activeProd = showProductions[0];
+    const initialQuestions = (pitch.questions || []).map((q, idx) => ({
+      id: `q-pitch-${Date.now()}-${idx}`,
+      blockId: idx === 0 ? 'blk-1' : 'blk-2',
+      order: idx + 1,
+      text: q,
+      objective: pitch.angle,
+      suggestedCamera: idx % 2 === 0 ? 'CAM 2' : 'CAM 1',
+      eyeDirection: 'Olhar para o convidado',
+      followUps: [],
+    }));
+
+    await handleCreateEpisode({
+      showId: show.id,
+      productionId: activeProd?.id,
+      title: pitch.title,
+      idea: `${pitch.hook}\n\nAbordagem Editorial: ${pitch.angle}\nPor que funciona (${pitch.score}%): ${pitch.reason}`,
+      guestName: pitch.suggestedGuest,
+      targetDurationMin: show.defaultDurationMin || 45,
+      status: 'diagnosis',
+      objective: pitch.hook,
+      additionalInfo: pitch.angle,
+      questions: initialQuestions,
+    });
   };
 
   const handleDeleteEpisode = async (id: string) => {
@@ -407,7 +506,10 @@ export function App() {
   }
 
   const activeStudioShow =
-    shows.find((s) => s.id === selectedShowId) || shows[0] || null;
+    accessibleShows.find((s) => s.id === selectedShowId) || accessibleShows[0] || null;
+  const activeSelectedShowTitle =
+    accessibleShows.find((s) => s.id === selectedShowId)?.title ||
+    shows.find((s) => s.id === selectedShowId)?.title;
 
   return (
     <div className="flex h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
@@ -419,11 +521,11 @@ export function App() {
           setActiveEpisodeId(null);
         }}
         onNewEpisode={() => setIsNewEpisodeOpen(true)}
-        episodesCount={episodes.length}
-        showsCount={shows.length}
+        episodesCount={accessibleEpisodes.length}
+        showsCount={accessibleShows.length}
         guestsCount={guests.length}
-        scheduleCount={scheduleEvents.length}
-        libraryCount={libraryAssets.length}
+        scheduleCount={accessibleScheduleEvents.length}
+        libraryCount={accessibleLibraryAssets.length}
         organizationName={session?.activeOrganization.name}
         session={session}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
@@ -432,7 +534,7 @@ export function App() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         <Header
-          shows={shows}
+          shows={accessibleShows}
           selectedShowId={selectedShowId}
           onSelectShow={setSelectedShowId}
           searchQuery={searchQuery}
@@ -441,7 +543,9 @@ export function App() {
           saveErrorMessage={saveErrorMessage}
           activeEpisodeTitle={activeEpisode?.title}
           onOpenStudioMode={
-            activeEpisode ? () => setStudioEpisodeId(activeEpisode.id) : undefined
+            activeEpisode && permissions.canOperateStudio(activeEpisode.showId)
+              ? () => setStudioEpisodeId(activeEpisode.id)
+              : undefined
           }
           session={session}
           onSwitchOrganization={handleSwitchOrganization}
@@ -468,8 +572,8 @@ export function App() {
               <span className="text-zinc-600">·</span>
               <span className="text-zinc-400">
                 {session.isFullAccessAdmin
-                  ? `Visão Administrativa Master (${shows.length} programas liberados)`
-                  : `Isolamento por Programa Ativo — Visualizando exclusivamente: ${shows
+                  ? `Visão Administrativa Master (${accessibleShows.length} programas liberados)`
+                  : `Isolamento por Programa Ativo — Visualizando exclusivamente: ${accessibleShows
                       .map((s) => s.title)
                       .join(', ')}`}
               </span>
@@ -507,126 +611,213 @@ export function App() {
         )}
 
         {activeEpisode ? (
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <EpisodeHeader
-              episode={activeEpisode}
-              activeTab={activeEpisodeTab}
-              onSelectTab={setActiveEpisodeTab}
-              onBack={() => setActiveEpisodeId(null)}
-              onUpdateEpisode={handleUpdateEpisode}
-              onOpenStudioMode={() => setStudioEpisodeId(activeEpisode.id)}
-              onOpenExportModal={() => setExportEpisode(activeEpisode)}
-              onToggleAiAssistant={() => setIsAiAssistantOpen((prev) => !prev)}
-            />
+          <ShowPermissionGuard
+            session={session}
+            showId={activeEpisode.showId}
+            showTitle={
+              shows.find((s) => s.id === activeEpisode.showId)?.title || activeEpisode.showId
+            }
+            requiredCapability="canView"
+            featureLabel="Editor Editorial de Episódio"
+            onSwitchLogin={() => setIsLoginModalOpen(true)}
+            onResetShowFilter={() => setActiveEpisodeId(null)}
+          >
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <EpisodeHeader
+                episode={activeEpisode}
+                session={session}
+                activeTab={activeEpisodeTab}
+                onSelectTab={setActiveEpisodeTab}
+                onBack={() => setActiveEpisodeId(null)}
+                onUpdateEpisode={handleUpdateEpisode}
+                onOpenStudioMode={() => setStudioEpisodeId(activeEpisode.id)}
+                onOpenExportModal={() => setExportEpisode(activeEpisode)}
+                onToggleAiAssistant={() => setIsAiAssistantOpen((prev) => !prev)}
+              />
 
-            <div className="flex-1 overflow-y-auto bg-zinc-950">
-              {activeEpisodeTab === 'diagnosis' && (
-                <DiagnosisTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('research')}
-                />
-              )}
-              {activeEpisodeTab === 'research' && (
-                <ResearchTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('outline')}
-                />
-              )}
-              {activeEpisodeTab === 'outline' && (
-                <OutlineTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('script')}
-                />
-              )}
-              {activeEpisodeTab === 'script' && (
-                <ScriptTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('cameras')}
-                  onOpenTeleprompter={(initialText) => {
-                    setInitialTeleprompterText(initialText);
-                    setStudioEpisodeId(activeEpisode.id);
-                  }}
-                />
-              )}
-              {activeEpisodeTab === 'cameras' && (
-                <CamerasTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('assets')}
-                />
-              )}
-              {activeEpisodeTab === 'assets' && (
-                <AssetsTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('shorts')}
-                />
-              )}
-              {activeEpisodeTab === 'shorts' && (
-                <ShortsTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onAdvanceToNextTab={() => setActiveEpisodeTab('prep')}
-                />
-              )}
-              {(activeEpisodeTab === 'prep' || activeEpisodeTab === 'recording') && (
-                <RecordingPrepTab
-                  episode={activeEpisode}
-                  onUpdateEpisode={handleUpdateEpisode}
-                  onOpenStudioMode={() => setStudioEpisodeId(activeEpisode.id)}
-                />
-              )}
-              {activeEpisodeTab === 'editor' && (
-                <EditorTab episode={activeEpisode} onUpdateEpisode={handleUpdateEpisode} />
-              )}
+              <div className="flex-1 overflow-y-auto bg-zinc-950">
+                {activeEpisodeTab === 'diagnosis' && (
+                  <DiagnosisTab
+                    episode={activeEpisode}
+                    onUpdateEpisode={handleUpdateEpisode}
+                    onAdvanceToNextTab={() => setActiveEpisodeTab('research')}
+                  />
+                )}
+                {activeEpisodeTab === 'research' && (
+                  <ResearchTab
+                    episode={activeEpisode}
+                    onUpdateEpisode={handleUpdateEpisode}
+                    onAdvanceToNextTab={() => setActiveEpisodeTab('outline')}
+                  />
+                )}
+                {activeEpisodeTab === 'outline' && (
+                  <OutlineTab
+                    episode={activeEpisode}
+                    onUpdateEpisode={handleUpdateEpisode}
+                    onAdvanceToNextTab={() => setActiveEpisodeTab('script')}
+                  />
+                )}
+                {activeEpisodeTab === 'script' && (
+                  <ScriptTab
+                    episode={activeEpisode}
+                    onUpdateEpisode={handleUpdateEpisode}
+                    onAdvanceToNextTab={() => setActiveEpisodeTab('cameras')}
+                    onOpenTeleprompter={(initialText) => {
+                      setInitialTeleprompterText(initialText);
+                      setStudioEpisodeId(activeEpisode.id);
+                    }}
+                  />
+                )}
+                {activeEpisodeTab === 'cameras' && (
+                  <ShowPermissionGuard
+                    session={session}
+                    showId={activeEpisode.showId}
+                    requiredCapability="canOperateStudio"
+                    featureLabel="Configuração Multicâmera do Episódio"
+                    onSwitchLogin={() => setIsLoginModalOpen(true)}
+                  >
+                    <CamerasTab
+                      episode={activeEpisode}
+                      onUpdateEpisode={handleUpdateEpisode}
+                      onAdvanceToNextTab={() => setActiveEpisodeTab('assets')}
+                    />
+                  </ShowPermissionGuard>
+                )}
+                {activeEpisodeTab === 'assets' && (
+                  <ShowPermissionGuard
+                    session={session}
+                    showId={activeEpisode.showId}
+                    requiredCapability="canManageAssets"
+                    featureLabel="Gestão de Materiais e B-Roll do Episódio"
+                    onSwitchLogin={() => setIsLoginModalOpen(true)}
+                  >
+                    <AssetsTab
+                      episode={activeEpisode}
+                      onUpdateEpisode={handleUpdateEpisode}
+                      onAdvanceToNextTab={() => setActiveEpisodeTab('shorts')}
+                    />
+                  </ShowPermissionGuard>
+                )}
+                {activeEpisodeTab === 'shorts' && (
+                  <ShowPermissionGuard
+                    session={session}
+                    showId={activeEpisode.showId}
+                    requiredCapability="canEditScript"
+                    featureLabel="Planejamento de Cortes e Shorts"
+                    onSwitchLogin={() => setIsLoginModalOpen(true)}
+                  >
+                    <ShortsTab
+                      episode={activeEpisode}
+                      onUpdateEpisode={handleUpdateEpisode}
+                      onAdvanceToNextTab={() => setActiveEpisodeTab('prep')}
+                    />
+                  </ShowPermissionGuard>
+                )}
+                {(activeEpisodeTab === 'prep' || activeEpisodeTab === 'recording') && (
+                  <ShowPermissionGuard
+                    session={session}
+                    showId={activeEpisode.showId}
+                    requiredCapability="canOperateStudio"
+                    featureLabel="Checklist Técnico & Preparação de Estúdio"
+                    onSwitchLogin={() => setIsLoginModalOpen(true)}
+                  >
+                    <RecordingPrepTab
+                      episode={activeEpisode}
+                      onUpdateEpisode={handleUpdateEpisode}
+                      onOpenStudioMode={() => setStudioEpisodeId(activeEpisode.id)}
+                    />
+                  </ShowPermissionGuard>
+                )}
+                {activeEpisodeTab === 'editor' && (
+                  <ShowPermissionGuard
+                    session={session}
+                    showId={activeEpisode.showId}
+                    requiredCapability="canEditScript"
+                    featureLabel="Roteiro de Pós-Produção e Edição"
+                    onSwitchLogin={() => setIsLoginModalOpen(true)}
+                  >
+                    <EditorTab episode={activeEpisode} onUpdateEpisode={handleUpdateEpisode} />
+                  </ShowPermissionGuard>
+                )}
+              </div>
             </div>
-          </div>
+          </ShowPermissionGuard>
         ) : (
           <main className="flex-1 overflow-y-auto">
             {activeSection === 'dashboard' && (
-              <DashboardView
-                shows={shows}
-                productions={productions}
-                episodes={filteredEpisodes}
-                guests={guests}
-                scheduleEvents={scheduleEvents}
-                libraryAssets={libraryAssets}
-                onOpenEpisode={(id) => openEpisode(id)}
-                onNewEpisode={() => setIsNewEpisodeOpen(true)}
-                onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
-                onNavigateSection={setActiveSection}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={selectedShowId}
+                showTitle={activeSelectedShowTitle}
+                requiredCapability="canView"
+                featureLabel="Dashboard Operacional do Programa"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <DashboardView
+                  shows={accessibleShows}
+                  productions={accessibleProductions}
+                  episodes={filteredEpisodes}
+                  guests={guests}
+                  scheduleEvents={accessibleScheduleEvents}
+                  libraryAssets={accessibleLibraryAssets}
+                  onOpenEpisode={(id) => openEpisode(id)}
+                  onNewEpisode={() => setIsNewEpisodeOpen(true)}
+                  onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
+                  onNavigateSection={setActiveSection}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'shows' && (
-              <ShowsView
-                shows={shows}
-                productions={productions}
-                episodes={episodes}
-                onCreateShow={handleCreateShow}
-                onUpdateShow={handleUpdateShow}
-                onDeleteShow={handleDeleteShow}
-                onCreateProduction={handleCreateProduction}
-                onDeleteProduction={handleDeleteProduction}
-                onSelectShowFilter={(id) => {
-                  setSelectedShowId(id);
-                  setActiveSection('episodes');
-                }}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={selectedShowId}
+                showTitle={activeSelectedShowTitle}
+                requiredCapability="canView"
+                featureLabel="Catálogo de Programas"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <ShowsView
+                  shows={accessibleShows}
+                  productions={accessibleProductions}
+                  episodes={accessibleEpisodes}
+                  onCreateShow={handleCreateShow}
+                  onUpdateShow={handleUpdateShow}
+                  onDeleteShow={handleDeleteShow}
+                  onCreateProduction={handleCreateProduction}
+                  onDeleteProduction={handleDeleteProduction}
+                  onSelectShowFilter={(id) => {
+                    setSelectedShowId(id);
+                    setActiveSection('episodes');
+                  }}
+                  onUsePitchInProduction={handleUsePitchInProduction}
+                  canEditShow={(id) => permissions.canEditEditorial(id)}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'episodes' && (
-              <EpisodesListView
-                episodes={filteredEpisodes}
-                onSelectEpisode={(ep, tab) => openEpisode(ep.id, tab || 'diagnosis')}
-                onNewEpisodeClick={() => setIsNewEpisodeOpen(true)}
-                onDeleteEpisode={handleDeleteEpisode}
-                onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={selectedShowId}
+                showTitle={activeSelectedShowTitle}
+                requiredCapability="canView"
+                featureLabel="Lista de Episódios do Programa"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <EpisodesListView
+                  episodes={filteredEpisodes}
+                  session={session}
+                  selectedShowId={selectedShowId}
+                  onSelectEpisode={(ep, tab) => openEpisode(ep.id, tab || 'diagnosis')}
+                  onNewEpisodeClick={() => setIsNewEpisodeOpen(true)}
+                  onDeleteEpisode={handleDeleteEpisode}
+                  onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'guests' && (
@@ -638,47 +829,77 @@ export function App() {
             )}
 
             {activeSection === 'schedule' && (
-              <ScheduleView
-                scheduleEvents={scheduleEvents}
-                shows={shows}
-                productions={productions}
-                episodes={episodes}
-                selectedShowId={selectedShowId}
-                onCreateEvent={handleCreateScheduleEvent}
-                onUpdateEvent={handleUpdateScheduleEvent}
-                onDeleteEvent={handleDeleteScheduleEvent}
-                onOpenEpisode={(id) => openEpisode(id)}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={selectedShowId}
+                showTitle={activeSelectedShowTitle}
+                requiredCapability="canView"
+                featureLabel="Agenda de Produção do Programa"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <ScheduleView
+                  scheduleEvents={accessibleScheduleEvents}
+                  shows={accessibleShows}
+                  productions={accessibleProductions}
+                  episodes={accessibleEpisodes}
+                  selectedShowId={selectedShowId}
+                  onCreateEvent={handleCreateScheduleEvent}
+                  onUpdateEvent={handleUpdateScheduleEvent}
+                  onDeleteEvent={handleDeleteScheduleEvent}
+                  onOpenEpisode={(id) => openEpisode(id)}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'library' && (
-              <LibraryView
-                libraryAssets={libraryAssets}
-                shows={shows}
-                episodes={episodes}
-                selectedShowId={selectedShowId}
-                onCreateAsset={handleCreateLibraryAsset}
-                onUpdateAsset={handleUpdateLibraryAsset}
-                onDeleteAsset={handleDeleteLibraryAsset}
-                onOpenEpisode={(id) => openEpisode(id)}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={selectedShowId}
+                showTitle={activeSelectedShowTitle}
+                requiredCapability="canView"
+                featureLabel="Biblioteca de Assets & B-Roll"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <LibraryView
+                  libraryAssets={accessibleLibraryAssets}
+                  shows={accessibleShows}
+                  episodes={accessibleEpisodes}
+                  selectedShowId={selectedShowId}
+                  onCreateAsset={handleCreateLibraryAsset}
+                  onUpdateAsset={handleUpdateLibraryAsset}
+                  onDeleteAsset={handleDeleteLibraryAsset}
+                  onOpenEpisode={(id) => openEpisode(id)}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'studio' && (
-              <StudioSetupView
-                activeShow={activeStudioShow}
-                onUpdateShowCameras={async (cameras: CameraConfig[]) => {
-                  if (activeStudioShow) {
-                    await handleUpdateShow(activeStudioShow.id, { cameras });
-                  }
-                }}
-              />
+              <ShowPermissionGuard
+                session={session}
+                showId={activeStudioShow?.id || selectedShowId}
+                showTitle={activeStudioShow?.title}
+                requiredCapability="canOperateStudio"
+                featureLabel="Configuração de Estúdio & Câmeras"
+                onSwitchLogin={() => setIsLoginModalOpen(true)}
+                onResetShowFilter={() => setSelectedShowId('ALL')}
+              >
+                <StudioSetupView
+                  activeShow={activeStudioShow}
+                  onUpdateShowCameras={async (cameras: CameraConfig[]) => {
+                    if (activeStudioShow) {
+                      await handleUpdateShow(activeStudioShow.id, { cameras });
+                    }
+                  }}
+                />
+              </ShowPermissionGuard>
             )}
 
             {activeSection === 'billing' && (
               <BillingView
                 session={session}
-                shows={shows}
+                shows={accessibleShows}
                 onSubscriptionUpdated={loadWorkspaceState}
               />
             )}
@@ -703,20 +924,21 @@ export function App() {
         onClose={() => setIsLoginModalOpen(false)}
         session={session}
         availableUsers={availableUsers}
-        allShows={shows}
+        allShows={accessibleShows}
         onLogin={handleLoginProfile}
+        onRegister={handleRegisterAccount}
       />
 
       <NewEpisodeModal
         isOpen={isNewEpisodeOpen}
         onClose={() => setIsNewEpisodeOpen(false)}
-        shows={shows}
-        productions={productions}
+        shows={accessibleShows}
+        productions={accessibleProductions}
         guests={guests}
         onCreateEpisode={handleCreateEpisode}
       />
 
-      {exportEpisode && (
+      {exportEpisode && permissions.canAccessEpisode(exportEpisode, 'canExport') && (
         <ExportModal
           isOpen={Boolean(exportEpisode)}
           episode={exportEpisode}
@@ -724,7 +946,7 @@ export function App() {
         />
       )}
 
-      {studioEpisode && (
+      {studioEpisode && permissions.canAccessEpisode(studioEpisode, 'canOperateStudio') && (
         <StudioModeModal
           isOpen={Boolean(studioEpisode)}
           episode={studioEpisode}
@@ -737,7 +959,7 @@ export function App() {
         />
       )}
 
-      {activeEpisode && (
+      {activeEpisode && permissions.canAccessEpisode(activeEpisode, 'canView') && (
         <AiContextAssistant
           isOpen={isAiAssistantOpen}
           onClose={() => setIsAiAssistantOpen(false)}

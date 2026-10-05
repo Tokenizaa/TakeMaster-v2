@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "NA VITRINE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — NA VITRINE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircularlogo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "Logo Moda Circular",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "Fernanda Bassi",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular7.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular8.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular9.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular10.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/moda_circular/modacircular1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/navitrine.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NA VITRINE"
+  }
+]

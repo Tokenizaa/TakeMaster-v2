@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DEBATE DE GIGANTES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"debate_gigantes\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"debate_gigantes\",\"title\":\"DEBATE DE GIGANTES\",\"host\":\"Marcio Lima\",\"description\":\"Dinâmico e profundo para debater liderança de mercado.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/gigantes/debategigantes.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/debategigantes.html\",\"mediaKitFile\":\"debategigantes.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Negócios\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "DEBATE DE GIGANTES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"debate_gigantes\",\"title\":\"DEBATE DE GIGANTES\",\"host\":\"Marcio Lima\",\"description\":\"Dinâmico e profundo para debater liderança de mercado.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/gigantes/debategigantes.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DEBATE DE GIGANTES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"debate_gigantes\",\"title\":\"DEBATE DE GIGANTES\",\"host\":\"Marcio Lima\",\"description\":\"Dinâmico e profundo para debater liderança de mercado.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/gigantes/debategigantes.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/debategigantes.html",
+    "urlCanonica": "https://www.rsplay.com.br/debategigantes.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Debate de Gigantes",
+    "dataHoraScrape": "2026-10-05T02:06:29.018Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DEBATE DE GIGANTES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Márcio Lima",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Mídia Kit Oficial\nMárcio\nLima\nHistórias\n•\nEmpreendedorismo\n•\nLiderança"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR — Márcio Lima",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Jornalista & Comunicador\nMárcio\nLima\nJornalista, comunicador e apresentador do programa Debate de Gigantes , um espaço dedicado a dar voz a histórias inspiradoras, trajetórias de superação, empreendedorismo e liderança.\nCom uma comunicação autêntica e humana, construiu sua trajetória acreditando no poder das histórias reais para transformar vidas, conectar pessoas e gerar oportunidades . À frente do programa, entrevista empresários, profissionais, líderes e personalidades que compartilham experiências capazes de inspirar e impactar o público.\nReconhecido por criar conexões genuínas com seus convidados, vem consolidando sua presença na comunicação gaúcha, fortalecendo o papel da televisão como ferramenta de informação, inspiração e transformação social.\n“Toda grande trajetória começa com uma decisão. E toda história de sucesso merece ser contada.”\n— Márcio Lima\nJornalismo\nEmpreendedorismo\nLiderança"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA & FORMATO — O Programa & O Formato",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "O Programa &\nO Formato\nConceito\nO Debate de Gigantes tem como objetivo trazer à audiência um bate-papo e entrevistas com empresários de todas as áreas, tirando dúvidas sobre o mercado atual e como evoluir no mundo empresarial.\nPúblico Alvo: Advogados, CEOs, Startups e Jovens Empresários.\nDinâmica\n1 Hora de duração (gravado).\nEntrevistas e mediação de debates.\nPergunta Surpresa: Interação direta da audiência para todos os participantes.\nBusiness &\nInovação"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: METRICS (NOVO DASHBOARD MULTIPLATAFORMA) — Alcance Multiplataforma",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Alcance Multiplataforma\nO tamanho da nossa voz no mercado\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: OBJETIVOS COMERCIAIS & COTAS — Objetivos Comerciais",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Oportunidade\nObjetivos\nComerciais\nO programa busca empresas interessadas em patrocinar através de um sistema de cotas, associando sua marca a conteúdos de alto valor.\nExposição de Marca\nSua marca exibida no telão ao fundo do cenário durante todo o programa, garantindo visibilidade constante.\nIntervalos Comerciais\nComerciais de até 30 segundos nos intervalos. São 3 intervalos a cada 13 minutos de entrevistas.\nLIMITADO\nCotas de Patrocínio\nR$ 1.000,00 / cota\nTotalizando inicialmente 10 cotas disponíveis.\nValor total do projeto: R$ 10.000,00."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALLERY — Galeria de Gigantes",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Galeria de Gigantes\nMomentos e bastidores do programa."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Faça parte deste time",
+        "origemDoTrecho": "https://www.rsplay.com.br/debategigantes.html",
+        "textoOriginal": "Faça parte deste time\nPlataforma\nRS Play\nApresentação\nMárcio Lima\nDebate de Gigantes © 2025"
+      }
+    ]
+  }
+]

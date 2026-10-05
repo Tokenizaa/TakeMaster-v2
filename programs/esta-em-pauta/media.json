@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/empauta-20260626111708-d61ff352.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "ESTÁ EM PAUTA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ESTÁ EM PAUTA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empauta/empauta.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estaempauta.html",
+    "altText": "ESTÁ EM PAUTA — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empauta/estaempauta2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estaempauta.html",
+    "altText": "Jéssica Laguna",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empauta/estaempauta1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estaempauta.html",
+    "altText": "Germanna Lopes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empauta/estaempauta3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estaempauta.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empauta/empautadesktop.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estaempauta.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "ESTÁ EM PAUTA"
+  }
+]

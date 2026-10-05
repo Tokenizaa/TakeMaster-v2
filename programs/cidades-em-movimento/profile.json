@@ -1,0 +1,76 @@
+{
+  "slug": "cidades-em-movimento",
+  "idOriginalCms": "cidades_em_movimento",
+  "tipoRegistro": "programa",
+  "ativoNoCms": true,
+  "midiaKitUrl": "não informado na fonte",
+  "midiaKitUrlsConsolidadas": "não informado na fonte",
+  "midiaKitStatusHttp": "não informado na fonte",
+  "midiaKitCapturadoComSucesso": false,
+  "nomeDoPrograma": "CIDADES EM MOVIMENTO",
+  "titulo": "Cidades em Movimento",
+  "subtitulo": "não informado na fonte",
+  "descricao": "Márcio Lima recebe gestores e representantes de prefeituras para conversas sobre o presente e o futuro dos municípios — crescimento, projetos, investimentos e desenvolvimento.",
+  "propostaEditorial": "não informado na fonte",
+  "conceito": "não informado na fonte",
+  "publico": "não informado na fonte",
+  "apresentador": "Márcio Lima",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": [
+    "Gestão Pública"
+  ],
+  "quadros": "não informado na fonte",
+  "formato": "não informado na fonte",
+  "duracao": "não informado na fonte",
+  "periodicidade": "Quarta-feira | 12h30",
+  "horario": "Quarta-feira | 12h30",
+  "canalPlataforma": "RS Play TV (Canal 524 Claro TV / Streaming rsplay.com.br)",
+  "informacoesComerciais": "não informado na fonte",
+  "diferenciais": "não informado na fonte",
+  "contatos": "não informado na fonte",
+  "redesSociais": "não informado na fonte",
+  "links": "não informado na fonte",
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/img/mediakit/cidades_em_movimento/cidades_card.jpg"
+  ],
+  "textosPromocionais": "não informado na fonte",
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "temasAbordados",
+      "periodicidade",
+      "horario",
+      "canalPlataforma",
+      "imagens"
+    ],
+    "informacaoDerivadaDaEstrutura": [],
+    "informacaoAusente": [
+      "subtitulo",
+      "propostaEditorial",
+      "conceito",
+      "publico",
+      "especialistasConvidadosRecorrentes",
+      "quadros",
+      "formato",
+      "duracao",
+      "informacoesComerciais",
+      "diferenciais",
+      "contatos",
+      "redesSociais",
+      "links",
+      "videos",
+      "textosPromocionais",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/data/rsplay_cms.json"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

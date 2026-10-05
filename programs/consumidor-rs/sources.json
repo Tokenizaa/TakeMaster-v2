@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CONSUMIDOR RS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"16\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"16\",\"title\":\"CONSUMIDOR RS\",\"host\":\"Fernanda Appel\",\"description\":\"Programa de serviço sobre consumo, saúde e direitos.\",\"schedule\":\"Terça-feira | 21h30\",\"image\":\"assets/uploads/consumidor-20260806160618-3ab2faff.png\",\"colorHex\":\"#06b6d4\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/consumidor.html\",\"mediaKitFile\":\"consumidor.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Cidadania\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CONSUMIDOR RS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"16\",\"title\":\"CONSUMIDOR RS\",\"host\":\"Fernanda Appel\",\"description\":\"Programa de serviço sobre consumo, saúde e direitos.\",\"schedule\":\"Terça-feira | 21h30\",\"image\":\"https://rsplay.com.br/imgmidia/consumidor.jpg\",\"colorHex\":\"#06b6d4\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CONSUMIDOR RS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"16\",\"title\":\"CONSUMIDOR RS\",\"host\":\"Fernanda Appel\",\"description\":\"Programa de serviço sobre consumo, saúde e direitos.\",\"schedule\":\"Terça-feira | 21h30\",\"image\":\"https://rsplay.com.br/imgmidia/consumidor.jpg\",\"colorHex\":\"#06b6d4\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/consumidor.html",
+    "urlCanonica": "https://www.rsplay.com.br/consumidor.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Consumidor RS",
+    "dataHoraScrape": "2026-10-05T02:06:28.762Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CONSUMIDOR RS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — CONSUMIDOR ·RS",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Mídia Kit Oficial\nCONSUMIDOR ·RS\nCom Fernanda Appel\nClaro TV (Canal 524) • RS PLAY TV\nInformação\nEducação\nComunicação"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE OS APRESENTADORES E HISTÓRIA DO PROGRAMA — Fernanda Appel",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Fernanda Appel\nA Apresentadora\nFernanda Appel\nA jornalista e comunicadora Fernanda Appel é a voz da defesa dos direitos e interesses do cidadão gaúcho. Com credibilidade inquestionável, traduz informações complexas sobre consumo, saúde e cidadania em conteúdo direto e acessível para o público.\n27 Anos de História\nNo ar ininterruptamente há quase três décadas, o Consumidor RS não é apenas um programa de televisão, mas uma ferramenta de utilidade pública consolidada. Nascido para educar, informar e promover a comunicação entre empresas e cidadãos.\nCredibilidade\nTradição na TV Gaúcha\nMediação Ativa\nResolução de Conflitos"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Formato do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "O Formato do Programa\n\"Direitos do consumidor, saúde, negócios e utilidade pública em um só lugar.\"\nGênero\nJornalismo & Utilidade Pública\nEstilo\nEntrevistas, Reportagens & Mediação\nHistórico\n27 Anos de Continuidade\nTransmissão\nSimultânea para o RS e Portal Digital"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: MARCAS QUE CONFIAM — Marcas que Confiam",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Marcas que Confiam\nUm programa apoiado pelos maiores players e entidades de diversos setores da economia do Rio Grande do Sul.\nZAFFARI / BOURBON\nUNIMED\nPANVEL\nRODOIL\nGBOEX\nLOJAS LEBES\nSINDILOJAS POA\nSULPETRO"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: VISUAL IDENTITY / BASTIDORES (MARQUEE CAROUSEL) — Universo Consumidor RS",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Universo Consumidor RS\nBastidores, entrevistas, coberturas e muita informação."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Faça Parte Deste Legado",
+        "origemDoTrecho": "https://www.rsplay.com.br/consumidor.html",
+        "textoOriginal": "Faça Parte Deste Legado\nAssocie sua empresa à credibilidade de 27 anos de história em defesa da informação e educação do cidadão.\nO Portal\n@consumidorrs\nFale Conosco\nCom Fernanda Appel\n•\nClaro TV 524 | RS Play\n•\n© 2026 Consumidor RS"
+      }
+    ]
+  }
+]

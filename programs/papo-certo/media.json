@@ -1,0 +1,101 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/papo_certo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "PAPO CERTO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — PAPO CERTO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/m5K8MDD72qtWEQ7R/4-YD0Eqo3M42iVOeMQ.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "João Custódio",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/m5K8MDD72qtWEQ7R/3-m5K8ZkzNWoujZ5gD.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "Evanir Aguiar",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/20-YyvDO4wN5rS3rlkb.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/19-YbN4zgWKxOH6jbEz.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/3-m5K8ZkzNWoujZ5gD.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/16-mjE4XbR30GIyEMGw.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/4-YD0Eqo3M42iVOeMQ.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/13-A1az89O7y5I5lnzj.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/10-AzGMx4Q6zDUXwJvy.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  },
+  {
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop/m5K8MDD72qtWEQ7R/2-mnl4PbMpoeH8DP9R.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papocerto.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO CERTO"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/pontodevirada.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "PONTO DE VIRADA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — PONTO DE VIRADA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "Ponto de Virada",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "Tatiana Ferreira de Ávila",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PONTO DE VIRADA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pontovirada/ponto1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pontovirada.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "PONTO DE VIRADA"
+  }
+]

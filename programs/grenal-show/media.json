@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/grenal_show.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "GRENAL SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — GRENAL SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "GRENAL SHOW"
+  },
+  {
+    "url": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo%20colorida%20com%20claro%20tv-iFyZWSfOrbVseuHZd5WJTStPSIvqhd.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/grenalshow.html",
+    "altText": "RS Play TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "GRENAL SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/grenal/nando.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/grenalshow.html",
+    "altText": "Nando Gross",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GRENAL SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/grenal/farid.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/grenalshow.html",
+    "altText": "Farid Germano",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GRENAL SHOW"
+  }
+]

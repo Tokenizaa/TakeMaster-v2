@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/fitsou-20260622101233-45bc80a0.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "FITSOU",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — FITSOU",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/logofit.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "Logo Fit Sou",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "Glenda Delanhese",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fitsou/fitsou6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fitsou.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FITSOU"
+  }
+]

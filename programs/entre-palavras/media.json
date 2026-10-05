@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Entre Palavras — com Ju Ferreira",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ENTRE PALAVRAS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "Entre Palavras — com Ju Ferreira",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "Ju Ferreira",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "Ju Ferreira com seu livro",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/entrepalavras/f5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/entrepalavras.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ENTRE PALAVRAS"
+  }
+]

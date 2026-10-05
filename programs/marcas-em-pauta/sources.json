@@ -1,0 +1,75 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "MARCAS EM PAUTA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"rafaela_vissoky\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"rafaela_vissoky\",\"title\":\"MARCAS EM PAUTA\",\"host\":\"RAFAELA VISSOKY\",\"description\":\"Marcas em Pauta é um programa voltado à análise estratégica de marcas, negócios e ativos intangíveis. \",\"schedule\":\"\",\"image\":\"assets/uploads/marcasempauta-20260706122431-1e1fffdf.jpg\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"marcasempauta.html\",\"mediaKitFile\":\"marcasempauta.html\",\"tags\":[\"Negócios\"],\"gallery\":[],\"menuTitle\":\"MARCAS EM PAUTA\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "MARCAS EM PAUTA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"rafaela_vissoky\",\"title\":\"RAFAELA VISSOKY\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/Rafaela%20Vissoky.png\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/marcasempauta.html",
+    "urlCanonica": "https://www.rsplay.com.br/marcasempauta.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Marcas em Pauta",
+    "dataHoraScrape": "2026-10-05T02:06:32.096Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "MARCAS EM PAUTA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Marcas",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Mídia Kit Oficial\nMarcas\nEm Pauta\nCOM RAFAELA VISSOKY\nRS PLAY • Claro-tv Canal 524\nBranding\n•\nDireito Intelectual\n•\nEstratégia"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: A APRESENTADORA — Rafaela Vissoky",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Apresentação\nRafaela Vissoky\nAdvogada, Empresária, Palestrante e Sócia-fundadora da Rotta Propriedade Intelectual.\nRafaela atua na vanguarda do direito de marcas e inovação empresarial. Com uma comunicação clara, objetiva e estratégica, ela orienta empreendedores sobre como proteger o maior patrimônio de uma empresa: a sua própria identidade no mercado."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Análise Estratégica\nO Programa\nDebates inteligentes e práticos sobre como transformar marcas de negócios em ativos reais de valor.\nBranding Jurídico & Proteção\nDiscussão de forma acessível e prática sobre como as empresas podem proteger sua identidade, fortalecer seu posicionamento, evitar disputas legais no mercado e registrar seus ativos intangíveis de forma correta.\nExpansão & Novos Mercados\nAbordagem detalhada sobre licenciamentos, contratos corporativos, formatação de franquias, inovação tecnológica e estratégias reais de expansão empresarial para marcas em crescimento."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: GALERIA - CARROSSEL HORIZONTAL AUTOMÁTICO E ALEATÓRIO — Galeria do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Registros em Estúdio\nGaleria do Programa\nPasse o mouse ou toque para pausar"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE DA EMISSORA (PENÚLTIMA SEÇÃO) — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Alcance da Emissora\nO poder de divulgação multiplataforma da emissora que exibe o programa.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total Estimado da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — FOOTER / CONTACT",
+        "origemDoTrecho": "https://www.rsplay.com.br/marcasempauta.html",
+        "textoOriginal": "Marcas\nEm Pauta\nDiscutindo, de forma acessível e prática, como proteger sua identidade e evitar conflitos no mercado.\nRS PLAY • CANAL 524 DA CLARO\nRafaela Vissoky\n•\nRS Play\n•\nMarcas em Pauta © 2026"
+      }
+    ]
+  }
+]

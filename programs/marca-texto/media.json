@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/marca_textoo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "MARCA TEXTO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — MARCA TEXTO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "MARCA TEXTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcatexto/marcatexto1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcatexto.html",
+    "altText": "Kátia Limberger",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCA TEXTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcatexto/marcatexto.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcatexto.html",
+    "altText": "Galeria Marca Texto",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCA TEXTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcatexto/marcatexto2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcatexto.html",
+    "altText": "Galeria Marca Texto",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCA TEXTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcatexto/marcatexto3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcatexto.html",
+    "altText": "Galeria Marca Texto",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCA TEXTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcatexto/marcatexto4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcatexto.html",
+    "altText": "Galeria Marca Texto",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCA TEXTO"
+  }
+]

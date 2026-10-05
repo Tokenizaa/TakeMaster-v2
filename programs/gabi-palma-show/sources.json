@@ -1,0 +1,106 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "GABI PALMA SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"gabi_palma_digital\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"gabi_palma_digital\",\"title\":\"GABI PALMA SHOW\",\"host\":\"Gabi Palma\",\"description\":\"As novidades da tecnologia, marketing digital e o universo das redes sociais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/gabipalma.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/gabipalma.html\",\"mediaKitFile\":\"gabipalma.html\",\"active\":false,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Tecnologia\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "GABI PALMA SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"gabi_palma_digital\",\"title\":\"GABI PALMA SHOW\",\"host\":\"Gabi Palma\",\"description\":\"As novidades da tecnologia, marketing digital e o universo das redes sociais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/gabipalma.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "GABI PALMA SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"gabi_palma_digital\",\"title\":\"GABI PALMA SHOW\",\"host\":\"Gabi Palma\",\"description\":\"As novidades da tecnologia, marketing digital e o universo das redes sociais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/gabipalma.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/gabipalma.html",
+    "urlCanonica": "https://www.rsplay.com.br/gabipalma.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Gabi Palma no Digital",
+    "dataHoraScrape": "2026-10-05T02:06:29.536Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "GABI PALMA SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — As redes sociais viram um Game Show na sua TV.",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Mídia Kit Oficial\nAs redes sociais viram um Game Show na sua TV.\nInfluência\n•\nEntretenimento\n•\nEstratégia Digital\n•\nConexão"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTADORA E MANIFESTO — Gabi Palma",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "A Apresentadora\nGabi Palma\nInfluenciadora digital e comunicadora, Gabi Palma traz para a TV o ritmo ágil e a autenticidade de quem vive as redes sociais 24 horas por dia.\nCom uma trajetória focada na criação de conteúdo, ela une o carisma da televisão com o conhecimento técnico do digital, transformando temas complexos em conversas leves, rápidas e envolventes.\nO Digital é Agora\nA internet ocupando a \"telona\" com estratégia, diversão e a linguagem de quem cria, decide e consome no mundo conectado."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA E QUADROS — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "O Programa\nUm espaço criado para mostrar que a presença digital é a chave para o sucesso de qualquer negócio ou profissão.\nNo formato de Game Show, o programa recebe convidados que são autoridades em suas áreas para testar conhecimentos e compartilhar experiências reais sobre o universo das redes.\nQuadros e Dinâmicas\nSegundos ou Nada\nO desafio do tempo. Convidados têm apenas 30 segundos para responder perguntas diretas — o tempo exato de um Reel de sucesso.\nTendências e Virais\nO que está bombando no feed hoje? Discussões sobre filtros, comportamento digital e os vídeos que alcançaram milhões.\nIsso ou Aquilo\nUm duelo rápido de referências culturais e estéticas que revela a personalidade e as preferências dos convidados de forma lúdica.\nPapo Digital\nEntrevistas focadas em carreira, inovação e como a tecnologia e as redes impactam o dia a dia de diferentes setores do mercado."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: UNIVERSO GABI PALMA — O Universo Gabi Palma",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "O Universo Gabi Palma\nConexão, resultados reais e entretenimento premium."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE NA TELEVISÃO E REDES (NOVO DASHBOARD) — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Alcance e Performance\nA força de distribuição multiplataforma da emissora RS Play , aliada a um engajamento imbatível.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: FORÇA NO DIGITAL (SOMENTE REDES DA GABI) — Força no Digital",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Força no Digital\nOs números reais de uma criadora multiplataforma com engajamento 100% orgânico .\nInstagram\n34.7K\nSeguidores\n5.5M\nViews/30 dias\n1.230 Posts Ativos\nTikTok\n9.1K\nSeguidores\n198.4K\nCurtidas\nLifestyle & Humor\nThreads\n2.7K\nSeguidores\n58.5K\nViews/30 dias\nTráfego Orgânico\nYouTube\n665\nInscritos\n180\nVídeos\nAtualizações Frequentes"
+      },
+      {
+        "secaoOrigem": "SLIDE 7: COMERCIAL E PÚBLICO — Por que associar sua marca?",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Por que associar sua marca?\nEstar no \"Gabi Palma no Digital\" é falar a língua de quem decide, cria e consome no mundo conectado.\nLinguagem Multiplataforma\nConteúdo produzido pensando na entrega de qualidade na TV e na viralização em cortes rápidos para Instagram, TikTok e YouTube.\nPúblico Qualificado\nO programa se conecta com empreendedores, profissionais liberais e uma audiência jovem e conectada que consome tendências.\nAmbiente de Retenção\nO formato dinâmico, visual e acelerado de Game Show garante uma atenção muito maior do telespectador durante as inserções da sua marca.\nAutoridade e Endosso\nSua marca será chancelada por uma apresentadora que vive e domina as ferramentas e a linguagem da nova economia digital."
+      },
+      {
+        "secaoOrigem": "SLIDE 8: FORMAS DE ENTREGA (PACOTES E PREÇOS) — Formas de Entrega",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Formas de Entrega\nFormatos avulsos e pacotes estratégicos para alavancar a presença da sua marca no digital.\nFormatos Individuais\nCombo de 3 Stories\nSequência imersiva com call to action direto.\nR$ 800\nReels Lo-Fi\nEstilo espontâneo, natural e totalmente humanizado.\nR$ 1.300\nPost Feed / Carrossel\nEntrega de alto valor em imagem e texto.\nR$ 1.300\nReels Conceito\nAltamente roteirizado, estético e estratégico.\nR$ 1.500\nPacotes\nStart\nPresença inicial de impacto.\nR$ 2.000\n1 Combo de Stories\n1 Reels\nPerformance\nAceleração de engajamento e visibilidade.\nR$ 3.200\n1 Combo de Stories\n1 Reels\n1 Post no Feed\nPremium\nA experiência e autoridade completa.\nR$ 10.000\n2 Reels publicados no Feed da Gabi\n2 Reels para entrega (uso da marca)\n4 Combos de Stories (publicação semanal)\nInformações Importantes\nParte do valor pode ser negociada em produtos ou serviços da marca, mediante acordo prévio.\nContratos e desenvolvimento de pacotes personalizados são realizados exclusivamente via chamada de vídeo.\nVídeos produzidos e entregues em resolução 4K .\nTodos os conteúdos são disponibilizados em alta qualidade via Google Drive .\nDireito de uso de imagem incluso no pacote pelo período de 6 meses ."
+      },
+      {
+        "secaoOrigem": "SLIDE 9: FOOTER / CONTACT — Associe sua imagem à inovação e ao futuro da comunicação.",
+        "origemDoTrecho": "https://www.rsplay.com.br/gabipalma.html",
+        "textoOriginal": "Associe sua imagem à inovação\ne ao futuro da comunicação.\nA hora de dominar o digital na televisão é agora. Junte-se a nós.\n@agabipalma\n@gabipalm.a\nGabi Palma no Digital é um programa de entretenimento e estratégia multiplataforma. Com uma estética vibrante inspirada em game shows, ele educa e diverte a audiência sobre o impacto das redes sociais nos negócios e na vida. Uma produção pensada para a nova economia da atenção.\nGabi Palma\n•\nRS Play\n•\nGabi Palma no Digital © 2026"
+      }
+    ]
+  }
+]

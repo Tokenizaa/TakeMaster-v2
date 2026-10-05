@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "LÉO RECEBE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"leorecebe_1788360313\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"leorecebe_1788360313\",\"title\":\"LÉO RECEBE\",\"menuTitle\":\"LÉO RECEBE\",\"kitTitle\":\"Léo Recebe\",\"host\":\"Léo da Silva Alves\",\"description\":\"Apresentador de TV e professor de Direito. Recebe ideias, pessoas e histórias — com autoridade em Direito, gestão pública e comunicação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/leorecebe/capa.jpg\",\"imageAlt\":\"Léo da Silva Alves\",\"bannerImage\":\"\",\"colorHex\":\"#2E6BE6\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"leorecebe.html\",\"mediaKitFile\":\"leorecebe.html\",\"tags\":[\"Direito\",\"Gestão Pública\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/leorecebe.html",
+    "urlCanonica": "https://www.rsplay.com.br/leorecebe.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Léo Recebe",
+    "dataHoraScrape": "2026-10-05T02:06:31.068Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "LÉO RECEBE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "CAPA — CAPA",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\n“Recebe ideias, pessoas e histórias.”\nDireito •\nComunicação •\nGestão Pública •\nAutoridade\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "APRESENTADOR — Léo da Silva Alves",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "O Apresentador\nLéo da Silva Alves\nApresentador de TV e professor de Direito\nAdvogado e professor de Direito na Universidade Católica de Brasília, é autor de 62 livros nas áreas do Direito, Psicologia Forense, Comunicação e Ciência Política. Conferencista com atuação na América, Europa e África, e consultor de normas perante a Administração Pública.\nJornalista e apresentador de televisão, registrado desde 1988 (TV Capital / Record e Rádio e TV Nacional de Brasília). Conferencista de três continentes, leva ao ar o programa Léo Recebe : recebe ideias, pessoas e histórias.\n62 livros\nDireito, Comunicação e mais\n3 continentes\nAmérica, Europa e África\nDesde 1988\nJornalista e apresentador\nProf. UCB\nUniversidade Católica de Brasília"
+      },
+      {
+        "secaoOrigem": "PROPOSTA + FICHA — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nO Léo Recebe associa a experiência de apresentador da Rádio e TV Nacional em Brasília a um olhar de autoridade sobre Direito, gestão pública e comunicação. A cada episódio, recebe ideias, pessoas e histórias que informam e inspiram.\nUm espaço institucional e de conteúdo, que aproxima especialistas, líderes e o público de conversas relevantes — com credibilidade e profundidade.\nFicha Técnica\nFormato Entrevistas & conteúdo\nPeriodicidade Inédito 1x/semana\nApresentação Léo da Silva Alves\nExibição RS Play\nCanal 524 · Claro TV+\nPúblico\nProfissionais do Direito, gestores públicos, líderes institucionais, estudantes e um público qualificado interessado em conhecimento, carreira e boas histórias."
+      },
+      {
+        "secaoOrigem": "OBJETIVOS — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Estratégia\nObjetivos\n01\nReposicionamento profissional como apresentador de TV.\n02\nDivulgação de cursos, conferências e congressos.\n03\nFortalecimento da marca da consultoria em gestão governamental.\n04\nAmpliação da rede de relacionamentos institucionais.\n05\nPosicionamento como autoridade no segmento.\n06\nGeração de novos negócios e divulgação de produtos, serviços e projetos."
+      },
+      {
+        "secaoOrigem": "TEMAS — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nDireito\nAutoridade e didática jurídica.\nGestão Pública\nNormas e Administração Pública.\nComunicação\nDécadas de TV e oratória.\nCiência Política\nIdeias, poder e sociedade."
+      },
+      {
+        "secaoOrigem": "ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n15.359 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "GALERIA — Léo da Silva Alves",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Galeria Léo da Silva Alves"
+      },
+      {
+        "secaoOrigem": "COTAS & CONTATO — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/leorecebe.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a conteúdo de autoridade em Direito, gestão pública e comunicação.\nPrograma + Instagram Cota MARCA\nInserção qualificada de patrocínio\n• Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n• 1 Reels em Collab no Instagram (Programa + Marca).\n• 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram Patrocinador de Episódio\nAssociação ao convidado da semana\n• Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n• 1 Postagem no Instagram comunicando o convidado da semana e a marca.\n• 1 Sequência de Stories com a marca como patrocinadora do episódio.\nSolicitar Proposta\nExclusividade Sob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n• 1 Programa completo dedicado à marca, projeto ou instituição.\n• 4 Recortes de vídeo distribuídos 1x por semana.\n• 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nVamos construir uma parceria de autoridade e alcance?\n(51) 99910-8548\n•\ncomercial@rsplay.com.br\nLéo Recebe • Léo da Silva Alves • RS Play — Canal 524 Claro • © 2026"
+      }
+    ]
+  }
+]

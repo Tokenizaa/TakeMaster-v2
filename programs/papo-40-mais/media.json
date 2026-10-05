@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/papo40mais.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "PAPO 40+",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — PAPO 40+",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "PAPO 40+"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/papo40/papo405.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papo40.html",
+    "altText": "Dra. Aline Gutierrez",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO 40+"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/papo40/papo401.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papo40.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO 40+"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/papo40/papo402.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papo40.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO 40+"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/papo40/papo403.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papo40.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO 40+"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/papo40/papo404.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/papo40.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO 40+"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/rsplaysports.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "RSPLAY SPORTS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — RSPLAY SPORTS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "Logo RS Play Sports",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/sports1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "A Bancada RS Play Sports",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/sports2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/sports3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/sports4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RSPLAY SPORTS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sports/sports5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaysports.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RSPLAY SPORTS"
+  }
+]

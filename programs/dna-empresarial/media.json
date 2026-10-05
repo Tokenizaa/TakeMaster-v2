@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/dna-20260805172940-0585fbbd.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DNA EMPRESARIAL",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DNA EMPRESARIAL",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DNA EMPRESARIAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/dnaempresarial.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DNA EMPRESARIAL",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DNA EMPRESARIAL",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DNA EMPRESARIAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/dna/dna.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/dna.html",
+    "altText": "Logo DNA Empresarial",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "DNA EMPRESARIAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/dna/matheus.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/dna.html",
+    "altText": "Matheus Bulegon",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DNA EMPRESARIAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/dna/romulo.JPG",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/dna.html",
+    "altText": "Rômulo Vargas",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DNA EMPRESARIAL"
+  }
+]

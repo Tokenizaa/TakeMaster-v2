@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "BELEZA INTELIGENTE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"beleza_inteligente\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"beleza_inteligente\",\"title\":\"BELEZA INTELIGENTE\",\"host\":\"Marília Righetto\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/mediakit/beleza_inteligente/belezainteligente.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/beleza_inteligente.html\",\"mediaKitFile\":\"beleza_inteligente.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Beleza\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "BELEZA INTELIGENTE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"beleza_inteligente\",\"title\":\"BELEZA INTELIGENTE\",\"host\":\"Marília Righetto\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/mediakit/beleza_inteligente/belezainteligente.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "BELEZA INTELIGENTE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"beleza_inteligente\",\"title\":\"BELEZA INTELIGENTE\",\"host\":\"Marília Righetto\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/mediakit/beleza_inteligente/belezainteligente.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/beleza_inteligente.html",
+    "urlCanonica": "https://www.rsplay.com.br/beleza_inteligente.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Beleza Inteligente na TV",
+    "dataHoraScrape": "2026-10-05T02:06:28.506Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "BELEZA INTELIGENTE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Dra. Marília Righetto\n\"A beleza construída com inteligência, tecnologia e respeito.\"\nEstética\n•\nTecnologia\n•\nInovação\n•\nEmpreendedorismo"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTADORA E MANIFESTO — Dra. Marília Righetto",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "A Apresentadora\nDra. Marília Righetto\nCirurgiã-dentista há quase 15 anos, especialista em harmonização facial e referência nacional em rejuvenescimento com tecnologias. Ao longo de sua trajetória, construiu autoridade ao unir prática clínica, visão estratégica e inovação, sempre com foco em resultados naturais e seguros .\nCriadora da marca Beleza Inteligente, é speaker nos principais congressos do país e mentora de profissionais que desejam elevar seus resultados. Empreendedora apaixonada, é casada com Rafael, mãe da Malu e do Pedro, e vive intensamente a sua fé com valores que refletem em sua forma de cuidar e ensinar.\nA Filosofia\n\"O meu lema é o Menos é Mais . Minha promessa nunca é sobre voltar no tempo, e sim sobre fazer cada pessoa se sentir bem na exata idade que ela tem, respeitando cada história, mas despertando a sua melhor versão.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA E O MOVIMENTO — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "O Programa\nUm espaço criado para mostrar que a beleza não precisa de exageros. O programa ensina profissionais a utilizarem tecnologia para transformar o faturamento de suas clínicas, enquanto mostra ao público final como a estética pode ser construída de forma leve, consciente e inteligente.\nEstética Natural\nDesmistificando exageros e focando no gerenciamento do envelhecimento com elegância, respeitando a individualidade.\nTecnologia e Inovação\nAs novidades do mercado mundial, equipamentos de ponta e como a ciência impulsiona o rejuvenescimento seguro.\nNegócios e Gestão\nConteúdo B2B focado em ensinar profissionais a elevarem seu posicionamento e transformarem a lucratividade de suas clínicas.\nAutoestima e Bem-Estar\nA conexão entre se sentir bem por fora e por dentro. A beleza como ferramenta de poder e autoconfiança.\nMais que Estética: Um Movimento\nEmbora tenha um forte foco em procedimentos e tecnologias, a Beleza Inteligente vai muito além disso. Ela é um movimento completo que envolve tudo o que contribui com a sua melhor versão. No programa, incluímos temas fundamentais como saúde, nutrição, cuidados com o cabelo, esportes, mente e espírito . Afinal, a verdadeira beleza é o reflexo de uma vida integrada e em total equilíbrio.\nDiferenciais da Beleza Inteligente\nAutoridade Comprovada\nApresentadora experiente, que une conhecimento clínico real e capacidade de comunicação.\nPúblico B2B e B2C\nAtinge tanto o paciente que deseja o procedimento, quanto o profissional que deseja comprar tecnologias.\nEstética Premium\nAmbiente visualmente sofisticado que eleva a percepção de valor das marcas associadas."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE DA EMISSORA (TV / RS PLAY) - NOVO DASHBOARD — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida da emissora RS Play , com forte engajamento e retenção.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance total da emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: UNIVERSO BELEZA INTELIGENTE (CAROUSEL DE IMAGENS) — Universo Beleza Inteligente",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "Universo Beleza Inteligente\nTecnologia, resultados reais e estética premium."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: COMERCIAL E PÚBLICO — Perfil do Público",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "Perfil do Público\nUm público altamente qualificado, dividindo-se entre profissionais do setor e consumidores de estética premium.\nProfissionais que trabalham com harmonização facial, corporal e estética em geral.\nDonos e gestores de clínicas de estética.\nPacientes exigentes que buscam resultados naturais.\nMarcas de equipamentos e tecnologias faciais.\nOportunidade para Marcas\nConecte seu produto a uma audiência engajada que busca inovação e alta performance clínica.\nVisibilidade de Equipamentos\nDemonstração da sua tecnologia ou produto diretamente no cenário ou em quadros práticos do programa.\nEndosso Clínico\nMenção qualificada e chancelada pela Dra. Marília durante o conteúdo de maior retenção.\nConteúdo Multiplataforma\nExposição estendida nos cortes e reels de alta performance no Instagram e YouTube.\nAções B2B Especializadas\nQuadros focados em ensinar o profissional a rentabilizar a tecnologia da sua marca na clínica dele."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: FOOTER / CONTACT — Sua marca conectada ao que há de mais avançado e elegante na estética.",
+        "origemDoTrecho": "https://www.rsplay.com.br/beleza_inteligente.html",
+        "textoOriginal": "Sua marca conectada ao que há de\nmais avançado e elegante na estética.\nAssocie sua imagem à inovação, resultados reais e ao profissionalismo no mercado de harmonização facial.\n@belezainteligente\n@BelezaInteligenteTV\nO Beleza Inteligente na TV é um programa apresentado por Dra. Marília Righetto. Com foco no \"Menos é Mais\" e na rentabilidade através de tecnologias, consolida uma audiência expressiva entre profissionais e pacientes, sendo o ambiente ideal para marcas que buscam credibilidade B2B e desejo de consumo B2C no mercado estético.\nDra. Marília Righetto\n•\nRS Play\n•\nBeleza Inteligente © 2026"
+      }
+    ]
+  }
+]

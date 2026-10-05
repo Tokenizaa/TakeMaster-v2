@@ -31,6 +31,7 @@ import {
   validateShortsOutput,
 } from '../src/domain/aiContracts';
 import { buildAuthSession, verifySessionToken } from '../src/server/auth';
+import { evaluateShowPermissions } from '../src/hooks/usePermissions';
 import { createApiApp } from '../server';
 
 describe('TakeMaster V2 / RSPlay TV SaaS — Reconstruction, RBAC & Billing Suite', () => {
@@ -451,6 +452,233 @@ describe('TakeMaster V2 / RSPlay TV SaaS — Reconstruction, RBAC & Billing Suit
       const adminOverview = await adminOverviewRes.json();
       assert.ok(adminOverview.reportSummary.mrrCents > 0);
       assert.ok(adminOverview.reportSummary.showsReport.length >= 2);
+
+      // 8. Validate usePermissions / evaluateShowPermissions show-level RBAC isolation
+      const rafaelShow1Perms = evaluateShowPermissions(rafaelSession, 'show-1');
+      assert.equal(rafaelShow1Perms.hasShowAccess, true);
+      assert.equal(rafaelShow1Perms.canView, true);
+      assert.equal(rafaelShow1Perms.canEditEditorial, true);
+      assert.equal(rafaelShow1Perms.source, 'explicit_show_permission');
+
+      const rafaelShow2Perms = evaluateShowPermissions(rafaelSession, 'show-2');
+      assert.equal(rafaelShow2Perms.hasShowAccess, false);
+      assert.equal(rafaelShow2Perms.canView, false);
+      assert.equal(rafaelShow2Perms.source, 'denied');
+
+      const claraShow2Perms = evaluateShowPermissions(claraSession, 'show-2');
+      assert.equal(claraShow2Perms.hasShowAccess, true);
+      assert.equal(claraShow2Perms.canView, true);
+      assert.equal(claraShow2Perms.canOperateStudio, true);
+
+      const claraShow1Perms = evaluateShowPermissions(claraSession, 'show-1');
+      assert.equal(claraShow1Perms.hasShowAccess, false);
+      assert.equal(claraShow1Perms.canView, false);
+
+      const adminShow2Perms = evaluateShowPermissions(adminSession, 'show-2');
+      assert.equal(adminShow2Perms.hasShowAccess, true);
+      assert.equal(adminShow2Perms.isFullAccessAdmin, true);
+      assert.equal(adminShow2Perms.source, 'admin_master');
+
+      // 9. FASE 1 a 10: Validação de Identidade Editorial + Curadoria de Pautas (3 programas)
+      // 9.1 Programa 1: Advogada do Leque (Mídia Kit Completo)
+      const advKnowledgeRes = await fetch(
+        `${baseUrl}/api/shows/show-advogada-do-leque/knowledge`,
+        {
+          headers: { Authorization: `Bearer ${adminSession.token}` },
+        }
+      );
+      assert.equal(advKnowledgeRes.status, 200);
+      const advKnowledge = await advKnowledgeRes.json();
+      assert.equal(advKnowledge.foundInKnowledgeBase, true);
+      assert.equal(advKnowledge.coverageLevel, 'completa');
+      assert.equal(advKnowledge.nome.toUpperCase(), 'ADVOGADA DO LEQUE');
+      assert.equal(advKnowledge.apresentador, 'Taise Vielmo Côrtes');
+      assert.ok(advKnowledge.temasPrincipais.length > 0);
+      assert.ok(advKnowledge.fontes.length >= 2);
+
+      const advIdentityRes = await fetch(
+        `${baseUrl}/api/shows/show-advogada-do-leque/editorial-identity`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminSession.token}`,
+          },
+          body: JSON.stringify({}),
+        }
+      );
+      assert.equal(advIdentityRes.status, 200);
+      const advIdentity = await advIdentityRes.json();
+      assert.ok(advIdentity.essencia.length > 10);
+      assert.ok(Array.isArray(advIdentity.temas) && advIdentity.temas.length > 0);
+      assert.ok(Array.isArray(advIdentity.forcas) && advIdentity.forcas.length > 0);
+      assert.ok(
+        Array.isArray(advIdentity.abordagens_recomendadas) &&
+          advIdentity.abordagens_recomendadas.length > 0
+      );
+      assert.ok(
+        Array.isArray(advIdentity.abordagens_a_evitar) &&
+          advIdentity.abordagens_a_evitar.length > 0
+      );
+      assert.ok(Array.isArray(advIdentity.diferenciais) && advIdentity.diferenciais.length > 0);
+      assert.ok(Array.isArray(advIdentity.fontes) && advIdentity.fontes.length > 0);
+
+      // Sugestão de pautas SEM input ("Quero ideias de pautas para este programa.")
+      const advPautasNoInputRes = await fetch(
+        `${baseUrl}/api/shows/show-advogada-do-leque/suggest-pautas`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminSession.token}`,
+          },
+          body: JSON.stringify({}),
+        }
+      );
+      assert.equal(advPautasNoInputRes.status, 200);
+      const advPautasNoInput = await advPautasNoInputRes.json();
+      assert.equal(advPautasNoInput.queryUsed, 'Quero ideias de pautas para este programa.');
+      assert.ok(advPautasNoInput.pautas.length >= 3);
+      assert.ok(advPautasNoInput.pautas[0].score >= 50 && advPautasNoInput.pautas[0].score <= 99);
+      assert.ok(['alto', 'medio', 'baixo'].includes(advPautasNoInput.pautas[0].fit));
+      assert.ok(advPautasNoInput.pautas[0].title.length > 5);
+      assert.ok(advPautasNoInput.pautas[0].reason.length > 5);
+      assert.ok(advPautasNoInput.pautas[0].angle.length > 5);
+      assert.ok(advPautasNoInput.pautas[0].suggestedGuest.length > 3);
+      assert.ok(Array.isArray(advPautasNoInput.pautas[0].questions));
+
+      // Sugestão de pautas COM tema e cidade
+      const advPautasThemeRes = await fetch(
+        `${baseUrl}/api/shows/show-advogada-do-leque/suggest-pautas`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminSession.token}`,
+          },
+          body: JSON.stringify({
+            tema: 'Direito do consumidor em compras online e golpes digitais',
+            cidade: 'Porto Alegre',
+          }),
+        }
+      );
+      assert.equal(advPautasThemeRes.status, 200);
+      const advPautasTheme = await advPautasThemeRes.json();
+      assert.ok(advPautasTheme.queryUsed.includes('Direito do consumidor'));
+      assert.ok(advPautasTheme.pautas.length >= 3);
+
+      // Uso da pauta na produção (fluxo atual de criação de episódio)
+      const chosenPitch = advPautasTheme.pautas[0];
+      const useInProdRes = await fetch(`${baseUrl}/api/episodes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${adminSession.token}`,
+        },
+        body: JSON.stringify({
+          showId: 'show-advogada-do-leque',
+          title: chosenPitch.title,
+          idea: `${chosenPitch.hook}\nAbordagem: ${chosenPitch.angle}`,
+          guestName: chosenPitch.suggestedGuest,
+          targetDurationMin: 45,
+          status: 'diagnosis',
+        }),
+      });
+      assert.equal(useInProdRes.status, 201);
+      const createdFromPitch = await useInProdRes.json();
+      assert.equal(createdFromPitch.showId, 'show-advogada-do-leque');
+      assert.equal(createdFromPitch.title, chosenPitch.title);
+
+      // 9.2 Programa 2: As Pessoas Inspiram (Mídia Kit Completo)
+      const apiKnowledgeRes = await fetch(
+        `${baseUrl}/api/shows/show-as-pessoas-inspiram/knowledge`,
+        {
+          headers: { Authorization: `Bearer ${adminSession.token}` },
+        }
+      );
+      assert.equal(apiKnowledgeRes.status, 200);
+      const apiKnowledge = await apiKnowledgeRes.json();
+      assert.equal(apiKnowledge.foundInKnowledgeBase, true);
+      assert.equal(apiKnowledge.coverageLevel, 'completa');
+      assert.equal(apiKnowledge.apresentador, 'Eliane Davila');
+      assert.ok(apiKnowledge.quadros.length > 0);
+
+      const apiPautasRes = await fetch(
+        `${baseUrl}/api/shows/show-as-pessoas-inspiram/suggest-pautas`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminSession.token}`,
+          },
+          body: JSON.stringify({
+            tema: 'Empreendedorismo social e histórias inspiradoras na Serra Gaúcha',
+          }),
+        }
+      );
+      assert.equal(apiPautasRes.status, 200);
+      const apiPautas = await apiPautasRes.json();
+      assert.ok(apiPautas.pautas.length >= 3);
+
+      // 9.3 Programa 3: Bem Viver (Programa com base menor — apenas catálogo, sem inventar dados)
+      const bvKnowledgeRes = await fetch(`${baseUrl}/api/shows/show-bem-viver/knowledge`, {
+        headers: { Authorization: `Bearer ${adminSession.token}` },
+      });
+      assert.equal(bvKnowledgeRes.status, 200);
+      const bvKnowledge = await bvKnowledgeRes.json();
+      assert.equal(bvKnowledge.foundInKnowledgeBase, true);
+      assert.equal(bvKnowledge.coverageLevel, 'parcial');
+      assert.equal(bvKnowledge.proposta, 'não identificado na base');
+      assert.equal(
+        bvKnowledge.editorialSynthesis.abordagens_a_evitar[0],
+        'não identificado na base'
+      );
+
+      // 9.4 Teste de Fallback de IA (FASE 8: Primary -> Fallback -> Grounded)
+      const fallbackRes = await fetch(
+        `${baseUrl}/api/shows/show-advogada-do-leque/suggest-pautas`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminSession.token}`,
+          },
+          body: JSON.stringify({
+            tema: 'Planejamento sucessório familiar',
+            simulatePrimaryFailure: true,
+          }),
+        }
+      );
+      assert.equal(fallbackRes.status, 200);
+      const fallbackData = await fallbackRes.json();
+      assert.equal(fallbackData.usedFallback, true);
+      assert.ok(fallbackData.pautas.length >= 3);
+
+      // 10. Teste de Primeiro Cadastro Conectado ao Pagante (POST /api/auth/register)
+      const registerRes = await fetch(`${baseUrl}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Dr. Marcos Andrade',
+          email: `marcos.andrade.${Date.now()}@rsplaytv.com.br`,
+          loginCode: 'dna2026',
+          jobTitle: 'Apresentador & Produtor',
+          showMode: 'knowledge_base',
+          knowledgeBaseSlug: 'dna-empresarial',
+          planId: 'rsplay_studio_pro',
+          paymentMethodType: 'pix_automatico',
+          paymentMethodBrand: 'PIX Automático Banco Central',
+          paymentMethodLast4: '9912',
+          autoRenew: true,
+        }),
+      });
+      assert.equal(registerRes.status, 201);
+      const registerData = await registerRes.json();
+      assert.ok(registerData.session.token);
+      assert.equal(registerData.subscription.status, 'active');
+      assert.equal(registerData.invoice.status, 'paid');
+      assert.ok(registerData.gatewayEvent.eventType.includes('subscription'));
+      assert.ok(registerData.show.id.includes('dna-empresarial'));
     } finally {
       server.close();
     }

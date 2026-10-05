@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"conversa_alto_valor\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"conversa_alto_valor\",\"title\":\"CONVERSAS DE ALTO VALOR\",\"host\":\"Cacá Lima\",\"description\":\"Entrevistas exclusivas e debates sobre temas relevantes para o seu desenvolvimento.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/conversadealtovalor.jpg\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/alto_valor.html\",\"mediaKitFile\":\"alto_valor.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Entrevista\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"conversa_alto_valor\",\"title\":\"CONVERSAS DE ALTO VALOR\",\"host\":\"Cacá Lima\",\"description\":\"Entrevistas exclusivas e debates sobre temas relevantes para o seu desenvolvimento.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/conversadealtovalor.jpg\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"conversa_alto_valor\",\"title\":\"CONVERSAS DE ALTO VALOR\",\"host\":\"Cacá Lima\",\"description\":\"Entrevistas exclusivas e debates sobre temas relevantes para o seu desenvolvimento.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/conversadealtovalor.jpg\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/alto_valor.html",
+    "urlCanonica": "https://www.rsplay.com.br/alto_valor.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Conversas de Alto Valor",
+    "dataHoraScrape": "2026-10-05T02:06:28.504Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Conversas de Alto Valor",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "Mídia Kit Oficial\nConversas de\nAlto Valor\n\"Onde histórias revelam propósitos.\"\nCom Cacá Lima\nProfundidade\n•\nPropósito\n•\nNarrativa Humana"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA E PROPÓSITO — Apresentado por Cacá Lima",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "Visão Geral\nApresentado por Cacá Lima\nCacá Lima é referência pela clareza, elegância, visão estratégica e habilidade de conectar pessoas, marcas e histórias com inteligência e sensibilidade.\nO programa nasce com um DNA sólido: conteúdo que inspira, educa e movimenta. Cada episódio é construído como uma experiência completa - o público não apenas assiste; ele se reconhece, reflete e evolui.\nNosso Propósito\nDesenhado para transformar perspectivas\nInspirar\nTrajetórias reais, corajosas e transformadoras\nEducar\nTécnica, mentalidade e prática\nConectar\nPessoas, marcas, ideias e setores\nProvocar Clareza\nPerguntas que mudam a percepção\nValorizar Propósito\nPorque propósito sustenta qualquer movimento\nCriar Impacto\nConteúdo que permanece após o episódio"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FORMATO DE PRODUÇÃO — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "O Programa\n\"Uma profundidade empreendedora e narrativa humana.\"\nSala de Entrevistas\nConversas de Alto Valor é um programa semanal no formato Sala de Entrevistas, desenhado para entregar alta profundidade e conectar o público através de experiências autênticas.\nPeriodicidade\nSemanal\nDuração\nAté 30 min\nFormato de Produção\nCâmeras\nGravação multicâmera (2 ou 3) com alta qualidade cinematográfica.\nÁudio\nCaptação cristalina com lapelas profissionais.\nEdição Premium\nCortes dinâmicos premium e trilha sonora suave pensada para imersão."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ESTRUTURA DO EPISÓDIO — Estrutura do Episódio",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "Estrutura do Episódio\nUma jornada cuidadosamente construída do início ao fim.\n01\nMinuto Educação\n45s - 1min\nAbertura com impacto imediato.\n• VT de alta produção executado por Head Trainer\n• Quebrar crenças limitantes do público\n• Entregar valor rápido e aplicável\n• Objetivo: Ativar mentalidade empreendedora\nCota Master Disponível\n02\nBoas-vindas + Tema + Histórias\n8 min\nCacá Lima dá o tom e cria conexão humana.\n• Saudação calorosa da apresentadora\n• Introdução dos convidados com mini-bio\n• Criação de conexão emocional com o público\n• Apresentação do tema do episódio\n03\nConstruindo Novos Saberes\n8 min (2 VTs)\nAprofundamento técnico e educacional.\n• 2 VTs educativos de alta qualidade\n• Entrevistas com especialistas do mercado\n• Formato \"Você Sabia?\" para engajamento\n• Conteúdo técnico acessível ao público\nCota Premium Disponível\n04\nVozes que Transformam\n8 min (2 VTs)\nMomento central do episódio\n• Histórias reais de 2 convidados que mudaram o jogo\n• Narrativas de superação e conquistas pessoais\n• Resultados concretos e mensuráveis\n• Impacto gerado em suas comunidades e mercados\n05\nDesafio Revelador\n3-4 min\nA pergunta que revela o propósito.\n• Pergunta final poderosa e provocativa\n• Reflexão profunda dos convidados\n• Revelação de propósitos e valores\n• Encerramento memorável e impactante"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE E CARROSSEL (NOVO DASHBOARD MULTIPLATAFORMA) — Alcance e Distribuição",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "Alcance e Distribuição\nPresença multiplataforma sólida para o máximo impacto.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance total da emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas\nUniverso Conversas de Alto Valor"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Pronto para fazer parte de uma conversa transformadora?",
+        "origemDoTrecho": "https://www.rsplay.com.br/alto_valor.html",
+        "textoOriginal": "Pronto para fazer parte de uma\nconversa transformadora?\nConversas de Alto Valor está pronto para inspirar, educar e conectar. Entre em contato para oportunidades comerciais e cotas de patrocínio.\nEntre em contato\nCacá Lima\n•\nCanal 524 Claro TV\n•\n© 2026 Conversas de Alto Valor"
+      }
+    ]
+  }
+]

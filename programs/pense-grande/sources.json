@@ -1,0 +1,74 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "PENSE GRANDE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"pense_grande\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"pense_grande\",\"title\":\"PENSE GRANDE\",\"host\":\"Thiago Nunes\",\"description\":\"Conversas que expandem a mente — propósito, mentalidade e crescimento, com Thiago Nunes.\",\"schedule\":\"Sexta-feira | 21h\",\"image\":\"https://rsplay.com.br/img/mediakit/pense_grande/pensegrande_card.jpg\",\"colorHex\":\"#C9A24B\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"pense_grande.html\",\"mediaKitFile\":\"pense_grande.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":true,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Inspiração\"],\"gallery\":[],\"menuTitle\":\"Pense Grande\",\"kitTitle\":\"Pense Grande\",\"imageAlt\":\"\",\"novo\":true}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/pense_grande.html",
+    "urlCanonica": "https://www.rsplay.com.br/pense_grande.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Pense Grande",
+    "dataHoraScrape": "2026-10-05T02:06:30.816Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "PENSE GRANDE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "============ SLIDE 1: CAPA ============ — ============ SLIDE 1: CAPA ============",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\n“Uma mente grande deixa marca por onde passa — reconheça sua verdadeira identidade e propósito.”\nMentalidade\n✦\nIdentidade\n✦\nPropósito\n✦\nAlta Performance\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 2: O APRESENTADOR ============ — Mentor de performance humana Thiago Nunes",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "O Apresentador\nMentor de performance humana\nThiago Nunes\n“Sou servo do Deus vivo. Marido da Lia, pai do Marcus Vinicius — essas são as raízes de tudo\no que sou, antes de qualquer título. Leal até o fim, sincero mesmo quando dói, positivo sem\nser ingênuo. Visionário porque enxergo o que ainda não existe, e trabalhador porque sei que\nvisão sem suor é só sonho. Inabalável na fé. Isso — antes de qualquer palco, microfone ou\ntítulo — é quem eu sou.”\nMétodo R.I.O.\nResgate da Identidade Original\nCEO\nPense Grande Conference\nAutor\nLivro “Pense Grande”\n7+\nFormações e pós-graduações"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 3: FORMAÇÕES ============ — Formação que sustenta a autoridade",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Trajetória\nFormação que sustenta a autoridade\nFormação em Teologia\nPNL — Instituto Tony Robbins\nPalestrante certificado — Febracis e Instituto Tatiane De'Angelo\nPós em Inteligência Emocional\nPós em Neurociência Comportamental\nPós em Gestão de Pessoas\nPós em Psicologia Analítica Junguiana\nPós em Marketing e Vendas\nCriador do Método R.I.O."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 4: O PROGRAMA / PROPOSTA ============ — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nO Pense Grande é um convite para que ninguém mais viva dominado por vozes externas ou pela\nnegatividade, mas ancorado na certeza de que nasceu com um propósito. Reunindo pessoas de\nmentalidade grande, o programa inspira cada espectador a viver sua identidade real com clareza.\nHistórias inspiradoras que despertam outros a seguirem seus passos — para que a passagem de\ncada um por esta terra deixe marca e relevância.\nFicha Técnica\nDuração 57 minutos\nPeriodicidade Inédito 1x/semana\nEpisódios/ano 48\nExibição RS Play\nCanal 524 · Claro TV+\nPúblico\nEmpreendedores, líderes e pessoas em busca de desenvolvimento humano, inteligência emocional e alta performance — que querem trocar a vida pequena pela mentalidade grande."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 5: OBJETIVOS ============ — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Estratégia\nObjetivos\n01\nFortalecer a marca pessoal como mentor de performance humana e o Método R.I.O.\n02\nConsolidar o posicionamento como autoridade em desenvolvimento humano, inteligência emocional e reprogramação de crenças.\n03\nGerar novas oportunidades de negócio — mentorias, palestras e treinamentos corporativos.\n04\nExpandir a rede de relacionamento com empresas, parceiros e especialistas do segmento.\n05\nCompartilhar, de forma prática, ferramentas de autogoverno e transformação de identidade.\n06\nDivulgar produtos, serviços e projetos ligados à alta performance humana."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 6: TEMAS ============ — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nIdentidade e propósito\nReconhecer quem se é, antes de qualquer título.\nInteligência emocional\nGovernar as emoções em vez de ser governado por elas.\nReprogramação de crenças\nTrocar a vida pequena pela mentalidade grande.\nAlta performance\nFerramentas práticas de autogoverno e disciplina."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 7: ALCANCE DA EMISSORA ============ — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n15.389 Milhões\nAlcance total da emissora multiplataforma\n16 M\nAcessos\nPlataforma TVSPlay\n2 M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,5M+\nVisualizações\n19.2K\nInscritos\nInstagram\n@rsplaydigital\n+6.4M\nAlcance\n65K\nInterações\nTikTok\n@rsplaydigital\n300 K\nVisualizações\n15.2 K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 8: GALERIA ============ — Pense Grande",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Galeria\nPense Grande"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 9: COTAS & CONTATO ============ — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/pense_grande.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a um conteúdo de propósito sobre mentalidade, identidade e alta performance.\nPrograma + Instagram\nCota MARCA\nInserção qualificada de patrocínio\n✦ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n✦ 1 Reels em Collab no Instagram (Programa + Marca).\n✦ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram\nPatrocinador Oficial de Episódio\nAssociação ao convidado da semana\n✦ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n✦ 1 Postagem no Instagram comunicando o convidado da semana e a marca patrocinadora.\n✦ 1 Sequência de Stories trazendo a marca como patrocinadora oficial do episódio.\nSolicitar Proposta\nExclusividade\nSob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n✦ 1 Programa completo dedicado: o convidado apresenta sua história, marca e propósito.\n✦ 4 Recortes de vídeo em Collab , distribuídos 1x por semana.\n✦ Agradecimento aos patrocinadores nos outros 4 programas do mês .\n✦ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para construir uma parceria com propósito?\n(51) 99910-8548\n✦\ncomercial@rsplay.com.br\nPense Grande\n✦\nMentalidade • Identidade • Propósito\n✦\nRS Play — Canal 524 Claro\n✦\n© 2026"
+      }
+    ]
+  }
+]

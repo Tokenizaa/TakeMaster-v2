@@ -1,0 +1,85 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"emocoes_chocolate\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"emocoes_chocolate\",\"title\":\"EMOÇÕES COM CHOCOLATE\",\"host\":\"Nicole Ferrari\",\"description\":\"Uma conversa deliciosa sobre emoções, comportamento e bem-estar com a leveza do chocolate.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/nicole_ferreira-20260824135206-9db213d6.jpeg\",\"colorHex\":\"#b45309\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"emocoes_chocolate.html\",\"mediaKitFile\":\"emocoes_chocolate.html\",\"tags\":[\"Comportamento\"],\"gallery\":[],\"menuTitle\":\"EMOÇÕES COM CHOCOLATE\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"emocoes_chocolate\",\"title\":\"EMOÇÕES COM CHOCOLATE\",\"host\":\"Nicole Ferrari\",\"description\":\"Uma conversa deliciosa sobre emoções, comportamento e bem-estar com a leveza do chocolate.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/programas/emo%C3%A7%C3%B5es-com-chocolate-com-Nicole-Ferrari.png\",\"colorHex\":\"#b45309\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "urlCanonica": "https://www.rsplay.com.br/emocoes_chocolate.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Emoções com Chocolate",
+    "dataHoraScrape": "2026-10-05T02:06:31.844Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "EMOÇÕES COM CHOCOLATE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "============ SEÇÃO 01: CAPA ============ — ============ SEÇÃO 01: CAPA ============",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\nAlimente suas emoções\nEntrevistas\n❧\nReceitas\n❧\nJogos\n❧\nEntretenimento Social\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 02: O PROGRAMA ============ — Emoções que vão além do chocolate",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "O Programa\nEmoções que vão além do chocolate\nO Emoções com Chocolate é um programa para mostrar as emoções que o chocolate pode trazer na vida das pessoas — no estúdio e na rua, com entrevistas, jogos, atualidades, receitas, produtos e parceiros.\nMais do que vitrine, é entretenimento social : leva o social ao conhecimento da marca e dos parceiros, e mostra a essência que está por trás da marca .\nGênero\nVariedades — Chocolate, Emoção & Social\nApresentação\nNicole Ferrari\nGravação\nEstúdio e externas\nDistribuição\nRS Play — Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 03: A APRESENTADORA ============ — Nicole Ferrari, da musicoterapia ao chocolate",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "‹\n›\nA Apresentadora\nNicole Ferrari, da musicoterapia ao chocolate\nGramadense, graduada em Musicoterapia , especialista nos Problemas do Desenvolvimento na Infância e Adolescência com abordagem transdisciplinar e em Estimulação Precoce .\nTem mais de 12 anos de atuação em consultório particular, foi docente de Musicoterapia da única faculdade do Rio Grande do Sul a oferecer o curso, e atuou em CAPS e APAE .\nEmpresária do chocolate há 18 anos , é sócia-proprietária da Fábrica Chocolate GramadoWay, das lojas GramadoWay e da loja temática que brilha o seu coração: Chocolate João e Maria by GramadoWay .\n18\nAnos de\nempresária do chocolate\n12+\nAnos em\nconsultório particular\nDocente\nMusicoterapia\núnica faculdade do RS\nGramado\nRaízes e\natuação gramadense"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 04: O QUE TEM NO PROGRAMA ============ — No estúdio e na rua",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Conteúdo\nNo estúdio e na rua\nEntrevistas\nJogos\nAtualidades\nReceitas\nProdutos\nParceiros\nEntretenimento Social\nExternas na Rua\nPropósito\nLevar o social ao conhecimento da marca e dos parceiros — e mostrar a essência que está por trás da marca ."
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 05: AS MARCAS ============ — As Marcas",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Por trás do programa\nAs Marcas\nProdução\nFábrica Chocolate GramadoWay\nA fábrica onde o chocolate nasce — origem de toda a operação da marca.\nVarejo\nLojas GramadoWay\nA rede de lojas que leva o chocolate de Gramado ao público.\nLoja temática\nChocolate João e Maria\nA loja temática by GramadoWay — a que brilha o coração da Nicole."
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 06: ALCANCE DA EMISSORA ============ — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\nDados da plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 07: GALERIA ============ — Emoções com Chocolate",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Galeria\nEmoções com Chocolate"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 08: COTAS & CONTATO ============ — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/emocoes_chocolate.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a um programa sobre afeto, sabor e o que há por trás de cada história.\nPrograma + Instagram\nCota MARCA\nInserção qualificada de patrocínio\n❧ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n❧ 1 Reels em Collab no Instagram (Programa + Marca).\n❧ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram\nPatrocinador Oficial de Episódio\nAssociação ao convidado da semana\n❧ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n❧ 1 Postagem no Instagram comunicando o convidado da semana e a marca patrocinadora.\n❧ 1 Sequência de Stories trazendo a marca como patrocinadora oficial do episódio.\nSolicitar Proposta\nExclusividade\nSob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n❧ 1 Programa completo dedicado: o convidado apresenta sua história, marca e propósito.\n❧ 4 Recortes de vídeo em Collab tripla, distribuídos 1x por semana.\n❧ Agradecimento aos patrocinadores nos outros 4 programas do mês .\n❧ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para alimentar as emoções do seu público junto com a gente?\ncomercial@rsplay.com.br\n❧\nwww.rsplay.com.br\nEmoções com Chocolate\n❧\ncom Nicole Ferrari\n❧\nRS Play — Canal 524 Claro\n❧\n© 2026"
+      }
+    ]
+  }
+]

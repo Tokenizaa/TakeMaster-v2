@@ -1,0 +1,75 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "RADAR AMBIENTAL 360",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"josiane_martinello\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"josiane_martinello\",\"title\":\"RADAR AMBIENTAL 360\",\"host\":\"JOSIANE MARTINELLO\",\"description\":\"As grandes questões ambientais em pauta. Com uma abordagem multidisciplinar, o programa contempla diferentes eixos: mudanças climáticas, agronegócio, sustentabilidade, inovação e os desafios das autorizações ambientais em áreas urbanas que serão pautas debatidas por especialistas e protagonistas.\",\"schedule\":\"Em breve\",\"image\":\"assets/uploads/radar_ambiental-20260622142353-28840d1f.jpg\",\"colorHex\":\"#3b82f6\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"Estreia em breve\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"radarambiental360.html\",\"mediaKitFile\":\"radarambiental360.html\",\"tags\":[\"Meio Ambiente\"],\"gallery\":[],\"menuTitle\":\"RADAR AMBIENTAL 360\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "RADAR AMBIENTAL 360",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"josiane_martinello\",\"title\":\"JOSIANE MARTINELLO\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/Josiane%20Martinello.jpeg\",\"colorHex\":\"#3b82f6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/radarambiental360.html",
+    "urlCanonica": "https://www.rsplay.com.br/radarambiental360.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Radar Ambiental 360",
+    "dataHoraScrape": "2026-10-05T02:06:32.095Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "RADAR AMBIENTAL 360",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Josiane Martinello\nRS PLAY • Claro-tv Canal 524\nInformação qualificada para decisões ambientais mais seguras."
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA — Josiane Martinello",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "A Apresentadora\nJosiane Martinello\nJosiane Martinello é bióloga, advogada e consultora estratégica ambiental , especialista em gestão de risco e conformidade para empresas. Com mais de 13 anos de atuação, construiu uma trajetória baseada na integração entre conhecimento técnico, jurídico e operacional, ajudando organizações a identificar riscos, cumprir obrigações ambientais e tomar decisões com mais segurança.\nÀ frente da Insights Ambiental , atua do diagnóstico ao acompanhamento contínuo da conformidade, transformando questões ambientais em proteção para a operação, a reputação e o crescimento dos negócios. Mestra em Planejamento Urbano e Regional , leva ao Radar Ambiental 360º uma visão multidisciplinar que conecta meio ambiente, legislação, gestão, economia e desenvolvimento.\nSegurança jurídica\nInterpretação regulatória, responsabilidades e prevenção de passivos administrativos, civis e penais.\nTécnica ambiental\nLeitura dos riscos, licenças, condicionantes, impactos e exigências que afetam a operação.\nEstratégia empresarial\nDecisões que protegem reputação, continuidade, competitividade e crescimento."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA & EIXOS — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "O Programa\n“As grandes questões ambientais em pauta que impactam empresas, cidades e sociedade.”\nAnálise, Informação & Reflexão\nRadar Ambiental 360º é um programa de entrevistas, análise e informação que traduz os principais temas ambientais para a realidade das empresas, das cidades e da sociedade. Conduzido por Josiane Martinello — bióloga, advogada e consultora estratégica ambiental — o programa conecta meio ambiente, legislação, gestão, inovação e desenvolvimento, mostrando como decisões ambientais impactam operação, reputação, segurança jurídica, economia e crescimento.\nA cada episódio, especialistas, empresários, gestores públicos e protagonistas do mercado debatem riscos, soluções, tendências e oportunidades para construir organizações e territórios mais preparados para o futuro.\nInformação de qualidade, análise e reflexão sobre assuntos que afetam a vida de todos.\nEspecialistas\nProtagonistas\nNa Grade da TV\nRS Play\nExibição\nEm definição\nA grade pode ser atualizada conforme definição comercial e programação da emissora.\nCanal 524 da Claro-tv\nEixos Editoriais\nClique em cada eixo para ver os conteúdos e a abordagem.\n1. Gestão de risco e conformidade ambiental\nLicenciamento, condicionantes, fiscalização, passivos, monitoramento, responsabilidades e prevenção.\n2. Meio ambiente e estratégia empresarial\nReputação, competitividade, certificações, financiamentos, expansão, cadeia de fornecedores e continuidade do negócio.\n3. Legislação e segurança jurídica\nMudanças regulatórias, responsabilidade administrativa, civil e penal, crimes ambientais, defesas e responsabilidade solidária.\n4. Inovação e sustentabilidade aplicada\nTecnologias, economia circular, gestão de resíduos, eficiência operacional, transição energética e soluções viáveis.\n5. Desenvolvimento urbano e territorial\nPlanejamento urbano, infraestrutura, autorizações, ocupação do solo, expansão e impactos nas cidades.\n6. Clima, agronegócio e economia\nEventos extremos, adaptação, produção, abastecimento, riscos econômicos e segurança territorial."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS RS PLAY — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma que amplifica o conteúdo.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: CARROSSEL DO SITE / UNIVERSO VISUAL — Universo Radar Ambiental 360º",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "Universo Radar Ambiental 360º\nImagens oficiais utilizadas no carrossel visual do mídia kit."
+      },
+      {
+        "secaoOrigem": "FOOTER — Radar Ambiental 360º",
+        "origemDoTrecho": "https://www.rsplay.com.br/radarambiental360.html",
+        "textoOriginal": "Radar Ambiental 360º\nInformação de qualidade, análise e reflexão sobre as grandes questões ambientais que afetam a vida de todos.\nRSPLAY.COM.BR\nJosiane Martinello • RS Play • Radar Ambiental 360º © 2026"
+      }
+    ]
+  }
+]

@@ -5,15 +5,16 @@ import {
   Download,
   Clock,
   ArrowLeft,
-  CheckCircle2,
-  AlertTriangle,
-  RotateCcw
+  Lock,
+  ShieldCheck,
 } from 'lucide-react';
-import { Episode, EpisodeStatus } from '../../types';
-import { getStatusColorClass, getStatusLabel, formatTimeMinutes } from '../../utils/format';
+import { AuthSession, Episode, EpisodeStatus } from '../../types';
+import { getStatusColorClass, getStatusLabel } from '../../utils/format';
+import { usePermissions } from '../../hooks/usePermissions';
 
 interface EpisodeHeaderProps {
   episode: Episode;
+  session?: AuthSession | null;
   activeTab: string;
   onSelectTab: (tab: string) => void;
   onUpdateEpisode: (updated: Partial<Episode>) => void;
@@ -25,6 +26,7 @@ interface EpisodeHeaderProps {
 
 export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
   episode,
+  session,
   activeTab,
   onSelectTab,
   onUpdateEpisode,
@@ -33,24 +35,39 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
   onToggleAiAssistant,
   onBack,
 }) => {
+  const {
+    canEditEditorial,
+    canEditScript,
+    canOperateStudio,
+    canManageAssets,
+    canExport,
+    isReadOnly,
+    normalizedRole,
+  } = usePermissions(session, episode.showId);
+
+  const allowEditorialEdit = canEditEditorial();
+  const allowScriptEdit = canEditScript();
+  const allowStudio = canOperateStudio();
+  const allowAssets = canManageAssets();
+  const allowExport = canExport();
+
   // Calculate planned duration from blocks
   const plannedMinutes = (episode.outline || []).reduce(
     (acc, b) => acc + (b.estimatedDurationMin || 0),
     0
   );
-  const targetMin = episode.targetDurationMin || episode.targetDurationMinutes || 60;
-  const diffMinutes = plannedMinutes - targetMin;
+  const diffMinutes = plannedMinutes - episode.targetDurationMin;
 
   const tabs = [
-    { id: 'diagnosis', label: '1. Visão Geral & Conceito' },
-    { id: 'research', label: '2. Pesquisa Factual' },
-    { id: 'outline', label: '3. Pauta & Blocos' },
-    { id: 'script', label: '4. Roteiro & 3 Câmeras' },
-    { id: 'cameras', label: '5. Setup Câmeras' },
-    { id: 'assets', label: '6. Materiais / B-Roll' },
-    { id: 'shorts', label: '7. Cortes / Shorts' },
-    { id: 'prep', label: '8. Checklist Gravação' },
-    { id: 'editor', label: '9. Roteiro de Edição' },
+    { id: 'diagnosis', label: '1. Visão Geral & Conceito', allowed: true },
+    { id: 'research', label: '2. Pesquisa Factual', allowed: true },
+    { id: 'outline', label: '3. Pauta & Blocos', allowed: true },
+    { id: 'script', label: '4. Roteiro & 3 Câmeras', allowed: true },
+    { id: 'cameras', label: '5. Setup Câmeras', allowed: allowStudio || allowEditorialEdit },
+    { id: 'assets', label: '6. Materiais / B-Roll', allowed: allowAssets || allowEditorialEdit },
+    { id: 'shorts', label: '7. Cortes / Shorts', allowed: allowScriptEdit || allowEditorialEdit },
+    { id: 'prep', label: '8. Checklist Gravação', allowed: allowStudio || allowEditorialEdit },
+    { id: 'editor', label: '9. Roteiro de Edição', allowed: allowScriptEdit || allowEditorialEdit },
   ];
 
   const statuses: EpisodeStatus[] = [
@@ -81,7 +98,7 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
           </button>
 
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
               <span className="text-xs font-mono font-bold text-amber-400">
                 EP {String(episode.episodeNumber).padStart(3, '0')}
               </span>
@@ -92,11 +109,14 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
               {/* Status Selector Dropdown */}
               <select
                 value={episode.status}
-                onChange={(e) => onUpdateEpisode({ status: e.target.value as EpisodeStatus })}
+                disabled={!allowEditorialEdit}
+                onChange={(e) =>
+                  allowEditorialEdit && onUpdateEpisode({ status: e.target.value as EpisodeStatus })
+                }
                 aria-label="Status de Produção"
-                className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded border focus:outline-none cursor-pointer ${getStatusColorClass(
-                  episode.status
-                )}`}
+                className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded border focus:outline-none ${
+                  allowEditorialEdit ? 'cursor-pointer' : 'opacity-70 cursor-not-allowed'
+                } ${getStatusColorClass(episode.status)}`}
               >
                 {statuses.map((st) => (
                   <option key={st} value={st} className="bg-zinc-900 text-zinc-100">
@@ -104,12 +124,26 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
                   </option>
                 ))}
               </select>
+
+              <span className="text-zinc-600">·</span>
+              {isReadOnly ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
+                  <Lock className="w-3 h-3 text-amber-400" />
+                  Modo Leitura ({normalizedRole.toUpperCase()})
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/50 text-emerald-300 border border-emerald-800/60">
+                  <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                  Acesso Autorizado ({normalizedRole.toUpperCase()})
+                </span>
+              )}
             </div>
 
             <input
               type="text"
               value={episode.title}
-              onChange={(e) => onUpdateEpisode({ title: e.target.value })}
+              readOnly={!allowEditorialEdit}
+              onChange={(e) => allowEditorialEdit && onUpdateEpisode({ title: e.target.value })}
               aria-label="Título do Episódio"
               className="text-lg md:text-xl font-extrabold text-zinc-100 bg-transparent border-b border-transparent hover:border-zinc-700 focus:border-amber-500 focus:outline-none transition-colors w-full max-w-xl"
             />
@@ -147,31 +181,37 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
           </div>
 
           {/* AI Co-Producer Assistant Button */}
-          <button
-            onClick={onToggleAiAssistant}
-            className="px-3 py-2 bg-indigo-950/60 hover:bg-indigo-900/80 text-indigo-300 border border-indigo-800/80 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400 fill-indigo-400/20" />
-            <span>Assistente IA</span>
-          </button>
+          {(allowEditorialEdit || allowScriptEdit) && (
+            <button
+              onClick={onToggleAiAssistant}
+              className="px-3 py-2 bg-indigo-950/60 hover:bg-indigo-900/80 text-indigo-300 border border-indigo-800/80 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400 fill-indigo-400/20" />
+              <span>Assistente IA</span>
+            </button>
+          )}
 
           {/* Export / Print */}
-          <button
-            onClick={onOpenExportModal}
-            className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Exportar</span>
-          </button>
+          {allowExport && (
+            <button
+              onClick={onOpenExportModal}
+              className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Exportar</span>
+            </button>
+          )}
 
           {/* Main Studio Mode CTA */}
-          <button
-            onClick={onOpenStudioMode}
-            className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg flex items-center gap-2 shadow-lg shadow-red-950/50 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-          >
-            <PlayCircle className="w-4 h-4 fill-white/20" />
-            <span>🎬 Modo Estúdio</span>
-          </button>
+          {allowStudio && (
+            <button
+              onClick={onOpenStudioMode}
+              className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg flex items-center gap-2 shadow-lg shadow-red-950/50 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <PlayCircle className="w-4 h-4 fill-white/20" />
+              <span>🎬 Modo Estúdio</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -183,13 +223,14 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
             <button
               key={tab.id}
               onClick={() => onSelectTab(tab.id)}
-              className={`py-2.5 px-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors cursor-pointer ${
+              className={`py-2.5 px-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 ${
                 isActive
                   ? 'border-amber-400 text-amber-300 bg-amber-400/5'
                   : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:border-zinc-700'
               }`}
             >
-              {tab.label}
+              <span>{tab.label}</span>
+              {!tab.allowed && <Lock className="w-3 h-3 text-zinc-500" />}
             </button>
           );
         })}

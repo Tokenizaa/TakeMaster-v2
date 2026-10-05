@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "NA VITRINE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"na_vitrine\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"na_vitrine\",\"title\":\"NA VITRINE\",\"host\":\"Fe Bassi\",\"description\":\"Apresentadora e uma das vozes mais atuantes na moda circular.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/moda_circular/modacircular.jpg\",\"colorHex\":\"#059669\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/navitrine.html\",\"mediaKitFile\":\"navitrine.html\",\"active\":false,\"showOnIndex\":false,\"showInMenus\":false,\"showOnMediakit2026\":false,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Moda\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "NA VITRINE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"na_vitrine\",\"title\":\"NA VITRINE\",\"host\":\"Fe Bassi\",\"description\":\"Apresentadora e uma das vozes mais atuantes na moda circular.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/moda_circular/modacircular.jpg\",\"colorHex\":\"#059669\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "NA VITRINE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"na_vitrine\",\"title\":\"NA VITRINE\",\"host\":\"Fe Bassi\",\"description\":\"Apresentadora e uma das vozes mais atuantes na moda circular.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/moda_circular/modacircular.jpg\",\"colorHex\":\"#059669\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/navitrine.html",
+    "urlCanonica": "https://www.rsplay.com.br/navitrine.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Fernanda Bassi",
+    "dataHoraScrape": "2026-10-05T02:06:29.791Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "NA VITRINE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Fernanda Bassi",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "Mídia Kit Oficial\nFernanda\nBassi\nSustentabilidade\n•\nEstilo\n•\nPropósito"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE — Sobre Fernanda Bassi",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "Apresentadora & Empreendedora\nSobre\nFernanda Bassi\nEmpreendedora, apresentadora e uma das vozes mais atuantes na promoção da moda circular no Rio Grande do Sul.\nProprietária do Brechó Balonê — localizado no complexo Ipanema Sports em Porto Alegre — Fernanda transformou sua paixão por estilo e curadoria em um negócio referência, que une propósito, afeto e consumo consciente.\nCom um olhar apurado e mais de 15 anos de mercado , ela se comunica de forma leve e objetiva, construindo uma comunidade fiel que enxerga na moda uma ferramenta de transformação e sustentabilidade.\nCuradoria\nSustentabilidade"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O BRECHÓ & PROGRAMA — O Negócio & O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "O Negócio &\nO Programa\nBrechó Balonê\nMais que uma loja, um ponto de encontro para quem busca exclusividade e consciência. Localizado dentro do Ipanema Sports, o Balonê é referência em curadoria de peças second-hand de alta qualidade.\nNa Vitrine com Fê Bassi\nFernanda, apresenta um programa onde histórias, talentos e oportunidades se encontram. Entrevistando personalidades, marcas e especialistas. Abrindo espaço também, para a moda circular, trazendo conteúdo que inspira uma mudança cultural em direção ao consumo consciente.\nEntrevistas com especialistas\nDicas de curadoria e estilo\nVisibilidade para marcas conscientes\n15\nAnos de\nHistória"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: COMMUNITY & METRICS MULTIPLATAFORMA — Comunidade Engajada",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "Comunidade Engajada\nConexão Real com o Público\n+36K\nSeguidores\nUma audiência fiel que acompanha diariamente o conteúdo no brechó e nas redes.\nAlto\nEngajamento Orgânico\nInterações reais de pessoas que buscam novas formas de consumir e se expressar.\n15\nAnos de Mercado\nCredibilidade construída com consistência e compromisso com práticas sustentáveis.\nAlcance e Performance\nAudiência multiplataforma sólida da emissora RS Play.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas\nPerfil do Público\nMulheres\nInteresse em Moda\nConsumo Consciente\nEmpreendedorismo\nLifestyle"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: SERVICES — Serviços & Parcerias",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "O que oferecemos\nServiços &\nParcerias\nFernanda atua como uma ponte entre marcas que desejam impactar conscientemente e consumidores que buscam propósito.\nCuradoria & Consultoria\nConsultoria especializada para pequenos empreendedores e curadoria de moda circular.\nApresentação\nCondução de entrevistas, lives e eventos focados em sustentabilidade e moda.\nPubli & Conteúdo\nDivulgação estratégica de marcas e produtos alinhados aos valores de consumo consciente.\nPalestras\nWorkshops e conversas sobre o futuro da moda, empreendedorismo feminino e brechós."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALLERY / LIFESTYLE — Estilo Circular",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "Estilo Circular\nUm olhar sobre a estética e a rotina de Fernanda Bassi."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Vamos criar juntos?",
+        "origemDoTrecho": "https://www.rsplay.com.br/navitrine.html",
+        "textoOriginal": "Vamos criar juntos?\nContato\nfernandabassirolim@gmail.com\nLocalização\nIpanema Sports, Porto Alegre\nInstagram\n@brechobalonefebassi\n@programanavitrinecomfebassi\nModa Circular © 2026 Fernanda Bassi"
+      }
+    ]
+  }
+]

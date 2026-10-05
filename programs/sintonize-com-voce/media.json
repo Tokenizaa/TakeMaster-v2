@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/sintonizecomvoce.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "SINTONIZE COM VOCÊ",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — SINTONIZE COM VOCÊ",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "SINTONIZE COM VOCÊ"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sintonize/sintonize.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sintonize.html",
+    "altText": "Marco",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SINTONIZE COM VOCÊ"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sintonize/sintonize2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sintonize.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SINTONIZE COM VOCÊ"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sintonize/sintonize3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sintonize.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SINTONIZE COM VOCÊ"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sintonize/sintonize4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sintonize.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SINTONIZE COM VOCÊ"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "PONTO DE VIRADA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"ponto_de_virada\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"ponto_de_virada\",\"title\":\"PONTO DE VIRADA\",\"host\":\"Tati Ferreira\",\"description\":\"Programa de saúde e treinamento.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/pontodevirada.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/pontovirada.html\",\"mediaKitFile\":\"pontovirada.html\",\"active\":false,\"visible\":true,\"showOnMediakit2026\":false,\"showOnIndex\":false,\"showInMenus\":false,\"showBadge\":false,\"tags\":[\"Saúde\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "PONTO DE VIRADA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"ponto_de_virada\",\"title\":\"PONTO DE VIRADA\",\"host\":\"Em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/pontodevirada.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "PONTO DE VIRADA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"ponto_de_virada\",\"title\":\"PONTO DE VIRADA\",\"host\":\"Tati Ferreira\",\"description\":\"Programa de saúde e treinamento.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/pontodevirada.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/pontovirada.html",
+    "urlCanonica": "https://www.rsplay.com.br/pontovirada.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Ponto de Virada com Tati Ferreira",
+    "dataHoraScrape": "2026-10-05T02:06:30.046Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "PONTO DE VIRADA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Tati Ferreira\n\"A verdadeira virada não acontece apenas no corpo, mas também na mente, nas emoções e na postura diante da vida.\"\nAção\n•\nCorpo\n•\nMentalidade\n•\nTransformação"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTADORA E MANIFESTO — Tatiana Ferreira de Ávila",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "A Apresentadora\nTatiana Ferreira de Ávila\nSou personal trainer, especialista em musculação e apresentadora do programa Ponto de Virada .\nMeu propósito é conduzir transformações reais, que ultrapassam a estética e alcançam também a mente, as emoções e a postura diante da vida.\nA Filosofia\n\"Acredito na força do alinhamento entre corpo/ação, consciência/foco e atitude/emocional para sustentar uma nova versão.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA, PILARES E DIFERENCIAIS — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "O Programa\nPonto de Virada com Tati Ferreira é um programa sobre transformação real. A cada episódio, conduzirei conversas inspiradoras e profundas sobre mudança de vida, autoestima, disciplina, saúde, mentalidade e comportamento.\nCom convidados e histórias reais, é um convite para quem deseja romper padrões, alinhar forças e construir uma nova versão de si.\nMudança de Vida\nHistórias reais de pessoas que deram a volta por cima, superaram limites e decidiram assumir o controle de seus destinos.\nCorpo & Saúde\nMusculação, bem-estar e o impacto direto do movimento e da disciplina física na melhoria da autoestima e longevidade.\nMentalidade & Foco\nA força da consciência. Como treinar a mente para suportar os desafios da rotina, gerenciar emoções e construir constância.\nDisciplina & Atitude\nO passo a passo prático para tirar as metas do papel, transformações motivação passageira em rotina e assumir uma nova postura diária.\nNossos Diferenciais\nAutoridade Prática\nComando de uma especialista em musculação que vive e conduz transformações corporais reais todos os dias.\nConexão Humana\nFoco em histórias verdadeiras, gerando alta identificação e engajamento emocional do público.\nVisão 360º\nNão é só sobre estética. É uma abordagem completa entre corpo, mente, foco e atitude."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE DA EMISSORA E REDES (NOVO DASHBOARD) — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "Alcance e Performance\nA força de distribuição multiplataforma da emissora RS Play , aliada a um engajamento imbatível.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: UNIVERSO PONTO DE VIRADA (CAROUSEL DE IMAGENS) — Universo Ponto de Virada",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "Universo Ponto de Virada\nCorpo, mente, foco e superação na prática."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: COMERCIAL E PÚBLICO — Perfil do Público",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "Perfil do Público\nUm público engajado, que busca motivação real, saúde, performance e qualidade de vida.\nPessoas em busca de emagrecimento, hipertrofia e mudança de hábitos.\nProfissionais de educação física e saúde integrativa.\nConsumidores de moda fitness, suplementação e alimentação saudável.\nIndivíduos interessados em desenvolvimento pessoal e mentalidade forte.\nOportunidade para Marcas\nConecte seu produto a uma audiência que já está em movimento e buscando soluções para sua rotina.\nVisibilidade / Placement\nExibição orgânica de roupas, acessórios, alimentos ou suplementos durante o programa e entrevistas.\nEndosso da Especialista\nSua marca recomendada com propriedade por uma profissional experiente em fitness e saúde.\nPresença Multiplataforma\nAções que começam na TV e se estendem aos cortes virais nas redes sociais, ampliando seu alcance.\nQuadros Patrocinados\nCriação de segmentos específicos patrocinados (ex: \"Dica de Nutrição X\", \"O Treino do Dia\")."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: FOOTER / CONTACT — Sua marca conectada à verdadeira transformação física e mental.",
+        "origemDoTrecho": "https://www.rsplay.com.br/pontovirada.html",
+        "textoOriginal": "Sua marca conectada à\nverdadeira transformação física e mental.\nAssocie sua imagem ao movimento, à disciplina e a histórias reais de superação que inspiram milhares de pessoas todos os dias.\n@tatiferreira.avila\nRS Play\nO Ponto de Virada com Tati Ferreira é um programa focado em transformação real. Com um olhar apurado para a musculação e a mudança de vida, a personal trainer Tatiana Ferreira de Ávila mostra que o alinhamento entre corpo, foco e emoção é o segredo para romper padrões e construir uma nova versão. O ambiente ideal para marcas esportivas e de saúde.\nTati Ferreira\n•\nRS Play\n•\nPonto de Virada © 2026"
+      }
+    ]
+  }
+]

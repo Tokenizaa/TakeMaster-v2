@@ -1,0 +1,83 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/radar_ambiental-20260622142353-28840d1f.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "RADAR AMBIENTAL 360",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — RADAR AMBIENTAL 360",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/novos/Josiane%20Martinello.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "RADAR AMBIENTAL 360",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — RADAR AMBIENTAL 360",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar360-negativo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental 360",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Josiane Martinello",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/radarambiental/radar6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/radarambiental360.html",
+    "altText": "Radar Ambiental",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RADAR AMBIENTAL 360"
+  }
+]

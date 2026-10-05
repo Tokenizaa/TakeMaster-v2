@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/leorecebe/capa.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Léo da Silva Alves",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — LÉO RECEBE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "LÉO RECEBE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/leorecebe/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/leorecebe.html",
+    "altText": "Léo Recebe",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "LÉO RECEBE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/leorecebe/leo1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/leorecebe.html",
+    "altText": "Léo da Silva Alves",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "LÉO RECEBE"
+  }
+]

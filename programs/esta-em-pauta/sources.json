@@ -1,0 +1,89 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "ESTÁ EM PAUTA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1782154447702\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1782154447702\",\"title\":\"ESTÁ EM PAUTA\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"Jessica Lagunna e Germanna Lopes\",\"description\":\"O Podcast \\\"Está em Pauta – Imóveis e Investimentos\\\" nasce com o propósito de aproximar as pessoas do sonho da casa própria por meio de conteúdos informativos, inspiradores e acessíveis. O programa tem como foco principal os clientes em busca do primeiro imóvel, abordando temas relacionados à moradia, financiamento, investimentos imobiliários e oportunidades do mercado de forma leve, dinâmica e descontraída.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/empauta-20260626111708-d61ff352.png\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"estaempauta.html\",\"mediaKitFile\":\"estaempauta.html\",\"tags\":[\"Imóveis\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/estaempauta.html",
+    "urlCanonica": "https://www.rsplay.com.br/estaempauta.html",
+    "tituloDaPagina": "Está em Pauta — Podcast Imóveis & Investimentos",
+    "dataHoraScrape": "2026-10-05T02:06:31.579Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "ESTÁ EM PAUTA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Podcast — Imóveis & Investimentos",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Mídia Kit Oficial\nPodcast — Imóveis & Investimentos\nCom Jéssica Lagunna & Germanna Lopes\nRS PLAY • Claro-tv Canal 524"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: AS APRESENTADORAS - JESSICA LAGUNNA — JESSICA LAGUNNA",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Apresentadora\nJESSICA LAGUNNA\nJornalista e consultora de imóveis.\nJéssica Lagunna, 35 anos, é jornalista, pós-graduada em Comunicação Empresarial, mãe da Lavínia e da inseparável pet Lolla. Sua trajetória profissional reúne comunicação, informação e relacionamento com pessoas.\nAo longo da carreira, atuou no jornalismo esportivo como repórter setorista do Juventude pelo Portal Esporte News Mundo e como repórter da Rádio Estação Web. Também construiu uma sólida experiência de mais de dez anos como produtora de elenco no segmento da moda, desenvolvendo um olhar apurado para pessoas, histórias e conexões.\nHoje, une sua paixão pela comunicação ao mercado imobiliário, onde atua como consultora de imóveis, ajudando famílias a conquistarem o sonho da casa própria e orientando investidores na busca por boas oportunidades.\nÀ frente do podcast \"Está em Pauta\" ao lado da sua sócia Germanna Lopes, exibido pela RS Play (canal 524 da Claro), realiza o sonho de comandar um programa jornalístico próprio, com uma linguagem dinâmica, acessível e humanizada. O propósito é desmistificar o mercado imobiliário, compartilhar conhecimento de forma clara e conectar especialistas, clientes e investidores, mostrando que informação de qualidade também transforma vidas."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: AS APRESENTADORAS - GERMANNA — GERMANNA LOPES",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Apresentadora\nGERMANNA LOPES\nDisciplina vem antes da motivação.\nGermanna Lopes é cientista social e corretora de imóveis. Formada em Ciências Sociais, com mestrado em Ciência Política, ela atua há mais de quatro anos no mercado imobiliário. Ao longo da carreira, conquistou diversos reconhecimentos nas construtoras pelas quais passou, destacando-se como uma das maiores vendedoras da MRV no Brasil e alcançando o primeiro lugar nacional em agosto de 2024.\nEm busca de um propósito, encontrou na corretagem uma verdadeira paixão: transformar vidas por meio da conquista da casa própria. Seu maior objetivo é mostrar às pessoas, especialmente aquelas em situação de vulnerabilidade, que elas são capazes de realizar esse sonho e construir uma vida melhor.\nSua formação desenvolveu habilidades como empatia, visão ampla das questões sociais e respeito à diversidade, características que fortaleceram sua conexão com cada cliente e tornaram seu atendimento mais humano.\nEmpreender, para Germanna, é resolver problemas e superar desafios diariamente. Mais do que vender imóveis, ela acredita em caminhar ao lado das pessoas, oferecendo segurança e confiança em cada etapa do processo.\nAgora, por meio deste podcast, espera compartilhar informação, imagem, inspiração e coragem para que mais pessoas acreditem no próprio potencial e entendam que a conquista do primeiro imóvel é possível. Essa missão nasceu da própria experiência: Germanna comprou seu primeiro imóvel mais tarde justamente por falta de informação, e hoje trabalha para que outras pessoas não enfrentem a mesma realidade."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE DA EMISSORA (PADRÃO DA TV) — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma da emissora que transmite o programa.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: PROPOSTA EDITORIAL - CONCEITO, MISSÃO & VISÃO — PROPOSTA EDITORIAL",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "PROPOSTA EDITORIAL\nPODCAST ESTÁ EM PAUTA – IMÓVEIS E INVESTIMENTOS\nCONCEITO\nO Podcast \"Está em Pauta – Imóveis e Investimentos\" nasce com o propósito de aproximar as pessoas do sonho da casa própria por meio de conteúdos informativos, inspiradores e acessíveis. O programa tem como foco principal os clientes em busca do primeiro imóvel, abordando temas relacionados à moradia, financiamento, investimentos imobiliários e oportunidades do mercado de forma leve, dinâmica e descontraída.\nMais do que um canal de informação, o podcast busca ser uma ferramenta de transformação social, contribuindo para que mais famílias tenham acesso à moradia digna e possam construir patrimônio por meio da aquisição de imóveis.\nMISSÃO\nInformar, orientar e inspirar pessoas a conquistarem seu primeiro imóvel, desmistificando o mercado imobiliário e tornando o acesso à informação mais simples, próximo e humanizado.\nVISÃO\nSer referência no Rio Grande do Sul como um canal de comunicação que conecta pessoas, oportunidades e conhecimento, incentivando a realização do sonho da casa própria e promovendo educação imobiliária para a população."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: OBJETIVOS — OBJETIVOS",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Propósitos\nOBJETIVOS\n•\nIncentivar a conquista do primeiro imóvel.\n•\nAproximar o público do mercado imobiliário.\n•\nApresentar oportunidades de financiamento e programas habitacionais.\n•\nCompartilhar histórias reais de superação e conquista.\n•\nEsclarecer dúvidas de forma simples e objetiva.\n•\nContribuir para a redução do déficit habitacional no Rio Grande do Sul.\n•\nEstimular a educação financeira e patrimonial."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: LINHA EDITORIAL — LINHA EDITORIAL",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Conteúdo Temático\nLINHA EDITORIAL\nO conteúdo será desenvolvido com linguagem acessível, evitando termos excessivamente técnicos e burocráticos. Os episódios combinarão informação, entretenimento e inspiração, criando identificação imediata com o público.\nOs temas abordados incluem:\nPrimeiro imóvel e planejamento financeiro;\nPrograma Minha Casa Minha Vida;\nCrédito e financiamento imobiliário;\nMercado imobiliário e tendências;\nInvestimentos em imóveis;\nConstrução de patrimônio;\nHistórias reais de clientes;\nEmpreendedorismo e desenvolvimento regional;\nQualidade de vida e moradia."
+      },
+      {
+        "secaoOrigem": "SLIDE 8: FORMATO & DIFERENCIAL — FORMATO",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "FORMATO\nO programa terá duração aproximada de 27 minutos e contará com entrevistas, bate-papos e relatos inspiradores de especialistas, empresários, profissionais do setor imobiliário, investidores e clientes que conquistaram seus objetivos.\nA proposta é oferecer conteúdo relevante em um ambiente leve, acolhedor e descontraído, tornando a experiência agradável para ouvintes de diferentes profiles.\nDIFERENCIAL\nO principal diferencial do Podcast Está em Pauta está na valorização de histórias reais. Cada episódio buscará mostrar exemplos concretos de pessoas que transformaram suas vidas por meio da conquista do imóvel próprio, permitindo que o público se identifique e perceba que esse sonho também é possível.\nAo unir informação, inspiração e credibilidade, o programa se torna uma ponte entre o desejo de ter um imóvel e a realização desse objetivo."
+      },
+      {
+        "secaoOrigem": "SLIDE 9: MENSAGEM CENTRAL — SLIDE 9: MENSAGEM CENTRAL",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "MENSAGEM CENTRAL\n\"Seu primeiro imóvel pode estar mais perto do que você imagina. Com informação, planejamento e oportunidade, o sonho da casa própria se transforma em realidade.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 10: OBJETIVO & FUNÇÃO SOCIAL / RIO GRANDE DO SUL — Objetivo & Função Social",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Propósito\nObjetivo & Função Social\nObjetivo: Despertar o interesse do público pela conquista do primeiro imóvel, mostrando que esse sonho é possível e mais próximo do que muitos imaginam.\nO projeto também tem uma importante função social: contribuir para a redução do deficit habitacional no Rio Grande do Sul, ajudando cada vez mais famílias a saírem de áreas de risco, do aluguel ou da dependência da casa e do terreno dos pais.\nA proposta é abordar esse tema com desenvoltura, leveza, alegria e bom humor, sem linguagem técnica e sem tornar o conteúdo burocrático.\nRealidade do Rio Grande do Sul\nHoje, o Rio Grande do Sul está entre os estados com maior renda per capita do país. Ainda assim, esse cenário não se reflete no número de pessoas que buscam ou conquistam o primeiro imóvel. Queremos entender essa lógica, discutir os motivos por trás desse comportamento e ajudar a quebrar esse paradigma.\nPara isso, utilizaremos histórias reais e inspiradoras, permitindo que o público se identifique com os personagens e consiga visualizar seu próprio futuro na realização desse sonho. O objetivo é fazer com que cada pessoa perceba que a conquista da casa própria pode ser uma realidade para ela também."
+      },
+      {
+        "secaoOrigem": "SLIDE 11: PACOTES DE PATROCÍNIO — Pacotes de Patrocínio",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Está em Pauta\nPacotes de Patrocínio\nO Está em Pauta é um podcast especializado no mercado imobiliário, apresentando entrevistas, dicas, tendências e oportunidades para quem deseja comprar, investir ou entender mais sobre o setor.\nFrequência\n1x a cada 15 dias\nDuração\n27 minutos\nApresentadoras\nJéssica Lagunna & Germanna Lopes\nBRONZE\nCota de Apoio\nR$ 500\npor mês\n• 1 inserção de 15 segundos no programa\n• 1 menção de 30 segundos no programa\n• Logo da marca no telão do estúdio\n• 1 Story por quinzena (menção da marca)\n• Logo no YouTube e demais plataformas\n• Agradecimento dos apresentadores\nPRATA\nPatrocinador Oficial\nR$ 1.000\npor mês\n• 2 inserções de 15 segundos no programa\n• 2 menções de 30 segundos no programa\n• Vídeo comercial de até 30 segundos\n• Logo da marca em destaque no telão do estúdio\n• 2 Stories por quinzena (menção da marca)\n• Logo em destaque no YouTube e demais plataformas\n• Agradecimento especial dos apresentadores\n• 1 matéria completa no Portal TVS Play\nOURO\nPatrocinador Master\nR$ 2.000\npor mês\n• 2 inserções de 30 segundos no programa\n• Vídeo comercial de até 60 segundos\n• Destaque da marca durante o programa\n• Logo da marca em destaque no telão e nas redes\n• 3 Stories por quinzena (menção da marca)\n• Logo em destaque no YouTube e demais plataformas\n• Agradecimento especial e citação como Patrocinador Master\n• 1 matéria completa no Portal TVS Play\nPor que patrocinar?\nSua marca conecta-se a um público altamente qualificado, gera autoridade na era digital com alcance multiplataforma (YouTube, Instagram, Facebook, TikTok e RS Play)."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Está em Pauta",
+        "origemDoTrecho": "https://www.rsplay.com.br/estaempauta.html",
+        "textoOriginal": "Está em Pauta\nImóveis e Investimentos de forma simples, humanizada e transparente.\nRS PLAY • CANAL 524 DA CLARO\nJéssica Lagunna & Germanna Lopes\n•\nRS Play\n•\nEstá em Pauta © 2026"
+      }
+    ]
+  }
+]

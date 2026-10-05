@@ -1,0 +1,216 @@
+{
+  "nomeEmissora": "RS Play TV (TVSPlay)",
+  "slogan": "A Emissora que mais cresce no Brasil • O melhor da nossa terra em um só play",
+  "canalClaroTv": "Canal 524 da Claro TV+",
+  "streamingAoVivoHls": "https://tv03.zas.media:1936/rsplay/rsplay/playlist.m3u8",
+  "siteOficial": "https://www.rsplay.com.br",
+  "midiaKitOficial2026": "https://www.rsplay.com.br/midia2026.html",
+  "redesSociaisOficiais": [
+    "https://www.instagram.com/rsplaynodigital/",
+    "https://www.facebook.com/share/1BVr4X9V6U/?mibextid=wwXIfr",
+    "https://www.youtube.com/@RSPLAYTVofc"
+  ],
+  "contatosComerciais": {
+    "email": "Comercial1@rsplay.com.br",
+    "whatsappComercial": "https://wa.me/5551980392326",
+    "whatsappGeral": "https://wa.me/5551933005790"
+  },
+  "metricasEcossistema": [
+    {
+      "id": "ecosystem_reach",
+      "name": "Ecossistema RS Play",
+      "value": "15.395",
+      "unit": "M",
+      "label": "Alcance total da emissora multiplataforma",
+      "group": "Mídia Kit 2026",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "14.388"
+    },
+    {
+      "id": "tvs_platform_access",
+      "name": "Portal TVS Play",
+      "value": "16",
+      "unit": "M",
+      "label": "Acessos na plataforma",
+      "group": "Mídia Kit 2026",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "16M"
+    },
+    {
+      "id": "claro_tv_reach",
+      "name": "Claro TV+",
+      "value": "2",
+      "unit": "M",
+      "label": "Alcance Canal 524",
+      "group": "Mídia Kit 2026",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "2M"
+    },
+    {
+      "id": "youtube_views",
+      "name": "YouTube views",
+      "value": "1,5M+",
+      "unit": "",
+      "label": "Views",
+      "group": "YouTube",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "1,2M+"
+    },
+    {
+      "id": "youtube_subscribers",
+      "name": "YouTube inscritos",
+      "value": "19.2K",
+      "unit": "",
+      "label": "Inscritos",
+      "group": "YouTube",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "19K"
+    },
+    {
+      "id": "instagram_reach",
+      "name": "Instagram alcance",
+      "value": "+6.4M",
+      "unit": "",
+      "label": "Alcance total",
+      "group": "Instagram",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "+5.0M"
+    },
+    {
+      "id": "instagram_interactions",
+      "name": "Instagram interações",
+      "value": "65K",
+      "unit": "",
+      "label": "Interações",
+      "group": "Instagram",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "163K"
+    },
+    {
+      "id": "tiktok_views",
+      "name": "TikTok views",
+      "value": "300",
+      "unit": "K",
+      "label": "Views",
+      "group": "TikTok",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "784K"
+    },
+    {
+      "id": "tiktok_likes",
+      "name": "TikTok likes",
+      "value": "15.2",
+      "unit": "K",
+      "label": "Likes",
+      "group": "TikTok",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "48K"
+    },
+    {
+      "id": "schedule_hours",
+      "name": "Programação 24h",
+      "value": "24h",
+      "unit": "",
+      "label": "De programação ininterrupta",
+      "group": "Grade",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "24h"
+    },
+    {
+      "id": "exclusive_programs",
+      "name": "Programas exclusivos",
+      "value": "80",
+      "unit": "",
+      "label": "Programas exclusivos",
+      "group": "Grade",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "80"
+    },
+    {
+      "id": "smarttv_growth",
+      "name": "Crescimento Smart TV",
+      "value": "60%",
+      "unit": "ao mês",
+      "label": "Crescimento do App Smart TV",
+      "group": "Smart TV",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "60%"
+    },
+    {
+      "id": "smarttv_downloads",
+      "name": "Smart TV acessos/downloads",
+      "value": "728.224",
+      "unit": "",
+      "label": "Acessos & Downloads por mês",
+      "group": "Smart TV",
+      "active": true,
+      "applyToAllKits": true,
+      "oldText": "728.224"
+    }
+  ],
+  "comentaristasEDepoimentos": [
+    {
+      "name": "Boris Casoy",
+      "role": "Jornalista",
+      "image": "https://rsplay.com.br/img/boris_casoy.jpg",
+      "text": "Um dos âncoras mais marcantes do jornalismo brasileiro, pioneiro em emitir opiniões na bancada e dono do célebre bordão 'Isso é uma vergonha'. Com décadas de experiência nas principais emissoras do país, segue analisando o cenário político nacional como apresentador e comentarista.",
+      "highlightColor": "text-orange-500",
+      "active": true
+    },
+    {
+      "name": "Alexandre Garcia",
+      "role": "Jornalista e Comentarista",
+      "image": "https://rsplay.com.br/programas/alexandre.jpg",
+      "text": "Um jornalista com larga experiência e credibilidade, com destaque e senso crítico, os principais acontecimentos nacionais. Com extensa carreira na TV, hoje atua como comentarista e colunista.",
+      "highlightColor": "text-orange-500",
+      "active": true
+    },
+    {
+      "name": "Deltan Dallagnol",
+      "role": "Analista Político",
+      "image": "https://rsplay.com.br/programas/deltan.jpg",
+      "text": "O podcast traz análises políticas e econômicas do atual cenário brasileiro. Apresenta opiniões voltadas a um público conservador, reforçando pautas contra corrupção.",
+      "highlightColor": "text-blue-500",
+      "active": true
+    },
+    {
+      "name": "Juremir Machado",
+      "role": "Jornalista",
+      "image": "https://rsplay.com.br/programas/juremir.jpg",
+      "text": "O foco é inspirar, informar e conectar líderes do presente e do futuro. Com sua bagagem intelectual, traz reflexões profundas sobre a sociedade.",
+      "highlightColor": "text-emerald-500",
+      "active": true
+    },
+    {
+      "name": "Luciana Genro",
+      "role": "Líder Socialista",
+      "image": "https://rsplay.com.br/programas/luciana.jpg",
+      "text": "Deputada estadual e líder socialista, ela articula críticas contundentes, defendendo mudanças estruturais na política econômica e justiça social.",
+      "highlightColor": "text-red-500",
+      "active": true
+    },
+    {
+      "name": "Léo da Silva Alves",
+      "role": "Apresentador de TV e professor de Direito",
+      "image": "https://rsplay.com.br/programas/leo_silva_alves.jpg",
+      "text": "Conferencista de três continentes, associa a experiência de apresentador da Rádio e TV Nacional em Brasília e leva ao ar o programa LÉO RECEBE: recebe ideias, pessoas e histórias.",
+      "highlightColor": "text-blue-500",
+      "active": true
+    }
+  ],
+  "apoiadores": [],
+  "quemSomos": [],
+  "dataHoraScrape": "2026-10-05T02:06:26.301Z"
+}

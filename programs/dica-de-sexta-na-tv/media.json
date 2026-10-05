@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/dicadesextanatv-20260709141018-cc915344.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DICA DE SEXTA NA TV",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DICA DE SEXTA NA TV",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DICA DE SEXTA NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sexta/sexta5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sextanatv.html",
+    "altText": "Camila Pretto — Dica de Sexta na TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DICA DE SEXTA NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sexta/sexta3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sextanatv.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "DICA DE SEXTA NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sexta/sexta4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sextanatv.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "DICA DE SEXTA NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sexta/sexta2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sextanatv.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "DICA DE SEXTA NA TV"
+  }
+]

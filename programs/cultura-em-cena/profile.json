@@ -1,0 +1,215 @@
+{
+  "slug": "cultura-em-cena",
+  "idOriginalCms": "17",
+  "tipoRegistro": "programa",
+  "ativoNoCms": false,
+  "midiaKitUrl": "https://www.rsplay.com.br/cultura.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/cultura.html"
+  ],
+  "midiaKitStatusHttp": 200,
+  "midiaKitCapturadoComSucesso": true,
+  "nomeDoPrograma": "CULTURA EM CENA",
+  "titulo": "Mídia Kit Oficial — Cultura em Cena com Nando Gross",
+  "subtitulo": "não informado na fonte",
+  "descricao": "Manifestações artísticas e culturais do RS.",
+  "propostaEditorial": "[Nando Gross] Jornalista, comunicador de peso e profundo conhecedor do cenário musical e artístico do Rio Grande do Sul. Nando conecta diferentes gerações, gêneros e tribos — do vinil independente ao simulador digital, do rock ao hip hop — com entrevistas autênticas e performances marcantes. O **Cultura em Cena** estreia para registrar, celebrar e divulgar o que acontece na cidade de Porto Alegre e no RS em termos de estrutura, shows e entretenimento. É a vitrine onde a música pulsa ao vivo e a história é contada por quem a viveu. Recebendo nomes que vão desde os pioneiros da música independente aos astros do Hip Hop local (como Nelson Coelho de Castro e DJ Piá), o programa mescla crônicas da cidade, demonstrações técnicas de som e bate-papos inesquecíveis.",
+  "conceito": "não informado na fonte",
+  "publico": "não informado na fonte",
+  "apresentador": "Nando Gross — [Nando Gross] Jornalista, comunicador de peso e profundo conhecedor do cenário musical e artístico do Rio Grande do Sul. Nando conecta diferentes gerações, gêneros e tribos — do vinil independente ao simulador digital, do rock ao hip hop — com entrevistas autênticas e performances marcantes. O **Cultura em Cena** estreia para registrar, celebrar e divulgar o que acontece na cidade de Porto Alegre e no RS em termos de estrutura, shows e entretenimento. É a vitrine onde a música pulsa ao vivo e a história é contada por quem a viveu. Recebendo nomes que vão desde os pioneiros da música independente aos astros do Hip Hop local (como Nelson Coelho de Castro e DJ Piá), o programa mescla crônicas da cidade, demonstrações técnicas de som e bate-papos inesquecíveis.",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": [
+    "Cultura"
+  ],
+  "quadros": "não informado na fonte",
+  "formato": "[Formato & Identidade] \"A vitrine da cultura porto-alegrense e gaúcha.\" Música & Cultura Talk Show Musical ~45 Minutos Canal 524 & RS Play",
+  "duracao": "não informado na fonte",
+  "periodicidade": "Sexta-feira | 21h",
+  "horario": "Sexta-feira | 21h",
+  "canalPlataforma": "Claro TV+ (Canal 524) • Ecossistema RS Play / Streaming • YouTube • Instagram • TikTok",
+  "informacoesComerciais": [
+    "[Alcance e Performance] Audiência multiplataforma sólida, com forte engajamento em todo o estado. 14.388 Milhões Alcance Total da Emissora Multiplataforma 16M Acessos Plataforma TVSPLAY 2M Alcance Claro TV+ (Canal 524) Dados da Plataforma 1,2M+ Visualizações 19K Inscritos @RSPLAYDIGITAL +5.0M Alcance 163K Interações 784K 48K Curtidas"
+  ],
+  "diferenciais": "não informado na fonte",
+  "contatos": "não informado na fonte",
+  "redesSociais": [
+    "https://www.instagram.com/nandogross/",
+    "https://youtube.com/@nandogross",
+    "@RSPLAYDIGITAL",
+    "@nandogross"
+  ],
+  "links": [
+    "https://www.rsplay.com.br/cultura.html",
+    "https://www.instagram.com/nandogross/",
+    "https://youtube.com/@nandogross"
+  ],
+  "videos": [
+    "https://youtube.com/@nandogross"
+  ],
+  "imagens": [
+    "https://www.rsplay.com.br/imgmidia/culturaemcena.jpg",
+    "https://www.rsplay.com.br/img/mediakit/cultura/culturacena5.jpg",
+    "https://www.rsplay.com.br/img/mediakit/cultura/culturacena3.jpg",
+    "https://www.rsplay.com.br/img/mediakit/cultura/culturacena4.jpg",
+    "https://www.rsplay.com.br/img/mediakit/cultura/culturacena6.jpg",
+    "https://www.rsplay.com.br/img/mediakit/cultura/culturacena7.jpg"
+  ],
+  "textosPromocionais": [
+    "Mídia Kit Oficial",
+    "Com Nando Gross",
+    "Claro TV (Canal 524) • RS PLAY"
+  ],
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [
+    {
+      "indice": 1,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "SLIDE 1: CAPA / HERO",
+      "tituloSecao": "Cultura Em Cena",
+      "subtitulos": [],
+      "paragrafos": [
+        "Mídia Kit Oficial",
+        "Com Nando Gross",
+        "Claro TV (Canal 524) • RS PLAY"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Mídia Kit Oficial\nApresentamos\nCultura Em Cena\nCom Nando Gross\nClaro TV (Canal 524) • RS PLAY\nMúsica\n/\nArte\n/\nEntretenimento"
+    },
+    {
+      "indice": 2,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "SLIDE 2: SOBRE O APRESENTADOR E HISTÓRIA DO PROGRAMA",
+      "tituloSecao": "Nando Gross",
+      "subtitulos": [
+        "O Espaço da Cena Gaúcha"
+      ],
+      "paragrafos": [
+        "Jornalista, comunicador de peso e profundo conhecedor do cenário musical e artístico do Rio Grande do Sul. Nando conecta diferentes gerações, gêneros e tribos — do vinil independente ao simulador digital, do rock ao hip hop — com entrevistas autênticas e performances marcantes.",
+        "O **Cultura em Cena** estreia para registrar, celebrar e divulgar o que acontece na cidade de Porto Alegre e no RS em termos de estrutura, shows e entretenimento. É a vitrine onde a música pulsa ao vivo e a história é contada por quem a viveu.",
+        "Recebendo nomes que vão desde os pioneiros da música independente aos astros do Hip Hop local (como Nelson Coelho de Castro e DJ Piá), o programa mescla crônicas da cidade, demonstrações técnicas de som e bate-papos inesquecíveis."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "O Apresentador\nNando Gross\nJornalista, comunicador de peso e profundo conhecedor do cenário musical e artístico do Rio Grande do Sul. Nando conecta diferentes gerações, gêneros e tribos — do vinil independente ao simulador digital, do rock ao hip hop — com entrevistas autênticas e performances marcantes.\nO Espaço da Cena Gaúcha\nO **Cultura em Cena** estreia para registrar, celebrar e divulgar o que acontece na cidade de Porto Alegre e no RS em termos de estrutura, shows e entretenimento. É a vitrine onde a música pulsa ao vivo e a história é contada por quem a viveu.\nPerformances & Resenha\nArtistas, DJs, Músicos e Produtores Culturais\nRecebendo nomes que vão desde os pioneiros da música independente aos astros do Hip Hop local (como Nelson Coelho de Castro e DJ Piá), o programa mescla crônicas da cidade, demonstrações técnicas de som e bate-papos inesquecíveis."
+    },
+    {
+      "indice": 3,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "SLIDE 3: FICHA TÉCNICA E FORMATO",
+      "tituloSecao": "Formato & Identidade",
+      "subtitulos": [
+        "Gênero",
+        "Estilo",
+        "Duração",
+        "Plataforma"
+      ],
+      "paragrafos": [
+        "\"A vitrine da cultura porto-alegrense e gaúcha.\"",
+        "Música & Cultura",
+        "Talk Show Musical",
+        "~45 Minutos",
+        "Canal 524 & RS Play"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Formato & Identidade\n\"A vitrine da cultura porto-alegrense e gaúcha.\"\nGênero\nMúsica & Cultura\nEstilo\nTalk Show Musical\nDuração\n~45 Minutos\nPlataforma\nCanal 524 & RS Play"
+    },
+    {
+      "indice": 4,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA",
+      "tituloSecao": "Alcance e Performance",
+      "subtitulos": [
+        "YouTube",
+        "Instagram",
+        "TikTok"
+      ],
+      "paragrafos": [
+        "Audiência multiplataforma sólida, com forte engajamento em todo o estado.",
+        "14.388 Milhões",
+        "Alcance Total da Emissora Multiplataforma",
+        "16M",
+        "Acessos Plataforma TVSPLAY",
+        "2M",
+        "Alcance Claro TV+ (Canal 524)",
+        "Dados da Plataforma",
+        "1,2M+",
+        "Visualizações",
+        "19K",
+        "Inscritos",
+        "@RSPLAYDIGITAL",
+        "+5.0M",
+        "Alcance",
+        "163K",
+        "Interações",
+        "784K",
+        "48K",
+        "Curtidas"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento em todo o estado.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+    },
+    {
+      "indice": 5,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "SLIDE 5: VISUAL IDENTITY (MARQUEE CAROUSEL MUSICAL)",
+      "tituloSecao": "A vibe do Cultura em Cena",
+      "subtitulos": [],
+      "paragrafos": [
+        "Música ao vivo, discos de vinil, histórias reais e a cultura pulsando."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "A vibe do Cultura em Cena\nMúsica ao vivo, discos de vinil, histórias reais e a cultura pulsando."
+    },
+    {
+      "indice": 6,
+      "origemUrl": "https://www.rsplay.com.br/cultura.html",
+      "identificadorSlideOuSecao": "FOOTER / CONTACT",
+      "tituloSecao": "Faça Parte do Show",
+      "subtitulos": [],
+      "paragrafos": [
+        "Vincule sua marca ao principal canal da cultura, música e entretenimento do Rio Grande do Sul."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Faça Parte do Show\nVincule sua marca ao principal canal da cultura, música e entretenimento do Rio Grande do Sul.\n@nandogross\n/NandoGross\nCultura em Cena\n•\nCom Nando Gross\n•\nCanal 524 Claro TV | RS PLAY\n•\n© 2026"
+    }
+  ],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "temasAbordados",
+      "formato",
+      "periodicidade",
+      "horario",
+      "canalPlataforma",
+      "redesSociais",
+      "links",
+      "videos",
+      "imagens",
+      "textosPromocionais"
+    ],
+    "informacaoDerivadaDaEstrutura": [
+      "propostaEditorial",
+      "informacoesComerciais"
+    ],
+    "informacaoAusente": [
+      "subtitulo",
+      "conceito",
+      "publico",
+      "especialistasConvidadosRecorrentes",
+      "quadros",
+      "duracao",
+      "diferenciais",
+      "contatos",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "https://www.rsplay.com.br/",
+    "https://www.rsplay.com.br/midia2026.html",
+    "https://www.rsplay.com.br/cultura.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

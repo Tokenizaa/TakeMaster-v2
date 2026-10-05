@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "UM PAPO COM A COMADRE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"papo_comadre_1787943763\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"papo_comadre_1787943763\",\"title\":\"UM PAPO COM A COMADRE\",\"menuTitle\":\"UM PAPO COM A COMADRE\",\"kitTitle\":\"Um Papo com a Comadre\",\"host\":\"Comadre Adriana\",\"description\":\"Humor, verdade e o jeito gaúcho de contar a vida, com a Comadre Adriana.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/comadre/capa.jpg\",\"imageAlt\":\"Comadre Adriana\",\"bannerImage\":\"\",\"colorHex\":\"#E1454F\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"comadre.html\",\"mediaKitFile\":\"comadre.html\",\"tags\":[\"Humor\",\"Cultura Gaúcha\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/comadre.html",
+    "urlCanonica": "https://www.rsplay.com.br/comadre.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Um Papo com a Comadre",
+    "dataHoraScrape": "2026-10-05T02:06:31.069Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "UM PAPO COM A COMADRE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "CAPA — CAPA",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\n“Alô, comadre! Humor, verdade e o jeito gaúcho de contar a vida.”\nHumor ♥\nCultura Gaúcha ♥\nMulheres ♥\nVida Real\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "APRESENTADORA — Adriana Giuliani Comadre Adriana",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "A Apresentadora\nAdriana Giuliani\nComadre Adriana\nNatural de Ametista do Sul (RS), a Comadre Adriana é mãe, esposa, dona de casa, humorista e influenciadora digital. Há quatro anos encontrou nas redes uma nova forma de expressão: transformar o cotidiano, experiências pessoais e a realidade de tantas mulheres em conteúdo leve, autêntico e bem-humorado. O que começou de forma espontânea na pandemia virou uma trajetória de grande alcance e identificação com o público.\nCom seu jeito genuíno, carismático e marcado pela identidade gaúcha, conquistou mais de 500 mil seguidores no Instagram. Sua marca registrada, o famoso “Alô, comadre!” , nasceu do jeito carinhoso de se referir às amigas e virou identidade da sua comunicação. Hoje leva a Comadre também aos palcos, com apresentações de humor e novos projetos em constante crescimento.\n+500 mil\nSeguidores no Instagram\n“Alô, comadre!”\nMarca registrada\nPalcos\nHumor ao vivo\nGaúcha\nCultura e identidade"
+      },
+      {
+        "secaoOrigem": "PROPOSTA + FICHA — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nMais do que uma personagem, a Comadre Adriana é a força de uma mulher que encontrou na própria história uma forma de inspirar, divertir e criar conexões. O programa celebra a vida real, as relações humanas e a espontaneidade — sempre com muito bom humor.\nCom simplicidade e irreverência, retrata o cotidiano, a vida no interior e as particularidades do jeito de ser e falar do povo gaúcho, levando alegria, representatividade e identificação para milhares de pessoas.\nFicha Técnica\nFormato Humor & conversa\nPeriodicidade Inédito 1x/semana\nApresentação Comadre Adriana\nExibição RS Play\nCanal 524 · Claro TV+\nPúblico\nMulheres, famílias e o público que se identifica com o humor do cotidiano, a cultura gaúcha e as histórias reais do interior — de todas as idades."
+      },
+      {
+        "secaoOrigem": "OBJETIVOS — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Estratégia\nObjetivos\n01\nPosicionamento como autoridade no segmento.\n02\nSer porta-voz das mulheres.\n03\nDar visibilidade a pessoas e microinfluenciadores.\n04\nExpandir o público e o alcance da marca.\n05\nDivulgar produtos, serviços e projetos (publicidade)."
+      },
+      {
+        "secaoOrigem": "TEMAS — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nHumor do cotidiano\nO riso que nasce da vida real.\nCultura gaúcha\nO jeito de ser e falar do povo.\nMulheres\nRepresentatividade e voz.\nVida no interior\nHistórias reais e conexões."
+      },
+      {
+        "secaoOrigem": "ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "GALERIA — Comadre Adriana",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Galeria Comadre Adriana"
+      },
+      {
+        "secaoOrigem": "COTAS & CONTATO — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/comadre.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca ao humor, à autenticidade e às conexões reais da Comadre Adriana.\nPrograma + Instagram Cota MARCA\nInserção qualificada de patrocínio\n♥ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n♥ 1 Reels em Collab no Instagram (Programa + Marca).\n♥ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram Patrocinador de Episódio\nAssociação ao tema da semana\n♥ Logo na abertura e no encerramento como Patrocinador Oficial de 1 episódio.\n♥ 1 Postagem no Instagram comunicando o tema e a marca patrocinadora.\n♥ 1 Sequência de Stories com a marca como patrocinadora do episódio.\nSolicitar Proposta\nExclusividade Sob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n♥ 1 Programa completo dedicado à marca, produto ou projeto.\n♥ 4 Recortes de vídeo distribuídos 1x por semana.\n♥ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para associar sua marca a quem faz o Brasil sorrir?\n(51) 99910-8548\n♥\ncomercial@rsplay.com.br\nUm Papo com a Comadre ♥ Comadre Adriana ♥ RS Play — Canal 524 Claro ♥ © 2026"
+      }
+    ]
+  }
+]

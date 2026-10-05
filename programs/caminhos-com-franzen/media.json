@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/caminhofranzen.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CAMINHOS COM FRANZEN",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CAMINHOS COM FRANZEN",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/logo_caminhos.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "Logo Caminhos",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "Claudio Franzen",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/caminhos/caminhos8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/caminhofranzen.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMINHOS COM FRANZEN"
+  }
+]

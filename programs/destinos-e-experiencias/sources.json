@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DESTINOS & EXPERIÊNCIAS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"destinos_experiencias\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"destinos_experiencias\",\"title\":\"DESTINOS & EXPERIÊNCIAS\",\"host\":\"Vivian Lima\",\"description\":\"Roteiros de viagens, gastronomia e experiências inesquecíveis pelo mundo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/destinos-e-experiencias-com-vivian-lima.jpg\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/vivian.html\",\"mediaKitFile\":\"vivian.html\",\"active\":false,\"showOnIndex\":false,\"showInMenus\":false,\"showOnMediakit2026\":false,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Viagem\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "DESTINOS & EXPERIÊNCIAS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"destinos_experiencias\",\"title\":\"DESTINOS & EXPERIÊNCIAS\",\"host\":\"Vivian Lima\",\"description\":\"Roteiros de viagens, gastronomia e experiências inesquecíveis pelo mundo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/destinos-e-experiencias-com-vivian-lima.jpg\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DESTINOS & EXPERIÊNCIAS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"destinos_experiencias\",\"title\":\"DESTINOS & EXPERIÊNCIAS\",\"host\":\"Vivian Lima\",\"description\":\"Roteiros de viagens, gastronomia e experiências inesquecíveis pelo mundo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/destinos-e-experiencias-com-vivian-lima.jpg\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/vivian.html",
+    "urlCanonica": "https://www.rsplay.com.br/vivian.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Destinos & Experiências com Vívian Lima",
+    "dataHoraScrape": "2026-10-05T02:06:29.018Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DESTINOS & EXPERIÊNCIAS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SECTION #1 — Destinos & Experiên cias",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "Mídia Kit Oficial\nDestinos & Experiên cias\nCom Vívian Lima\nRS PLAY • Claro-tv Canal 524"
+      },
+      {
+        "secaoOrigem": "SECTION #2 — Vívian Lima",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "A Apresentadora\nVívian Lima\nNatural de Gramado (RS), Vívian cresceu cercada pela excelência da hospitalidade. Hoje vivendo em Santa Catarina, ela traz em sua trajetória a paixão por contar histórias de forma humana e inspiradora.\n\"Meu objetivo é mostrar que viajar vai muito além de visitar — é sentir, aprender e viver experiências que ficam para sempre.\"\nImpacto Digital\nPerformance Consolidada\n1,37 Mi\nVisualizações\nÚltimos 90 dias\n282,9 K\nContas Alcançadas\nCrescimento de +44,5%"
+      },
+      {
+        "secaoOrigem": "SECTION #3 — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "O Programa\n\"Um novo olhar sobre o turismo brasileiro.\"\nDestinos & Experiências\nIndo além dos pontos turísticos tradicionais, o programa apresenta destinos sob um olhar sensível, mostrando experiências reais, dicas práticas e os bastidores de cada roteiro.\nLinguagem Dinâmica e Emocional\nCuriosidades Culturais e Gastronomia\nExibição\nRS Play\nProgramação\nDiária\nCanal Claro-tv\n524\nConsulte a grade local para inserções especiais"
+      },
+      {
+        "secaoOrigem": "NOVA SESSÃO: ALCANCE E PERFORMANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida da emissora RS Play.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SECTION #5 — Universo Vívian Lima",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "Universo Vívian Lima"
+      },
+      {
+        "secaoOrigem": "FOOTER #6 — Vamos Conversar?",
+        "origemDoTrecho": "https://www.rsplay.com.br/vivian.html",
+        "textoOriginal": "Vamos Conversar?\n@vivianlima\nVívian Lima • RS Play • Canal 524 • © 2026"
+      }
+    ]
+  }
+]

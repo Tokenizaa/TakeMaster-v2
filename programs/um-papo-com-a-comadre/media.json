@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/capa.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Comadre Adriana",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — UM PAPO COM A COMADRE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/comadre4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "UM PAPO COM A COMADRE — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "Um Papo com a Comadre",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/comadre1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "Comadre Adriana",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/comadre2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "Comadre Adriana",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/comadre3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "Comadre Adriana",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/comadre/comadre5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/comadre.html",
+    "altText": "Comadre Adriana",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "UM PAPO COM A COMADRE"
+  }
+]

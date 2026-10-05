@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/motorshow/motorshow.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "MOTOR SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — MOTOR SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "MOTOR SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/motorshow/motorshowperfil.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/motorshow.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "apresentador",
+    "programaRelacionado": "MOTOR SHOW"
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&q=80",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/motorshow.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MOTOR SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/motorshow/motorshow_topo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/motorshow.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "MOTOR SHOW"
+  }
+]

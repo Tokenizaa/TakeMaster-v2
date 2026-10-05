@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Fora da Mente — com Júlia Gross",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — FORA DA MENTE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "FORA DA MENTE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/foradamente.html",
+    "altText": "FORA DA MENTE — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "FORA DA MENTE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/f1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/foradamente.html",
+    "altText": "Júlia Gross",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FORA DA MENTE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/f2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/foradamente.html",
+    "altText": "Júlia Gross no consultório",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FORA DA MENTE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/f3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/foradamente.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FORA DA MENTE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/foradamente/f4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/foradamente.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FORA DA MENTE"
+  }
+]

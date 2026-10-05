@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/bussiness.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "RS PLAY BUSINESS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — RS PLAY BUSINESS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "Melissa Oliveira",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/business/business5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/rsplaybusiness.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "RS PLAY BUSINESS"
+  }
+]

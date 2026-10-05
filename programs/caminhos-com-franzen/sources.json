@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMINHOS COM FRANZEN",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"11\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"11\",\"title\":\"CAMINHOS COM FRANZEN\",\"host\":\"Claudio Franzen\",\"description\":\"Talk show com humor, entretenimento e entrevistas.\",\"schedule\":\"Domingo | 19h\",\"image\":\"https://rsplay.com.br/imgmidia/caminhofranzen.jpg\",\"colorHex\":\"#22c55e\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/caminhofranzen.html\",\"mediaKitFile\":\"caminhofranzen.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Entretenimento\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMINHOS COM FRANZEN",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"11\",\"title\":\"CAMINHOS COM FRANZEN\",\"host\":\"Claudio Franzen\",\"description\":\"Talk show com humor, entretenimento e entrevistas.\",\"schedule\":\"Domingo | 19h\",\"image\":\"https://rsplay.com.br/imgmidia/caminhofranzen.jpg\",\"colorHex\":\"#22c55e\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMINHOS COM FRANZEN",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"11\",\"title\":\"CAMINHOS COM FRANZEN\",\"host\":\"Claudio Franzen\",\"description\":\"Talk show com humor, entretenimento e entrevistas.\",\"schedule\":\"Domingo | 19h\",\"image\":\"https://rsplay.com.br/imgmidia/caminhofranzen.jpg\",\"colorHex\":\"#22c55e\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/caminhofranzen.html",
+    "urlCanonica": "https://www.rsplay.com.br/caminhofranzen.html",
+    "tituloDaPagina": "Caminhos com Franzen — Mídia Kit Oficial",
+    "dataHoraScrape": "2026-10-05T02:06:28.762Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMINHOS COM FRANZEN",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Claudio Franzen",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Mídia Kit Oficial\nClaudio\nFranzen\nEsporte\n•\nSuperação\n•\nSustentabilidade"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE — Sobre Claudio Franzen",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Apresentador & Empreendedor\nSobre\nClaudio Franzen\nEmpreendedor, apresentador e uma das vozes mais atuantes na promoção da alta performance e conscientização sustentável no Sul do país.\nÀ frente do programa Caminhos , Claudio utiliza sua vasta experiência para conectar marcas e pessoas através de histórias de superação, saúde e equilíbrio.\nComo 5 vezes Campeão Mundial , ele transforma a disciplina de elite em uma ferramenta poderosa de comunicação.\nPerformance\nSuperação"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O NEGÓCIO & PROGRAMA — O Negócio & O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "O Negócio &\nO Programa\nRS PLAY HUB\nMais que um canal de televisão, a RS PLAY é um ecossistema de conteúdo premium. Canal 524 na Claro TV, consolidado como referência.\nCaminhos com Franzen\nUm programa que explora as diversas trilhas da vida moderna. Da performance esportiva ao empreendedorismo consciente.\nEntrevistas exclusivas\nDicas de saúde e performance\nParcerias com marcas conscientes\n15\nAnos de\nHistória"
+      },
+      {
+        "secaoOrigem": "METRICS SECTION (ATUALIZADO) — Audiência Multiplataforma",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Audiência Multiplataforma\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas\nPerfil Qualificado\nEmpresários\nAtletas\nLideranças\nPerformance"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: SERVICES — Serviços & Parcerias",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Oportunidades\nServiços &\nParcerias\nClaudio Franzen atua como uma ponte estratégica conectando marcas premium a um público altamente qualificado.\nCota Master\nExclusividade total e presença em todas as frentes do programa Caminhos.\nApresentação\nCondução de eventos, lives e media training corporativo de alto nível.\nPubli & Conteúdo\nDivulgação estratégica de produtos e serviços em todas as redes do apresentador.\nPalestras\nExperiência de 5 mundiais aplicada à resiliência e foco nos negócios."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALLERY / LIFESTYLE — Performance Visível",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Performance\nVisível\nUm olhar sobre a rotina de Claudio Franzen."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Vamos criar juntos?",
+        "origemDoTrecho": "https://www.rsplay.com.br/caminhofranzen.html",
+        "textoOriginal": "Vamos criar\njuntos?\nLocalização\nRS PLAY • Canal 524 Claro TV\nInstagram\n@ClaudioFranzen\nCaminhos com Franzen © 2026 • Temporada Oficial"
+      }
+    ]
+  }
+]

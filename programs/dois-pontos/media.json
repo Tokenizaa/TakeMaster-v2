@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/doispontos.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DOIS PONTOS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DOIS PONTOS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Dani e Marilia",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/doispontosprograma1-20260619155844-7333c.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/doispontosprograma2-20260619155844-b9093.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/doispontosprograma3-20260619155844-f5512.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/dois-ponto-programa-20260619153405-d1b5a.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doispontos/doispontos11.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doispontos.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOIS PONTOS"
+  }
+]

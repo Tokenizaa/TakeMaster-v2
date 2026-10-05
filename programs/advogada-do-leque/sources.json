@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "ADVOGADA DO LEQUE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1786041546861\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1786041546861\",\"title\":\"ADVOGADA DO LEQUE\",\"menuTitle\":\"ADVOGADA DO LEQUE\",\"kitTitle\":\"\",\"host\":\"Taise Vielmo Côrtes\",\"description\":\"Fortalecimento da marca @advogadadoleque e @pachecoecortes — fortalecimento da marca pessoal e empresarial. Melhorar cada vez mais o posicionamento como autoridade no segmento da advocacia, trazendo aos seguidores e agora à audiência do programa informações cada vez mais relevantes sobre planejamento de suas aposentadorias e direito a benefícios previdenciários.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/advogadaleque-20260806154030-b8294733.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"advogada_leque.html\",\"mediaKitFile\":\"advogada_leque.html\",\"tags\":[\"Direito\"],\"badgeText\":\"Estreia em breve\",\"showBadge\":true,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/advogada_leque.html",
+    "urlCanonica": "https://www.rsplay.com.br/advogada_leque.html",
+    "tituloDaPagina": "Advogada do Leque — Mídia Kit Oficial",
+    "dataHoraScrape": "2026-10-05T02:06:31.069Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "ADVOGADA DO LEQUE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Com Taise Vielmo Côrtes",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Taise Vielmo Côrtes\n@advogadadoleque\nRS PLAY • Claro-tv Canal 524"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: A APRESENTADORA — TAISE VIELMO CÔRTES",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "A Apresentadora\nTAISE VIELMO CÔRTES\nAdvogada do Leque • @advogadadoleque\nAdvogada com mais de 30 anos de experiência, especialista em direito previdenciário pela UCS (Universidade de Caxias do Sul), com diversos cursos de direito e gestão de escritórios de advocacia.\nSócia e gestora majoritária do escritório Pacheco e Côrtes Advogados , com duas unidades no Rio Grande do Sul, em Porto Alegre e Viamão, e uma unidade em Santa Catarina, na cidade de Palhoça/SC.\nMentora de advogados em gestão e direito previdenciário, Associada do IARGS e articulista de obras. Associada da BPWPOA , nesta como coordenadora do jurídico.\nEscritora articulista no livro “Lugar de Mulher é aonde ela quiser” , lançado na Feira do Livro de Porto Alegre no ano de 2024.\nDançarina de flamenco há mais de doze anos, já se apresentou no Teatro São Pedro por duas oportunidades. Atualmente integra o grupo amador de apresentação desta arte chamado @flamencosdosul , criado no ano passado e comandado pela professora @deniseflamenco .\nAssociada da ONG @bpwpoa , que valoriza a mulher e a liderança feminina."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma da emissora que transmite o programa.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: OBJETIVO DO PROJETO — Objetivo do Projeto",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "Programa Advogada do Leque\nObjetivo do Projeto\nFortalecimento da marca @advogadadoleque e @pachecoecortes — fortalecimento da marca pessoal e empresarial. Melhorar cada vez mais o posicionamento como autoridade no segmento da advocacia, trazendo aos seguidores e agora à audiência do programa informações cada vez mais relevantes sobre planejamento de suas aposentadorias e direito a benefícios previdenciários.\nDentro do programa, além de convidados diversos para falar de assuntos sérios como estes, falar também sobre a advocacia e como melhorar o trabalho dos advogados — sou mentora de advogados, associada do IARGS (Instituto dos Advogados do Rio Grande do Sul) e articulista de livros.\nFazer também um momento cultural de dança, escrita, música e saúde, pois sou dançarina de flamenco há mais de doze anos, já me apresentei no Teatro São Pedro por duas oportunidades e atualmente temos um grupo amador de apresentação desta arte chamado @flamencosdosul , criado no ano passado, comandado por nossa professora @deniseflamenco , que também pretendo divulgar, para que o público conheça ainda mais desta arte tão poderosa e que traz empoderamento feminino.\nAlém disso, sou associada de uma ONG, a @bpwpoa , que valoriza a mulher e a liderança feminina, assunto que também devo trazer para meu público através de convidados. Sou escritora articulista do livro “Lugar de Mulher é aonde ela quiser”, lançado na Feira do Livro de Porto Alegre no ano de 2024.\nEm todas estas ideias que tenho para o programa “Advogada do Leque” desejo, claro, geração de novos negócios e oportunidades e audiência para a emissora, que pretendo ajudar a se tornar ainda mais conhecida. A expansão da rede de relacionamento é inevitável, pois sou comunicativa e pretendo divulgar meus colegas da emissora e fazer novas amizades e negócios.\nO compartilhamento de conhecimento e experiências é algo que já faço há mais de trinta anos na minha carreira: já formei inúmeros estagiários e advogados que passaram por minha empresa e atualmente têm seus negócios — e que agora, com o programa, terei um alcance ainda maior.\nPretendo divulgar produtos que vou criar com o passar do tempo para comercialização da minha marca advogadadoleque. Os serviços e projetos são automaticamente falados no programa, com os convidados, para que o público venha a ter mais conhecimento."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: OPORTUNIDADES — Oportunidades",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "Exemplos\nOportunidades\nFortalecimento de marca pessoal ou empresarial;\nPosicionamento como autoridade no segmento;\nGeração de novos negócios e oportunidades;\nExpansão da rede de relacionamento;\nCompartilhamento de conhecimento e experiências;\nDivulgação de produtos, serviços ou projetos."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: RESUMO DOS OBJETIVOS DO PROGRAMA — Resumo dos Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "O Programa\nResumo dos Objetivos\nO objetivo do programa é trazer convidados para falar sobre Direito Previdenciário e principalmente sobre a área consultiva de planejamento previdenciário, que a maioria das pessoas não tem conhecimento, e da importância deste trabalho para todos.\nFazer um momento de tira-dúvidas com a advogadadoleque — aqui o foco na marca e em mim. Exaltar a liderança feminina. Trazer entretenimento com cultura, principalmente da dança flamenca e outras, todas maravilhosas para qualquer pessoa e principalmente para os advogados que lidam com as dores do ser humano: ela serve como uma terapia e uma válvula de escape para a nossa atividade.\nE todas as formas de melhorar a saúde das pessoas, trazendo convidados também sobre a importância da dança, escrita, saúde e exercícios, dentre outros — tudo que melhore a autoestima, o bem-estar e a qualidade de vida das pessoas.\nAssim, desejo que o programa tenha também um momento mais leve destas atividades, pois se verificar o meu perfil @advogadadoleque , o meu diferencial é este."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: GALERIA — Advogada do Leque",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "Galeria\nAdvogada do Leque"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — FOOTER / CONTATO",
+        "origemDoTrecho": "https://www.rsplay.com.br/advogada_leque.html",
+        "textoOriginal": "@advogadadoleque\n@pachecoecortes\n@flamencosdosul\nApresentação: Taise Vielmo Côrtes\n•\nAdvogada do Leque\n•\nPacheco e Côrtes Advogados\n•\nRS Play — Canal 524 Claro\n•\n© 2026"
+      }
+    ]
+  }
+]

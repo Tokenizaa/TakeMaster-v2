@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/conversaintima.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CONVERSA ÍNTIMA COM SHIRLEY",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CONVERSA ÍNTIMA COM SHIRLEY",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "Shirley Coden",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intima/intima6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/conversaintima.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSA ÍNTIMA COM SHIRLEY"
+  }
+]

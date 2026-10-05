@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/programas/imperium-das-estrelas---com-brenda-e-tatiane.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "ESTRELAS NA TV",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ESTRELAS NA TV",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ESTRELAS NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/estrelasnatv/logo.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estrelastv.html",
+    "altText": "Logo Estrelas na TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "ESTRELAS NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/estrelasnatv/estrelas_as_duas_juntas.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estrelastv.html",
+    "altText": "Brenda Corrêa e Tatiane Bergenthal",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTRELAS NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/estrelasnatv/brenda.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estrelastv.html",
+    "altText": "Brenda Corrêa",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTRELAS NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/estrelasnatv/tatiana.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estrelastv.html",
+    "altText": "Tatiane Bergenthal",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTRELAS NA TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/estrelasnatv/estrelas3.PNG",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/estrelastv.html",
+    "altText": "Set Estrelas na TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ESTRELAS NA TV"
+  }
+]

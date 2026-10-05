@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "LUCCAS CRISTIANO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1782152739519\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1782152739519\",\"title\":\"LUCCAS CRISTIANO\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"\",\"description\":\"\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/luccas_cristiano-20260622152651-3ebec8d8.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"\",\"mediaKitFile\":\"\",\"tags\":[\"Variedades\"],\"badgeText\":\"Estreia em breve\",\"showBadge\":true,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  }
+]

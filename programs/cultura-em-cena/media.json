@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/culturaemcena.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CULTURA EM CENA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CULTURA EM CENA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cultura/culturacena5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "Nando Gross no Estúdio",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cultura/culturacena3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cultura/culturacena4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cultura/culturacena6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cultura/culturacena7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CULTURA EM CENA"
+  },
+  {
+    "url": "https://youtube.com/@nandogross",
+    "tipo": "youtube",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cultura.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "Canal / Playlist / Vídeo YouTube",
+    "contexto": "youtube_referencia",
+    "programaRelacionado": "CULTURA EM CENA"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/belezaenegocio.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "BELEZA E NEGÓCIO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — BELEZA E NEGÓCIO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "Natália Dias",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/belezanegocio/beleza7.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/belezanegocio.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "BELEZA E NEGÓCIO"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "REPROGRAME-SE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — REPROGRAME-SE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/logo-reprograme.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "REPROGRAME-SE — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g9.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/reprograme/mae-g10.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "altText": "Mãe Colorida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "REPROGRAME-SE"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "STALKEANDO COM KYM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"stalkeando_kym\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"stalkeando_kym\",\"title\":\"STALKEANDO COM KYM\",\"host\":\"Kym\",\"description\":\"Investigação, mistério e diversão — Kym vai atrás das histórias que ninguém conta. \\\"Porque uma hora a gente encontra.\\\"\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/stalkeando/kym.jpg\",\"colorHex\":\"#FF1478\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"#\",\"mediaKitFile\":\"#\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":false,\"showOnMediakit2026\":true,\"showBadge\":true,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Entretenimento\"],\"gallery\":[],\"menuTitle\":\"Stalkeando com Kym\",\"kitTitle\":\"Stalkeando com Kym\",\"imageAlt\":\"\",\"novo\":true}"
+      }
+    ]
+  }
+]

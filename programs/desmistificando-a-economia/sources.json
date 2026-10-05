@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1781901725544\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1781901725544\",\"title\":\"DESMISTIFICANDO A ECONOMIA\",\"menuTitle\":\"DESMISTIFICANDO A ECONOMIA\",\"kitTitle\":\"\",\"host\":\"DIRLENE SILVA\",\"description\":\"Dirlene Silva é LinkedIn Top Voices e fundadora da DS Estratégia de Educação e Inteligência Financeira. Atua na interseção entre comportamento humano e finanças, transformando a gestão do dinheiro em uma ferramenta de consciência, autonomia e profunda transformação social.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/dirlene_silva-20260619174332-abf6e58f.jpeg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"desmistificando.html\",\"mediaKitFile\":\"desmistificando.html\",\"tags\":[\"Economia\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/desmistificando.html",
+    "urlCanonica": "https://www.rsplay.com.br/desmistificando.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Desmistificando a Economia",
+    "dataHoraScrape": "2026-10-05T02:06:31.579Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Mídia Kit Oficial\nCOM DIRLENE SILVA\nRS PLAY • Claro-tv Canal 524\nFinanças\n•\nComportamento\n•\nCidadania"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: A APRESENTADORA — Dirlene Silva",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "A Especialista\nDirlene Silva\nEconomista, Mestre em Gestão e Negócios, conselheira e colunista de finanças.\nDirlene Silva é LinkedIn Top Voices e fundadora da DS Estratégia de Educação e Inteligência Financeira. Atua na interseção entre comportamento humano e finanças, transformando a gestão do dinheiro em uma ferramenta de consciência, autonomia e profunda transformação social.\nSua história de vida é parte essencial do seu trabalho. Conhecida na adolescência como “filha da Lixeira” , sua trajetória faz parte do Museu da Pessoa , na exposição “Diversidade no Mercado Financeiro” , e também foi objeto de estudo acadêmico em trabalho de conclusão de curso da Universidade Federal do Rio Grande do Sul (UFRGS) .\nÉ escritora e recentemente lançou o livro “Do Lixo a Paris: minha jornada de filha da Lixeira a referência em Educação Financeira” . Entre os principais prêmios: LinkedIn Top Voices , uma das 10 mulheres que revolucionaram o universo das finanças ( Banco PAN ), entre as 50 pessoas mais criativas do Brasil ( Revista Wired ) e o Troféu Pensadores de Futuros (Futuros Possíveis)."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Economia Prática\nO Programa\nMostrar que a economia e as finanças vão muito além dos números frios.\nEstratégia Desmistificar\nAproxima os temas econômicos complexos da rotina diária das pessoas, provando que as decisões financeiras influenciam diretamente as condições de vida e o bem-estar.\nCidadania Financeira\nTraz a premissa de que a economia é uma ferramenta de cidadania. Através de educação financeira, ensina a importância das escolhas conscientes e do comportamento de consumo.\nHistórias Inspiradoras\nPor meio de entrevistas dinâmicas e relatos inspiradores, o quadro Desmistificando a Economia® conecta comportamento, trabalho, superação e desenvolvimento social de forma direta."
+      },
+      {
+        "secaoOrigem": "SLIDE 3B: OS QUADROS DO PROGRAMA — Os Quadros",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Antes dos números, pessoas\nOs Quadros\nDesmistificando a Economia aproxima a economia e as finanças da vida real, mostrando que, antes dos números, existem pessoas, escolhas e histórias. Apresentado por Dirlene Silva , a economista de pessoas, o programa traduz temas econômicos de forma simples e acessível — partindo da premissa de que economia é, sobretudo, pessoas — e mostra como nossas escolhas, comportamentos, trabalho, consumo e relação com o dinheiro impactam oportunidades, qualidade de vida e futuro, tornando a economia uma ferramenta de cidadania e transformação social.\nMomento Desmistificar\nBusca questionar e desconstruir conceitos, crenças e informações — nem sempre verdadeiras — presentes no cotidiano, traduzindo temas econômicos de forma simples e acessível.\nNa Vida Real\nQuadro de entrevista que conecta economia, finanças e comportamento às experiências do cotidiano, mostrando que por trás dos números existem pessoas."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: GALERIA - CARROSSEL AUTOMÁTICO INFINITO COM FOTOS VERTICAIS EM ORDEM ALEATÓRIA — Galeria do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Registros em Tela\nGaleria do Programa\nPasse o mouse ou toque para pausar"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: COTAS DE PATROCÍNIO (NEW) — Cotas de Patrocínio",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Parcerias e Negócios\nCotas de Patrocínio\nSua marca posicionada estrategicamente no principal programa de educação e inteligência financeira.\nCota de Entrada\nApoiador\nIdeal para:\nLojas de roupas, acessórios, maquiagem, floricultura, brindes, estética, beleza, etc.\nInvestimento\nPermuta\nEm produtos ou serviços durante 6 meses\nLogo como Apoiador no Mídia Kit\nMarcação em 1 story no dia da gravação\nMarcação na publicação do episódio\nDireito de mencionar que apoia o programa\nBronze / Prata\nParceiro Prata\nIdeal para:\nEmpresas que desejam fortalecer sua marca de forma recorrente e estruturada.\nInvestimento\nR$ 800 /mês\nou R$ 4.500 em cota única por 6 meses\nLogo nas artes oficiais do programa\nLogo na tela de encerramento do programa\n3 stories mensais dedicados nas redes\nMarcação nas legendas das postagens\nEspaço para material institucional no estúdio\nDireito de compartilhar trechos do programa\nPresença Ouro\nParceiro Ouro\nIdeal para:\nMarcas consolidadas que buscam alta autoridade e visibilidade na temporada.\nInvestimento\nR$ 1.600 /mês\nou R$ 9.000 em cota única por 6 meses\nTudo da Cota Prata +\nLogo na abertura e no encerramento\n6 stories mensais dedicados nas redes\n1 Reels colaborativo durante o semestre\nMenção institucional verbal pela Dirlene\nLink da empresa na página do programa\nParticipação ativa em ações especiais\nNaming Sponsor\nCota Master / Oficial\nPatrocinador Master\n“Desmistificando a Economia, com oferecimento de [Sua Marca]...”\nBranding\n• Destaque na abertura/encerramento\n• Logo em todas as artes oficiais\n• Logo no cenário (se possível)\n• Menção verbal da Dirlene em todos os episódios\nRedes Sociais\n• 8 stories mensais exclusivos\n• 2 Reels colaborativos por semestre\n• Bastidores e conteúdo institucional\nRelacionamento\n• Direito de uso da identidade visual\n• Convite para episódios especiais\n• Entrevista exclusiva na temporada\n• Ações promocionais e institucionais\nInvestimento\nR$ 3.000 /mês\nDurante o período de 6 meses\nCota Única\nR$ 16.000,00\nPuntual / Solo\nPatrocínio de Episódio\nIdeal para:\nEmpresas que não desejam assumir compromisso mensal, com ação tática pontual.\nInvestimento\nR$ 1.300\nCota única por programa selecionado\nLogo inserido no episódio selecionado\nCitação verbal da marca no programa\nStory dedicado nas redes sociais\nMarcação na legenda e reels específico"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ALCANCE DA EMISSORA (PENÚLTIMA SEÇÃO) — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "Alcance da Emissora\nA amplitude da rede multiplataforma que distribui o programa diariamente.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Geral da Emissora Multiplataforma\n16M\nAcessos TVSPlay\n2M\nClaro TV+ (524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — FOOTER / CONTACT",
+        "origemDoTrecho": "https://www.rsplay.com.br/desmistificando.html",
+        "textoOriginal": "A economia que acontece todos os dias como ferramenta de cidadania e transformação social.\nCLARO TV+ CANAL 524\nWWW.RSPLAY.COM.BR\nDirlene Silva\n•\nRS Play\n•\nDesmistificando a Economia © 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/consumidor-20260806160618-3ab2faff.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CONSUMIDOR RS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CONSUMIDOR RS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/consumidor.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CONSUMIDOR RS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CONSUMIDOR RS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "Fernanda Apel",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/consumidor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONSUMIDOR RS"
+  }
+]

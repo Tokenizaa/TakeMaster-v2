@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/marco_marzola.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "PAPO DE TERAPEUTA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — PAPO DE TERAPEUTA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "PAPO DE TERAPEUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/terapeuta/terapeuta.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/terapeuta.html",
+    "altText": "Marco Marzolla",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO DE TERAPEUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/terapeuta/terapeuta2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/terapeuta.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO DE TERAPEUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/terapeuta/terapeuta3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/terapeuta.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO DE TERAPEUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/terapeuta/terapeuta4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/terapeuta.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PAPO DE TERAPEUTA"
+  }
+]

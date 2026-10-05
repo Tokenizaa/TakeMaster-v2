@@ -1,0 +1,83 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/negocios-em-foco.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "NEGÓCIOS EM FOCO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — NEGÓCIOS EM FOCO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Michèle Castro",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/negociofoco/negocio8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/negociosfoco.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NEGÓCIOS EM FOCO"
+  }
+]

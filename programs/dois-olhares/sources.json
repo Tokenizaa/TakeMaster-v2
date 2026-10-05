@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS OLHARES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1783688076109\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1783688076109\",\"title\":\"DOIS OLHARES\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"ADRIANA ZANONATO E LUIZ CARLOS PRADO\",\"description\":\"O Dois Olhares não pretende oferecer respostas prontas. Pretende fazer perguntas que merecem ser conversadas.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/olhares-20260710100326-5c0b147c.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"doisolhares.html\",\"mediaKitFile\":\"doisolhares.html\",\"tags\":[\"Comportamento\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/doisolhares.html",
+    "urlCanonica": "https://www.rsplay.com.br/doisolhares.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Dois Olhares com Adriana e Dr. Luiz Carlos",
+    "dataHoraScrape": "2026-10-05T02:06:31.578Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS OLHARES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "Apresentação do Programa de TV\nPorque toda história pode ser vista de mais de uma maneira.\nCom Adriana Zanonato e Luiz Carlos Prado\nPsicologia\n•\nPsiquiatria\n•\nDiálogo\n•\nComportamento"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: OS APRESENTADORES — Duas Trajetórias, Dois Olhares",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "A Parceria de Vida e Ciência\nDuas Trajetórias, Dois Olhares\n\"Nenhuma história pode ser compreendida a partir de um único ponto de vista.\"\nAdriana Zanonato\nPsicóloga, Terapeuta de Família e Casal, Professora e Escritora\nÉ psicóloga, terapeuta de família e casal, professora, supervisora clínica e escritora. Atua há décadas no atendimento de crianças, adolescentes, adultos, casais e famílias, dedicando-se especialmente ao estudo dos traumas psicológicos, dos vínculos afetivos e do desenvolvimento emocional.\nÉ autora e coautora de diversas obras voltadas à promoção da saúde mental e ao fortalecimento das relações humanas.\nLuiz Carlos Prado\nMédico Psiquiatra, Professor e Escritor\nÉ médico psiquiatra, professor e escritor. Ao longo de sua trajetória, tem se dedicado ao cuidado em saúde mental, à formação de profissionais e à divulgação do conhecimento científico em uma linguagem acessível, aproximando a Psiquiatria das pessoas e de suas histórias.\nA União\nCiência, Sensibilidade e Encontro Humano\nJuntos, são autores de diversos livros publicados pela Arte em Livros Editora e apresentam o programa Dois Olhares , na RS Play TV , um espaço dedicado a entrevistas, reflexões e histórias que inspiram. Unindo os olhares da Psicologia e da Psiquiatria, recebem convidados para conversar sobre relacionamentos, família, saúde mental e os desafios da vida contemporânea, mostrando que toda história pode ser compreendida sob diferentes perspectivas.\nAcreditam que o conhecimento transforma, mas é o encontro humano que verdadeiramente promove mudanças. Por isso, dedicam sua trajetória a construir pontes entre a ciência e a sensibilidade, levando esperança, acolhimento e reflexão a leitores, pacientes, alunos e telespectadores."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O CONCEITO & IDENTIDADE DO PROGRAMA — A Identidade do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "A Identidade do Programa\n\"O Dois Olhares não pretende oferecer respostas prontas. Pretende fazer perguntas que merecem ser conversadas.\"\nCiência & Humanidade\nO conhecimento científico e acadêmico encontra-se diretamente com a experiência humana real, crua e sensível.\nEncontros Reais\nOs convidados não vêm apenas contar conquistas. Vêm para dividir caminhos, dúvidas, aprendizados e escolhas de vida.\nReflexão Ativa\nMais do que informar de forma passiva, o objetivo central do Dois Olhares é despertar reflexão profunda no espectador.\nConversa Próxima\nMais do que simplesmente falar sobre pessoas, queremos estabelecer pontes e de fato conversar com elas."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: A EXPERIÊNCIA QUE PROPOMOS — Uma Conversa que Continua",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "A Experiência\nUma Conversa que Continua\n\"Não queremos que o público apenas assista ao programa. Queremos que continue a conversa quando as câmeras se desligarem.\"\n01.\nPais com Filhos\nFomentar diálogos seguros entre gerações, permitindo que a infância e a adolescência encontrem um porto seguro.\n02.\nCasais com Perguntas Inéditas\nPropor questionamentos que casais nunca haviam feito antes, ampliando os horizontes da cumplicidade.\n03.\nAmigos Reatando Diálogos\nInspirar as pessoas a retomarem conversas que haviam sido silenciadas ou interrompidas com o tempo.\n04.\nResignificar Dores Antigas\nPossibilitar que alguém descubra uma perspectiva nova e mais leve para lidar com um sofrimento passado.\n\"Toda transformação começa quando alguém se sente verdadeiramente escutado.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE E PERFORMANCE DA TRANSMISSÃO — Alcance e Transmissão",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "Alcance e Transmissão\nA força de uma audiência qualificada e multiplataforma consolidada [3].\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaynodigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaynodigital\n784K\nVisualizações\n48K\nCurtidas\nTendências Virais"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALERIA DO UNIVERSO VISUAL (CARROSSEL INFINITO COM FOTOS DO PROGRAMA) — Estética & Acolhimento",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "Estética & Acolhimento\nDiálogos, estudos, consultório e encontros reais que moldam a nossa essência."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: PATROCINADORES — Nossos Patrocinadores",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "Apoio e Confiança\nNossos Patrocinadores\nO Dois Olhares é um projeto que se torna realidade graças à confiança de empresas e instituições que acreditam no poder do conhecimento, do diálogo e da promoção da saúde mental. Cada patrocinador é parte desta história. Mais do que apoiar um programa de televisão, escolhe investir em um conteúdo que informa, acolhe, inspira e contribui para uma sociedade mais consciente, empática e humana.\nArte em Livros Editora\nLivraria especializada em Psicologia, desenvolvimento humano e literatura infantil, responsável por aproximar conhecimento, profissionais e leitores por meio de uma curadoria cuidadosa.\nAcessar Site\n@arteemlivroseditora\nInTCC\nSaúde Mental que Transforma Vidas\nInstituição de ensino, formação e atendimento clínico dedicada à excelência em saúde mental e ao desenvolvimento de profissionais comprometidos com o cuidado baseado em evidências.\nAcessar Site\n@intcc_rs\nCONCRIART\nCongresso de Terapia Cognitiva\nUm dos principais congressos brasileiros dedicados à Terapia Cognitiva aplicada à infância e adolescência, promovendo o encontro entre ciência, prática clínica e inovação.\nAcessar Site\n@concriart\n\"Empresas que escolhem patrocinar o Dois Olhares tornam-se parceiras de um projeto comprometido com a disseminação de conhecimento, a valorização das relações humanas e a construção de uma sociedade emocionalmente mais saudável.\""
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO E OPORTUNIDADES COMERCIAIS — Oportunidades Comerciais",
+        "origemDoTrecho": "https://www.rsplay.com.br/doisolhares.html",
+        "textoOriginal": "Oportunidades Comerciais\nSua marca presente e associada à profundidade de um dos diálogos mais reflexivos da TV.\nInserção Máxima\nPatrocínio Master\nExposição destacada da marca durante toda a jornada do programa, além de inserções na abertura, encerramento, mídias institucionais e ações promocionais multiplataforma.\nPresença Elegante\nApoio Cultural\nSua marca integrada nos créditos, logomarcas ao longo de toda a transmissão e menções verbais institucionais leves e de alta autoridade.\nFoco Conteúdo\nParticipação Especial\nPossibilidade de entrevistas exclusivas para apresentar serviços, marcas, produtos e soluções inovadoras que conversem com a saúde e o desenvolvimento pessoal.\nEntre em Contato Oficial\n@rsplaynodigital\nApresentação: Adriana Zanonato e Luiz Carlos Prado\n•\nPrograma de TV: Dois Olhares\n•\n© 2026"
+      }
+    ]
+  }
+]

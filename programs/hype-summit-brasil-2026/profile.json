@@ -1,0 +1,252 @@
+{
+  "slug": "hype-summit-brasil-2026",
+  "idOriginalCms": "não informado na fonte",
+  "tipoRegistro": "apresentacao_especial",
+  "ativoNoCms": true,
+  "midiaKitUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/apresentacoes/summit.html"
+  ],
+  "midiaKitStatusHttp": 200,
+  "midiaKitCapturadoComSucesso": true,
+  "nomeDoPrograma": "HYPE SUMMIT BRASIL — PORTO ALEGRE 2026",
+  "titulo": "HYPE SUMMIT BRASIL - Porto Alegre 2026",
+  "subtitulo": "BRASIL",
+  "descricao": "O maior encontro de influenciadores e criadores Porto Alegre • Fevereiro 2026",
+  "propostaEditorial": "[PROPÓSITO] Conectar, capacitar e potencializar influenciadores, criadores e marcas Hub vivo de criatividade e negócios para a nova geração Conhecimento de alto nível e experiências sensoriais únicas Transformar conteúdo e presença digital em negócios reais",
+  "conceito": "[HYPE SUMMIT BRASIL] Mais que um summit. É revolução. O futuro da influência digital começa aqui Conectando criadores com oportunidades reais Porto Alegre como epicentro da inovação A nova era da comunicação digital nasce no Sul do Brasil.",
+  "publico": "não informado na fonte",
+  "apresentador": "não informado na fonte",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": "não informado na fonte",
+  "quadros": [
+    "PORTO ALEGRE • FEVEREIRO 2026",
+    "4 DIAS • SEGUNDA A QUINTA",
+    "Ingressos",
+    "Dias",
+    "Influenciadores e criadores de conteúdo",
+    "Profissionais de marketing e comunicação",
+    "Marcas e agências",
+    "Público interessado em inovação digital"
+  ],
+  "formato": "[FORMATO] 4 DIAS • SEGUNDA A QUINTA Ingressos Dias Influenciadores e criadores de conteúdo Profissionais de marketing e comunicação Marcas e agências Público interessado em inovação digital | [DIFERENCIAIS] Presencial + Digital Transmissão digital para expandir alcance Conteúdo + Memórias Cada canto pensado para gerar conteúdo Matchmaking Conexão entre marcas e criadores Dia + Noite Aprendizado de dia, conexão à noite Primeiro no Sul Referência nacional em Porto Alegre Sul do Brasil Estrutura única na região",
+  "duracao": "não informado na fonte",
+  "periodicidade": "não informado na fonte",
+  "horario": "não informado na fonte",
+  "canalPlataforma": "Instagram",
+  "informacoesComerciais": [
+    "[ATIVAÇÕES] Empresas Master Espaços Instagramáveis Espaços Gastronômicos Patrocinadores Naming rights e ações exclusivas com influenciadores Cenários exclusivos para fotos e vídeos Degustações e ativações especiais"
+  ],
+  "diferenciais": [
+    "[DIFERENCIAIS] Presencial + Digital Transmissão digital para expandir alcance Conteúdo + Memórias Cada canto pensado para gerar conteúdo Matchmaking Conexão entre marcas e criadores Dia + Noite Aprendizado de dia, conexão à noite Primeiro no Sul Referência nacional em Porto Alegre Sul do Brasil Estrutura única na região"
+  ],
+  "contatos": "não informado na fonte",
+  "redesSociais": "não informado na fonte",
+  "links": [
+    "https://www.rsplay.com.br/apresentacoes/summit.html"
+  ],
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/placeholder.svg?height=600&width=800"
+  ],
+  "textosPromocionais": [
+    "O maior encontro de influenciadores e criadores Porto Alegre • Fevereiro 2026",
+    "Conectar, capacitar e potencializar influenciadores, criadores e marcas",
+    "Hub vivo de criatividade e negócios para a nova geração",
+    "Conhecimento de alto nível e experiências sensoriais únicas",
+    "Transformar conteúdo e presença digital em negócios reais"
+  ],
+  "chamadas": [
+    "BRASIL",
+    "Conectar",
+    "Capacitar",
+    "Potencializar"
+  ],
+  "secoesDoMidiaKit": [
+    {
+      "indice": 1,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Hero Section",
+      "tituloSecao": "HYPE SUMMIT",
+      "subtitulos": [
+        "BRASIL"
+      ],
+      "paragrafos": [
+        "O maior encontro de influenciadores e criadores Porto Alegre • Fevereiro 2026"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "🚀\nHYPE SUMMIT\nBRASIL\nO maior encontro de influenciadores e criadores\nPorto Alegre • Fevereiro 2026\n4 DIAS DE EVENTO"
+    },
+    {
+      "indice": 2,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Section 1: Propósito",
+      "tituloSecao": "PROPÓSITO",
+      "subtitulos": [
+        "Conectar",
+        "Capacitar",
+        "Potencializar"
+      ],
+      "paragrafos": [
+        "Conectar, capacitar e potencializar influenciadores, criadores e marcas",
+        "Hub vivo de criatividade e negócios para a nova geração",
+        "Conhecimento de alto nível e experiências sensoriais únicas",
+        "Transformar conteúdo e presença digital em negócios reais"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "01\nPROPÓSITO\nConectar, capacitar e potencializar influenciadores, criadores e marcas\nConectar\nHub vivo de criatividade e negócios para a nova geração\nCapacitar\nConhecimento de alto nível e experiências sensoriais únicas\nPotencializar\nTransformar conteúdo e presença digital em negócios reais"
+    },
+    {
+      "indice": 3,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Section 2: Formato e Estrutura",
+      "tituloSecao": "FORMATO",
+      "subtitulos": [
+        "PORTO ALEGRE • FEVEREIRO 2026"
+      ],
+      "paragrafos": [
+        "4 DIAS • SEGUNDA A QUINTA",
+        "Ingressos",
+        "Dias",
+        "Influenciadores e criadores de conteúdo",
+        "Profissionais de marketing e comunicação",
+        "Marcas e agências",
+        "Público interessado em inovação digital"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "02\nFORMATO\nPORTO ALEGRE • FEVEREIRO 2026\n4 DIAS • SEGUNDA A QUINTA\n3K\nIngressos\n4\nDias\n✓\nInfluenciadores e criadores de conteúdo\n✓\nProfissionais de marketing e comunicação\n✓\nMarcas e agências\n✓\nPúblico interessado em inovação digital"
+    },
+    {
+      "indice": 4,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Section 3: Atividades",
+      "tituloSecao": "ATIVIDADES",
+      "subtitulos": [
+        "📚 EDUCAÇÃO + ENTRETENIMENTO",
+        "AULAS TEÓRICAS",
+        "AULAS PRÁTICAS",
+        "PAINÉIS",
+        "FESTAS TEMÁTICAS"
+      ],
+      "paragrafos": [
+        "Aprendizado durante o dia e conexão nas festas à noite",
+        "Conhecimento estratégico",
+        "Tendências globais, monetização e posicionamento de marca",
+        "Mão na massa",
+        "Produção em tempo real, fotografia e edição",
+        "Troca de experiências",
+        "Convidados nacionais e internacionais",
+        "Networking e diversão",
+        "Cada noite com conceito diferenciado"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "03\nATIVIDADES\n📚 EDUCAÇÃO + ENTRETENIMENTO\nAprendizado durante o dia e conexão nas festas à noite\n📖\nAULAS TEÓRICAS\nConhecimento estratégico\nTendências globais, monetização e posicionamento de marca\n🎬\nAULAS PRÁTICAS\nMão na massa\nProdução em tempo real, fotografia e edição\n💬\nPAINÉIS\nTroca de experiências\nConvidados nacionais e internacionais\n🎉\nFESTAS TEMÁTICAS\nNetworking e diversão\nCada noite com conceito diferenciado"
+    },
+    {
+      "indice": 5,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Section 4: Ativações para Marcas",
+      "tituloSecao": "ATIVAÇÕES",
+      "subtitulos": [
+        "Presença Massiva de Marca",
+        "Visibilidade Orgânica",
+        "Experiências Gastronômicas"
+      ],
+      "paragrafos": [
+        "Empresas Master",
+        "Espaços Instagramáveis",
+        "Espaços Gastronômicos",
+        "Patrocinadores",
+        "Naming rights e ações exclusivas com influenciadores",
+        "Cenários exclusivos para fotos e vídeos",
+        "Degustações e ativações especiais"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "04\nATIVAÇÕES\n5\nEmpresas Master\n30\nEspaços Instagramáveis\n20\nEspaços Gastronômicos\n30\nPatrocinadores\nPresença Massiva de Marca\nNaming rights e ações exclusivas com influenciadores\nVisibilidade Orgânica\nCenários exclusivos para fotos e vídeos\nExperiências Gastronômicas\nDegustações e ativações especiais"
+    },
+    {
+      "indice": 6,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Section 5: Diferenciais",
+      "tituloSecao": "DIFERENCIAIS",
+      "subtitulos": [
+        "FORMATO HÍBRIDO",
+        "EXPERIÊNCIA IMERSIVA",
+        "REDE DE NEGÓCIOS",
+        "EDUCAÇÃO + DIVERSÃO",
+        "PIONEIRISMO",
+        "FOCO REGIONAL"
+      ],
+      "paragrafos": [
+        "Presencial + Digital",
+        "Transmissão digital para expandir alcance",
+        "Conteúdo + Memórias",
+        "Cada canto pensado para gerar conteúdo",
+        "Matchmaking",
+        "Conexão entre marcas e criadores",
+        "Dia + Noite",
+        "Aprendizado de dia, conexão à noite",
+        "Primeiro no Sul",
+        "Referência nacional em Porto Alegre",
+        "Sul do Brasil",
+        "Estrutura única na região"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "05\nDIFERENCIAIS\n🌐\nFORMATO HÍBRIDO\nPresencial + Digital\nTransmissão digital para expandir alcance\n📸\nEXPERIÊNCIA IMERSIVA\nConteúdo + Memórias\nCada canto pensado para gerar conteúdo\n🤝\nREDE DE NEGÓCIOS\nMatchmaking\nConexão entre marcas e criadores\n🎓\nEDUCAÇÃO + DIVERSÃO\nDia + Noite\nAprendizado de dia, conexão à noite\n🏆\nPIONEIRISMO\nPrimeiro no Sul\nReferência nacional em Porto Alegre\n🎯\nFOCO REGIONAL\nSul do Brasil\nEstrutura única na região"
+    },
+    {
+      "indice": 7,
+      "origemUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "identificadorSlideOuSecao": "Final Section: Manifesto",
+      "tituloSecao": "HYPE SUMMIT BRASIL",
+      "subtitulos": [],
+      "paragrafos": [
+        "Mais que um summit.",
+        "É revolução.",
+        "O futuro da influência digital começa aqui",
+        "Conectando criadores com oportunidades reais",
+        "Porto Alegre como epicentro da inovação",
+        "A nova era da comunicação digital nasce no Sul do Brasil."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "MANIFESTO\nHYPE SUMMIT BRASIL\nMais que um summit.\nÉ revolução.\nO futuro da influência digital começa aqui\nConectando criadores com oportunidades reais\nPorto Alegre como epicentro da inovação\nA nova era da comunicação digital\nnasce no Sul do Brasil.\n🚀"
+    }
+  ],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "subtitulo",
+      "descricao",
+      "formato",
+      "canalPlataforma",
+      "links",
+      "imagens",
+      "textosPromocionais",
+      "chamadas"
+    ],
+    "informacaoDerivadaDaEstrutura": [
+      "propostaEditorial",
+      "conceito",
+      "quadros",
+      "informacoesComerciais",
+      "diferenciais"
+    ],
+    "informacaoAusente": [
+      "publico",
+      "apresentador",
+      "especialistasConvidadosRecorrentes",
+      "temasAbordados",
+      "duracao",
+      "periodicidade",
+      "horario",
+      "contatos",
+      "redesSociais",
+      "videos"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/apresentacoes/summit.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

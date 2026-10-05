@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS PONTOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"dois_pontos\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"dois_pontos\",\"title\":\"DOIS PONTOS\",\"host\":\"Dani Veissid & Marilia Nonnenmacher\",\"description\":\"Se você já mudou de casa alguma vez ou está pensando em mudar, este programa é para você. O Dois Pontos recebe convidados para discutir os bastidores emocionais e práticos das transições de vida.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/doispontos.jpg\",\"colorHex\":\"#6366f1\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/doispontos.html\",\"mediaKitFile\":\"doispontos.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"Estreia em breve\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Imóveis\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS PONTOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"dois_pontos\",\"title\":\"DOIS PONTOS\",\"host\":\"Em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/doispontos.jpg\",\"colorHex\":\"#6366f1\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS PONTOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"dois_pontos\",\"title\":\"DOIS PONTOS\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/doispontos.jpg\",\"colorHex\":\"#6366f1\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/doispontos.html",
+    "urlCanonica": "https://www.rsplay.com.br/doispontos.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Dois Pontos",
+    "dataHoraScrape": "2026-10-05T02:06:29.284Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DOIS PONTOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Dois Pontos",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "Mídia Kit Oficial\nDois Pontos\nCom Dani Veissid & Marilia Nonnenmacher\n\"Onde histórias encontram novos começos.\"\nImóveis\n•\nHistórias\n•\nTrajetórias\n•\nRecomeços"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE OS APRESENTADORES E O PROGRAMA — Dani & Marilia",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "Os Apresentadores\nDani & Marilia\nRepresentando a essência da Sociedade Dois Pontos , Dani Veissid e Marilia criaram este espaço para provar que o mercado imobiliário vai muito além de tijolos e contratos.\n\"Mudar de casa não é só trocar de endereço. É mudar rotina, memória, expectativa e até fase da vida.\" Através de conversas reais, eles conectam trajetórias profissionais, mudanças de identidade e a busca pela casa ideal, mostrando como tudo está ligado ao estilo de vida.\nA Essência do Programa\nSe você já mudou de casa alguma vez ou está pensando em mudar, este programa é para você. O Dois Pontos recebe convidados para discutir os bastidores emocionais e práticos das transições de vida.\nQuadro: Café com Mudança\nUm bate-papo leve, direto e com sabor regional."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Formato",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "O Formato\n\"Aqui a conversa conecta pessoas e lugares.\"\nGênero\nBate-Papo, Imóveis & Lifestyle\nEstilo\nVideocast de Histórias Reais\nDuração\nAproximadamente 27 Minutos\nDistribuição\nClaro TV (Canal 524) e Digital"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: VISUAL IDENTITY (MARQUEE CAROUSEL) — Universo Dois Pontos",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "Universo Dois Pontos\nDecisões, conversas inspiradoras e a casa ideal."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — Comece sua nova história",
+        "origemDoTrecho": "https://www.rsplay.com.br/doispontos.html",
+        "textoOriginal": "Comece sua nova história\nVincule sua marca a conversas reais sobre moradia, estilo de vida e aos recomeços que transformam trajetórias com a Dois Pontos.\n@doispontosrs\nApresentação: Dani Veissid & Marilia\n•\nPrograma Dois Pontos\n•\n© 2026"
+      }
+    ]
+  }
+]

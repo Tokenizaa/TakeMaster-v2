@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Tv,
   Plus,
@@ -13,15 +13,19 @@ import {
   Globe,
   Target,
   FolderPlus,
+  BookOpen,
 } from 'lucide-react';
 import {
   CatalogStatus,
   Episode,
   Production,
   ProductionStatus,
+  ProgramPitchSuggestion,
   Show,
   ShowFormat,
 } from '../types';
+import { ProgramIdentityCard } from './ProgramIdentityCard';
+import { api } from '../services/api';
 
 interface ShowsViewProps {
   shows: Show[];
@@ -34,6 +38,8 @@ interface ShowsViewProps {
   onUpdateProduction?: (id: string, prod: Partial<Production>) => Promise<void>;
   onDeleteProduction?: (id: string) => Promise<void>;
   onSelectShowFilter: (showId: string) => void;
+  onUsePitchInProduction?: (show: Show, pitch: ProgramPitchSuggestion) => Promise<void> | void;
+  canEditShow?: (showId: string) => boolean;
 }
 
 const FORMATS: ShowFormat[] = [
@@ -84,12 +90,31 @@ export const ShowsView: React.FC<ShowsViewProps> = ({
   onCreateProduction,
   onDeleteProduction,
   onSelectShowFilter,
+  onUsePitchInProduction,
+  canEditShow,
 }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [creatingProductionForShowId, setCreatingProductionForShowId] = useState<string | null>(
     null
   );
+  const [kbPrograms, setKbPrograms] = useState<
+    {
+      slug: string;
+      nome: string;
+      apresentador: string;
+      descricao: string;
+      hasMediaKitHtml: boolean;
+      secoesCount: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    api
+      .listKnowledgeBasePrograms()
+      .then((list) => setKbPrograms(list))
+      .catch(() => {});
+  }, []);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -280,6 +305,46 @@ export const ShowsView: React.FC<ShowsViewProps> = ({
               <X className="w-5 h-5" />
             </button>
           </div>
+
+          {!editingId && kbPrograms.length > 0 && (
+            <div className="bg-zinc-950/90 border border-amber-500/20 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-zinc-300">
+                <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>
+                  Preencher a partir da <strong>Base de Conhecimento RS Play</strong> (Mídia Kits):
+                </span>
+              </div>
+              <select
+                defaultValue=""
+                onChange={(e) => {
+                  const selected = kbPrograms.find((p) => p.slug === e.target.value);
+                  if (selected) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      title: selected.nome,
+                      host:
+                        selected.apresentador && selected.apresentador !== 'não informado na fonte'
+                          ? selected.apresentador
+                          : prev.host,
+                      description:
+                        selected.descricao && selected.descricao !== 'não informado na fonte'
+                          ? selected.descricao
+                          : prev.description,
+                    }));
+                  }
+                }}
+                className="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs text-zinc-100"
+              >
+                <option value="">Selecionar programa da base RS Play...</option>
+                {kbPrograms.map((kb) => (
+                  <option key={kb.slug} value={kb.slug}>
+                    {kb.nome}{' '}
+                    {kb.hasMediaKitHtml ? `(Mídia Kit • ${kb.secoesCount} seções)` : '(Catálogo)'}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
@@ -556,6 +621,13 @@ export const ShowsView: React.FC<ShowsViewProps> = ({
                     </p>
                   </div>
                 </div>
+
+                {/* FASE 1 a 5: Identidade Editorial do Programa + Curadoria de Pautas */}
+                <ProgramIdentityCard
+                  show={show}
+                  canEditEditorial={canEditShow ? canEditShow(show.id) : true}
+                  onUsePitchInProduction={onUsePitchInProduction}
+                />
 
                 {/* Productions / Seasons Hierarchy Section */}
                 <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-4 space-y-3">

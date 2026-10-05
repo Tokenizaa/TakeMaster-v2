@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencias.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "TENDÊNCIAS QUE MARCAM",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — TENDÊNCIAS QUE MARCAM",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencias.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Logotipo Tendências que Marcam",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Camila Marques",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Tendências que Marcam",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Camila Marques - Branding",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Gravações Show",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Estratégia e Presença",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tendencias/tendencia6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tendencias.html",
+    "altText": "Bastidores TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TENDÊNCIAS QUE MARCAM"
+  }
+]

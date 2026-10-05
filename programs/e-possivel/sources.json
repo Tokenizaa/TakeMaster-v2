@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "É POSSÍVEL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"23\",\"title\":\"É POSSÍVEL\",\"host\":\"É Possível\",\"description\":\"Inspira mulheres a conquistar o primeiro imóvel.\",\"schedule\":\"Quinta-feira | 09h30\",\"image\":\"https://rsplay.com.br/imgmidia/e_possivel.jpg\",\"colorHex\":\"#059669\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  }
+]

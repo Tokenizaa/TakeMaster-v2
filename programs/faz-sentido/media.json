@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Léo da Silva Alves",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — FAZ SENTIDO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-duo1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "FAZ SENTIDO — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Faz Sentido — Conversas sobre carreira, escolhas e vida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-ingrid-av.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-martin-av.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-duo2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-duo3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-ingrid.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-dogs.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-duo4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-martin.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fazsentido/fs-ensaio.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fazsentido.html",
+    "altText": "Ingrid Santana e Martin Guedes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FAZ SENTIDO"
+  }
+]

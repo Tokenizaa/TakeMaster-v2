@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/dirlene_silva-20260619174332-abf6e58f.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DESMISTIFICANDO A ECONOMIA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DESMISTIFICANDO A ECONOMIA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/desmistificando/desmistificando.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/desmistificando.html",
+    "altText": "Desmistificando a Economia",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/desmistificando/momento.mp4",
+    "tipo": "video_mp4",
+    "paginaDeOrigem": "https://www.rsplay.com.br/desmistificando.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "Stream / Vídeo na página",
+    "contexto": "player_video",
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/desmistificando/navidareal.mp4",
+    "tipo": "video_mp4",
+    "paginaDeOrigem": "https://www.rsplay.com.br/desmistificando.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "Stream / Vídeo na página",
+    "contexto": "player_video",
+    "programaRelacionado": "DESMISTIFICANDO A ECONOMIA"
+  }
+]

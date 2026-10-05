@@ -1,0 +1,101 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "LIKE SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"like_show\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"like_show\",\"title\":\"LIKE SHOW\",\"host\":\"Ilsa Mara e Ariska Mel\",\"description\":\"Tudo sobre o universo digital e tendências.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/likeshow_ilsa_ariska-20260619171905-3fe89cee.png\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"likeshow.html\",\"mediaKitFile\":\"likeshow.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Tecnologia\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "LIKE SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"like_show\",\"title\":\"LIKE SHOW\",\"host\":\"Ilsa Mara\",\"description\":\"Tudo sobre o universo digital e tendências.\",\"schedule\":\"Consulte a programação\",\"image\":\"http://www.rsplay.com.br/imgmidia/likeshow.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "LIKE SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"like_show\",\"title\":\"LIKE SHOW\",\"host\":\"Ilsa Mara\",\"description\":\"Tudo sobre o universo digital e tendências.\",\"schedule\":\"Consulte a programação\",\"image\":\"http://www.rsplay.com.br/imgmidia/likeshow.jpg\",\"colorHex\":\"#ec4899\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/likeshow.html",
+    "urlCanonica": "https://www.rsplay.com.br/likeshow.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Like Show | RSPlay TV",
+    "dataHoraScrape": "2026-10-05T02:06:32.095Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "LIKE SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — LIKE SHOW",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Release Oficial\nLIKE\nSHOW\nOnde o que bomba na internet vira show na televisão .\nRS Play\nClaro TV 524"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: O PROGRAMA (CONCEITO) — Transformando as tardes de sábado em um Espetáculo.",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Entretenimento Dinâmico\nTransformando as tardes de sábado em um Espetáculo.\nA RSPlay TV apresenta o Like Show , um programa que reúne os assuntos mais comentados das redes sociais, celebridades e tendências do momento, com linguagem dinâmica, atual e envolvendo.\nÉ a fusão perfeita entre a agilidade da internet e a credibilidade da TV. Um espaço marcado por muita interação, opinião e lifestyle.\nTrends\nO que viralizou na semana\nCelebs\nFofocas e Famosos\nLifestyle\nDicas e Eventos\nHumor\nConselhos Divertidos"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O ELENCO (CAST) — Quem Faz o Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Quem Faz o Show\nUm time conectado, irreverente e cheio de personalidade.\nApresentadora\nIlsa Mara Marques\nComanda o \"Bombou na Semana\" , trazendo trends, memes e os assuntos mais comentados com muita interação.\nHumor & Personagem\nAyala (Ariska Mel)\nDiversão garantida no quadro \"O Mundo ao Contrário\" , dando conselhos amorosos hilários para a audiência."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: OS QUADROS (DETALHES) — Destaques da Programação",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Destaques da Programação\nBombou na Semana\nTrends, memes e o que viralizou na internet, com a curadoria de Ilsa Mara.\nMundo ao Contrário\nAriska Mel (Ayala) responde perguntas e dá conselhos inusitados aos internautas."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: GRADE E FORMATO — Sintonize",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Sintonize\nSábados\n15h30\nUma hora de puro entretenimento e conexão com o mundo digital.\nCanal\n524 Claro TV+\nOnline\nStreaming RSPlay"
+      },
+      {
+        "secaoOrigem": "SLIDE 2.5: ALCANCE & VISIBILIDADE (METRICS) — Alcance & Visibilidade",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Alcance & Visibilidade\nOnde sua marca será vista: TV, streaming e digital.\nMétricas da Emissora\nEcossistema RS Play\nStreaming & Emissora\n14.388\nMilhões\nAlcance total da emissora multiplataforma\n16M\nAcessos plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral\nEngajamento dos Perfis\nDados de apoio dos perfis conectados ao Like Show.\nInstagram\nIlsa Mara\n@ilsamara.marques\n7.355\nSeguidores\n300\nVisualizações\n80K\nInterações/mês\nAyala Ariska Mel\n@ayalaariskamel\n61K\nSeguidores\n1M\nVisualizações\n300K\nInterações/mês\nLike Show\n@likeshow.rs\n1K\nSeguidores\n150\nVisualizações\n30K\nInterações/mês"
+      },
+      {
+        "secaoOrigem": "SLIDE 2.7: PACOTES COMERCIAIS & OPORTUNIDADES — Pacotes Comerciais",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Oportunidades de Parceria\nPacotes Comerciais\nFormatos sob medida para conectar a sua marca ao público qualificado e interativo da TVS Play e redes sociais.\nCota de Apoio\nPacote Trend\nIdeal para marcas que querem iniciar sua presença no programa.\nLogo no carrossel de patrocinadores no rodapé do programa\nCitação da marca quando houver sorteios com brindes do patrocinador\nDivulgação nas redes sociais (Stories com menções entre marca e apresentadores)\nInvestimento\nR$\n500\n/ mês\nPatrocinador Oficial\nDestaque Interativo\nPacote Viral\nPara marcas que querem destaque e presença orgânica dentro do conteúdo.\nMerchandising durante o programa, mostrando ou divulgando o produto\nLogo no carrossel de patrocinadores do programa\nCitação da marca durante o programa como patrocinador\nMarca exibida no telão durante a ação de merchandising\nParticipação ativa em promoções e sorteios\nPossibilidade de envio de brindes para o público\nDivulgação no Instagram (Postagens collab & Stories com menções)\nInvestimento\nR$\n1.500\n/ mês\nPatrocinador Master\nPacote Bombou\nA experiência máxima de comunicação e consolidação de marca em múltiplos canais.\nPropaganda comercial (VT) exibida durante o programa\nMerchandising integrado no decorrer do programa\nLogo destacado no carrossel de patrocinadores\nParticipação exclusiva em sorteios e promoções\nStatus e destaque premium como Patrocinador Master\nPresença digital massiva (Postagens collab & Stories com os apresentadores)\nMarca exibida em ações promocionais e no telão do programa\nInvestimento\nR$\n2.000\n/ mês\nMídia de Grade & Inserções Avulsas\nGanta inserções comerciais exclusivas utilizando formatos diretos de vídeo (VT de 30s)\nVT Comercial de 30 segundos\nExibição de VT institucional ou promocional de 30 segundos, veiculado estrategicamente entre um bloco e outro nos intervalos do programa Like Show.\nInvestimento\nR$ 2.500 / mês\nVT Grade Completa Emissora\nVT comercial de 30 segundos com 90 inserções mensais distribuídas de forma estratégica ao longo da programação geral e nos intervalos de toda a emissora.\nInvestimento\nR$ 3.000 / mês"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Anuncie no Like Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/likeshow.html",
+        "textoOriginal": "Anuncie no Like Show\nConecte sua marca ao público jovem e antenado que consome o melhor da TV e da Internet.\nFalar com Comercial\n@likeshow.rs\nLike Show © RS Play TV - Todos os direitos reservados."
+      }
+    ]
+  }
+]

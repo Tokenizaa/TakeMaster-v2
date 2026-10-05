@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "BEM VIVER",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"9\",\"title\":\"BEM VIVER\",\"host\":\"Mauricio Souto\",\"description\":\"Saúde, bem-estar e qualidade de vida com ciência.\",\"schedule\":\"Terça-feira | 10h30\",\"image\":\"https://rsplay.com.br/imgmidia/bemviver.jpg\",\"colorHex\":\"#14b8a6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  }
+]

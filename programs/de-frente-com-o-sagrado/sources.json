@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DE FRENTE COM O SAGRADO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"18\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"18\",\"title\":\"DE FRENTE COM O SAGRADO\",\"host\":\"Aldomiro Nascimento\",\"description\":\"Diálogos sobre diversidade religiosa.\",\"schedule\":\"Sábado | 08h30\",\"image\":\"https://rsplay.com.br/imgmidia/defrentecomsagrado.jpg\",\"colorHex\":\"#d97706\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/sagrado.html\",\"mediaKitFile\":\"sagrado.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Espiritualidade\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "DE FRENTE COM O SAGRADO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"18\",\"title\":\"DE FRENTE COM O SAGRADO\",\"host\":\"Aldomiro Nascimento\",\"description\":\"Diálogos sobre diversidade religiosa.\",\"schedule\":\"Sábado | 08h30\",\"image\":\"https://rsplay.com.br/imgmidia/defrentecomsagrado.jpg\",\"colorHex\":\"#d97706\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DE FRENTE COM O SAGRADO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"18\",\"title\":\"DE FRENTE COM O SAGRADO\",\"host\":\"Aldomiro Nascimento\",\"description\":\"Diálogos sobre diversidade religiosa.\",\"schedule\":\"Sábado | 08h30\",\"image\":\"https://rsplay.com.br/imgmidia/defrentecomsagrado.jpg\",\"colorHex\":\"#d97706\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/sagrado.html",
+    "urlCanonica": "https://www.rsplay.com.br/sagrado.html",
+    "tituloDaPagina": "Mídia Kit Oficial — De Frente com o Sagrado",
+    "dataHoraScrape": "2026-10-05T02:06:30.298Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DE FRENTE COM O SAGRADO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — De Frente com o Sagrado",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "Mídia Kit Oficial\nDe Frente\ncom o Sagrado\nO seu programa de amor e fé\nExclusivo • RS PLAY TV\nEsclarecimento\n•\nVerdade\n•\nTradição"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE OS APRESENTADORES E O PROGRAMA — Eric Wolf",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "Apoio Científico e Cultural\nEric Wolf\nCientista da cultura afro-umbandista, dirigente do ILE na Gokob e especialista em história afro-brasileira com livros publicados. A ponte entre a ancestralidade e o estudo acadêmico.\nO Sacerdote Apresentador\nBabá Aldo\nIniciado nas tradições do Batuque no final da década de 60, Babá Aldo é considerado uma verdadeira \"cápsula do tempo\" da religião gaúcha. Sem as facilidades da internet de hoje, ele absorveu o verdadeiro orô (segredo) através da vivência. Hoje, ele usa sua bagagem para questionar a superficialidade moderna e resgatar a essência pura dos Orixás.\nO Propósito do Programa\n\"De frente com o sagrado é você de frente com o seu sagrado.\"\nNão importa se você é espírita, católico, umbandista, evangélico ou batuqueiro. O programa nasce para quebrar paradigmas, trazer orientações sérias e enfrentar polêmicas num universo religioso atual onde muitos fiéis se encontram perdidos.\nA Cadeira da Verdade\nOnde convidados defendem suas raízes frente a frente, sem máscaras."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Formato",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "O Formato\n\"Aqui a verdade prevalece, doa a quem doer.\"\nGênero\nReligioso, Informativo & Investigativo\nEstilo\nTalk Show com Convidados e Debates\nDinâmica\nDiscussões Diretas com Participação do Público\nExibição\nSemanal (Estreias exclusivas na RS Play TV)"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: CARROSSEL DE IMAGENS — Universo De Frente com o Sagrado",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "Universo De Frente com o Sagrado\nBastidores, debates de bancada e a força da nossa fé."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Apoie a Verdade e a Cultura",
+        "origemDoTrecho": "https://www.rsplay.com.br/sagrado.html",
+        "textoOriginal": "Apoie a Verdade e a Cultura\nVincule sua marca a um projeto sério que promove o esclarecimento histórico, combate a intolerância religiosa e valoriza nossas raízes.\nDe Frente com o Sagrado\n•\nRS PLAY TV\n•\nAxé para quem é de Axé"
+      }
+    ]
+  }
+]

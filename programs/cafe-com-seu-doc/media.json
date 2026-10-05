@@ -1,0 +1,119 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/cafe_com_teu_doc.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CAFÉ COM SEU DOC",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CAFÉ COM SEU DOC",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafe%20com%20teu%20doc.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "Logo Café com teu doc",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "Dr. Vitor Picanço",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cafedoc/cafedoc10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  },
+  {
+    "url": "https://www.youtube.com/@VitorPican%C3%A7o-l1t",
+    "tipo": "youtube",
+    "paginaDeOrigem": "https://www.rsplay.com.br/cafedoc.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "Canal / Playlist / Vídeo YouTube",
+    "contexto": "youtube_referencia",
+    "programaRelacionado": "CAFÉ COM SEU DOC"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "FITSOU",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1782132545535\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1782132545535\",\"title\":\"FITSOU\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"GLENDA DELANHESE\",\"description\":\"O projeto propõe uma abordagem integrada de saúde, bem-estar e performance, conectando diferentes áreas da vida que, juntas, sustentam resultados consistentes.\\nA partir de quatro pilares — nutrição, saúde mental, atividade física e conexões com propósito — o programa conduz conversas com especialistas e experiências práticas, traduzindo conhecimento em aplicação real no dia a dia.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/fitsou-20260622101233-45bc80a0.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"fitsou.html\",\"mediaKitFile\":\"fitsou.html\",\"tags\":[\"Saúde\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/fitsou.html",
+    "urlCanonica": "https://www.rsplay.com.br/fitsou.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Fit Sou por Glenda Delanhese",
+    "dataHoraScrape": "2026-10-05T02:06:29.536Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "FITSOU",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Glenda Delanhese\nClaro TV (Canal 524) • RS PLAY\nCorpo\n•\nMente\n•\nEscolhas\n•\nResultados"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA E HISTÓRIA DO PROGRAMA — Glenda Delanhese",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "A Apresentadora\nGlenda Delanhese\nEmpresária, mentora de negócios e apresentadora de TV. Fundadora da Fit Sou , marca de alimentação saudável congelada em Porto Alegre. Meu propósito é inspirar pessoas a evoluírem com mais saúde, clareza e alta performance — na vida e nos negócios.\nO Programa Fit Sou\nO projeto propõe uma abordagem integrada de saúde, bem-estar e performance, conectando diferentes áreas da vida que, juntas, sustentam resultados consistentes.\nA partir de quatro pilares — nutrição, saúde mental, atividade física e conexões com propósito — o programa conduz conversas com especialistas e experiências práticas, traduzindo conhecimento em aplicação real no dia a dia.\nClareza e Execução\nCom linguagem acessível e estratégica, o programa organiza temas tratados de forma isolada, oferecendo uma visão clara. Mais do que informar, o objetivo é inspirar mudanças reais, promovendo evolução com equilíbrio."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — A Dinâmica",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "A Dinâmica\n\"Onde saúde e alta performance se encontram na prática.\"\nÁrea Principal\nAlimentação Saudável e Mentoria de Negócios\nEstilo\nConversas com Especialistas e Experiências Práticas\nDuração\n30 Minutos (Episódios inéditos)\nAgenda\nTodas às Terças feiras às 11h."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: VISUAL IDENTITY (MARQUEE CAROUSEL) — Universo Fit Sou",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "Universo Fit Sou\nCorpo, mente, escolhas e resultados."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Faça Parte Dessa Evolução",
+        "origemDoTrecho": "https://www.rsplay.com.br/fitsou.html",
+        "textoOriginal": "Faça Parte Dessa Evolução\nVincule sua marca a saúde, alta performance e resultados consistentes na vida e nos negócios.\n@fiitsou\nGlenda Delanhese\n•\nCanal 524 Claro TV\n•\n© 2026 Fit Sou"
+      }
+    ]
+  }
+]

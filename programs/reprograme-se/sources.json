@@ -1,0 +1,64 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "REPROGRAME-SE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"mae_colorida\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"mae_colorida\",\"title\":\"REPROGRAME-SE\",\"host\":\"Mãe Colorida\",\"description\":\"Histórias reais de mulheres e maternidade — a força de quem lutou sozinha, com Mãe Colorida.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/img/mediakit/reprograme/mae1.jpg\",\"colorHex\":\"#7C3AED\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"reprogramese_mae_colorida.html\",\"mediaKitFile\":\"reprogramese_mae_colorida.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":true,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Entrevistas\"],\"gallery\":[],\"menuTitle\":\"Reprograme-se\",\"kitTitle\":\"Reprograme-se\",\"imageAlt\":\"\",\"novo\":true}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "urlCanonica": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Reprograme-se com Mãe Colorida",
+    "dataHoraScrape": "2026-10-05T02:06:30.816Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "REPROGRAME-SE",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "============ SEÇÃO 01: CAPA ============ — ============ SEÇÃO 01: CAPA ============",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\nInspire-se. Transforme-se. Reprograme-se.\nSuperação\n✦\nEmpreendedorismo\n✦\nFé\n✦\nPosicionamento Feminino\nEstreia\n|\nQuinta-feira 06/08\n|\n22h30\nRS Play • Claro TV+ Canal 524 • YouTube"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 02: A APRESENTADORA ============ — Mãe Colorida, a força de quem lutou sozinha",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "A Apresentadora\nMãe Colorida, a força de quem lutou sozinha\nA Mãe Colorida é uma mãe solo que luta desde muito nova pelos seus filhos. Conquistou sozinha grande parte da sua vida, dividindo-se entre criar dois filhos , trabalhar com carteira assinada e ainda estudar e sonhar com algo melhor.\nFormou-se em Enfermagem e Farmácia , mas não exerceu: migrou para o mundo dos negócios — sempre no escuro e sozinha. Sempre foi religiosa, mas passou anos sem falar disso publicamente.\nJá com um Instagram forte no meio feminino , decidiu abrir suas redes para o mundo religioso — e vem se tornando referência como mulher de fé.\nAgora, com o nome ganhando autoridade em um programa de televisão.\n2\nFilhos criados\ncomo mãe solo\n2\nGraduações\nEnfermagem e Farmácia\n✦\nReferência\nde mulher de fé\nTV\nAutoridade\nna televisão"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 03: O PROGRAMA ============ — Reprograme-se",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "O Programa\nReprograme-se\nUm programa de entrevistas sobre superação e recomeço . A Mãe Colorida recebe majoritariamente mulheres — e também homens que lutam por igualdade — com histórias reais de quem venceu obstáculos.\nPassam pelo programa nomes do meio religioso e político e também mulheres pouco conhecidas , cujas trajetórias merecem ser ouvidas.\nGênero\nEntrevistas — Superação & Empreendedorismo\nApresentação\nMãe Colorida\nExibição\nQuintas-feiras, 22h30\nOnde assistir\nClaro TV+ 524 · App RS Play · YouTube\nConvidados\nMulheres com histórias de superação\nConvidados\nMeio religioso e político\nConvidados\nHomens que lutam por igualdade"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 04: OBJETIVOS ============ — Objetivos do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "Reprograme-se\nObjetivos do Programa\n01\nPosicionamento de mulheres\nDar palco e voz para mulheres construírem autoridade e serem vistas.\n02\nExpansão no digital\nOportunidade de crescimento no Instagram e no YouTube para todos os envolvidos.\n03\nCompartilhar experiências\nAjudar outras mulheres a vencer e empreender a partir de histórias reais.\n04\nDivulgar marcas parceiras\nEspaço para produtos de marcas parceiras, com foco principal no #borae ."
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 05: ALCANCE DA EMISSORA ============ — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\nDados da plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 06: GALERIA ============ — Mãe Colorida",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "Galeria\nMãe Colorida"
+      },
+      {
+        "secaoOrigem": "============ SEÇÃO 07: COTAS & CONTATO ============ — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a histórias reais de superação, fé e recomeço.\nPrograma + Instagram\nCota MARCA\nInserção qualificada de patrocínio\n✦ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n✦ 1 Reels em Collab no Instagram (Programa + Marca).\n✦ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram\nPatrocinador Oficial de Episódio\nAssociação ao convidado da semana\n✦ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n✦ 1 Postagem no Instagram comunicando o convidado da semana e a marca patrocinadora.\n✦ 1 Sequência de Stories trazendo a marca como patrocinadora oficial do episódio.\nSolicitar Proposta\nExclusividade\nSob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n✦ 1 Programa completo dedicado: o convidado apresenta sua história, marca e propósito.\n✦ 4 Recortes de vídeo em Collab tripla, distribuídos 1x por semana.\n✦ Agradecimento aos patrocinadores nos outros 4 programas do mês .\n✦ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para fazer parte de histórias que transformam?\ncomercial@rsplay.com.br\n✦\n@maecoloridaa\n✦\nwww.rsplay.com.br\nReprograme-se\n✦\ncom Mãe Colorida\n✦\nRS Play — Canal 524 Claro\n✦\n© 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/defrentecomsagrado.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DE FRENTE COM O SAGRADO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DE FRENTE COM O SAGRADO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DE FRENTE COM O SAGRADO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sagrado/sagrado1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sagrado.html",
+    "altText": "De Frente com o Sagrado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DE FRENTE COM O SAGRADO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sagrado/sagrado2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sagrado.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DE FRENTE COM O SAGRADO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/sagrado/sagrado3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/sagrado.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DE FRENTE COM O SAGRADO"
+  }
+]

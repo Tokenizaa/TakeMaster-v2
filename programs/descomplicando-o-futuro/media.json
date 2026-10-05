@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/programas/descomplicando-o-futuro%20com%20patr%C3%ADcia%20Silva.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DESCOMPLICANDO O FUTURO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DESCOMPLICANDO O FUTURO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/descomplicando/descomplicando.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/descomplicando.html",
+    "altText": "Logotipo Descomplicando o Futuro",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/descomplicando/patricia_img1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/descomplicando.html",
+    "altText": "Dra. Patrícia F. Silva",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/descomplicando/patricia_img2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/descomplicando.html",
+    "altText": "Dra. Patrícia F. Silva — Descomplicando o Futuro",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/descomplicando/patricia_img4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/descomplicando.html",
+    "altText": "Dra. Patrícia F. Silva — Tecnologia & IA",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/descomplicando/patricia_img5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/descomplicando.html",
+    "altText": "Dra. Patrícia F. Silva — Bastidores TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO"
+  }
+]

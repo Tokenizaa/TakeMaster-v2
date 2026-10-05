@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "FAZ SENTIDO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"faz_sentido\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"faz_sentido\",\"title\":\"FAZ SENTIDO\",\"menuTitle\":\"Faz Sentido\",\"kitTitle\":\"Faz Sentido\",\"host\":\"Ingrid Santana e Martin Guedes\",\"description\":\"Conversas sobre carreira, escolhas e vida — com Ingrid Santana e Martin Guedes.\",\"schedule\":\"Por temporadas\",\"image\":\"https://rsplay.com.br/img/mediakit/fazsentido/card.jpg\",\"imageAlt\":\"Léo da Silva Alves\",\"bannerImage\":\"\",\"colorHex\":\"#D99A3E\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"fazsentido.html\",\"mediaKitFile\":\"fazsentido.html\",\"tags\":[\"Carreira\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[],\"novo\":true}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/fazsentido.html",
+    "urlCanonica": "https://www.rsplay.com.br/fazsentido.html",
+    "tituloDaPagina": "Mídia Kit Oficial — FAZ SENTIDO • com Ingrid Santana e Martin Guedes • RS Play",
+    "dataHoraScrape": "2026-10-05T02:06:30.815Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "FAZ SENTIDO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "===================== CAPA ===================== — ===================== CAPA =====================",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\nConversas sobre carreira, escolhas e vida.\nCarreira •\nEscolhas •\nEmpreendedorismo •\nVida\ncom Ingrid Santana e Martin Guedes • RS Play • Claro TV+ Canal 524\nRole"
+      },
+      {
+        "secaoOrigem": "===================== APRESENTADORES ===================== — Ingrid Santana & Martin Guedes",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Santana Guedes Carreiras\nOs Apresentadores\nIngrid Santana &\nMartin Guedes\nSócios da Santana Guedes Carreiras\nIngrid Santana\nPsicóloga • Mentora de carreira\n22 anos de\nexperiência\nPsicóloga, mentora de carreira e sócia da Santana Guedes Carreiras, com mais de 22 anos de experiência — sendo 18 dedicados ao desenvolvimento de pessoas, lideranças e carreira. Atuou como Business Partner e em posições de liderança em empresas de médio e grande porte, incluindo multinacionais.\nHoje ajuda especialistas, líderes e executivos a estruturarem a transição da carreira corporativa para o empreendedorismo , fortalecendo o posicionamento profissional e transformando experiência em um negócio com clareza, direção e sustentabilidade.\nMartin Guedes\nMentor em Estratégia de Negócios\n14 anos de\nexperiência\nMentor em Estratégia de Negócios e sócio da Santana Guedes Carreiras, com mais de 14 anos de experiência em gestão, sourcing e governança de fornecedores no setor financeiro.\nAtua apoiando especialistas, líderes e executivos na estruturação estratégica da transição para o empreendedorismo — modelo de negócio, proposta de valor, posicionamento e organização das decisões para construir uma atuação empreendedora consistente."
+      },
+      {
+        "secaoOrigem": "===================== POR QUE FAZ SENTIDO ===================== — O que fazia sentido há 10 ou 20 anos ainda faz sentido hoje?",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Por que Faz Sentido?\nO que fazia sentido há 10 ou 20 anos ainda faz sentido hoje?\nAo longo da vida, mudamos. As prioridades mudam. A relação com o dinheiro muda. A família muda. Os desejos, as ambições e a forma como queremos trabalhar também podem mudar.\nMas nem sempre paramos para olhar de novo para a carreira que construímos e perguntar: isso ainda faz sentido para a vida que eu quero viver?\nFAZ SENTIDO nasce dessa pergunta. Um programa sobre pessoas que construíram trajetórias relevantes e, em algum momento, decidiram repensar seus caminhos — muitas encontrando no empreendedorismo uma nova forma de trabalhar, gerar renda e construir a vida que desejavam.\nNão buscamos mostrar qual é a escolha certa. Queremos conhecer o que fez sentido para cada pessoa — e por quê."
+      },
+      {
+        "secaoOrigem": "===================== A CRENÇA ===================== — A carreira deve sustentar a vida que queremos viver — e não a vida caber dentro dela.",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "A Crença\nA carreira deve sustentar a vida que queremos viver — e não a vida caber dentro dela.\nTrabalho importa\nDinheiro importa\nCrescimento importa\nRealização importa\nMas tudo isso existe dentro de algo maior: a vida que estamos construindo . Por isso, FAZ SENTIDO fala de carreira sem separá-la de dinheiro, família, tempo, liberdade, identidade, ambição, medo e escolhas.\nE fala de empreendedorismo sem romantizá-lo — porque construir um negócio não significa automaticamente construir a vida desejada. O negócio também precisa fazer sentido para a vida."
+      },
+      {
+        "secaoOrigem": "===================== O PROGRAMA ===================== — Mais do que o resultado, o caminho .",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "O Programa\nMais do que o resultado, o caminho .\nFAZ SENTIDO é um programa de entrevistas apresentado por Ingrid Santana e Martin Guedes, que recebe profissionais para conversas próximas e reais sobre carreira, escolhas, transições e vida.\nA primeira temporada terá um olhar especial para pessoas que, depois de anos construindo uma trajetória, decidiram empreender ou buscar novas formas de trabalhar .\nAs perguntas que guiam cada conversa\n? O que deixou de fazer sentido?\n? O que motivou a mudança?\n? Quais foram os medos?\n? Como dinheiro e família entraram na decisão?\n? Como foi transformar experiência em negócio?\n? Quais foram os erros?\n? A vida construída hoje se aproxima da que se desejava?\nFormato\nPrograma por temporadas\nEntrevistas em blocos de conteúdo, organizados por temporada.\nPúblico\nProfissionais entre 35 e 55 anos\nExperientes, repensando a relação com carreira e trabalho, considerando o empreendedorismo ou construindo uma nova fase profissional."
+      },
+      {
+        "secaoOrigem": "===================== ALCANCE DA EMISSORA ===================== — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n15.359 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "===================== GALERIA ===================== — Ingrid & Martin em cena",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Galeria\nIngrid & Martin em cena"
+      },
+      {
+        "secaoOrigem": "===================== COTAS / CONTATO ===================== — Associe sua marca a conversas que fazem sentido .",
+        "origemDoTrecho": "https://www.rsplay.com.br/fazsentido.html",
+        "textoOriginal": "Comercial & Cotas de Parceria\nAssocie sua marca a conversas que fazem sentido .\nUm programa sobre carreira, escolhas e vida — para um público experiente, qualificado e em decisão.\ncomercial@rsplay.com.br\nRS Play • Faz Sentido • com Ingrid Santana e Martin Guedes"
+      }
+    ]
+  }
+]

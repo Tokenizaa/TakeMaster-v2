@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "MENTES QUE INSPIRAM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"mentes_1788292828\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"mentes_1788292828\",\"title\":\"MENTES QUE INSPIRAM\",\"menuTitle\":\"MENTES QUE INSPIRAM\",\"kitTitle\":\"Mentes que Inspiram\",\"host\":\"\",\"description\":\"Conversas com mulheres que transformam ideias em impacto — histórias reais, conhecimento e inspiração.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/mentes/mentescapa.jpg\",\"imageAlt\":\"Mentes que Inspiram\",\"bannerImage\":\"\",\"colorHex\":\"#2A4A9C\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"mentesinspiram.html\",\"mediaKitFile\":\"mentesinspiram.html\",\"tags\":[\"Inspiração\",\"Mulheres\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/mentesinspiram.html",
+    "urlCanonica": "https://www.rsplay.com.br/mentesinspiram.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Mentes que Inspiram",
+    "dataHoraScrape": "2026-10-05T02:06:31.069Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "MENTES QUE INSPIRAM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Vanessa Sanceverino Esteves\n\"Conteúdo com propósito, elegância e impacto.\"\nEducação\n•\nLiderança\n•\nInclusão\n•\nDesenvolvimento Humano"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTADORA E MANIFESTO — Vanessa Sanceverino Esteves",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "A Apresentadora\nVanessa Sanceverino Esteves\nGestora educacional, comunicadora e idealizadora do programa. Com trajetória sólida construída na educação, na liderança pedagógica e na comunicação com propósito, Vanessa conduz entrevistas que unem profundidade, sensibilidade e relevância social .\nSua presença em cena traduz a essência do projeto: escutar com inteligência, comunicar com elegância e transformar conversas em conteúdo que inspira, informa e gera impacto real.\nO Manifesto\n\"Porque toda conversa que toca a essência também pode transformar realidades. O Mentes que Inspiram nasce da força das ideias, da escuta e das histórias que ampliam o olhar sobre o mundo. É um espaço onde conhecimento encontra sensibilidade, e onde cada entrevista é um convite à reflexão, à consciência e à ação.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA, PILARES E DIFERENCIAIS — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "O Programa\nUm espaço de entrevistas voltado a conversas que geram valor, consciência e impacto. Com linguagem sofisticada e acessível, aborda temas contemporâneos conectando especialistas, educadores e histórias inspiradoras.\nEducação e Inovação\nReflexões sobre aprendizagem, gestão educacional, neuroeducação, práticas pedagógicas e o futuro da educação.\nInclusão e Diversidade\nPautas que ampliam o debate sobre acessibilidade, autismo, maternidade atípica, equidade e pertencimento.\nDesenvolvimento Humano\nComportamento, saúde emocional, relações humanas, carreira, propósito e bem-estar.\nLiderança e Inspiração\nTrajetórias, experiências e visões que mobilizam, ensinam e inspiram transformação verdadeira.\nDiferenciais do Mentes que Inspiram\nCuradoria de Temas com Relevância\nO programa trata de assuntos atuais, necessários e de alto valor para a sociedade.\nProfundidade e Leveza\nA condução da apresentadora equilibra perfeitamente acolhimento, inteligência e autoridade.\nEstética Premium e Marcante\nForte apelo visual e posicionamento elegante, fortalecendo a percepção de valor no mercado.\nConexão Emocional com a Audiência\nO conteúdo aproxima, sensibiliza e gera uma identificação genuína e duradoura com o público.\nVocação Multiplataforma\nCada episódio se desdobra em cortes, reels, chamadas, bastidores e conteúdos de alto potencial de alcance."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: PERFORMANCE DIGITAL DO PROGRAMA (ATUALIZADO) — Performance do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Performance do Programa\nMais de 2.15 Milhões de Visualizações\nDados consolidados do projeto nas plataformas digitais.\nInstagram\n@mentesqueinspiramoficial\nAlcance Orgânico Massivo\n2.086.382\nVisualizações no Instagram\nSeguidores Ativos\n12,5 mil\nDestaque: O alcance do perfil para não-seguidores é extremamente expressivo, chancelando um alto poder de viralização e entrega orgânica do conteúdo.\nYouTube\n@ProgramaMentesqueinspiram\nCrescimento Acelerado (Analytics)\n84.491\nVisualizações\n7.860\nInscritos Fiéis\nAlta Retenção de Público\nEx: Maternidade Atípica & Autismo\nPautas profundas que geram alta conexão e compartilhamento."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE DA EMISSORA (TV / RS PLAY) — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Alcance da Emissora\nAudiência multiplataforma sólida da emissora RS Play , com forte engajamento e retenção.\nRSPLAY.COM.BR Streaming & Emissora\n5 Milhões\nAudiência Mensal\n17h - 23h\nHorário de Pico\nAlto Engajamento\nRetenção e Interações\nYouTube\nRede RS Play\n224.8K\nVisualizações\n7.9K\nHoras\n+1.3K\nNovos Inscritos\n+61% Visualizações\nInstagram\nRede RS Play\n876.4K\nAlcance\n33.6K\nInterações\n+1.0K\nNovos Seguidores\nForte impacto na base\nTikTok\nRede RS Play\n46K\nVisualizações\n1.5K\nCurtidas\n39\nCompartilhamentos\n+550% de Engajamento"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: UNIVERSO MENTES QUE INSPIRAM (CAROUSEL DE IMAGENS) — Universo Mentes que Inspiram",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Universo Mentes que Inspiram\nHistórias reais, autoridade e impacto visual."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: COMERCIAL E PÚBLICO — Perfil do Público",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Perfil do Público\nDialogamos com um público que busca conteúdo com profundidade, qualidade e propósito.\nEducadores, gestores e famílias.\nProfissionais da saúde e desenvolvimento.\nEmpreendedores e líderes corporativos.\nInteressados em inclusão, educação e bem-estar.\nOportunidade para Marcas\nUm ambiente seguro, elegante e altamente conectado a valores contemporâneos.\nVisibilidade Cenográfica\nInserção orgânica e sofisticada da sua marca no cenário e em elementos visuais do programa.\nCitação Institucional\nMenção qualificada da apresentadora durante o conteúdo de maior retenção.\nConteúdo Multiplataforma\nExposição estendida nos cortes, reels, chamadas e cards de alta performance no Instagram/YouTube.\nParcerias Personalizadas\nProjetos, quadros ou episódios especiais desenhados conforme o objetivo estratégico da sua marca."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Sua marca conectada a um conteúdo que inspira, informa e deixa legado.",
+        "origemDoTrecho": "https://www.rsplay.com.br/mentesinspiram.html",
+        "textoOriginal": "Sua marca conectada a um conteúdo que\ninspira, informa e deixa legado.\nAssocie sua imagem à educação, credibilidade, responsabilidade social e impacto positivo.\n@mentesqueinspiramoficial\n@ProgramaMentesqueinspiram\nO Mentes que Inspiram é um programa de entrevistas apresentado por Vanessa Sanceverino Esteves. Com uma proposta editorial elegante e relevante, soma mais de 2.15 milhões de visualizações consolidadas entre Instagram e YouTube, reforçando seu potencial de alcance e valor para marcas que desejam se posicionar com propósito.\nVanessa Sanceverino Esteves\n•\nRS Play\n•\nMentes Que Inspiram © 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/empodera.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "EMPODERA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — EMPODERA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Andréia Miranda",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera11.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera12.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/empodera/empodera13.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/empodera.html",
+    "altText": "Galeria",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EMPODERA"
+  }
+]

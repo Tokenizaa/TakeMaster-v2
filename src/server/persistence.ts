@@ -17,6 +17,7 @@ import {
   PaymentMethodType,
   Production,
   SaaSPlanDefinition,
+  SaaSRegistrationPayload,
   SaaSSubscription,
   ScheduleEvent,
   ScriptVersion,
@@ -36,6 +37,7 @@ import {
   SEED_USERS,
   SEED_USER_SHOW_PERMISSIONS,
 } from './seeds';
+import { resolveProgramKnowledge } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
@@ -484,6 +486,22 @@ function ensureRSPlaySaaSSeeds(db: DatabaseSync) {
     const ep201 = ws.episodes.find((e) => e.id === 'ep-201');
     if (ep201) {
       insertEpisodeRecord(db, 'org-takemaster-studio', ep201);
+    }
+  }
+
+  // Ensure RS Play Knowledge Base validation programs exist in org-takemaster-studio
+  const wsMain = buildSeedWorkspaceForOrg('org-takemaster-studio');
+  for (const kbShowId of [
+    'show-advogada-do-leque',
+    'show-as-pessoas-inspiram',
+    'show-bem-viver',
+  ]) {
+    const exists = db.prepare(`SELECT id FROM shows WHERE id = ?`).get(kbShowId);
+    if (!exists) {
+      const targetShow = wsMain.shows.find((s) => s.id === kbShowId);
+      if (targetShow) {
+        insertShowRecord(db, 'org-takemaster-studio', targetShow);
+      }
     }
   }
 }
@@ -3113,5 +3131,142 @@ export function checkDatabaseHealth() {
       shows: showsCount,
       episodes: episodesCount,
     },
+  };
+}
+
+/**
+ * First-time SaaS Account Registration & Payer Gateway Onboarding
+ * Creates user, links/creates/imports program from RS Play Knowledge Base, grants show permissions,
+ * and activates recurring monthly subscription + paid invoice on the gateway.
+ */
+export function registerSaaSAccountWithSubscription(
+  payload: SaaSRegistrationPayload,
+  organizationId = 'org-takemaster-studio'
+): {
+  user: User;
+  show: Show;
+  subscription: SaaSSubscription;
+  invoice: BillingInvoice;
+  gatewayEvent: PaymentGatewayEvent;
+} {
+  const name = String(payload.name || '').trim();
+  const email = String(payload.email || '').trim().toLowerCase();
+  const loginCode = String(payload.loginCode || 'rsplay123').trim() || 'rsplay123';
+  const role: OrganizationRole = payload.role || 'producer';
+
+  if (name.length < 2) {
+    throw new AppError(400, 'VALIDATION_ERROR', 'Informe o nome completo para o cadastro.');
+  }
+  if (!email.includes('@')) {
+    throw new AppError(400, 'VALIDATION_ERROR', 'Informe um e-mail corporativo válido.');
+  }
+
+  let targetShow: Show | null = null;
+  const allShows = listShows(organizationId);
+
+  if (payload.showMode === 'existing' && payload.existingShowId) {
+    targetShow = allShows.find((s) => s.id === payload.existingShowId) || allShows[0] || null;
+  } else if (payload.showMode === 'knowledge_base' && payload.knowledgeBaseSlug) {
+    const existingBySlug = allShows.find(
+      (s) =>
+        s.id === `show-${payload.knowledgeBaseSlug}` ||
+        s.title.toLowerCase() === payload.knowledgeBaseSlug?.replace(/-/g, ' ').toLowerCase()
+    );
+    if (existingBySlug) {
+      targetShow = existingBySlug;
+    } else {
+      const { summary } = resolveProgramKnowledge(
+        { title: payload.knowledgeBaseSlug },
+        payload.knowledgeBaseSlug
+      );
+      targetShow = createShow(organizationId, {
+        id: `show-${summary.slug}`,
+        title: summary.nome,
+        host:
+          summary.apresentador !== 'não identificado na base'
+            ? summary.apresentador.split(' — ')[0]
+            : name,
+        description:
+          summary.descricao !== 'não identificado na base'
+            ? summary.descricao
+            : `Programa oficial ${summary.nome} na RS Play TV.`,
+        format: 'Entrevista',
+        defaultDurationMin: 30,
+        editorialStyle:
+          summary.proposta !== 'não identificado na base'
+            ? summary.proposta.slice(0, 260)
+            : summary.descricao,
+        category: summary.temasPrincipais[0] || 'RS Play TV',
+        targetAudience:
+          summary.publico !== 'não identificado na base' ? summary.publico : 'Audiência RS Play TV',
+        distributionChannels: ['Claro TV+ (Canal 524)', 'Ecossistema RS Play', 'YouTube'],
+        catalogStatus: 'active',
+      });
+    }
+  } else if (payload.showMode === 'new' && payload.newShowTitle?.trim()) {
+    targetShow = createShow(organizationId, {
+      title: payload.newShowTitle.trim(),
+      host: payload.newShowHost?.trim() || name,
+      format: payload.newShowFormat || 'Entrevista',
+      defaultDurationMin: 30,
+      description: `Programa ${payload.newShowTitle.trim()} cadastrado no onboarding RSPlay TV SaaS.`,
+      editorialStyle: 'Entrevistas e conteúdo dinâmico em estúdio multicâmera.',
+      catalogStatus: 'active',
+    });
+  }
+
+  if (!targetShow) {
+    targetShow = allShows[0];
+  }
+
+  const createdUser = createOrganizationUserWithShowPermissions(
+    organizationId,
+    {
+      name,
+      email,
+      jobTitle: payload.jobTitle?.trim() || `Produtor(a) / Apresentador(a) — ${targetShow.title}`,
+      loginCode,
+      role,
+      showPermissions: [
+        {
+          showId: targetShow.id,
+          canView: true,
+          canEditEditorial: role !== 'viewer',
+          canEditScript: role !== 'viewer',
+          canOperateStudio: role !== 'viewer',
+          canManageSchedule: role !== 'viewer',
+          canManageAssets: role !== 'viewer',
+          canExport: true,
+        },
+      ],
+    },
+    'self-onboarding'
+  );
+
+  const billingRes = subscribeOrUpdatePlan(
+    organizationId,
+    {
+      planId: payload.planId || 'rsplay_programa_individual',
+      showId: targetShow.id,
+      paymentMethodType: payload.paymentMethodType || 'pix_automatico',
+      paymentMethodBrand:
+        payload.paymentMethodBrand ||
+        (payload.paymentMethodType === 'pix_automatico'
+          ? 'PIX Automático Banco Central'
+          : 'Mastercard Corporativo'),
+      paymentMethodLast4:
+        payload.paymentMethodLast4 ||
+        (payload.paymentMethodType === 'pix_automatico' ? 'PIX' : '4829'),
+      autoRenew: payload.autoRenew !== false,
+    },
+    createdUser.id
+  );
+
+  return {
+    user: createdUser,
+    show: targetShow,
+    subscription: billingRes.subscription,
+    invoice: billingRes.invoice,
+    gatewayEvent: billingRes.gatewayEvent,
   };
 }

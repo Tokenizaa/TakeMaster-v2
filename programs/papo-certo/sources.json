@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "PAPO CERTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"36\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"36\",\"title\":\"PAPO CERTO\",\"host\":\"João Custodio\",\"description\":\"Conversas diretas e assuntos relevantes.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/papo_certo.jpg\",\"colorHex\":\"#64748b\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/papocerto.html\",\"mediaKitFile\":\"papocerto.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Entrevista\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "PAPO CERTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"36\",\"title\":\"PAPO CERTO\",\"host\":\"João Custodio\",\"description\":\"Conversas diretas e assuntos relevantes.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/papo_certo.jpg\",\"colorHex\":\"#64748b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "PAPO CERTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"36\",\"title\":\"PAPO CERTO\",\"host\":\"João Custodio\",\"description\":\"Conversas diretas e assuntos relevantes.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/papo_certo.jpg\",\"colorHex\":\"#64748b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/papocerto.html",
+    "urlCanonica": "https://www.rsplay.com.br/papocerto.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Papo Certo",
+    "dataHoraScrape": "2026-10-05T02:06:30.046Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "PAPO CERTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Papo Certo",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "Mídia Kit Oficial\nPapo Certo\nPara você que faz o Brasil acontecer\nApresentado por João Custódio e Evanir Aguiar\nClaro TV (Canal 524) • RS PLAY\nEmpreendedorismo\n•\nGestão & Inovação\n•\nEconomia"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE OS APRESENTADORES E O PROGRAMA — João Custódio & Evanir Aguiar",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "João Custódio\nEvanir Aguiar\nOs Anfitriões\nJoão Custódio & Evanir Aguiar\nLiderando as discussões de mais alto nível sobre o mercado nacional, João Custódio e Evanir Aguiar conectam empresários, mentores e especialistas. O objetivo da dupla é levar clareza a quem empreende, desmistificando o sucesso \"fácil\" e focando no que realmente constrói operações sólidas, escaláveis e duradouras.\nSobre o Programa\nUma bússola para as empresas. Com debates sobre ciência de dados, implementação de conselhos consultivos, mitigação de riscos legais e inteligência de negócios, o programa oferece ferramentas práticas para gestores pararem de \"apagar incêndios\" e começarem a construir o futuro corporativo.\n\"Se você não sabe aonde quer chegar, qualquer caminho serve. E esse caminho pode levar pro buraco. O Papo Certo existe para te dar o Norte.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — A Operação",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "A Operação\n\"Estratégia e conhecimento no formato certo.\"\nGênero\nNegócios, Finanças e Inovação\nEstilo\nMesa Redonda e Entrevistas com Especialistas\nDuração\n60 Minutos (Episódios inéditos)\nAgenda\n3x na semana no Ecossistema RS Play."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "Alcance e Performance\nA vitrine multiplataforma que fala diretamente com quem tem poder de decisão.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS — Oportunidades de Integração",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "Oportunidades de Integração\n\"Onde o B2B e o B2C encontram seu público-alvo qualificado.\"\nO Papo Certo é o ecossistema ideal para empresas que fornecem soluções de gestão, tecnologia e serviços financeiros. Fale com quem toma as decisões.\nTecnologia & Dados\nSistemas de gestão (ERPs), CRMs, agências de marketing de performance, serviços de inteligência artificial e soluções em nuvem que ajudam o empresário a tomar decisões precisas.\nFinanças & Crédito\nIntegração perfeita para cooperativas de crédito, bancos corporativos, corretoras de investimento, soluções de meios de pagamento e fundos voltados a PMEs (Fusões e Aquisições).\nServiços Corporativos\nDestaque para escritórios de advocacia empresarial, assessorias contábeis de ponta, consultorias tributárias e empresas que fornecem conselheiros consultivos experientes.\nEducação & Franquias\nMarcas buscando expansão através de franqueados qualificados, bem como instituições de ensino executivo, MBAs e programas focados no desenvolvimento de lideranças."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL) — Um Ambiente Inovador",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "Um Ambiente Inovador\nCenário moderno, de alto padrão, desenhado para gerar autoridade imediata."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Faça o Brasil Acontecer Conosco",
+        "origemDoTrecho": "https://www.rsplay.com.br/papocerto.html",
+        "textoOriginal": "Faça o Brasil Acontecer Conosco\nSua marca associada ao programa que traz inteligência, estratégia e inovação para o empresário moderno.\n@papocerto.com.br\nPapo Certo\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/apresentacoes/reality.html",
+    "urlCanonica": "https://www.rsplay.com.br/apresentacoes/reality.html",
+    "tituloDaPagina": "RSPLAY TV & TVSplay - Reality Shows",
+    "dataHoraScrape": "2026-10-05T02:06:28.007Z",
+    "tipoDePagina": "apresentacao_especial",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY TV & TVSPLAY — REALITY SHOWS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "Hero Section — REALITY SHOWS",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "REALITY SHOWS\nTransformando histórias em grandes experiências\nhá 9 anos criando formatos exclusivos\n9 REALITY SHOWS EXCLUSIVOS"
+      },
+      {
+        "secaoOrigem": "Section 1: Nossa Missão — NOSSA MISSÃO",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "01\nNOSSA MISSÃO\nEspecialistas em reality shows e criadores de formatos exclusivos que unem entretenimento, estratégia e resultado\nEntretenimento + Estratégia\nCombinamos o alcance da televisão com a força do digital para destacar marcas de forma diferenciada\nConexão Real\nCada projeto é pensado para gerar conexão real com o público, criando campanhas memoráveis\nResultados Concretos\nNão apenas audiência, mas resultados que posicionam parceiros como protagonistas\n📺\n9 Anos\nTransformando histórias em grandes experiências televisivas"
+      },
+      {
+        "secaoOrigem": "Section 2: RSPLAY Connect Club — RSPLAY CONNECT CLUB",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "02\nRSPLAY CONNECT CLUB\nNOSSO ATIVO PODEROSO\nClube seleto de influenciadores e criadores de conteúdo\n∞\nInfluenciadores\nM+\nAlcance\n100%\nOrgânico\nTOP\nEngajamento\n✓\nInfluenciadores selecionados\n✓\nComunicadores profissionais\n✓\nCriadores de conteúdo exclusivos\n✓\nAlcance para milhões de pessoas\nUnião Poderosa\nTelevisão tradicional + Marketing de influência = Resultados extraordinários"
+      },
+      {
+        "secaoOrigem": "Section 3: Reality Shows - Individual Sections — NOSSOS REALITY SHOWS",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "03\nNOSSOS REALITY SHOWS\n🎬 9 FORMATOS EXCLUSIVOS\nCada reality com sua personalidade única, criando experiências inesquecíveis"
+      },
+      {
+        "secaoOrigem": "INFLUENCERS LIVE SHOW — INFLUENCERS LIVE SHOW",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "🎭\nREALITY SHOW #01\nINFLUENCERS\nLIVE SHOW\nAventura, competição e superação\nInfluenciadores de todo o Brasil em provas desafiadoras em locais icônicos como Gramado e Canela\n🏔️\nGramado & Canela\nCenários deslumbrantes da Serra Gaúcha"
+      },
+      {
+        "secaoOrigem": "DESAFIO DOS INFLUENCERS — Energia Criativa",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "⚡\nEnergia Criativa\nProvas que testam criatividade e estratégia\n⚡\nREALITY SHOW #02\nDESAFIO DOS\nINFLUENCERS\nCriatividade e estratégia\nCompetição eletrizante com provas criativas que testam persuasão e habilidade de engajamento"
+      },
+      {
+        "secaoOrigem": "GRENALIZANDO — GRENALIZANDO",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "⚽\nREALITY SHOW #03\nGRENALIZANDO\nAlma gaúcha e futebol\nReality com tradição gaúcha, misturando futebol, gastronomia, humor e conhecimento sobre o GRENAL\n🏟️\nTradição Gaúcha\nFutebol, gastronomia e cultura do Sul"
+      },
+      {
+        "secaoOrigem": "MODEL SHOW — Fashion World",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "✨\nFashion World\nRevelando novos talentos da moda\n👗\nREALITY SHOW #04\nMODEL\nSHOW\nModa e beleza\nAspirantes a modelos disputam ensaios, desfiles e campanhas, revelando novos talentos fashion"
+      },
+      {
+        "secaoOrigem": "DELÍCIAS NA TV — DELÍCIAS NA TV",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "🍳\nREALITY SHOW #05\nDELÍCIAS\nNA TV\nGastronomia e criatividade\nViagem culinária com receitas autorais e releituras de pratos clássicos visualmente encantadores\n👨‍🍳\nArte Culinária\nReceitas autorais e criatividade gastronômica"
+      },
+      {
+        "secaoOrigem": "CASA GRAMADO — Festival de Cinema",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "🎭\nFestival de Cinema\nCultura, turismo e criação de conteúdo\n🎬\nREALITY SHOW #06\nCASA\nGRAMADO\nCinema e turismo\nDurante o Festival de Cinema, experiência imersiva unindo turismo, cultura e criação de conteúdo"
+      },
+      {
+        "secaoOrigem": "MANSÃO AL IN — MANSÃO AL IN",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "🏰\nREALITY SHOW #07\nMANSÃO\nAL IN\nEstratégia e intensidade\nLuxuosa mansão onde alianças e rivalidades surgem em provas estratégicas acirradas\n🎯\nEstratégia Pura\nAlianças e rivalidades em ambiente luxuoso"
+      },
+      {
+        "secaoOrigem": "APRENDIZ — Mundo Corporativo",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "📊\nMundo Corporativo\nLiderança e execução sob pressão\n💼\nREALITY SHOW #08\nAPRENDIZ\nUniverso corporativo\nDesafios de liderança e execução de projetos sob pressão, testando planejamento e criatividade"
+      },
+      {
+        "secaoOrigem": "MANSÃO VPAG — MANSÃO VPAG",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "🏖️\nREALITY SHOW #09\nMANSÃO\nVPAG\nGlamour de Jurerê\nDestino exclusivo do Brasil com provas de convivência, festas e estratégias de alto nível\n🌊\nJurerê Internacional\nDestino exclusivo com glamour e sofisticação"
+      },
+      {
+        "secaoOrigem": "Section 4: Diferenciais — NOSSOS DIFERENCIAIS",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "04\nNOSSOS DIFERENCIAIS\n9\nAnos\n9\nReality Shows\n∞\nExperiências\nFormatos Exclusivos\nCada reality é único, criado especialmente para gerar máximo engajamento\nTime Apaixonado\nEquipe especializada em inovação e sustentada por resultados comprovados\nCampanhas Memoráveis\nProjetos que permanecem na memória e fortalecem a reputação das marcas\n🏆\nLiderança\nReferência em reality shows no Brasil\nTransformando o cenário competitivo há 9 anos"
+      },
+      {
+        "secaoOrigem": "Final Section: Manifesto — Final Section: Manifesto",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/reality.html",
+        "textoOriginal": "MANIFESTO\nMais que mídia.\nExperiências que conectam e transformam.\nHistórias transformadas em grandes experiências\nEntretenimento com estratégia e resultado\nConexão real que permanece na memória\nHá 9 anos criando o futuro do entretenimento,\nonde cada reality é uma experiência única.\nReality Shows que transformam"
+      }
+    ]
+  }
+]

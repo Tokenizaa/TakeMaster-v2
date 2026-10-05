@@ -1,0 +1,106 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "VIDAS & DIREITOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"vidas_e_direitos\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"vidas_e_direitos\",\"title\":\"VIDAS & DIREITOS\",\"host\":\"Lussana Pfeil\",\"description\":\"Informações jurídicas essenciais, cidadania e direitos explicados de forma simples.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/vidasdireitos.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/vidasdireitos.html\",\"mediaKitFile\":\"vidasdireitos.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Cidadania\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "VIDAS & DIREITOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"vidas_e_direitos\",\"title\":\"VIDAS & DIREITOS\",\"host\":\"Lussana Pfeil\",\"description\":\"Informações jurídicas essenciais, cidadania e direitos explicados de forma simples.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/vidasdireitos.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "VIDAS & DIREITOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"vidas_e_direitos\",\"title\":\"VIDAS & DIREITOS\",\"host\":\"Lussana Pfeil\",\"description\":\"Informações jurídicas essenciais, cidadania e direitos explicados de forma simples.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/vidasdireitos.jpg\",\"colorHex\":\"#4f46e5\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/vidasdireitos.html",
+    "urlCanonica": "https://www.rsplay.com.br/vidasdireitos.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Lussana Pfeil",
+    "dataHoraScrape": "2026-10-05T02:06:30.551Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "VIDAS & DIREITOS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Lussana Pfeil",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Mídia Kit Oficial\nLussana Pfeil\nDireito Civil & Previdenciário\nSegurança\n•\nClareza\n•\nResponsabilidade"
+      },
+      {
+        "secaoOrigem": "Alterado bg color para um tom vinho muito escuro — Experiência Técnica & Visão Estratégica",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Perfil Profissional\nExperiência Técnica &\nVisão Estratégica\nAdvogada inscrita na OAB/RS nº 67.910 , há mais de 20 anos Lussana Pfeil é especialista em Direito Civil e Previdenciário. Sua atuação é focada na proteção implacável de direitos nos momentos mais decisivos da vida de seus clientes.\nEla une uma sólida bagagem técnica à sensibilidade necessária para lidar com questões familiares e previdenciárias. Lussana não entrega apenas processos; entrega orientação, clareza e segurança jurídica .\nSua missão é guiar pessoas e famílias através das complexidades da lei com responsabilidade, garantindo que a dignidade e o futuro estejam protegidos.\n+20 Anos\nDe Advocacia\nEspecialista\nCivil & Previdenciário"
+      },
+      {
+        "secaoOrigem": "SLIDE 2.1: COMENTARISTA 01 — ROGÉRIA BUENO — Dra. Rogéria Bueno",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Comentarista 01\nDra. Rogéria Bueno\nInformação garante seu direito\nAdvogada inscrita na OAB/RS nº 69.982 , com mais de 13 anos de experiência na área, possuindo sólida atuação em planejamento previdenciário e na condução estratégica de concessão e revisão de benefícios.\nSua prática abrange as esferas administrativa e judicial , com experiência na orientação jurídica de segurados, estruturação de aposentadorias e análise técnica de cenários previdenciários complexos.\nCompreende que as decisões sobre o futuro financeiro e a proteção social são pautadas pela segurança, informação e planejamento — base para escolhas mais assertivas e para a mitigação de riscos.\nConcessão e revisão de benefícios\nPlanejamento previdenciário estratégico\nOrientação jurídica especializada\nInformação garante seu direito\nAtuação\nDireito Previdenciário\nFoco\nPlanejamento • Aposentadorias • Benefícios"
+      },
+      {
+        "secaoOrigem": "SLIDE 2.2: COMENTARISTA 02 — JANINE REIS — Janine Reis",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Comentarista 02\nJanine Reis\nExperiência Técnica & Visão Estratégica\nAdvogada inscrita na OAB/RS nº 97.226 , formada pela Universidade Federal de Pelotas (UFPel) e especialista em Direito do Trabalho pela Universidade Federal do Rio Grande do Sul (UFRGS). Com mais de 10 anos de experiência , possui sólida atuação em relações trabalhistas e na prevenção e resolução de conflitos.\nSua atuação abrange as áreas preventiva e contenciosa , com experiência na orientação jurídica, condução de demandas trabalhistas e atuação em procedimentos perante o MTE e o MPT.\nCompreende que as relações de trabalho são pautadas pela confiança, informação e responsabilidade — base para relações mais equilibradas e para a prevenção de conflitos.\nAtuação preventiva e contenciosa\nCondução de demandas trabalhistas\nProcedimentos no MTE e no MPT\nUFPel · Especialização UFRGS\n+10 Anos\nDe Advocacia\nEspecialista\nDireito & Processo do Trabalho"
+      },
+      {
+        "secaoOrigem": "SLIDE 2.3: COMENTARISTA 03 — MATEUS FREITAS — Mateus Freitas",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Comentarista 03\nMateus Freitas\nDireito à Saúde & Atuação Estratégica\nAdvogado inscrito na OAB/RS nº 104.768 , com atuação destacada em Direito à Saúde , conduzindo demandas que envolvem negativas de cobertura, fornecimento de medicamentos, tratamentos, cirurgias e demais situações em que a proteção da saúde exige resposta jurídica rápida, técnica e eficaz.\nSua prática reúne análise técnica, estratégia e sensibilidade para lidar com situações em que o tempo e o acesso ao tratamento podem ser decisivos . Mais do que conduzir processos, busca oferecer orientação clara, segurança jurídica e respostas eficazes aos pacientes e suas famílias.\nDedica parte de sua atuação à divulgação de informação jurídica acessível , para que pacientes conheçam seus direitos, identifiquem abusos e saibam como agir diante de obstáculos ao tratamento.\nNegativas de cobertura\nFornecimento de medicamentos\nTratamentos e cirurgias\nInformação jurídica acessível\nAtuação\nDireito à Saúde\nFoco\nMedicamentos • Tratamentos • Planos de Saúde"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA — Vidas & Direitos",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Vidas & Direitos\nPrevidenciário, Família, Trabalho e Saúde — juntos para proteger o que mais importa.\nO Conceito\nO programa explica, na prática, como o Direito Previdenciário, de Família, do Trabalho e da Saúde se entrelaçam para proteger trabalhadores e famílias antes, durante e depois das grandes mudanças da vida.\nAbordamos situações reais que exigem orientação jurídica precisa para garantir dignidade:\nCasamento & União\nMaternidade & Relações de Trabalho\nDivórcio & Relações Familiares\nDoença, Tratamentos & Perda"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: PILARES / TOPICS — Do Planejamento à Proteção",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Missão do Programa\nDo Planejamento à Proteção\nPrevenção\nOrientar antes que o problema aconteça. Planejamento previdenciário, contratos trabalhistas equilibrados e pactos antenupciais como ferramentas de amor, respeito e segurança.\nSolução\nAtuação firme em momentos de crise, como divórcios litigiosos, negativas de planos de saúde e benefícios, ou conflitos nas relações de trabalho, buscando sempre o melhor direito.\nDignidade\nGarantir que trabalhadores, idosos, crianças e pessoas em situação de vulnerabilidade ou enfermidade tenham seus direitos fundamentais, saúde e sustento preservados.\n\"O Direito não serve apenas para resolver conflitos, mas para construir a base segura sobre a qual as famílias podem prosperar.\"\n— Lussana Pfeil"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: METRICS MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida da emissora RS Play.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Conecte-se Conosco",
+        "origemDoTrecho": "https://www.rsplay.com.br/vidasdireitos.html",
+        "textoOriginal": "Conecte-se Conosco\nAcompanhe as atualizações, novidades jurídicas e os bastidores do programa nas redes sociais.\n@vidasedireitos\n@pfeilpassosadv\n@rogeriabuenoadv\n@reisepalavroadvocacia\n@mateusmfreitasadv\nVidas & Direitos © 2026"
+      }
+    ]
+  }
+]

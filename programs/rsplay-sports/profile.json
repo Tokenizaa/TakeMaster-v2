@@ -1,0 +1,244 @@
+{
+  "slug": "rsplay-sports",
+  "idOriginalCms": "rsplay_sports",
+  "tipoRegistro": "programa",
+  "ativoNoCms": false,
+  "midiaKitUrl": "https://www.rsplay.com.br/rsplaysports.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/rsplaysports.html"
+  ],
+  "midiaKitStatusHttp": 200,
+  "midiaKitCapturadoComSucesso": true,
+  "nomeDoPrograma": "RSPLAY SPORTS",
+  "titulo": "Mídia Kit Oficial — RS Play Sports",
+  "subtitulo": "não informado na fonte",
+  "descricao": "A cobertura completa do esporte, com análises, comentários e muita informação.",
+  "propostaEditorial": "[Isenção, Clubismo e Rivalidade] Ancorado por Rafael Rímoli , o RS Play Sports traz uma bancada que representa o torcedor da arquibancada. De um lado, o coração Colorado da advogada Etiene Contini . Do outro, o fervor Gremista de Cris Presoto e a precisão tática e técnica do treinador Albano . O bicho pega! Falamos de futebol gaúcho e mundial com muita resenha, apostas, enquetes ao vivo (quem ganha o Grenal?), e sorteios que levam a audiência à loucura (de jantares espanhóis a ingressos na Arena e Beira-Rio). Aqui a análise tática se mistura com a emoção do torcedor. \"Sentimento não tem como explicar, mas a gente pode falar sobre ele. A rivalidade mais quente do Brasil na sua tela.\"",
+  "conceito": "não informado na fonte",
+  "publico": "não informado na fonte",
+  "apresentador": "Rafael Rimoliv",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": [
+    "Esporte"
+  ],
+  "quadros": "não informado na fonte",
+  "formato": "[A Tática] \"O esquema de jogo perfeito para a sua manhã de Sábado.\" Esportes, Mesa Redonda, Entretenimento Debate, Interatividade e Análise Tática 60 Minutos (Ao Vivo / Inéditos) Sábados, às 9h30 da Manhã.",
+  "duracao": "não informado na fonte",
+  "periodicidade": "não informado na fonte",
+  "horario": "Consulte a programação",
+  "canalPlataforma": "Claro TV+ (Canal 524) • Ecossistema RS Play / Streaming • YouTube • Instagram • TikTok",
+  "informacoesComerciais": [
+    "[Alcance e Performance] A arquibancada inteira ligada na vitrine multiplataforma do RS Play. 14.388 Milhões Alcance Total da Emissora 16M Acessos Plataforma TVSPlay 2M Alcance Claro TV+ (Canal 524) Crescimento de 60% ao mês 678.224 Acessos & Downloads Foco Nacional 72 Programas Exclusivos 24h Programação Ininterrupta 1,2M+ Visualizações 19K Inscritos +5.0M Alcance 163K Interações 784K Views 48K Curtidas",
+    "[Oportunidades de Jogo] \"Aqui sua marca entra em campo e joga para vencer.\" O RS Play Sports possui integração comercial totalmente orgânica. Fazemos sorteios ao vivo, brincamos com a sua marca e geramos engajamento na hora. Nosso programa analisa partidas, placares e estatísticas o tempo todo. O ecossistema perfeito para divulgar ODDs, bônus de boas-vindas e plataformas de palpites esportivos. \"Quem é que vai jantar de graça hoje?\" Realizamos sorteios ao vivo pelo chat (ex: Casa Espanhola), gerando tráfego qualificado e divulgação imediata para restaurantes, cervejarias e bares. As camisas dos times são o nosso manto. Perfeito para lojas esportivas (ex: Mantos Eternos), e-commerces de chuteiras e moda voltada ao torcedor fanático. Todo torcedor quer estar no estádio. Sorteios de ingressos ao vivo (Beira-Rio ou Arena) explodem a nossa audiência e o chat do YouTube. Uma ação com conversão imediata de seguidores."
+  ],
+  "diferenciais": "não informado na fonte",
+  "contatos": "não informado na fonte",
+  "redesSociais": [
+    "https://www.instagram.com/rsplaysports/",
+    "@rsplaydigital",
+    "@rsplaysports"
+  ],
+  "links": [
+    "https://www.rsplay.com.br/rsplaysports.html",
+    "https://www.instagram.com/rsplaysports/"
+  ],
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/imgmidia/rsplaysports.jpg",
+    "https://www.rsplay.com.br/img/mediakit/sports/logo.png",
+    "https://www.rsplay.com.br/img/mediakit/sports/sports1.png",
+    "https://www.rsplay.com.br/img/mediakit/sports/sports2.png",
+    "https://www.rsplay.com.br/img/mediakit/sports/sports3.png",
+    "https://www.rsplay.com.br/img/mediakit/sports/sports4.png",
+    "https://www.rsplay.com.br/img/mediakit/sports/sports5.png"
+  ],
+  "textosPromocionais": [
+    "Mídia Kit Oficial",
+    "Com Rafael Rímoli, Etiene Contini, Cris Presoto & Albano",
+    "Claro TV (Canal 524) • RS PLAY"
+  ],
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [
+    {
+      "indice": 1,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 1: CAPA / HERO",
+      "tituloSecao": "SLIDE 1: CAPA / HERO",
+      "subtitulos": [],
+      "paragrafos": [
+        "Mídia Kit Oficial",
+        "Com Rafael Rímoli, Etiene Contini, Cris Presoto & Albano",
+        "Claro TV (Canal 524) • RS PLAY"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Mídia Kit Oficial\nA emoção do futebol respira aqui\nCom Rafael Rímoli, Etiene Contini, Cris Presoto & Albano\nClaro TV (Canal 524) • RS PLAY\nGrêmio\n•\nDebate & Análise\n•\nInternacional"
+    },
+    {
+      "indice": 2,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 2: SOBRE A BANCADA E O PROGRAMA",
+      "tituloSecao": "Isenção, Clubismo e Rivalidade",
+      "subtitulos": [
+        "O Que Rola no Programa"
+      ],
+      "paragrafos": [
+        "Ancorado por Rafael Rímoli , o RS Play Sports traz uma bancada que representa o torcedor da arquibancada. De um lado, o coração Colorado da advogada Etiene Contini . Do outro, o fervor Gremista de Cris Presoto e a precisão tática e técnica do treinador Albano .",
+        "O bicho pega! Falamos de futebol gaúcho e mundial com muita resenha, apostas, enquetes ao vivo (quem ganha o Grenal?), e sorteios que levam a audiência à loucura (de jantares espanhóis a ingressos na Arena e Beira-Rio). Aqui a análise tática se mistura com a emoção do torcedor.",
+        "\"Sentimento não tem como explicar, mas a gente pode falar sobre ele. A rivalidade mais quente do Brasil na sua tela.\""
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "A Bancada\nIsenção, Clubismo e Rivalidade\nAncorado por Rafael Rímoli , o RS Play Sports traz uma bancada que representa o torcedor da arquibancada. De um lado, o coração Colorado da advogada Etiene Contini . Do outro, o fervor Gremista de Cris Presoto e a precisão tática e técnica do treinador Albano .\nO Que Rola no Programa\nO bicho pega! Falamos de futebol gaúcho e mundial com muita resenha, apostas, enquetes ao vivo (quem ganha o Grenal?), e sorteios que levam a audiência à loucura (de jantares espanhóis a ingressos na Arena e Beira-Rio). Aqui a análise tática se mistura com a emoção do torcedor.\n\"Sentimento não tem como explicar, mas a gente pode falar sobre ele. A rivalidade mais quente do Brasil na sua tela.\""
+    },
+    {
+      "indice": 3,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 3: FICHA TÉCNICA E FORMATO",
+      "tituloSecao": "A Tática",
+      "subtitulos": [
+        "Gênero",
+        "Estilo",
+        "Duração",
+        "Agenda"
+      ],
+      "paragrafos": [
+        "\"O esquema de jogo perfeito para a sua manhã de Sábado.\"",
+        "Esportes, Mesa Redonda, Entretenimento",
+        "Debate, Interatividade e Análise Tática",
+        "60 Minutos (Ao Vivo / Inéditos)",
+        "Sábados, às 9h30 da Manhã."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "A Tática\n\"O esquema de jogo perfeito para a sua manhã de Sábado.\"\nGênero\nEsportes, Mesa Redonda, Entretenimento\nEstilo\nDebate, Interatividade e Análise Tática\nDuração\n60 Minutos (Ao Vivo / Inéditos)\nAgenda\nSábados, às 9h30 da Manhã."
+    },
+    {
+      "indice": 4,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA",
+      "tituloSecao": "Alcance e Performance",
+      "subtitulos": [
+        "App Smart TV",
+        "Brasil",
+        "YouTube",
+        "Instagram",
+        "TikTok"
+      ],
+      "paragrafos": [
+        "A arquibancada inteira ligada na vitrine multiplataforma do RS Play.",
+        "14.388 Milhões",
+        "Alcance Total da Emissora",
+        "16M",
+        "Acessos Plataforma TVSPlay",
+        "2M",
+        "Alcance Claro TV+ (Canal 524)",
+        "Crescimento de 60% ao mês",
+        "678.224",
+        "Acessos & Downloads",
+        "Foco Nacional",
+        "72",
+        "Programas Exclusivos",
+        "24h",
+        "Programação Ininterrupta",
+        "1,2M+",
+        "Visualizações",
+        "19K",
+        "Inscritos",
+        "+5.0M",
+        "Alcance",
+        "163K",
+        "Interações",
+        "784K",
+        "Views",
+        "48K",
+        "Curtidas"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Alcance e Performance\nA arquibancada inteira ligada na vitrine multiplataforma do RS Play.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+    },
+    {
+      "indice": 5,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 5: INTEGRAÇÃO DE MARCAS",
+      "tituloSecao": "Oportunidades de Jogo",
+      "subtitulos": [
+        "Sites de Apostas (Bets)",
+        "Bares & Gastronomia",
+        "Material Esportivo",
+        "Turismo & Ingressos"
+      ],
+      "paragrafos": [
+        "\"Aqui sua marca entra em campo e joga para vencer.\"",
+        "O RS Play Sports possui integração comercial totalmente orgânica. Fazemos sorteios ao vivo, brincamos com a sua marca e geramos engajamento na hora.",
+        "Nosso programa analisa partidas, placares e estatísticas o tempo todo. O ecossistema perfeito para divulgar ODDs, bônus de boas-vindas e plataformas de palpites esportivos.",
+        "\"Quem é que vai jantar de graça hoje?\" Realizamos sorteios ao vivo pelo chat (ex: Casa Espanhola), gerando tráfego qualificado e divulgação imediata para restaurantes, cervejarias e bares.",
+        "As camisas dos times são o nosso manto. Perfeito para lojas esportivas (ex: Mantos Eternos), e-commerces de chuteiras e moda voltada ao torcedor fanático.",
+        "Todo torcedor quer estar no estádio. Sorteios de ingressos ao vivo (Beira-Rio ou Arena) explodem a nossa audiência e o chat do YouTube. Uma ação com conversão imediata de seguidores."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Oportunidades de Jogo\n\"Aqui sua marca entra em campo e joga para vencer.\"\nO RS Play Sports possui integração comercial totalmente orgânica. Fazemos sorteios ao vivo, brincamos com a sua marca e geramos engajamento na hora.\nSites de Apostas (Bets)\nNosso programa analisa partidas, placares e estatísticas o tempo todo. O ecossistema perfeito para divulgar ODDs, bônus de boas-vindas e plataformas de palpites esportivos.\nBares & Gastronomia\n\"Quem é que vai jantar de graça hoje?\" Realizamos sorteios ao vivo pelo chat (ex: Casa Espanhola), gerando tráfego qualificado e divulgação imediata para restaurantes, cervejarias e bares.\nMaterial Esportivo\nAs camisas dos times são o nosso manto. Perfeito para lojas esportivas (ex: Mantos Eternos), e-commerces de chuteiras e moda voltada ao torcedor fanático.\nTurismo & Ingressos\nTodo torcedor quer estar no estádio. Sorteios de ingressos ao vivo (Beira-Rio ou Arena) explodem a nossa audiência e o chat do YouTube. Uma ação com conversão imediata de seguidores."
+    },
+    {
+      "indice": 6,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL)",
+      "tituloSecao": "O Clima da Arquibancada",
+      "subtitulos": [],
+      "paragrafos": [
+        "Paixão, debate e rivalidade sadia na tela da RS Play."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "O Clima da Arquibancada\nPaixão, debate e rivalidade sadia na tela da RS Play."
+    },
+    {
+      "indice": 7,
+      "origemUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "identificadorSlideOuSecao": "FOOTER / CONTACT",
+      "tituloSecao": "Entre em campo com a gente",
+      "subtitulos": [],
+      "paragrafos": [
+        "Vincule sua marca ao projeto esportivo que entende a paixão, a zoeira e a técnica do futebol gaúcho."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Entre em campo com a gente\nVincule sua marca ao projeto esportivo que entende a paixão, a zoeira e a técnica do futebol gaúcho.\n@rsplaysports\nRS Play Sports\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+    }
+  ],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "temasAbordados",
+      "formato",
+      "horario",
+      "canalPlataforma",
+      "redesSociais",
+      "links",
+      "imagens",
+      "textosPromocionais"
+    ],
+    "informacaoDerivadaDaEstrutura": [
+      "propostaEditorial",
+      "informacoesComerciais"
+    ],
+    "informacaoAusente": [
+      "subtitulo",
+      "conceito",
+      "publico",
+      "especialistasConvidadosRecorrentes",
+      "quadros",
+      "duracao",
+      "periodicidade",
+      "diferenciais",
+      "contatos",
+      "videos",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "https://www.rsplay.com.br/",
+    "https://www.rsplay.com.br/midia2026.html",
+    "https://www.rsplay.com.br/rsplaysports.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

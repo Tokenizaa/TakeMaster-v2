@@ -1,0 +1,80 @@
+{
+  "slug": "2-ou-10",
+  "idOriginalCms": "2_ou_10",
+  "tipoRegistro": "programa",
+  "ativoNoCms": true,
+  "midiaKitUrl": "https://www.rsplay.com.br/2ou10.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/2ou10.html"
+  ],
+  "midiaKitStatusHttp": 404,
+  "midiaKitCapturadoComSucesso": false,
+  "nomeDoPrograma": "2 OU 10",
+  "titulo": "2 OU 10",
+  "subtitulo": "não informado na fonte",
+  "descricao": "Programa focado em discussões dinâmicas.",
+  "propostaEditorial": "não informado na fonte",
+  "conceito": "não informado na fonte",
+  "publico": "não informado na fonte",
+  "apresentador": "2 ou 10",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": "não informado na fonte",
+  "quadros": "não informado na fonte",
+  "formato": "não informado na fonte",
+  "duracao": "não informado na fonte",
+  "periodicidade": "não informado na fonte",
+  "horario": "Consulte a programação",
+  "canalPlataforma": "RS Play TV (Canal 524 Claro TV / Streaming rsplay.com.br)",
+  "informacoesComerciais": "não informado na fonte",
+  "diferenciais": "não informado na fonte",
+  "contatos": "não informado na fonte",
+  "redesSociais": "não informado na fonte",
+  "links": [
+    "https://www.rsplay.com.br/2ou10.html"
+  ],
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/imgmidia/2ou10.jpg"
+  ],
+  "textosPromocionais": "não informado na fonte",
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "horario",
+      "canalPlataforma",
+      "links",
+      "imagens"
+    ],
+    "informacaoDerivadaDaEstrutura": [],
+    "informacaoAusente": [
+      "subtitulo",
+      "propostaEditorial",
+      "conceito",
+      "publico",
+      "especialistasConvidadosRecorrentes",
+      "temasAbordados",
+      "quadros",
+      "formato",
+      "duracao",
+      "periodicidade",
+      "informacoesComerciais",
+      "diferenciais",
+      "contatos",
+      "redesSociais",
+      "videos",
+      "textosPromocionais",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/",
+    "https://www.rsplay.com.br/midia2026.html",
+    "https://www.rsplay.com.br/2ou10.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

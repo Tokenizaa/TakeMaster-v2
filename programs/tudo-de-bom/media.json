@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/tudo%20de%20bom.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "TUDO DE BOM",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — TUDO DE BOM",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "Rose do Erre",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/tdb/tdb7.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/tdb.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "TUDO DE BOM"
+  }
+]

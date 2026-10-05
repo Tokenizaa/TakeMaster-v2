@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/intimas.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "ÍNTIMAS",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ÍNTIMAS",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "Thais Freire",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/intimas/thais7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/intimas.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ÍNTIMAS"
+  }
+]

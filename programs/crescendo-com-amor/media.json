@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/crescendo_com_amo-20260806152925-78b3a0dd.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CRESCENDO COM AMOR",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CRESCENDO COM AMOR",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/logo-crescendo-original.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "CRESCENDO COM AMOR — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/logo-crescendo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor — por Nicole Alegretti e Priscilla Miranda",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Nicole Alegretti",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Priscilla Miranda",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/crescendo/crescendo7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/crescendo.html",
+    "altText": "Crescendo com Amor",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CRESCENDO COM AMOR"
+  }
+]

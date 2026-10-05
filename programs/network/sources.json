@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "NETWORK",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"35\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"35\",\"title\":\"NETWORK\",\"host\":\"Sérgio Martins\",\"description\":\"Conexões empresariais, negócios e oportunidades.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/sergio_martins.jpg\",\"colorHex\":\"#1d4ed8\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/network.html\",\"mediaKitFile\":\"network.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Negócios\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "NETWORK",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"35\",\"title\":\"NETWORK\",\"host\":\"Sérgio Martins\",\"description\":\"Conexões empresariais, negócios e oportunidades.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/sergio_martins.jpg\",\"colorHex\":\"#1d4ed8\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "NETWORK",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"35\",\"title\":\"NETWORK\",\"host\":\"Sérgio Martins\",\"description\":\"Conexões empresariais, negócios e oportunidades.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/sergio_martins.jpg\",\"colorHex\":\"#1d4ed8\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/network.html",
+    "urlCanonica": "https://www.rsplay.com.br/network.html",
+    "tituloDaPagina": "Mídia Kit Oficial — TV Network",
+    "dataHoraScrape": "2026-10-05T02:06:29.792Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "NETWORK",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — NETWORK",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "Mídia Kit Oficial\nNETWORK\nCom Sérgio\nClaro TV (Canal 524) • RS PLAY\nNegócios\n•\nDesenvolvimento\n•\nEventos"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR E O PROGRAMA — Sérgio",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "O Âncora\nSérgio\nComunicador, formador de opinião e a voz dos grandes eventos do Estado.\nSérgio comanda coberturas marcantes, aproximando a sociedade dos maiores polos de desenvolvimento. Com olhar atento, ele conecta lideranças empresariais, prefeitos e secretários ao público geral, mostrando que o crescimento econômico e cultural caminha lado a lado.\nO Programa TV Network\nMuito além de uma cobertura de eventos. O Network é a vitrine do ecossistema econômico e social do Rio Grande do Sul. O programa mostra os bastidores de grandes feiras (como a Olifeira em Guaíba), discute sustentabilidade, logística, infraestrutura e a vanguarda tecnológica dos municípios, sempre conversando com quem faz a engrenagem do Estado girar."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Formato",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "O Formato\n\"Onde grandes negócios e eventos encontram a sua audiência.\"\nGênero\nJornalismo, Negócios & Eventos Culturais\nEstilo\nCobertura in loco, Entrevistas e Cases de Sucesso\nDuração\n30 Minutos (Episódios inéditos)\nAgenda\nSemanalmente nas Plataformas da Emissora"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento em todo o estado.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS E QUADROS — Oportunidade para Marcas",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "Oportunidade para Marcas\n\"Estar onde o estado cresce e inova.\"\nO Network é o espaço ideal para empresas que buscam credibilidade corporativa, integrando-se organicamente a pautas sobre empreendedorismo e desenvolvimento.\nAgronegócio & Sustentabilidade\nCoberturas em grandes feiras do setor, como a Olifeira (Maior feira de azeite da América Latina). O espaço perfeito para indústrias, maquinários e soluções agro sustentáveis.\nGestão, Finanças & Inovação\nDebates com prefeitos e empresários sobre desenvolvimento local e tecnologia. A vitrine exata para bancos, cooperativas (como Sicredi/BRDE), hubs de TI e consultorias financeiras.\nCultura, Turismo & Eventos\nO programa dá luz à cultura local e ao turismo de eventos (Costa Doce, festas regionais). Oportunidade para redes hoteleiras, agências de viagens e patrocínios governamentais.\nSaúde & Infraestrutura\nDestaques para novos centros de saúde, rodovias e centros logísticos (Eixo de celulose). Ideal para planos de saúde, construtoras e concessionárias de transporte e logística."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: VISUAL IDENTITY (MARQUEE CAROUSEL) — Lentes do Desenvolvimento",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "Lentes do Desenvolvimento\nOs bastidores dos eventos que transformam o Estado."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Vincule sua Marca ao Sucesso",
+        "origemDoTrecho": "https://www.rsplay.com.br/network.html",
+        "textoOriginal": "Vincule sua Marca ao Sucesso\nComunique-se com um público qualificado que respira economia, inovação e a força do Rio Grande do Sul.\nTV Network\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

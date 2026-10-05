@@ -1,0 +1,101 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/doctor_tv.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DOCTOR TV",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DOCTOR TV",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://doctor.tv.br/wp-content/uploads/2025/09/Doctor-tv-Branco.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Logo DOCTOR TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr. Daniel Dias Machado no DOCTOR TV",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr. Daniel Dias Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/doctortv/drtv10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/doctortv.html",
+    "altText": "Dr Daniel Machado",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DOCTOR TV"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY SPORTS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"rsplay_sports\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"rsplay_sports\",\"title\":\"RSPLAY SPORTS\",\"host\":\"Rafael Rimoliv\",\"description\":\"A cobertura completa do esporte, com análises, comentários e muita informação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/rsplaysports.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"rsplaysports.html\",\"mediaKitFile\":\"rsplaysports.html\",\"active\":false,\"showOnIndex\":false,\"showInMenus\":false,\"showOnMediakit2026\":false,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Esporte\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY SPORTS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"rsplay_sports\",\"title\":\"RSPLAY SPORTS\",\"host\":\"Rafael Rimoli\",\"description\":\"A cobertura completa do esporte, com análises, comentários e muita informação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/rsplaysports.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY SPORTS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"rsplay_sports\",\"title\":\"RSPLAY SPORTS\",\"host\":\"Rafael Rimoli\",\"description\":\"A cobertura completa do esporte, com análises, comentários e muita informação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/rsplaysports.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/rsplaysports.html",
+    "urlCanonica": "https://www.rsplay.com.br/rsplaysports.html",
+    "tituloDaPagina": "Mídia Kit Oficial — RS Play Sports",
+    "dataHoraScrape": "2026-10-05T02:06:30.298Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY SPORTS",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "Mídia Kit Oficial\nA emoção do futebol respira aqui\nCom Rafael Rímoli, Etiene Contini, Cris Presoto & Albano\nClaro TV (Canal 524) • RS PLAY\nGrêmio\n•\nDebate & Análise\n•\nInternacional"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A BANCADA E O PROGRAMA — Isenção, Clubismo e Rivalidade",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "A Bancada\nIsenção, Clubismo e Rivalidade\nAncorado por Rafael Rímoli , o RS Play Sports traz uma bancada que representa o torcedor da arquibancada. De um lado, o coração Colorado da advogada Etiene Contini . Do outro, o fervor Gremista de Cris Presoto e a precisão tática e técnica do treinador Albano .\nO Que Rola no Programa\nO bicho pega! Falamos de futebol gaúcho e mundial com muita resenha, apostas, enquetes ao vivo (quem ganha o Grenal?), e sorteios que levam a audiência à loucura (de jantares espanhóis a ingressos na Arena e Beira-Rio). Aqui a análise tática se mistura com a emoção do torcedor.\n\"Sentimento não tem como explicar, mas a gente pode falar sobre ele. A rivalidade mais quente do Brasil na sua tela.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — A Tática",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "A Tática\n\"O esquema de jogo perfeito para a sua manhã de Sábado.\"\nGênero\nEsportes, Mesa Redonda, Entretenimento\nEstilo\nDebate, Interatividade e Análise Tática\nDuração\n60 Minutos (Ao Vivo / Inéditos)\nAgenda\nSábados, às 9h30 da Manhã."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "Alcance e Performance\nA arquibancada inteira ligada na vitrine multiplataforma do RS Play.\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS — Oportunidades de Jogo",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "Oportunidades de Jogo\n\"Aqui sua marca entra em campo e joga para vencer.\"\nO RS Play Sports possui integração comercial totalmente orgânica. Fazemos sorteios ao vivo, brincamos com a sua marca e geramos engajamento na hora.\nSites de Apostas (Bets)\nNosso programa analisa partidas, placares e estatísticas o tempo todo. O ecossistema perfeito para divulgar ODDs, bônus de boas-vindas e plataformas de palpites esportivos.\nBares & Gastronomia\n\"Quem é que vai jantar de graça hoje?\" Realizamos sorteios ao vivo pelo chat (ex: Casa Espanhola), gerando tráfego qualificado e divulgação imediata para restaurantes, cervejarias e bares.\nMaterial Esportivo\nAs camisas dos times são o nosso manto. Perfeito para lojas esportivas (ex: Mantos Eternos), e-commerces de chuteiras e moda voltada ao torcedor fanático.\nTurismo & Ingressos\nTodo torcedor quer estar no estádio. Sorteios de ingressos ao vivo (Beira-Rio ou Arena) explodem a nossa audiência e o chat do YouTube. Uma ação com conversão imediata de seguidores."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL) — O Clima da Arquibancada",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "O Clima da Arquibancada\nPaixão, debate e rivalidade sadia na tela da RS Play."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Entre em campo com a gente",
+        "origemDoTrecho": "https://www.rsplay.com.br/rsplaysports.html",
+        "textoOriginal": "Entre em campo com a gente\nVincule sua marca ao projeto esportivo que entende a paixão, a zoeira e a técnica do futebol gaúcho.\n@rsplaysports\nRS Play Sports\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

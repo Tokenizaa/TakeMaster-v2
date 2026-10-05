@@ -1,0 +1,101 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/Yoyo-Show---Yolanda-Panda.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "YOYO SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — YOYO SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Yolanda Panda",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/yoyo/yoyo10.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/yoyo.html",
+    "altText": "Galeria Yoyo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "YOYO SHOW"
+  }
+]

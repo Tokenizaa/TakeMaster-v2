@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/sabor-20260806153357-6b7f7dc7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "HISTÓRIAS COM SABOR",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — HISTÓRIAS COM SABOR",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "HISTÓRIAS COM SABOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/historias_sabores/logo_historias_sabores.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/historias_sabor.html",
+    "altText": "HISTÓRIAS COM SABOR — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "HISTÓRIAS COM SABOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/historias_sabores/historias_sabor",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/historias_sabor.html",
+    "altText": "Carina Lentz",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HISTÓRIAS COM SABOR"
+  }
+]

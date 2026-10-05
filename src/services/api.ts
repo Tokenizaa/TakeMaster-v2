@@ -15,9 +15,14 @@ import {
   PaymentMethodType,
   PlannedShort,
   Production,
+  ProgramEditorialIdentity,
+  ProgramKnowledgeSummary,
+  ProgramPitchCurationResponse,
+  ProgramPitchRequestInput,
   QuestionItem,
   ResearchData,
   SaaSPlanDefinition,
+  SaaSRegistrationPayload,
   SaaSSubscription,
   ScheduleEvent,
   ScriptItem,
@@ -144,6 +149,22 @@ export const api = {
     return res.session;
   },
 
+  registerAccount: async (payload: SaaSRegistrationPayload & { organizationId?: string }) => {
+    const res = await request<{
+      session: AuthSession;
+      user: User;
+      show: Show;
+      subscription: SaaSSubscription;
+      invoice: BillingInvoice;
+      gatewayEvent: PaymentGatewayEvent;
+    }>('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+    storeAuthSessionContext(res.session);
+    return res;
+  },
+
   switchOrganization: async (organizationId: string) => {
     const res = await request<{ session: AuthSession }>('/api/auth/switch-org', {
       method: 'POST',
@@ -241,6 +262,40 @@ export const api = {
     request<Show>(`/api/shows/${id}`, { method: 'PUT', body: JSON.stringify(show) }),
   deleteShow: (id: string) =>
     request<{ success: boolean }>(`/api/shows/${id}`, { method: 'DELETE' }),
+
+  // RS Play Knowledge Base, Program Editorial Identity & Pautas Curation (FASES 1 a 8)
+  listKnowledgeBasePrograms: () =>
+    request<
+      {
+        slug: string;
+        nome: string;
+        apresentador: string;
+        descricao: string;
+        hasMediaKitHtml: boolean;
+        secoesCount: number;
+      }[]
+    >('/api/knowledge-base/programs'),
+
+  getShowKnowledge: (showId: string) =>
+    request<ProgramKnowledgeSummary>(`/api/shows/${encodeURIComponent(showId)}/knowledge`),
+
+  generateShowEditorialIdentity: (showId: string) =>
+    request<ProgramEditorialIdentity>(
+      `/api/shows/${encodeURIComponent(showId)}/editorial-identity`,
+      {
+        method: 'POST',
+        body: JSON.stringify({}),
+      }
+    ),
+
+  suggestShowPautas: (showId: string, input: ProgramPitchRequestInput) =>
+    request<ProgramPitchCurationResponse>(
+      `/api/shows/${encodeURIComponent(showId)}/suggest-pautas`,
+      {
+        method: 'POST',
+        body: JSON.stringify(input),
+      }
+    ),
 
   // Productions / Seasons
   getProductions: (showId?: string) =>

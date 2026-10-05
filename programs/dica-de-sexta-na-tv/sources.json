@@ -1,0 +1,74 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DICA DE SEXTA NA TV",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1786042383065\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1786042383065\",\"title\":\"DICA DE SEXTA NA TV\",\"menuTitle\":\"DICA DE SEXTA NA TV\",\"kitTitle\":\"\",\"host\":\"CAMILA PRETTO\",\"description\":\"Com a apresentação de Camila Pretto, cada conversa acontece de forma natural, acolhedora e inteligente, valorizando quem está por trás de cada história. O programa foi pensado como um ambiente de encontros, onde empresários, artistas, chefs, atletas, empreendedores, comunicadores e pessoas comuns compartilham experiências capazes de inspirar milhares de pessoas.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/assets/uploads/dicadesextanatv-20260709141018-cc915344.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"sextanatv.html\",\"mediaKitFile\":\"sextanatv.html\",\"tags\":[\"Entrevista\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/sextanatv.html",
+    "urlCanonica": "https://www.rsplay.com.br/sextanatv.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Dica de Sexta na TV",
+    "dataHoraScrape": "2026-10-05T02:06:31.069Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DICA DE SEXTA NA TV",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Sexta",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Mídia Kit Oficial\nDica de\nSexta\nNa TV\nCom Camila Pretto\nCriação artística: TVSplay • Realização: RSPLAY • Duração: 1 hora\nTurismo\n•\nGastronomia\n•\nModa\n•\nBem-estar"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTAÇÃO / CAMILA — Camila Pretto",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Apresentação\nCamila Pretto\nO programa foi pensado como um ambiente de encontros, onde empresários, artistas, chefs, atletas, empreendedores, comunicadores e pessoas comuns compartilham experiências capazes de inspirar milhares de pessoas.\nCom a apresentação de Camila Pretto , cada conversa acontece de forma natural, acolhedora e inteligente, valorizando quem está por trás de cada história.\nConversa\nEntrevistas leves, humanas e inspiradoras.\nRS\nA identidade gaúcha como vitrine para o Brasil.\nHistórias\nPersonagens reais, emoção e transformação."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: JUSTIFICATIVA DO PROJETO — Histórias reais, conversas que inspiram.",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Justificativa\nHistórias reais,\nconversas que inspiram.\nMais do que um programa de televisão, um convite para descobrir pessoas, lugares, ideias e histórias que fazem a diferença.\nVivemos uma época em que as pessoas estão cada vez mais conectadas, mas, ao mesmo tempo, mais distantes de histórias reais, conversas inspiradoras e experiências capazes de transformar olhares.\nO Dica de Sexta na TV nasce para preencher esse espaço. Mais do que um programa de televisão, será um convite para descobrir pessoas, lugares, ideias e histórias que fazem a diferença.\nCom linguagem moderna, dinâmica e inspirada nos melhores formatos de televisão e videocasts, o programa une informação, entretenimento, turismo, cultura, comportamento e boas conversas em uma experiência leve e envolvente.\nCada episódio será pensado para informar, emocionar, divertir e aproximar o público de histórias que merecem ser conhecidas."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: O PROGRAMA — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "O Programa\nUm formato moderno entre revista eletrônica, videocast e televisão de experiência.\nCoração do projeto\nUm lugar onde as pessoas gostariam de estar.\nUm tom leve e informal, de “amiga para a amiga” , com referência mais próxima do streaming do que da televisão tradicional.\nPilares\nTurismo\nModa\nGastronomia\nBem-estar\nDados do Projeto\nTVSplay · RSPLAY\nExibição\nToda sexta-feira\nHorário\nMeio-dia\nDuração\n1 hora\nPúblico-alvo\nMulheres, 35 a 55\nInstagram oficial\n@dicadesexta_\nOnde assistir\nEpisódios semanais na Claro TV — canal 524 e no YouTube .\nMelhores momentos no Instagram do programa, da RS Play e da TVSPlay ."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: RIO GRANDE DO SUL — A força do RS para todo o Brasil .",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Rio Grande do Sul\nA força do RS\npara todo o Brasil .\nO Rio Grande do Sul é referência em cultura, turismo, gastronomia, empreendedorismo e inovação. O programa tem como missão apresentar esse potencial para todo o país, revelando destinos, negócios, iniciativas sociais, personagens inspiradores e experiências que representam a força do povo gaúcho.\nCada edição será uma vitrine da identidade do Estado, fortalecendo o turismo, a economia criativa e o desenvolvimento regional.\nTurismo\nGastronomia\nModa\nBem-estar\nA voz do Sul para o Brasil"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: DIFERENCIAIS — Um formato moderno , inspirador e multiplataforma .",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Dica de\nSexta\nDiferenciais do Projeto\nUm formato moderno , inspirador e multiplataforma .\nFormato moderno entre revista eletrônica e videocast.\nConversas leves, espontâneas e inspiradoras.\nConteúdo pensado para televisão e redes sociais.\nQuadros dinâmicos e interativos.\nForte conexão com turismo, gastronomia, cultura e comportamento.\nIntegração orgânica de patrocinadores e alto potencial comercial."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: ESTRUTURA DOS QUADROS — Quatro quadros, uma só sexta.",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Estrutura dos Quadros\nQuatro quadros, uma só sexta.\nDica de Sexta Indica!\n~5 min · série fixa\nDestinos, restaurantes e experiências: a série fixa que leva o telespectador para lugares diferentes e convida o público a viver a experiência junto com a apresentadora.\nNa Moda\n3 a 4 min\nConversa leve e direta sobre moda e comportamento.\nSão só 5 perguntas\nExterna\nO quadro que vai para a rua, para shows e para lugares onde as pessoas gostariam de estar, entrevistando chefs e artistas em cinco perguntas — dinâmico e feito para render bons cortes.\nTá na Agenda\nEstúdio\nDicas de programas para o final de semana.\nDuração total: 1 hora"
+      },
+      {
+        "secaoOrigem": "SLIDE 8: MÉTRICAS RSPLAY — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Alcance da Emissora\nA força da multiplataforma que leva o conteúdo do RS para todo o Brasil.\nEcossistema RSPLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos plataforma TVSplay\n2M\nAlcance Claro TV+ Canal 524\nYouTube\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "FOOTER — Sexta",
+        "origemDoTrecho": "https://www.rsplay.com.br/sextanatv.html",
+        "textoOriginal": "Dica de\nSexta\nNa TV\n“Porque quando existe uma boa conversa, sempre existe algo importante para compartilhar. E o Rio Grande do Sul tem muito para contar ao Brasil.”\nRSPLAY.COM.BR\nCamila Pretto • TVSplay • RSPLAY • Dica de Sexta na TV © 2026"
+      }
+    ]
+  }
+]

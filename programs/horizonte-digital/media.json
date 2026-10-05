@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte_digital_M%C3%A1rcia-Sedrez.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "HORIZONTE DIGITAL",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — HORIZONTE DIGITAL",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte_digital_logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "Horizonte Digital",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "Márcia Sedrez",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/horizontedigital.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "HORIZONTE DIGITAL"
+  }
+]

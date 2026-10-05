@@ -1,0 +1,75 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "HORIZONTE DIGITAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"horizonte_digital\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"horizonte_digital\",\"title\":\"HORIZONTE DIGITAL\",\"host\":\"Márcia Sedrez\",\"description\":\"O seu guia sobre inovação, tecnologia e tendências no ambiente digital.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte_digital_M%C3%A1rcia-Sedrez.jpg\",\"colorHex\":\"#3b82f6\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":true,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"horizontedigital.html\",\"mediaKitFile\":\"horizontedigital.html\",\"tags\":[\"Tecnologia\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "HORIZONTE DIGITAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"horizonte_digital\",\"title\":\"HORIZONTE DIGITAL\",\"host\":\"Márcia Sedrez\",\"description\":\"O seu guia sobre inovação, tecnologia e tendências no ambiente digital.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/horizonte_digital/horizonte_digital_M%C3%A1rcia-Sedrez.jpg\",\"colorHex\":\"#3b82f6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/horizontedigital.html",
+    "urlCanonica": "https://www.rsplay.com.br/horizontedigital.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Horizonte Digital com Márcia Sedrez",
+    "dataHoraScrape": "2026-10-05T02:06:31.844Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "HORIZONTE DIGITAL",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "Mídia Kit Oficial\ncom Márcia Sedrez\nRS PLAY • Claro tv+ Canal 524\nVisibilidade\n•\nAutoridade\n•\nCrescimento"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA + MÉTRICAS — Márcia Sedrez",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "A Apresentadora\nMárcia Sedrez\nEspecialista em Google Meu Negócio e posicionamento digital orgânico, Márcia ajuda empresas a conquistarem mais visibilidade, autoridade e novos clientes por meio do SEO Local e da gestão estratégica do Perfil da Empresa no Google.\nReconhecida pela comunicação clara e pela forma prática de compartilhar conhecimento, transforma perfis em ferramentas de crescimento — mostrando que toda empresa pode fortalecer sua presença digital e ser encontrada por quem realmente procura seus produtos ou serviços, sem depender de tráfego pago .\nSEO Local\nPerfil Google\nAutoridade\nCrescimento"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA + GRADE — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "O Programa\n\"Histórias reais que inspiram, conectam e impulsionam negócios.\"\nTalk Show & Negócios\nO Horizonte Digital nasceu para dar voz a empresários e profissionais com histórias inspiradoras. A cada episódio, os convidados dividem experiências, desafios, aprendizados e estratégias que impulsionaram o crescimento dos seus negócios.\nMais do que uma entrevista, é um espaço para gerar conexões, fortalecer marcas e incentivar o empreendedorismo — despertando a importância do posicionamento digital como parte do crescimento de qualquer empresa.\nHistórias inspiradoras de empreendedores\nEstratégias de presença e reputação online\nConexões que fortalecem marcas\nPúblico-Alvo\nEmpresários, empreendedores, profissionais liberais e gestores que buscam crescer com autoridade, fortalecer a marca e transformar presença digital em oportunidades reais de negócio."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS RS PLAY — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma que amplifica cada história.\nEcossistema RS Play\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos plataforma TVSPlay\n2M\nAlcance Claro tv+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: UNIVERSO / MOODBOARD — Universo Horizonte Digital",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "Universo Horizonte Digital\nBastidores, conexões e histórias que inspiram."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — Faça Parte Desse Horizonte",
+        "origemDoTrecho": "https://www.rsplay.com.br/horizontedigital.html",
+        "textoOriginal": "Faça Parte Desse Horizonte\nSua marca conectada a um público empreendedor, em um ambiente de autoridade e credibilidade.\nMárcia Sedrez\n•\nRS Play\n•\nHorizonte Digital © 2026"
+      }
+    ]
+  }
+]

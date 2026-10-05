@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/emmovimento.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "EM MOVIMENTO",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — EM MOVIMENTO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/logo%20branco%20movimento.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "Logo Em Movimento",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "Dra. Tamara Mucenic",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM MOVIMENTO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emmovimento/tamara1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emmovimento.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "EM MOVIMENTO"
+  }
+]

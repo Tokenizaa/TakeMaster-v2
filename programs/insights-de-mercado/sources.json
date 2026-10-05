@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "INSIGHTS DE MERCADO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"insightsdemercado\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"menuTitle\":\"Insights de Mercado\",\"kitTitle\":\"Insights de Mercado\",\"bannerImage\":\"\",\"playlistUrl\":\"\",\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[],\"novo\":true,\"schedule\":\"Consulte a programação\",\"id\":\"insightsdemercado\",\"title\":\"INSIGHTS DE MERCADO\",\"host\":\"Glenda Delanhese\",\"description\":\"Tendências, negócios e estratégias de mercado — com Glenda Delanhese.\",\"image\":\"https://rsplay.com.br/img/mediakit/insightsdemercado/card.jpg\",\"imageAlt\":\"Insights de Mercado — por Glenda Delanhese\",\"colorHex\":\"#D4A84A\",\"mediaKitUrl\":\"\",\"mediaKitFile\":\"\",\"tags\":[\"Negócios\"]}"
+      }
+    ]
+  }
+]

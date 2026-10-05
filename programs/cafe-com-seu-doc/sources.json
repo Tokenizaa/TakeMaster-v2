@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CAFÉ COM SEU DOC",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"cafe_com_seu_doc\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"cafe_com_seu_doc\",\"title\":\"CAFÉ COM SEU DOC\",\"host\":\"Vitor Picanço\",\"description\":\"Um programa idealizado para levar informação de saúde com qualidade e responsabilidade aos espectadores. Abordamos temas complexos de forma acessível e direta, sempre acompanhado de um bom café.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/cafe_com_teu_doc.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\",\"active\":true,\"visible\":true,\"showOnMediakit2026\":true,\"showOnIndex\":true,\"showInMenus\":true,\"mediaKitUrl\":\"cafedoc.html\",\"mediaKitFile\":\"cafedoc.html\",\"showBadge\":false,\"tags\":[\"Saúde\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"badgeText\":\"\",\"imageAlt\":\"\",\"removeImageFromCards\":false}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CAFÉ COM SEU DOC",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"cafe_com_seu_doc\",\"title\":\"CAFÉ COM SEU DOC\",\"host\":\"Em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/cafe_com_teu_doc.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CAFÉ COM SEU DOC",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"cafe_com_seu_doc\",\"title\":\"CAFÉ COM SEU DOC\",\"host\":\"Vitor Picanço\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/cafe_com_teu_doc.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/cafedoc.html",
+    "urlCanonica": "https://www.rsplay.com.br/cafedoc.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Café com teu doc",
+    "dataHoraScrape": "2026-10-05T02:06:28.761Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CAFÉ COM SEU DOC",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "Mídia Kit Oficial\nApresentado por Dr. Vitor Picanço\nInformação, Saúde e Comunicação\nQualidade de Vida\n•\nPrevenção\n•\nBem-Estar"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR E PROPÓSITO — Dr. Vitor Picanço",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "O Apresentador\nDr. Vitor Picanço\nAmazonense, 35 anos, casado. Médico Neurologista apaixonado por levar saúde e qualidade de vida aos seus pacientes. Atua em Porto Alegre e região através de consultas presenciais e telemedicina, com foco em dores de cabeça e doença de Parkinson, combinando a excelência técnica com um atendimento humano e empático.\nFormado em medicina pela Univ. Estadual do Amazonas (UEA).\nNeurologista (UFFS/Hospital de Clínicas de Passo Fundo).\nSubespecialista em Distúrbios do Movimento e Cefaleia (HCPA).\nMestrando pela UFRGS e Professor de medicina da Unisinos.\nNeurologista da Santa Casa de Misericórdia de Porto Alegre.\nPreceptor Voluntário (Residência em Neurologia - Santa Casa).\nO Propósito\n\"Minha meta é levar saúde e qualidade de vida aos meus pacientes, amparando, compreendendo e ajudando da melhor forma possível: tratando pessoas, ao invés de doenças. \""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA E CONVIDADOS — Sobre o Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "Sobre o Programa\n\"Introduzindo temas, explicando dúvidas e abrindo novos horizontes através da informação.\"\nO Que É?\nUm programa idealizado para levar informação de saúde com qualidade e responsabilidade aos espectadores. Abordamos temas complexos de forma acessível e direta, sempre acompanhado de um bom café.\nO Formato\nUm bate-papo estilo *videocast* que une o rigor técnico da medicina à leveza de uma conversa na mesa de centro. Conduzido de forma dinâmica para prender a atenção e realmente educar quem assiste.\nOs Convidados\nProfissionais de Saúde: Médicos de diversas especialidades, educadores físicos, fonoaudiólogos, fisioterapeutas, dentistas, cirurgiões bucomaxilofaciais, psicólogos, entre outros.\nEmpreendedores: Empresários e inovadores do ramo da saúde."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE (ATUALIZADO) — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: IDENTIDADE VISUAL (CARROSSEL) — O Cenário do Café com teu doc",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "O Cenário do Café com teu doc\nOnde a medicina encontra o acolhimento."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — Seja Nosso Parceiro",
+        "origemDoTrecho": "https://www.rsplay.com.br/cafedoc.html",
+        "textoOriginal": "Seja Nosso Parceiro\nPosicione sua marca ao lado da ciência, saúde e do cuidado genuíno com as pessoas.\n@vitorpicanco\n/VitorPicanco\nDr. Vitor Picanço\n•\nPorto Alegre - RS\n•\n© 2026 Café com teu doc"
+      }
+    ]
+  }
+]

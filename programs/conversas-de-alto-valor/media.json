@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/conversadealtovalor.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CONVERSAS DE ALTO VALOR",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CONVERSAS DE ALTO VALOR",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "Cacá Lima",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/alto_valor/alto9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/alto_valor.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CONVERSAS DE ALTO VALOR"
+  }
+]

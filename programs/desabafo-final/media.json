@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/desabafo/desabafo_final.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DESABAFO FINAL",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DESABAFO FINAL",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DESABAFO FINAL"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/desabafo/desabafo.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/desabafo.html",
+    "altText": "Eduardo Kappel - Desabafo Final",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DESABAFO FINAL"
+  }
+]

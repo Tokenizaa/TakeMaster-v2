@@ -1,0 +1,75 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "ESTRELAS NA TV",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"imperium_estrelas\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"imperium_estrelas\",\"title\":\"ESTRELAS NA TV\",\"host\":\"Brenda e Tatiane\",\"description\":\"Um universo de entretenimento, misticismo e conexão com o cosmos com Brenda e Tatiane.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/programas/imperium-das-estrelas---com-brenda-e-tatiane.png\",\"colorHex\":\"#7c3aed\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://rsplay.com.br/estrelastv.html\",\"mediaKitFile\":\"estrelastv.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Misticismo\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "ESTRELAS NA TV",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"imperium_estrelas\",\"title\":\"IMPERIUM DAS ESTRELAS\",\"host\":\"Brenda e Tatiane\",\"description\":\"Um universo de entretenimento, misticismo e conexão com o cosmos com Brenda e Tatiane.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/programas/imperium-das-estrelas---com-brenda-e-tatiane.png\",\"colorHex\":\"#7c3aed\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/estrelastv.html",
+    "urlCanonica": "https://www.rsplay.com.br/estrelastv.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Estrelas na TV",
+    "dataHoraScrape": "2026-10-05T02:06:31.844Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "ESTRELAS NA TV",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO (Fundo em preto puro sem gradiente e logo sem moldura) — SLIDE 1: CAPA / HERO (Fundo em preto puro sem gradiente e logo sem moldura)",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Mídia Kit Oficial\nBrenda Corrêa e Tatiane Bergenthal\n\"Duas mulheres, um sonho e uma missão: transformar talentos em oportunidades reais.\"\nPassarela\n•\nComunicação\n•\nAutoestima\n•\nTelevisão"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: A HISTÓRIA & AS FUNDADORAS — Toda grande história começa com um sonho",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Brenda Corrêa & Tatiane Bergenthal\nToda grande história\ncomeça com um sonho\nBrenda e Tatiane acreditaram que crianças e adolescentes talentosos mereciam muito mais do que simples aplausos — mereciam oportunidades reais para construir um futuro promissor no universo da moda, da televisão e do entretenimento.\nMovidas por essa paixão, fundaram uma empresa especializada na preparação de modelos, desenvolvendo postura, passarela, expressão, autoestima, disciplina, comunicação e confiança. O objetivo sempre foi claro: preparar cada criança para brilhar diante das câmeras e da vida.\nAmbiente Seguro & Acolhedor\nEntendemos que por trás de cada talento existe uma família que confia seus maiores tesouros em nossas mãos. Por isso, trabalhamos sob rigorosos critérios de respeito, responsabilidade e carinho para oferecer um espaço verdadeiramente transformador."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: PERFIL INDIVIDUAL DAS FUNDADORAS (Alinhadas pelo topo através do object-top) — Quem Constrói Esse Sonho",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Quem Constrói Esse Sonho\n\"Talento encontra preparação, dedicação e pessoas que acreditam.\"\nFundadora\nBrenda Corrêa\nEmpresária e especialista em desenvolvimento de talentos, Brenda atua diretamente na mentoria comportamental, lapidando a expressão e a passarela com sensibilidade e foco na autoestima das estrelas.\nFundadora\nTatiane Bergenthal\nDedicada à preparação técnica e artística, Tatiane desenvolve as habilidades de comunicação, oratória e confiança necessárias para que os alunos dominem as câmeras e palcos com naturalidade."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E ECOSSISTEMA RS PLAY (NÚMEROS ATUALIZADOS) — Alcance & Visibilidade",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Alcance & Visibilidade\nUma vitrine de prestígio multiplataforma nas telas de todo o Brasil [3].\nECOSSISTEMA RS PLAY\nCanais & Emissoras\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: VISUAL GALLERY (MARQUEE CAROUSEL - EXCLUSIVAMENTE IMAGENS REAIS ENVIADAS) — Descubra o brilho do Estrelas na TV",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Descubra o brilho do Estrelas na TV\nModa, postura, expressão, passarela e brilho nos estúdios oficiais."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO (Fundo Escuro com toque de Roxo Noturno) — Venha Fazer Parte Dessa História",
+        "origemDoTrecho": "https://www.rsplay.com.br/estrelastv.html",
+        "textoOriginal": "Venha Fazer Parte Dessa História\nSua marca associada a uma plataforma que inspira, ensina e abre portas de verdade para o futuro de centenas de famílias.\n@rsplaynodigital\nFundadoras: Brenda Corrêa & Tatiane Bergenthal\n•\nEstrelas na TV\n•\n© 2026"
+      }
+    ]
+  }
+]

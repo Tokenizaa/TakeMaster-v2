@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"descomplicando_futuro\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"descomplicando_futuro\",\"title\":\"DESCOMPLICANDO O FUTURO\",\"host\":\"Patrícia Silva\",\"description\":\"Tendências, inovação e o futuro explicados de forma simples e inspiradora.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/programas/descomplicando-o-futuro%20com%20patr%C3%ADcia%20Silva.png\",\"colorHex\":\"#8b5cf6\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/descomplicando.html\",\"mediaKitFile\":\"descomplicando.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Tecnologia\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"descomplicando_futuro\",\"title\":\"DESCOMPLICANDO O FUTURO\",\"host\":\"Patrícia Silva\",\"description\":\"Tendências, inovação e o futuro explicados de forma simples e inspiradora.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/programas/descomplicando-o-futuro%20com%20patr%C3%ADcia%20Silva.png\",\"colorHex\":\"#8b5cf6\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/descomplicando.html",
+    "urlCanonica": "https://www.rsplay.com.br/descomplicando.html",
+    "tituloDaPagina": "Mídia Kit — Descomplicando o Futuro | Dra. Patrícia F. Silva",
+    "dataHoraScrape": "2026-10-05T02:06:29.018Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "DESCOMPLICANDO O FUTURO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "Mídia Kit Oficial\n\"Educação, tecnologia e inteligência artificial ao alcance de todos.\"\nEducação Digital\n•\nInteligência Artificial\n•\nSegurança Digital\n•\nLetramento"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: MANIFESTO & CONCEITO DO PROGRAMA — O conhecimento precisa chegar.",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "O Manifesto\nO conhecimento precisa chegar.\nO papel da universidade não pode se limitar aos livros, artigos e pesquisas.\nO conhecimento precisa ultrapassar os muros institucionais.\nE chegar até quem realmente precisa dele:\na sociedade.\nA Missão do Programa\nMais do que informar, o Descomplicando o Futuro tem como objetivo educar, prevenir e formar cidadãos preparados para enfrentar os desafios do cotidiano digital.\nA proposta integra educação, tecnologia, segurança digital e inteligência artificial , transformando conteúdos complexos em orientações práticas que ajudam as pessoas no seu dia a dia — democratizando o acesso ao conhecimento e fortalecendo a relação entre universidade e comunidade.\n🎓\nEducação & Universidade\n🤖\nIA Responsável\n🔐\nSegurança Digital\n💡\nImpacto Social"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: SOBRE A DRA. PATRÍCIA F. SILVA — Dra. Patrícia F. Silva",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "325\ncandidatos avaliados\n6 selecionados / Brasil\nProjeto Nacional de IA na Educação Básica\nFundação Itaú × Columbia University\n▸\nUFRGS — Doutorado e Pós-Doutorado\n▸\nUniv. de Aveiro — Experiência internacional (Portugal)\n▸\nObservatório Brasileiro de IA na Educação Básica\n▸\nProfessora universitária & pesquisadora\nA Apresentadora\nDra. Patrícia F. Silva\nUma voz ativa no futuro da educação.\nPatrícia Fernanda da Silva é Doutora e Pós-Doutora em Informática na Educação pela Universidade Federal do Rio Grande do Sul (UFRGS) , professora universitária e pesquisadora referência em Tecnologias Educacionais na Educação.\nAtua na formação de professores e no desenvolvimento de soluções inovadoras que integram tecnologia, aprendizagem, inteligência artificial e impacto social . Com experiência internacional na Universidade de Aveiro (Portugal), foi selecionada entre 325 candidatos como uma das 6 pesquisadoras do Brasil para integrar o projeto nacional de Inteligência Artificial na Educação Básica — iniciativa da Fundação Itaú em parceria com a Universidade de Columbia.\nIntegrou a primeira turma do Observatório Brasileiro de IA na Educação Básica , com foco no desenvolvimento de competências digitais para educadores. É especialista no uso de tecnologias digitais, ambientes virtuais e programação no ensino, sendo voz ativa no debate sobre o futuro da educação na era da inteligência artificial.\n\"Ensinar e construir conhecimento sempre foi minha missão.\nAgora, pela televisão, essa missão ganha ainda mais alcance.\"\n— Dra. Patrícia F. Silva"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE (NÚMEROS DO ECOSSISTEMA RS PLAY) — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nTendências Virais"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: EIXOS TEMÁTICOS DO PROGRAMA (Carrossel de Temas) — Os temas que movem o programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "Eixos Temáticos\nOs temas que movem o programa\nConhecimento prático, crítico e acessível para o mundo conectado.\n🌐\nEixo 01\nUso Consciente da Internet\nHábitos saudáveis, presença digital responsável e cultura crítica online.\n🛡️\nEixo 02\nSegurança Digital & Prevenção de Golpes\nOrientações práticas para identificar fraudes e proteger dados pessoais.\n📚\nEixo 03\nLetramento Digital\nDesenvolver competências para ler, interpretar e produzir no ambiente digital.\n🤖\nEixo 04\nUso Responsável da IA\nInteligência artificial com ética, transparência e propósito educacional.\n📱\nEixo 05\nTecnologia no Cotidiano\nComo a tecnologia transforma rotinas, trabalho, saúde e relações sociais.\n👨‍👩‍👧\nEixo 06\nEducação Digital para Famílias\nFamílias e estudantes preparados para navegar com segurança e consciência.\n🎯\nEixo 07\nFormação Crítica para o Mundo Conectado\nPensamento crítico e cidadania digital diante das transformações tecnológicas.\n🌐\nEixo 01\nUso Consciente da Internet\nHábitos saudáveis, presença digital responsável e cultura crítica online.\n🛡️\nEixo 02\nSegurança Digital & Prevenção de Golpes\nOrientações práticas para identificar fraudes e proteger dados pessoais.\n📚\nEixo 03\nLetramento Digital\nDesenvolver competências para ler, interpretar e produzir no ambiente digital.\n🤖\nEixo 04\nUso Responsável da IA\nInteligência artificial com ética, transparência e propósito educacional.\n📱\nEixo 05\nTecnologia no Cotidiano\nComo a tecnologia transforma rotinas, trabalho, saúde e relações sociais.\n👨‍👩‍👧\nEixo 06\nEducação Digital para Famílias\nFamílias e estudantes preparados para navegar com segurança e consciência.\n🎯\nEixo 07\nFormação Crítica para o Mundo Conectado\nPensamento crítico e cidadania digital diante das transformações tecnológicas."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: VISUAL ID SHOWCASE (Carrossel com Fotos da Dra. Patrícia) — Ciência, Presença & Propósito",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "Identidade Visual\nCiência, Presença & Propósito\nA força de quem une academia, tecnologia e impacto social."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — Vincule sua marca ao futuro da educação",
+        "origemDoTrecho": "https://www.rsplay.com.br/descomplicando.html",
+        "textoOriginal": "Parcerias & Patrocínios\nVincule sua marca ao futuro da educação\nAssocie sua empresa a um movimento de impacto social, educação digital e inteligência artificial — pautado por ciência, ética e propósito.\nDisponível para Parcerias Oficiais & Patrocínios\n@descomplicandoofuturo\nApresentação: Dra. Patrícia F. Silva\n•\nDescomplicando o Futuro na TV\n•\n© 2026"
+      }
+    ]
+  }
+]

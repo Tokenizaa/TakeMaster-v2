@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "SEM ROTEIRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"lucia_andrade\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"lucia_andrade\",\"title\":\"SEM ROTEIRO\",\"host\":\"LÚCIA ANDRADE\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/L%C3%BAcia%20Andrade.jpeg\",\"colorHex\":\"#a855f7\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"semroteiro.html\",\"mediaKitFile\":\"semroteiro.html\",\"tags\":[\"Variedades\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "SEM ROTEIRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"lucia_andrade\",\"title\":\"LÚCIA ANDRADE\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/L%C3%BAcia%20Andrade.jpeg\",\"colorHex\":\"#a855f7\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/semroteiro.html",
+    "urlCanonica": "https://www.rsplay.com.br/semroteiro.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Sem Roteiro com Lúcia de Andrade",
+    "dataHoraScrape": "2026-10-05T02:06:32.095Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "SEM ROTEIRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Sem Roteiro com Lúcia de Andrade",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "MÍDIA KIT\nSem Roteiro com Lúcia de Andrade\nHistórias reais • Bastidores • Conexões autênticas\n\"Porque a vida real é muito mais interessante do que qualquer roteiro.\"\nEmpreendedorismo •\nRelacionamentos •\nMaternidade Real •\nRecomeços"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA — Lúcia de Andrade, Força e Sensibilidade",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "A Idealizadora\nLúcia de Andrade,\nForça e Sensibilidade\nAdvogada com mais de 24 anos de experiência no Direito Cível e Empresarial, Lúcia Oliveira de Andrade é mãe do João, líder nata e empreendedora apaixonada por transformar realidades. Reconhecida por sua atuação foca na excelência e na ética, construiu uma carreira fundamentada no relacionamento humano e na valorização da individualidade de cada cliente.\nApós passar por profundos recomeços pessoais e profissionais — incluindo a superação de um câncer aos 42 anos, uma gravidez milagrosa e a reorganização corajosa de sua marca advocatícia —, ela descobriu na sua comunicação autêntica, descontraída e sem moldes engessados o seu maior diferencial competitivo.\n\"Aquilo que a gente tem de diferente é justamente o que a gente tem de mais bonito. E a advocacia — assim como a vida — não precisa ser fria, dura e inacessível para ser respeitada\"."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA & CONCEITO — Histórias reais de pessoas extraordinárias",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "A Proposta\nHistórias reais de\npessoas extraordinárias\nO Sem Roteiro com Lúcia de Andrade é um espaço leve, divertido, autêntico e inspirador, criado para mostrar o lado humano e de bastidores que raramente aparece nas entrevistas tradicionais. Aqui, revelamos a pessoa por trás da profissão, despindo rótulos corporativos para dar voz a conquistas, fracassos, superações e os famosos \"B.Os da vida real\".\nUnindo empresários, profissionais liberais, atletas, artistas e líderes comunitários, o programa transita organicamente por temas como empreendedorismo, carreira, relações familiares, saúde, viagens e desenvolvimento pessoal de forma leve e descontraída.\nConversa Espontânea\nSem roteiros formais engessados\nHumor e Verdade\nIdentificação imediata com o público"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: OS QUADROS DINÂMICOS (GAMIFICAÇÃO) — Dinamismo & Quadros",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "Dinamismo & Quadros\n\"Elementos de gamificação e bom humor para arrancar memórias inusitadas.\"\nQuadro Principal\nRoleta da Vida Real\nUma roleta interativa define os rumos da conversa de forma surpreendente: Amor, Dinheiro, Trabalho, Viagens, Perrengues, Sonhos ou Recomeços.\nInteratividade\nQuem Nunca?\nPerguntas bem-humoradas sobre gafes do cotidiano: mandou mensagem no grupo errado, assinou sem ler, levou bolo ou passou vergonha em público.\nCompartilhamento\nB.O. da Vida Real\nOs convidados dividem perrengues marcantes, situações inusitadas ou desafiadoras e os grandes aprendizados práticos que colheram delas.\nAcolhimento\nSem Julgamento\nUm espaço livre para que os convidados contem erros, falhas do caminho e reinvenções, mostrando que ninguém tem uma jornada perfeita.\nCuriosidade\nCaixa Surpresa\nFotos antigas, perguntas inesperadas ou objetos provocativos ajudam a acessar histórias divertidas e memórias afetivas dos entrevistados.\nA Essência\nPessoas Reais, Conversas Reais\nO protagonismo está sempre no ser humano por trás do título, valorizando o aprendizado contínuo através da identificação direta com o público."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE E ECOSSISTEMA RS PLAY (PERFEITA LEITURA / VELVET BURGUNDY BACKGROUND) — Alcance e Transmissão",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "Alcance e Transmissão\nSólida audiência com excelente índice de engajamento em todo o território nacional.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: GALERIA DE FOTOS (CARROSSEL INFINITO) — Estúdio & Conexões Lúcia de Andrade",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "Estúdio & Conexões\nLúcia de Andrade\nAmbiente acolhedor, dinâmico e focado em histórias reais."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO (Luxury Burgundy & Warm Sand) — Faça Parte Dessa História",
+        "origemDoTrecho": "https://www.rsplay.com.br/semroteiro.html",
+        "textoOriginal": "Faça Parte Dessa História\nVincule sua marca a quem lidera debates com transparência, autenticidade e conexões reais.\nPrograma Sem Roteiro\nRS Play — Transmissão Semanal\nLúcia de Andrade\nLíder Empresarial & Comunicadora\n@rsplaynodigital\n@luciadeandrade\nMídia Kit: Lúcia de Andrade\n•\nSem Roteiro na RS Play\n•\n© 2026"
+      }
+    ]
+  }
+]

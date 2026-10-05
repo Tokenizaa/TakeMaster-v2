@@ -1,0 +1,56 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/ouvir-20260806153148-8797efdc.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "OUVIR É SINÔNIMO DE VIDA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — OUVIR É SINÔNIMO DE VIDA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/ouvir/logo-ouvir.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/ouvir.html",
+    "altText": "OUVIR É SINÔNIMO DE VIDA — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/ouvir/logo-ouvir.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/ouvir.html",
+    "altText": "Ouvir é Sinônimo de Vida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/ouvir/ouvir1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/ouvir.html",
+    "altText": "José Camargo",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/ouvir/ouvir2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/ouvir.html",
+    "altText": "Pâmela Teixeira",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/ouvir/ouvir-estreia.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/ouvir.html",
+    "altText": "Estreia — Ouvir é Sinônimo de Vida",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA"
+  }
+]

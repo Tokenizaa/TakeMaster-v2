@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/sergio_martins.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "NETWORK",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — NETWORK",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "Apresentador Sérgio",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "apresentador",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network9.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "NETWORK"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/network/network1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/network.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "NETWORK"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "EM EVIDÊNCIA — com Vivian Lima",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — EM EVIDÊNCIA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "Em Evidência — com Vivian Lima",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "Vivian Lima",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/emevidencia/g8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/emevidencia.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "EM EVIDÊNCIA"
+  }
+]

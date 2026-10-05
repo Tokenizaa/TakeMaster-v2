@@ -1,0 +1,85 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "ALÉM DO ESPELHO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"alem_do_espelho\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"alem_do_espelho\",\"title\":\"ALÉM DO ESPELHO\",\"host\":\"Caren Herzog\",\"description\":\"Variedades, entrevistas e histórias que inspiram com a apresentadora Caren Herzog.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/espelho/alemdoespelho.jpg\",\"colorHex\":\"#e11d48\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/espelho.html\",\"mediaKitFile\":\"espelho.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Variedades\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "ALÉM DO ESPELHO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"alem_do_espelho\",\"title\":\"ALÉM DO ESPELHO\",\"host\":\"Caren Herzog\",\"description\":\"Variedades, entrevistas e histórias que inspiram com a apresentadora Caren Herzog.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/espelho/alemdoespelho.jpg\",\"colorHex\":\"#e11d48\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/espelho.html",
+    "urlCanonica": "https://www.rsplay.com.br/espelho.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Além do Espelho com Dra. Caren Herzog",
+    "dataHoraScrape": "2026-10-05T02:06:29.284Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "ALÉM DO ESPELHO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Mídia Kit Oficial\nMuito além da beleza. Uma conexão de histórias, pessoas e experiências.\n\"Porque a verdadeira beleza está na naturalidade, na essência e nas histórias que compartilhamos.\"\nEstética Avançada\n•\nAutoestima\n•\nEmpreendedorismo\n•\nEstilo de Vida"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: APRESENTAÇÃO DO PROGRAMA & PROPÓSITO — Histórias que vão além do espelho",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "O Programa\nHistórias que vão\nalém do espelho\nO Além do Espelho com Dra. Caren Herzog é um programa de televisão desenhado para inspirar, conectar e informar. Muito além da estética, o programa abre espaço para discussões autênticas e maduras sobre temas que permeiam a vida contemporânea.\nA cada episódio, convidados especiais dividem suas trajetórias, conquistas, desafios e aprendizados, estabelecendo pontes enriquecedoras entre pessoas, ideias, negócios e oportunidades únicas.\nNossa Missão\nInspirar pessoas através de histórias reais, promover conhecimento de alto nível, estimular conexões autênticas e contribuir de maneira contínua para o desenvolvimento pessoal e profissional de toda a audiência."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: APRESENTADORA — Dra. Caren Herzog",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "A Apresentadora\nDra. Caren Herzog\nBiomédica especialista em harmonização facial e rejuvenescimento, Dra. Caren Herzog construiu sua trajetória pautada pela excelência, ética e pela constante busca de conhecimento com referências nacionais e internacionais do mercado.\nCom consultório instalado no tradicional bairro Moinhos de Vento, em Porto Alegre, é altamente reconhecida por sua atuação refinada focada na naturalidade extrema dos resultados e no atendimento humanizado. Acredita de forma íntima que a verdadeira beleza reside na autoestima e na preservação da individualidade de cada pessoa.\nÉtica\nAtuação estética altamente responsável\nNaturalidade\nExaltação da essência individual\nExcelência\nAtualização científica internacional\nEmpatia\nAcolhimento e conexão humana"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: TEMAS & FORMATO — Universo de Conteúdo",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Universo de Conteúdo\n\"Formato pautado por bate-papos exclusivos, tendências e comportamento.\"\nPilar Estético\nHarmonização & Rejuvenescimento\nAbordagens sobre harmonização facial, rejuvenescimento personalizado com naturalidade e os avanços da biomedicina estética internacional.\nPilar Corporativo\nNegócios & Liderança Feminina\nOs desafios de liderar e gerir marcas, o papel da mulher contemporânea no mercado e histórias marcantes de inovação e empreendedorismo.\nPilar Estilo de Vida\nModa, Turismo & Tendências\nCuradoria especial de experiências marcantes de viagem, comportamento, gastronomia, tendências de estilo e dicas culturais de qualidade.\nComunidade e Público Alvo\nPrograma sintonizado com empreendedores, profissionais do bem-estar, da saúde e estética avançada, além de pessoas que apreciam tendências de estilo, viagens, networking e refinamento cotidiano.\nModa & Estilo\nSaúde Integral\nNetworking"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ALCANCE E ECOSSISTEMA RS PLAY (Preservado fielmente) — Alcance e Transmissão",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Alcance e Transmissão\nSólida audiência multiplataforma com excelente engajamento e canais consolidados.\nECOSSISTEMA RS PLAY\nCanais & Emissoras\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: OPORTUNIDADES PARA PARCEIROS & BENEFÍCIOS — Oportunidades & Parcerias",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Oportunidades & Parcerias\n\"Associação da marca a conteúdos de refinada credibilidade e relevância.\"\nDestaque Máximo\nPatrocínio Master\nExposição completa de sua marca no decorrer do programa, vinhetas personalizadas de abertura/encerramento, inserções institucionais de alta relevância, além de forte presença promocional nas redes sociais.\nPresença Premium\nApoio Cultural\nInserção qualificada de logotipo institucional ao longo dos blocos de transmissão, menções verbais e divulgação multiplataforma nos recortes de melhores momentos nas redes sociais da emissora.\nSpotlight Exclusivo\nParticipação Especial\nEntrevistas institucionais customizadas no programa. Espaço único de vitrine comercial para apresentar produtos, projetos e serviços de alto nível, agregando forte autoridade.\nBenefícios para o seu Negócio\n✔ Autoridade\nGeração de alta credibilidade\n✔ Networking\nConexões de alto valor\n✔ Visibilidade\nAlcance qualificado\n✔ Associação\nVinculado a conteúdo nobre"
+      },
+      {
+        "secaoOrigem": "SLIDE 7: GALERIA DE FOTOS DA CLIENTE (CARROSSEL INFINITO) — Estética & Essência Dra. Caren Herzog",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Estética & Essência\nDra. Caren Herzog\nUm mergulho visual por trás das lentes do programa."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO (Luxury Gold & Deep Velvet Black) — Muito Além da Estética",
+        "origemDoTrecho": "https://www.rsplay.com.br/espelho.html",
+        "textoOriginal": "Muito Além da Estética\nSua marca associada a uma comunicação elegante, moderna e altamente qualificada.\nConsultório Porto Alegre\nMoinhos de Vento — Rio Grande do Sul\nContato WhatsApp\n(51) 98408-1466\n@dra.carenherzog\nApresentação: Dra. Caren Herzog\n•\nAlém do Espelho na TV\n•\n© 2026"
+      }
+    ]
+  }
+]

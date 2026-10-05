@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "TUDO DE BOM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"45_tudo_de_bom\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"45_tudo_de_bom\",\"title\":\"TUDO DE BOM\",\"host\":\"Rose do Erre\",\"description\":\"Variedades, cultura e entrevistas especiais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/tudo%20de%20bom.jpg\",\"colorHex\":\"#9a3412\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/tdb.html\",\"mediaKitFile\":\"tdb.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Variedades\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "TUDO DE BOM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"45\",\"title\":\"TUDO DE BOM\",\"host\":\"Rose do Erre\",\"description\":\"Variedades, cultura e entrevistas especiais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/tudo%20de%20bom.jpg\",\"colorHex\":\"#9a3412\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "TUDO DE BOM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"45_tudo_de_bom\",\"title\":\"TUDO DE BOM\",\"host\":\"Rose do Erre\",\"description\":\"Variedades, cultura e entrevistas especiais.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/tudo%20de%20bom.jpg\",\"colorHex\":\"#9a3412\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/tdb.html",
+    "urlCanonica": "https://www.rsplay.com.br/tdb.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Tudo de Bom com Rose do Erre",
+    "dataHoraScrape": "2026-10-05T02:06:30.551Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "TUDO DE BOM",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — TDB",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "Mídia Kit Oficial\nTDB\nTudo de Bom\nO Universo Feminino Sem Tabus\nCom Rose do Erre\nClaro TV (Canal 524) • RS PLAY\nModa & Estilo\n•\nIntimidade\n•\nAutoconhecimento"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA E O PROGRAMA — Rose do Erre",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "A Anfitriã\nRose do Erre\nCom muito carisma e leveza, Rose do Erre comanda um espaço acolhedor e real para a mulher. Ela transita perfeitamente entre dicas de looks, \"compras inteligentes\" e papos profundos sobre sexualidade, maturidade e relacionamento. Rose é aquela amiga íntima que te convida para tomar um espumante e falar a verdade nua e crua.\nSobre o Programa\nO Tudo de Bom mistura o que a mulher mais gosta: se sentir linda por fora e bem resolvida por dentro. De vitrines de boutiques a rodas de conversa sobre intimidade e tabus. É um programa sobre se conhecer, se amar, estabelecer limites e viver a vida com muito mais prazer.\n\"Sexo sem tabu, com prazer e com saúde. Permita-se viver e sinta-se feminina.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — A Dinâmica",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "A Dinâmica\n\"Conteúdo dinâmico, real e cheio de charme.\"\nGênero\nVariedades, Moda e Universo Feminino\nEstilo\nTalk Show e Externas (Lojas, Espaços)\nDuração\nAprox. 60 Minutos (Episódios inéditos)\nAgenda\nSemanalmente no Ecossistema RS Play."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "Alcance e Performance\nO público mais engajado: mulheres que decidem o consumo do lar e investem em si mesmas.\nECOSSISTEMA RS PLAY\nStreaming & TV Nacional\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS — Oportunidades de Integração",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "Oportunidades de Integração\n\"Onde a sua marca conversa naturalmente com o desejo feminino.\"\nO Tudo de Bom é o cenário perfeito para divulgar moda, cosméticos e experiências com autenticidade, seja em estúdio, clínica ou invadindo a sua loja.\nModa & Varejo\nApresentação real de looks. \"Nós não apenas mostramos, nós ensinamos a usar.\" Excelente para boutiques, marcas de calçados, bolsas, acessórios e moda feminina versátil.\nIntimidade & Saúde\nQuebrando tabus com leveza. Vitrine ideal para sex shops, marcas de lingeries, terapeutas de relacionamento, cosmética sensual (lubrificantes, hidratantes) e ginecologia.\nGastronomia Romântica\nSugerindo momentos a dois: exposição de tábuas de frios, docerias, espumantes, vinhos e restaurantes ideais para aquele \"date\" focado em resgatar a conexão do casal.\nBeleza & Estética\nUma mulher segura se cuida de dentro para fora. Espaço nativo para clínicas de estética, biomédicas, salões de beleza, perfumaria e produtos de skincare diário."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL) — O Mundo TDB",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "O Mundo TDB\nModa, risadas, sinceridade e muita inspiração em cada frame."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Vincule sua marca ao Tudo de Bom",
+        "origemDoTrecho": "https://www.rsplay.com.br/tdb.html",
+        "textoOriginal": "Vincule sua marca ao Tudo de Bom\nPosicione sua empresa ao lado de um conteúdo real, que valoriza a autoestima, a beleza e a saúde da mulher moderna.\n@roseedoerre\nTDB Tudo de Bom\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CULTURA EM CENA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"17\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"17\",\"title\":\"CULTURA EM CENA\",\"host\":\"Nando Gross\",\"description\":\"Manifestações artísticas e culturais do RS.\",\"schedule\":\"Sexta-feira | 21h\",\"image\":\"https://rsplay.com.br/imgmidia/culturaemcena.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/cultura.html\",\"mediaKitFile\":\"cultura.html\",\"active\":false,\"showOnIndex\":false,\"showInMenus\":false,\"showOnMediakit2026\":false,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Cultura\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CULTURA EM CENA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"17\",\"title\":\"CULTURA EM CENA\",\"host\":\"Nando Gross\",\"description\":\"Manifestações artísticas e culturais do RS.\",\"schedule\":\"Sexta-feira | 21h\",\"image\":\"https://rsplay.com.br/imgmidia/culturaemcena.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CULTURA EM CENA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"17\",\"title\":\"CULTURA EM CENA\",\"host\":\"Nando Gross\",\"description\":\"Manifestações artísticas e culturais do RS.\",\"schedule\":\"Sexta-feira | 21h\",\"image\":\"https://rsplay.com.br/imgmidia/culturaemcena.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/cultura.html",
+    "urlCanonica": "https://www.rsplay.com.br/cultura.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Cultura em Cena com Nando Gross",
+    "dataHoraScrape": "2026-10-05T02:06:29.017Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CULTURA EM CENA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Cultura Em Cena",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "Mídia Kit Oficial\nApresentamos\nCultura Em Cena\nCom Nando Gross\nClaro TV (Canal 524) • RS PLAY\nMúsica\n/\nArte\n/\nEntretenimento"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR E HISTÓRIA DO PROGRAMA — Nando Gross",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "O Apresentador\nNando Gross\nJornalista, comunicador de peso e profundo conhecedor do cenário musical e artístico do Rio Grande do Sul. Nando conecta diferentes gerações, gêneros e tribos — do vinil independente ao simulador digital, do rock ao hip hop — com entrevistas autênticas e performances marcantes.\nO Espaço da Cena Gaúcha\nO **Cultura em Cena** estreia para registrar, celebrar e divulgar o que acontece na cidade de Porto Alegre e no RS em termos de estrutura, shows e entretenimento. É a vitrine onde a música pulsa ao vivo e a história é contada por quem a viveu.\nPerformances & Resenha\nArtistas, DJs, Músicos e Produtores Culturais\nRecebendo nomes que vão desde os pioneiros da música independente aos astros do Hip Hop local (como Nelson Coelho de Castro e DJ Piá), o programa mescla crônicas da cidade, demonstrações técnicas de som e bate-papos inesquecíveis."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — Formato & Identidade",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "Formato & Identidade\n\"A vitrine da cultura porto-alegrense e gaúcha.\"\nGênero\nMúsica & Cultura\nEstilo\nTalk Show Musical\nDuração\n~45 Minutos\nPlataforma\nCanal 524 & RS Play"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento em todo o estado.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: VISUAL IDENTITY (MARQUEE CAROUSEL MUSICAL) — A vibe do Cultura em Cena",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "A vibe do Cultura em Cena\nMúsica ao vivo, discos de vinil, histórias reais e a cultura pulsando."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Faça Parte do Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/cultura.html",
+        "textoOriginal": "Faça Parte do Show\nVincule sua marca ao principal canal da cultura, música e entretenimento do Rio Grande do Sul.\n@nandogross\n/NandoGross\nCultura em Cena\n•\nCom Nando Gross\n•\nCanal 524 Claro TV | RS PLAY\n•\n© 2026"
+      }
+    ]
+  }
+]

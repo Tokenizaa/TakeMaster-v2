@@ -1,0 +1,96 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "RAIZ CAST PRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"39\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"39\",\"title\":\"RAIZ CAST PRO\",\"host\":\"Rodrigo Correa\",\"description\":\"Podcast que vai fundo nas raízes da cultura.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/raiz.jpg\",\"colorHex\":\"#ca8a04\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/raizcastpro.html\",\"mediaKitFile\":\"raizcastpro.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Cultura\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "RAIZ CAST PRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"39\",\"title\":\"RAIZ CAST PRO\",\"host\":\"Rodrigo Correa\",\"description\":\"Podcast que vai fundo nas raízes da cultura.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/raiz.jpg\",\"colorHex\":\"#ca8a04\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "RAIZ CAST PRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"39\",\"title\":\"RAIZ CAST PRO\",\"host\":\"Rodrigo Correa\",\"description\":\"Podcast que vai fundo nas raízes da cultura.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/raiz.jpg\",\"colorHex\":\"#ca8a04\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/raizcastpro.html",
+    "urlCanonica": "https://www.rsplay.com.br/raizcastpro.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Raizcast Pro",
+    "dataHoraScrape": "2026-10-05T02:06:30.047Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "RAIZ CAST PRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — RAIZCAST PRO",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "Mídia Kit Oficial\nRAIZCAST PRO\nA versão Pro é outro nível\nApresentado por Rodrigo\nClaro TV (Canal 524) • RS PLAY\nGestão Financeira\n•\nPrevisibilidade\n•\nLucro"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR E O PROGRAMA — Rodrigo",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "O Anfitrião\nRodrigo\nDe um podcast de garagem há 6 anos para estúdios profissionais e transmissão nacional na Claro TV. Rodrigo é a voz que desafia o empresário brasileiro a sair do achismo e assumir o comando de seus negócios. Experiente, ele conhece as dores de faturar milhões e ainda assim ter que encarar a realidade do fluxo de caixa e da previsibilidade.\nSobre o Programa\nO empresário brasileiro aprendeu a vender, mas muitos vivem inseguros. O Raizcast Pro é onde o faturamento encontra a gestão. Falamos de finanças, margem de contribuição, ebitda e os impactos da reforma tributária de 2026/2027. Uma verdadeira mentoria para quem quer parar de apagar incêndio e começar a governar.\n\"Quem vende sem gerir, cresce cansado e quebra cedo. O faturamento vem das vendas, o lucro vem da gestão.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Ecossistema",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "O Ecossistema\n\"Onde a experiência vira método.\"\nGênero\nGestão, Finanças e Negócios B2B\nEstilo\nEntrevistas e Aulas de Liderança\nDuração\n60 Minutos (Episódios inéditos)\nAgenda\n3x na semana no Ecossistema RS Play."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "Alcance e Performance\nA vitrine multiplataforma que fala diretamente com empresários e líderes do mercado.\nECOSSISTEMA RS PLAY\nStreaming & TV Nacional\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS — Oportunidades de Integração",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "Oportunidades de Integração\n\"Empresários decidem. Nós preparamos o terreno para sua marca.\"\nO Raizcast Pro fala com o dono do negócio. O cenário ideal para apresentar soluções que reduzem custos, aumentam a produtividade e garantem o fluxo de caixa.\nTributário & Contabilidade\nCom a Reforma Tributária batendo à porta, o empresário precisa se proteger. Espaço nativo para escritórios de contabilidade, advocacia tributária e consultores financeiros.\nTech & ERPs\nSistemas de gestão financeira, controle de estoque, ferramentas de automação e dados que evitam o empresário de \"trabalhar no escuro e apagar incêndios\".\nBancos & Investimentos\nSoluções para PMEs: linhas de crédito corporativo para fluxo de caixa, gestão de investimentos com liquidez diária (CDBs), contas PJ e antecipação de recebíveis seguros.\nMentorias & Ecossistemas\nIdeal para venda de infoprodutos focados em gestão, mentorias de vendas, imersões executivas, e clubes de negócios de alto padrão (Masterminds)."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL) — Bastidores Pro",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "Bastidores Pro\nAutoridade e tecnologia em cada frame do programa."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Nós ensinamos a governar",
+        "origemDoTrecho": "https://www.rsplay.com.br/raizcastpro.html",
+        "textoOriginal": "Nós ensinamos a governar\nVincule sua marca ao projeto de TV e Streaming que educa o empresariado brasileiro para além das vendas.\n@raizcastpro\nRaizcast Pro\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,2099 @@
+{
+  "resumo": {
+    "dataHoraScrape": "2026-10-05T02:06:26.301Z",
+    "urlsTotaisVerificadas": 91,
+    "programasEProjetosIdentificados": 107,
+    "programasRegulares": 103,
+    "apresentacoesEspeciais": 4,
+    "midiaKitsLinkadosTotal": 83,
+    "midiaKitsAcessiveisCapturados": 82,
+    "midiaKitsComUrlQuebrada404": 1,
+    "programasApenasNoCatalogoSemMidiaKit": 25,
+    "paginasEditoriaisECatalogo": 88,
+    "videosEStreamsCatalogados": 10,
+    "imagensRelevantesCatalogadas": 796,
+    "pdfsDocumentosEncontrados": 0,
+    "urlsQuebradasTotal": 3
+  },
+  "validacao": {
+    "advogadaLequeProcessadoCorretamente": true,
+    "todosOsProgramasPossuemFonte": true,
+    "encodingUtf8Verificado": true,
+    "urlsQuebradas": [
+      {
+        "url": "https://www.rsplay.com.br/robots.txt",
+        "status": 404,
+        "pageType": "pagina_inacessivel_404",
+        "error": "HTTP 404 Not Found"
+      },
+      {
+        "url": "https://www.rsplay.com.br/sitemap.xml",
+        "status": 404,
+        "pageType": "pagina_inacessivel_404",
+        "error": "HTTP 404 Not Found"
+      },
+      {
+        "url": "https://www.rsplay.com.br/2ou10.html",
+        "status": 404,
+        "pageType": "pagina_inacessivel_404",
+        "error": "HTTP 404 Not Found"
+      }
+    ],
+    "paginasSemConteudoOu404": [
+      {
+        "url": "https://www.rsplay.com.br/robots.txt",
+        "status": 404,
+        "title": "404 Not Found"
+      },
+      {
+        "url": "https://www.rsplay.com.br/sitemap.xml",
+        "status": 404,
+        "title": "404 Not Found"
+      },
+      {
+        "url": "https://www.rsplay.com.br/2ou10.html",
+        "status": 404,
+        "title": "404 Not Found"
+      }
+    ],
+    "programasComMidiaKit404": [
+      {
+        "slug": "2-ou-10",
+        "nomeDoPrograma": "2 OU 10",
+        "midiaKitUrl": "https://www.rsplay.com.br/2ou10.html",
+        "statusHttp": 404
+      }
+    ],
+    "programasSemMidiaKitDedicado": [
+      {
+        "slug": "a-mais-elegante-do-sul",
+        "nomeDoPrograma": "A MAIS ELEGANTE DO SUL",
+        "apresentador": "Dani Jacobsen",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "bem-viver",
+        "nomeDoPrograma": "BEM VIVER",
+        "apresentador": "Mauricio Souto",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "cafe-com-o-divino",
+        "nomeDoPrograma": "CAFÉ COM O DIVINO",
+        "apresentador": "Everton Rosa",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "carina-dos-santos-lentz",
+        "nomeDoPrograma": "CARINA DOS SANTOS LENTZ",
+        "apresentador": "Estreia em breve",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "cidades-em-movimento",
+        "nomeDoPrograma": "CIDADES EM MOVIMENTO",
+        "apresentador": "Márcio Lima",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "conheca-seu-dinheiro",
+        "nomeDoPrograma": "CONHEÇA SEU DINHEIRO",
+        "apresentador": "Eduardo Cereja",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "despertando-mulheres",
+        "nomeDoPrograma": "DESPERTANDO MULHERES",
+        "apresentador": "Andreia Fioravante",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "e-possivel",
+        "nomeDoPrograma": "É POSSÍVEL",
+        "apresentador": "É Possível",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "fran-na-real",
+        "nomeDoPrograma": "FRAN NA REAL",
+        "apresentador": "Fran Bilhava",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "higor-antonio",
+        "nomeDoPrograma": "HIGOR ANTONIO",
+        "apresentador": "Estreia em breve",
+        "ativoNoCms": false
+      },
+      {
+        "slug": "hora-da-ideia",
+        "nomeDoPrograma": "HORA DA IDEIA",
+        "apresentador": "Chandler",
+        "ativoNoCms": false
+      },
+      {
+        "slug": "insights-de-mercado",
+        "nomeDoPrograma": "INSIGHTS DE MERCADO",
+        "apresentador": "Glenda Delanhese",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "jornal-da-gazeta",
+        "nomeDoPrograma": "JORNAL DA GAZETA",
+        "apresentador": "TV Gazeta",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "livrosofia",
+        "nomeDoPrograma": "LIVROSOFIA",
+        "apresentador": "Flavia Marchezini",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "luccas-cristiano",
+        "nomeDoPrograma": "LUCCAS CRISTIANO",
+        "apresentador": "não informado na fonte",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "negocio-fechado",
+        "nomeDoPrograma": "NEGÓCIO FECHADO",
+        "apresentador": "Grazi Guaspari",
+        "ativoNoCms": false
+      },
+      {
+        "slug": "pausa-saudavel",
+        "nomeDoPrograma": "PAUSA SAUDÁVEL",
+        "apresentador": "Fabiola Mumbach",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "ponto-de-encontro",
+        "nomeDoPrograma": "PONTO DE ENCONTRO",
+        "apresentador": "Marcelo Vaz e Thyago Maino",
+        "ativoNoCms": false
+      },
+      {
+        "slug": "previsao-do-tempo",
+        "nomeDoPrograma": "PREVISÃO DO TEMPO",
+        "apresentador": "Paloma de Oliveira",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "rsplay-news",
+        "nomeDoPrograma": "RSPLAY NEWS",
+        "apresentador": "Angelita Jolin",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "stalkeando-com-kym",
+        "nomeDoPrograma": "STALKEANDO COM KYM",
+        "apresentador": "Kym",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "tia-carmem",
+        "nomeDoPrograma": "TIA CARMEM",
+        "apresentador": "Soraia Maria Rosso",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "universo-imobiliario",
+        "nomeDoPrograma": "UNIVERSO IMOBILIÁRIO",
+        "apresentador": "Ingrid Reis",
+        "ativoNoCms": true
+      },
+      {
+        "slug": "vida-conecta",
+        "nomeDoPrograma": "VIDA CONECTA",
+        "apresentador": "Thaiane Estauber",
+        "ativoNoCms": false
+      },
+      {
+        "slug": "virando-o-jogo",
+        "nomeDoPrograma": "VIRANDO O JOGO",
+        "apresentador": "Barbosa Junior",
+        "ativoNoCms": true
+      }
+    ]
+  },
+  "programas": [
+    {
+      "slug": "2-ou-10",
+      "nomeDoPrograma": "2 OU 10",
+      "tipoRegistro": "programa",
+      "apresentador": "2 ou 10",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/2ou10.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/2ou10.html"
+      ],
+      "midiaKitStatusHttp": 404,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "a-mais-elegante-do-sul",
+      "nomeDoPrograma": "A MAIS ELEGANTE DO SUL",
+      "tipoRegistro": "programa",
+      "apresentador": "Dani Jacobsen",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "advogada-do-leque",
+      "nomeDoPrograma": "ADVOGADA DO LEQUE",
+      "tipoRegistro": "programa",
+      "apresentador": "Taise Vielmo Côrtes",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/advogada_leque.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/advogada_leque.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 15,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "alem-do-espelho",
+      "nomeDoPrograma": "ALÉM DO ESPELHO",
+      "tipoRegistro": "programa",
+      "apresentador": "Caren Herzog",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/espelho.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/espelho.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 17,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "as-pessoas-inspiram",
+      "nomeDoPrograma": "AS PESSOAS INSPIRAM",
+      "tipoRegistro": "programa",
+      "apresentador": "Eliane Davila",
+      "horario": "Terça-feira | 11h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/inspiram.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/inspiram.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 18,
+      "videosCount": 1,
+      "fontesCount": 4
+    },
+    {
+      "slug": "atividade",
+      "nomeDoPrograma": "ATIVIDADE",
+      "tipoRegistro": "programa",
+      "apresentador": "José Silvas",
+      "horario": "Segunda a quinta-feira | 20h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/atividade.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/atividade.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "beleza-e-negocio",
+      "nomeDoPrograma": "BELEZA E NEGÓCIO",
+      "tipoRegistro": "programa",
+      "apresentador": "Natalia Dias",
+      "horario": "Terça | 17h",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/belezanegocio.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/belezanegocio.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "beleza-inteligente",
+      "nomeDoPrograma": "BELEZA INTELIGENTE",
+      "tipoRegistro": "programa",
+      "apresentador": "Marília Righetto",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/beleza_inteligente.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/beleza_inteligente.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 18,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "bem-viver",
+      "nomeDoPrograma": "BEM VIVER",
+      "tipoRegistro": "programa",
+      "apresentador": "Mauricio Souto",
+      "horario": "Terça-feira | 10h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "cafe-com-o-divino",
+      "nomeDoPrograma": "CAFÉ COM O DIVINO",
+      "tipoRegistro": "programa",
+      "apresentador": "Everton Rosa",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "cafe-com-seu-doc",
+      "nomeDoPrograma": "CAFÉ COM SEU DOC",
+      "tipoRegistro": "programa",
+      "apresentador": "Vitor Picanço",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/cafedoc.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/cafedoc.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 12,
+      "videosCount": 1,
+      "fontesCount": 4
+    },
+    {
+      "slug": "cami-souza-inspira",
+      "nomeDoPrograma": "CAMI SOUZA INSPIRA",
+      "tipoRegistro": "programa",
+      "apresentador": "Cami Souza",
+      "horario": "quarta | 7h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/inspiracami.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/inspiracami.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 8,
+      "videosCount": 1,
+      "fontesCount": 3
+    },
+    {
+      "slug": "caminhos-com-franzen",
+      "nomeDoPrograma": "CAMINHOS COM FRANZEN",
+      "tipoRegistro": "programa",
+      "apresentador": "Claudio Franzen",
+      "horario": "Domingo | 19h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/caminhofranzen.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/caminhofranzen.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "cara-a-cara-com-a-beleza",
+      "nomeDoPrograma": "CARA A CARA COM A BELEZA",
+      "tipoRegistro": "programa",
+      "apresentador": "Elenita Luzardo",
+      "horario": "Domingo | 16h às 17h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/cara_a_cara_com_a_beleza.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/cara_a_cara_com_a_beleza.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 14,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "carina-dos-santos-lentz",
+      "nomeDoPrograma": "CARINA DOS SANTOS LENTZ",
+      "tipoRegistro": "programa",
+      "apresentador": "Estreia em breve",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "cidades-em-movimento",
+      "nomeDoPrograma": "CIDADES EM MOVIMENTO",
+      "tipoRegistro": "programa",
+      "apresentador": "Márcio Lima",
+      "horario": "Quarta-feira | 12h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "conexoes",
+      "nomeDoPrograma": "CONEXÕES",
+      "tipoRegistro": "programa",
+      "apresentador": "Rose Mazucco",
+      "horario": "Quinta-feira | 21h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/midiakit_rose.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/midiakit_rose.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 10,
+      "imagensCount": 22,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "conheca-seu-dinheiro",
+      "nomeDoPrograma": "CONHEÇA SEU DINHEIRO",
+      "tipoRegistro": "programa",
+      "apresentador": "Eduardo Cereja",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "consumidor-rs",
+      "nomeDoPrograma": "CONSUMIDOR RS",
+      "tipoRegistro": "programa",
+      "apresentador": "Fernanda Appel",
+      "horario": "Terça-feira | 21h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/consumidor.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/consumidor.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "conversa-intima-com-shirley",
+      "nomeDoPrograma": "CONVERSA ÍNTIMA COM SHIRLEY",
+      "tipoRegistro": "programa",
+      "apresentador": "Shirley Coden",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/conversaintima.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/conversaintima.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 7,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "conversas-de-alto-valor",
+      "nomeDoPrograma": "CONVERSAS DE ALTO VALOR",
+      "tipoRegistro": "programa",
+      "apresentador": "Cacá Lima",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/alto_valor.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/alto_valor.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "crescendo-com-amor",
+      "nomeDoPrograma": "CRESCENDO COM AMOR",
+      "tipoRegistro": "programa",
+      "apresentador": "Nicole Alegretti e Priscilla Miranda",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/crescendo.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/crescendo.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "cultura-em-cena",
+      "nomeDoPrograma": "CULTURA EM CENA",
+      "tipoRegistro": "programa",
+      "apresentador": "Nando Gross",
+      "horario": "Sexta-feira | 21h",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/cultura.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/cultura.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 6,
+      "videosCount": 1,
+      "fontesCount": 4
+    },
+    {
+      "slug": "de-frente-com-o-sagrado",
+      "nomeDoPrograma": "DE FRENTE COM O SAGRADO",
+      "tipoRegistro": "programa",
+      "apresentador": "Aldomiro Nascimento",
+      "horario": "Sábado | 08h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/sagrado.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/sagrado.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 4,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "debate-de-gigantes",
+      "nomeDoPrograma": "DEBATE DE GIGANTES",
+      "tipoRegistro": "programa",
+      "apresentador": "Marcio Lima",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/debategigantes.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/debategigantes.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 11,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "desabafo-final",
+      "nomeDoPrograma": "DESABAFO FINAL",
+      "tipoRegistro": "programa",
+      "apresentador": "Eduardo Kappel",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/desabafo.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/desabafo.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 2,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "descomplicando-o-futuro",
+      "nomeDoPrograma": "DESCOMPLICANDO O FUTURO",
+      "tipoRegistro": "programa",
+      "apresentador": "Patrícia Silva",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/descomplicando.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/descomplicando.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "desmistificando-a-economia",
+      "nomeDoPrograma": "DESMISTIFICANDO A ECONOMIA",
+      "tipoRegistro": "programa",
+      "apresentador": "DIRLENE SILVA",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/desmistificando.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/desmistificando.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 2,
+      "videosCount": 2,
+      "fontesCount": 2
+    },
+    {
+      "slug": "despertando-mulheres",
+      "nomeDoPrograma": "DESPERTANDO MULHERES",
+      "tipoRegistro": "programa",
+      "apresentador": "Andreia Fioravante",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "destinos-e-experiencias",
+      "nomeDoPrograma": "DESTINOS & EXPERIÊNCIAS",
+      "tipoRegistro": "programa",
+      "apresentador": "Vivian Lima",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/vivian.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/vivian.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "dica-de-sexta-na-tv",
+      "nomeDoPrograma": "DICA DE SEXTA NA TV",
+      "tipoRegistro": "programa",
+      "apresentador": "CAMILA PRETTO",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/sextanatv.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/sextanatv.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "dna-empresarial",
+      "nomeDoPrograma": "DNA EMPRESARIAL",
+      "tipoRegistro": "programa",
+      "apresentador": "Rômulo Vargas e Matheus Bulegon",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/dna.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/dna.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "doctor-tv",
+      "nomeDoPrograma": "DOCTOR TV",
+      "tipoRegistro": "programa",
+      "apresentador": "Daniel Machado Dias",
+      "horario": "Sábado | 20h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/doctortv.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/doctortv.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 11,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "dois-olhares",
+      "nomeDoPrograma": "DOIS OLHARES",
+      "tipoRegistro": "programa",
+      "apresentador": "ADRIANA ZANONATO E LUIZ CARLOS PRADO",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/doisolhares.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/doisolhares.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 21,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "dois-pontos",
+      "nomeDoPrograma": "DOIS PONTOS",
+      "tipoRegistro": "programa",
+      "apresentador": "Dani Veissid & Marilia Nonnenmacher",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/doispontos.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/doispontos.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "e-possivel",
+      "nomeDoPrograma": "É POSSÍVEL",
+      "tipoRegistro": "programa",
+      "apresentador": "É Possível",
+      "horario": "Quinta-feira | 09h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "em-evidencia",
+      "nomeDoPrograma": "EM EVIDÊNCIA",
+      "tipoRegistro": "programa",
+      "apresentador": "Vivian Lima",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/emevidencia.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/emevidencia.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "em-movimento",
+      "nomeDoPrograma": "EM MOVIMENTO",
+      "tipoRegistro": "programa",
+      "apresentador": "Tamara Mucenic",
+      "horario": "Domingo | 20h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/emmovimento.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/emmovimento.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "emocoes-com-chocolate",
+      "nomeDoPrograma": "EMOÇÕES COM CHOCOLATE",
+      "tipoRegistro": "programa",
+      "apresentador": "Nicole Ferrari",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/emocoes_chocolate.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/emocoes_chocolate.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "empodera",
+      "nomeDoPrograma": "EMPODERA",
+      "tipoRegistro": "programa",
+      "apresentador": "Andreia Miranda",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/empodera.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/empodera.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 14,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "entre-palavras",
+      "nomeDoPrograma": "ENTRE PALAVRAS",
+      "tipoRegistro": "programa",
+      "apresentador": "Ju Ferreira",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/entrepalavras.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/entrepalavras.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "esta-em-pauta",
+      "nomeDoPrograma": "ESTÁ EM PAUTA",
+      "tipoRegistro": "programa",
+      "apresentador": "Jessica Lagunna e Germanna Lopes",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/estaempauta.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/estaempauta.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 12,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "estrelas-na-tv",
+      "nomeDoPrograma": "ESTRELAS NA TV",
+      "tipoRegistro": "programa",
+      "apresentador": "Brenda e Tatiane",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/estrelastv.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/estrelastv.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "faz-sentido",
+      "nomeDoPrograma": "FAZ SENTIDO",
+      "tipoRegistro": "programa",
+      "apresentador": "Ingrid Santana e Martin Guedes",
+      "horario": "Por temporadas",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/fazsentido.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/fazsentido.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "fio-a-fio",
+      "nomeDoPrograma": "FIO A FIO",
+      "tipoRegistro": "programa",
+      "apresentador": "Diego Albernás",
+      "horario": "Mensal | 55 min",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/fioafio.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/fioafio.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 11,
+      "imagensCount": 3,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "fitsou",
+      "nomeDoPrograma": "FITSOU",
+      "tipoRegistro": "programa",
+      "apresentador": "GLENDA DELANHESE",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/fitsou.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/fitsou.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "fora-da-mente",
+      "nomeDoPrograma": "FORA DA MENTE",
+      "tipoRegistro": "programa",
+      "apresentador": "Júlia Gross",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/foradamente.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/foradamente.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "fran-na-real",
+      "nomeDoPrograma": "FRAN NA REAL",
+      "tipoRegistro": "programa",
+      "apresentador": "Fran Bilhava",
+      "horario": "Domingo | 17h",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "gabi-palma-show",
+      "nomeDoPrograma": "GABI PALMA SHOW",
+      "tipoRegistro": "programa",
+      "apresentador": "Gabi Palma",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/gabipalma.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/gabipalma.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "geli-vida-leve",
+      "nomeDoPrograma": "GELI VIDA LEVE",
+      "tipoRegistro": "programa",
+      "apresentador": "Geli",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/geli.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/geli.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "grenal-show",
+      "nomeDoPrograma": "GRENAL SHOW",
+      "tipoRegistro": "programa",
+      "apresentador": "Nando Gross e Farid",
+      "horario": "Segunda a sexta-feira | 13h",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/grenalshow.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/grenalshow.html",
+        "https://www.rsplay.com.br/midia_grenal.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 16,
+      "imagensCount": 4,
+      "videosCount": 0,
+      "fontesCount": 5
+    },
+    {
+      "slug": "higor-antonio",
+      "nomeDoPrograma": "HIGOR ANTONIO",
+      "tipoRegistro": "programa",
+      "apresentador": "Estreia em breve",
+      "horario": "Em breve",
+      "ativoNoCms": false,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "historias-com-sabor",
+      "nomeDoPrograma": "HISTÓRIAS COM SABOR",
+      "tipoRegistro": "programa",
+      "apresentador": "Carina Lentz",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/historias_sabor.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/historias_sabor.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 3,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "hora-da-ideia",
+      "nomeDoPrograma": "HORA DA IDEIA",
+      "tipoRegistro": "programa",
+      "apresentador": "Chandler",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "horizonte-digital",
+      "nomeDoPrograma": "HORIZONTE DIGITAL",
+      "tipoRegistro": "programa",
+      "apresentador": "Márcia Sedrez",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/horizontedigital.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/horizontedigital.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "hype-summit-brasil-2026",
+      "nomeDoPrograma": "HYPE SUMMIT BRASIL — PORTO ALEGRE 2026",
+      "tipoRegistro": "apresentacao_especial",
+      "apresentador": "não informado na fonte",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/apresentacoes/summit.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/apresentacoes/summit.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "insights-de-mercado",
+      "nomeDoPrograma": "INSIGHTS DE MERCADO",
+      "tipoRegistro": "programa",
+      "apresentador": "Glenda Delanhese",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "intimas",
+      "nomeDoPrograma": "ÍNTIMAS",
+      "tipoRegistro": "programa",
+      "apresentador": "Thais Freire",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/intimas.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/intimas.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "jornal-da-gazeta",
+      "nomeDoPrograma": "JORNAL DA GAZETA",
+      "tipoRegistro": "programa",
+      "apresentador": "TV Gazeta",
+      "horario": "Segunda a Sexta | 19h",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "lado-b",
+      "nomeDoPrograma": "LADO B",
+      "tipoRegistro": "programa",
+      "apresentador": "Misael",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/ladob.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/ladob.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 14,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "leo-recebe",
+      "nomeDoPrograma": "LÉO RECEBE",
+      "tipoRegistro": "programa",
+      "apresentador": "Léo da Silva Alves",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/leorecebe.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/leorecebe.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 3,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "like-show",
+      "nomeDoPrograma": "LIKE SHOW",
+      "tipoRegistro": "programa",
+      "apresentador": "Ilsa Mara e Ariska Mel",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/likeshow.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/likeshow.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "livrosofia",
+      "nomeDoPrograma": "LIVROSOFIA",
+      "tipoRegistro": "programa",
+      "apresentador": "Flavia Marchezini",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "luccas-cristiano",
+      "nomeDoPrograma": "LUCCAS CRISTIANO",
+      "tipoRegistro": "programa",
+      "apresentador": "não informado na fonte",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "mae-sem-culpa",
+      "nomeDoPrograma": "MÃE SEM CULPA",
+      "tipoRegistro": "programa",
+      "apresentador": "Dani Jacobsen",
+      "horario": "Quarta | 17h • Sábado | 10h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/maesemculpa.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/maesemculpa.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 15,
+      "videosCount": 1,
+      "fontesCount": 4
+    },
+    {
+      "slug": "marca-texto",
+      "nomeDoPrograma": "MARCA TEXTO",
+      "tipoRegistro": "programa",
+      "apresentador": "Katia Limberger",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/marcatexto.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/marcatexto.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "marcas-em-pauta",
+      "nomeDoPrograma": "MARCAS EM PAUTA",
+      "tipoRegistro": "programa",
+      "apresentador": "RAFAELA VISSOKY",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/marcasempauta.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/marcasempauta.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 3,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "mentes-que-inspiram",
+      "nomeDoPrograma": "MENTES QUE INSPIRAM",
+      "tipoRegistro": "programa",
+      "apresentador": "não informado na fonte",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/mentesinspiram.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/mentesinspiram.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 15,
+      "videosCount": 1,
+      "fontesCount": 2
+    },
+    {
+      "slug": "motor-show",
+      "nomeDoPrograma": "MOTOR SHOW",
+      "tipoRegistro": "programa",
+      "apresentador": "Renato Rossi",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/motorshow.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/motorshow.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 4,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "n-o-l-t-cast",
+      "nomeDoPrograma": "N.O.L.T CAST",
+      "tipoRegistro": "programa",
+      "apresentador": "Ricardo Rizzo",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/noltcast.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/noltcast.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 11,
+      "imagensCount": 13,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "na-vitrine",
+      "nomeDoPrograma": "NA VITRINE",
+      "tipoRegistro": "programa",
+      "apresentador": "Fe Bassi",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/navitrine.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/navitrine.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "negocio-fechado",
+      "nomeDoPrograma": "NEGÓCIO FECHADO",
+      "tipoRegistro": "programa",
+      "apresentador": "Grazi Guaspari",
+      "horario": "Quinta-feira | 21h30",
+      "ativoNoCms": false,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "negocios-em-foco",
+      "nomeDoPrograma": "NEGÓCIOS EM FOCO",
+      "tipoRegistro": "programa",
+      "apresentador": "Michele Castro",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/negociosfoco.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/negociosfoco.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 9,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "network",
+      "nomeDoPrograma": "NETWORK",
+      "tipoRegistro": "programa",
+      "apresentador": "Sérgio Martins",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/network.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/network.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "onze-e-meia",
+      "nomeDoPrograma": "ONZE E MEIA",
+      "tipoRegistro": "programa",
+      "apresentador": "Flávia Portal",
+      "horario": "quinta-feira, às 23h30",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/onzeemeia.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/onzeemeia.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 3,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "ouvir-e-sinonimo-de-vida",
+      "nomeDoPrograma": "OUVIR É SINÔNIMO DE VIDA",
+      "tipoRegistro": "programa",
+      "apresentador": "José Camargo e Pâmela Teixeira",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/ouvir.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/ouvir.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "papo-40-mais",
+      "nomeDoPrograma": "PAPO 40+",
+      "tipoRegistro": "programa",
+      "apresentador": "Aline Gutierres",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/papo40.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/papo40.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 6,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "papo-certo",
+      "nomeDoPrograma": "PAPO CERTO",
+      "tipoRegistro": "programa",
+      "apresentador": "João Custodio",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/papocerto.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/papocerto.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 11,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "papo-de-terapeuta",
+      "nomeDoPrograma": "PAPO DE TERAPEUTA",
+      "tipoRegistro": "programa",
+      "apresentador": "Marco Marzolla",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/terapeuta.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/terapeuta.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "pausa-saudavel",
+      "nomeDoPrograma": "PAUSA SAUDÁVEL",
+      "tipoRegistro": "programa",
+      "apresentador": "Fabiola Mumbach",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "pense-grande",
+      "nomeDoPrograma": "PENSE GRANDE",
+      "tipoRegistro": "programa",
+      "apresentador": "Thiago Nunes",
+      "horario": "Sexta-feira | 21h",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/pense_grande.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/pense_grande.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "ponto-de-encontro",
+      "nomeDoPrograma": "PONTO DE ENCONTRO",
+      "tipoRegistro": "programa",
+      "apresentador": "Marcelo Vaz e Thyago Maino",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "ponto-de-virada",
+      "nomeDoPrograma": "PONTO DE VIRADA",
+      "tipoRegistro": "programa",
+      "apresentador": "Tati Ferreira",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/pontovirada.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/pontovirada.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "previsao-do-tempo",
+      "nomeDoPrograma": "PREVISÃO DO TEMPO",
+      "tipoRegistro": "programa",
+      "apresentador": "Paloma de Oliveira",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "radar-ambiental-360",
+      "nomeDoPrograma": "RADAR AMBIENTAL 360",
+      "tipoRegistro": "programa",
+      "apresentador": "JOSIANE MARTINELLO",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/radarambiental360.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/radarambiental360.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 6,
+      "imagensCount": 9,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "raiz-cast-pro",
+      "nomeDoPrograma": "RAIZ CAST PRO",
+      "tipoRegistro": "programa",
+      "apresentador": "Rodrigo Correa",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/raizcastpro.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/raizcastpro.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "reprograme-se",
+      "nomeDoPrograma": "REPROGRAME-SE",
+      "tipoRegistro": "programa",
+      "apresentador": "Mãe Colorida",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/reprogramese_mae_colorida.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/reprogramese_mae_colorida.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 12,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "rs-play-business",
+      "nomeDoPrograma": "RS PLAY BUSINESS",
+      "tipoRegistro": "programa",
+      "apresentador": "Melissa Oliveira",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/rsplaybusiness.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/rsplaybusiness.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 7,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "rsplay-divulgacao-turismo-rs",
+      "nomeDoPrograma": "PROJETO DIVULGAÇÃO DO TURISMO DO RIO GRANDE DO SUL",
+      "tipoRegistro": "apresentacao_especial",
+      "apresentador": "não informado na fonte",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/apresentacoes/turismo.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/apresentacoes/turismo.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "rsplay-news",
+      "nomeDoPrograma": "RSPLAY NEWS",
+      "tipoRegistro": "programa",
+      "apresentador": "Angelita Jolin",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "rsplay-reality-shows",
+      "nomeDoPrograma": "RSPLAY TV & TVSPLAY — REALITY SHOWS",
+      "tipoRegistro": "apresentacao_especial",
+      "apresentador": "não informado na fonte",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/apresentacoes/reality.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/apresentacoes/reality.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 15,
+      "imagensCount": 11,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "rsplay-serra-gaucha-nba-park",
+      "nomeDoPrograma": "RSPLAY SERRA GAÚCHA + NBA PARK",
+      "tipoRegistro": "apresentacao_especial",
+      "apresentador": "não informado na fonte",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/apresentacoes/nba_park.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 16,
+      "videosCount": 1,
+      "fontesCount": 1
+    },
+    {
+      "slug": "rsplay-sports",
+      "nomeDoPrograma": "RSPLAY SPORTS",
+      "tipoRegistro": "programa",
+      "apresentador": "Rafael Rimoliv",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": "https://www.rsplay.com.br/rsplaysports.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/rsplaysports.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 7,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "saude-da-coluna",
+      "nomeDoPrograma": "SAÚDE DA COLUNA",
+      "tipoRegistro": "programa",
+      "apresentador": "Cláudio Falcão",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/saudecoluna.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/saudecoluna.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 10,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "sem-roteiro",
+      "nomeDoPrograma": "SEM ROTEIRO",
+      "tipoRegistro": "programa",
+      "apresentador": "LÚCIA ANDRADE",
+      "horario": "Em breve",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/semroteiro.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/semroteiro.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 18,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "sintonize-com-voce",
+      "nomeDoPrograma": "SINTONIZE COM VOCÊ",
+      "tipoRegistro": "programa",
+      "apresentador": "Marco Marzolla e Barbara",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/sintonize.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/sintonize.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 5,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "sports-play",
+      "nomeDoPrograma": "SPORTS PLAY — A CASA DO ESPORTE GAÚCHO",
+      "tipoRegistro": "programa",
+      "apresentador": "não informado na fonte",
+      "horario": "não informado na fonte",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/sportsplay.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/sportsplay.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 16,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "stalkeando-com-kym",
+      "nomeDoPrograma": "STALKEANDO COM KYM",
+      "tipoRegistro": "programa",
+      "apresentador": "Kym",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "tendencias-que-marcam",
+      "nomeDoPrograma": "TENDÊNCIAS QUE MARCAM",
+      "tipoRegistro": "programa",
+      "apresentador": "Camila Marques",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/tendencias.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/tendencias.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "tia-carmem",
+      "nomeDoPrograma": "TIA CARMEM",
+      "tipoRegistro": "programa",
+      "apresentador": "Soraia Maria Rosso",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "tudo-de-bom",
+      "nomeDoPrograma": "TUDO DE BOM",
+      "tipoRegistro": "programa",
+      "apresentador": "Rose do Erre",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/tdb.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/tdb.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 8,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "um-papo-com-a-comadre",
+      "nomeDoPrograma": "UM PAPO COM A COMADRE",
+      "tipoRegistro": "programa",
+      "apresentador": "Comadre Adriana",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/comadre.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/comadre.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 8,
+      "imagensCount": 7,
+      "videosCount": 0,
+      "fontesCount": 2
+    },
+    {
+      "slug": "universo-imobiliario",
+      "nomeDoPrograma": "UNIVERSO IMOBILIÁRIO",
+      "tipoRegistro": "programa",
+      "apresentador": "Ingrid Reis",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 1
+    },
+    {
+      "slug": "vida-conecta",
+      "nomeDoPrograma": "VIDA CONECTA",
+      "tipoRegistro": "programa",
+      "apresentador": "Thaiane Estauber",
+      "horario": "Consulte a programação",
+      "ativoNoCms": false,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "vidas-e-direitos",
+      "nomeDoPrograma": "VIDAS & DIREITOS",
+      "tipoRegistro": "programa",
+      "apresentador": "Lussana Pfeil",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/vidasdireitos.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/vidasdireitos.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 9,
+      "imagensCount": 23,
+      "videosCount": 0,
+      "fontesCount": 4
+    },
+    {
+      "slug": "virando-o-jogo",
+      "nomeDoPrograma": "VIRANDO O JOGO",
+      "tipoRegistro": "programa",
+      "apresentador": "Barbosa Junior",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": null,
+      "midiaKitUrls": [],
+      "midiaKitStatusHttp": null,
+      "midiaKitCapturado": false,
+      "secoesExtraidas": 0,
+      "imagensCount": 1,
+      "videosCount": 0,
+      "fontesCount": 3
+    },
+    {
+      "slug": "yoyo-show",
+      "nomeDoPrograma": "YOYO SHOW",
+      "tipoRegistro": "programa",
+      "apresentador": "Yolanda Panda",
+      "horario": "Consulte a programação",
+      "ativoNoCms": true,
+      "midiaKitUrl": "https://www.rsplay.com.br/yoyo.html",
+      "midiaKitUrls": [
+        "https://www.rsplay.com.br/yoyo.html"
+      ],
+      "midiaKitStatusHttp": 200,
+      "midiaKitCapturado": true,
+      "secoesExtraidas": 7,
+      "imagensCount": 11,
+      "videosCount": 0,
+      "fontesCount": 3
+    }
+  ]
+}

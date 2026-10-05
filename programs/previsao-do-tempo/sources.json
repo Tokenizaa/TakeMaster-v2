@@ -1,0 +1,50 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "PREVISÃO DO TEMPO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"previsao_tempo\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"previsao_tempo\",\"title\":\"PREVISÃO DO TEMPO\",\"host\":\"Paloma de Oliveira\",\"description\":\"Informações atualizadas sobre o clima e o tempo para você se planejar.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/previsao-do-tempo.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"\",\"mediaKitFile\":\"\",\"tags\":[\"Clima\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "PREVISÃO DO TEMPO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"previsao_tempo\",\"title\":\"PREVISÃO DO TEMPO\",\"host\":\"Paloma de Oliveira\",\"description\":\"Informações atualizadas sobre o clima e o tempo para você se planejar.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/previsao-do-tempo.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "PREVISÃO DO TEMPO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"previsao_tempo\",\"title\":\"PREVISÃO DO TEMPO\",\"host\":\"Paloma de Oliveira\",\"description\":\"Informações atualizadas sobre o clima e o tempo para você se planejar.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://rsplay.com.br/imgmidia/previsao-do-tempo.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  }
+]

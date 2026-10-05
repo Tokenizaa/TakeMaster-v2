@@ -591,3 +591,114 @@ export interface StandardizedApiError {
   details?: string[];
   requestId?: string;
 }
+
+// --- PROGRAM IDENTITY & PAUTAS CURATION LAYER (RS PLAY KNOWLEDGE BASE) ---
+
+export interface ProgramKnowledgeSource {
+  urlOriginal: string;
+  urlCanonica: string;
+  tituloDaPagina: string;
+  tipoDePagina: string;
+  statusHttp: number;
+  dataHoraScrape: string;
+  trechosCount: number;
+  resumoTrecho?: string;
+}
+
+export interface ProgramKnowledgeSummary {
+  slug: string;
+  showId?: string;
+  foundInKnowledgeBase: boolean;
+  coverageLevel: 'completa' | 'parcial' | 'cadastro_interno';
+  coverageLabel: string;
+  nome: string;
+  apresentador: string;
+  descricao: string;
+  proposta: string;
+  conceito: string;
+  publico: string;
+  temasPrincipais: string[];
+  quadros: string[];
+  formato: string;
+  duracao: string;
+  horario: string;
+  canalPlataforma: string;
+  caracteristicasEditoriais: string[];
+  informacoesComerciais: string[];
+  redesSociais: string[];
+  imagensCount: number;
+  secoesExtraidasCount: number;
+  fontes: ProgramKnowledgeSource[];
+  editorialSynthesis: ProgramEditorialIdentity;
+}
+
+export interface ProgramEditorialIdentity {
+  essencia: string;
+  publico: string;
+  tom: string;
+  temas: string[];
+  formatos: string[];
+  forcas: string[];
+  abordagens_recomendadas: string[];
+  abordagens_a_evitar: string[];
+  diferenciais: string[];
+  fontes: ProgramKnowledgeSource[];
+  modelUsed?: string;
+  usedFallback?: boolean;
+  generatedAt?: string;
+}
+
+export type EditorialFitLevel = 'alto' | 'medio' | 'baixo';
+
+export interface ProgramPitchSuggestion {
+  score: number;
+  fit: EditorialFitLevel;
+  reason: string;
+  angle: string;
+  suggestedGuest: string;
+  questions: string[];
+  title: string;
+  hook: string;
+}
+
+export interface ProgramPitchRequestInput {
+  prompt?: string;
+  tema?: string;
+  noticia?: string;
+  convidado?: string;
+  acontecimento?: string;
+  produto?: string;
+  cidade?: string;
+}
+
+export interface ProgramPitchCurationResponse {
+  showId: string;
+  showTitle: string;
+  slug: string;
+  queryUsed: string;
+  pautas: ProgramPitchSuggestion[];
+  fontes: ProgramKnowledgeSource[];
+  modelUsed: string;
+  usedFallback: boolean;
+  generatedAt: string;
+}
+
+export interface SaaSRegistrationPayload {
+  name: string;
+  email: string;
+  loginCode: string;
+  jobTitle?: string;
+  role?: OrganizationRole;
+  showMode: 'existing' | 'new' | 'knowledge_base';
+  existingShowId?: string;
+  knowledgeBaseSlug?: string;
+  newShowTitle?: string;
+  newShowHost?: string;
+  newShowFormat?: ShowFormat;
+  planId: SubscriptionPlanId;
+  paymentMethodType: PaymentMethodType;
+  paymentMethodBrand?: string;
+  paymentMethodLast4?: string;
+  autoRenew?: boolean;
+}
+

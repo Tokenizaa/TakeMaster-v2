@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "HORA DA IDEIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1782236957252\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1782236957252\",\"title\":\"HORA DA IDEIA\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"Chandler\",\"description\":\"\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/horadaideia-20260623145006-2a2dbe3a.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"\",\"mediaKitFile\":\"\",\"tags\":[\"Variedades\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":false,\"showOnIndex\":false,\"showOnMediakit2026\":false,\"showInMenus\":false,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  }
+]

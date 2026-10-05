@@ -1,0 +1,226 @@
+{
+  "slug": "consumidor-rs",
+  "idOriginalCms": "16",
+  "tipoRegistro": "programa",
+  "ativoNoCms": true,
+  "midiaKitUrl": "https://www.rsplay.com.br/consumidor.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/consumidor.html"
+  ],
+  "midiaKitStatusHttp": 200,
+  "midiaKitCapturadoComSucesso": true,
+  "nomeDoPrograma": "CONSUMIDOR RS",
+  "titulo": "Mídia Kit Oficial — Consumidor RS",
+  "subtitulo": "não informado na fonte",
+  "descricao": "Programa de serviço sobre consumo, saúde e direitos.",
+  "propostaEditorial": "[Fernanda Appel] A jornalista e comunicadora Fernanda Appel é a voz da defesa dos direitos e interesses do cidadão gaúcho. Com credibilidade inquestionável, traduz informações complexas sobre consumo, saúde e cidadania em conteúdo direto e acessível para o público. No ar ininterruptamente há quase três décadas, o Consumidor RS não é apenas um programa de televisão, mas uma ferramenta de utilidade pública consolidada. Nascido para educar, informar e promover a comunicação entre empresas e cidadãos.\n\n[O Formato do Programa] \"Direitos do consumidor, saúde, negócios e utilidade pública em um só lugar.\" Jornalismo & Utilidade Pública Entrevistas, Reportagens & Mediação 27 Anos de Continuidade Simultânea para o RS e Portal Digital",
+  "conceito": "não informado na fonte",
+  "publico": "não informado na fonte",
+  "apresentador": "Fernanda Appel — [Fernanda Appel] A jornalista e comunicadora Fernanda Appel é a voz da defesa dos direitos e interesses do cidadão gaúcho. Com credibilidade inquestionável, traduz informações complexas sobre consumo, saúde e cidadania em conteúdo direto e acessível para o público. No ar ininterruptamente há quase três décadas, o Consumidor RS não é apenas um programa de televisão, mas uma ferramenta de utilidade pública consolidada. Nascido para educar, informar e promover a comunicação entre empresas e cidadãos.",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": [
+    "Cidadania"
+  ],
+  "quadros": "não informado na fonte",
+  "formato": "[O Formato do Programa] \"Direitos do consumidor, saúde, negócios e utilidade pública em um só lugar.\" Jornalismo & Utilidade Pública Entrevistas, Reportagens & Mediação 27 Anos de Continuidade Simultânea para o RS e Portal Digital",
+  "duracao": "não informado na fonte",
+  "periodicidade": "Terça-feira | 21h30",
+  "horario": "Terça-feira | 21h30",
+  "canalPlataforma": "Claro TV+ (Canal 524) • Ecossistema RS Play / Streaming • YouTube • Instagram • TikTok",
+  "informacoesComerciais": [
+    "[Alcance e Performance] Audiência multiplataforma sólida, com forte engajamento e retenção. 14.388 Milhões Alcance total da emissora multiplataforma 16M Acessos Plataforma TVSPLAY 2M Alcance Claro TV+ (Canal 524) Dados da Plataforma 1,2M+ Visualizações 19K Inscritos @rsplaydigital +5.0M Alcance 163K Interações 784K 48K Curtidas",
+    "[Marcas que Confiam] Um programa apoiado pelos maiores players e entidades de diversos setores da economia do Rio Grande do Sul."
+  ],
+  "diferenciais": "não informado na fonte",
+  "contatos": [
+    "E-mail: contato@consumidorrs.com.br"
+  ],
+  "redesSociais": [
+    "@rsplaydigital",
+    "@consumidorrs"
+  ],
+  "links": [
+    "https://www.rsplay.com.br/consumidor.html",
+    "https://consumidorrs.com.br/"
+  ],
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/assets/uploads/consumidor-20260806160618-3ab2faff.png",
+    "https://www.rsplay.com.br/imgmidia/consumidor.jpg",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor6.png",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor1.png",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor2.png",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor3.png",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor4.png",
+    "https://www.rsplay.com.br/img/mediakit/consumidor/consumidor5.png"
+  ],
+  "textosPromocionais": [
+    "Mídia Kit Oficial",
+    "Com Fernanda Appel",
+    "Claro TV (Canal 524) • RS PLAY TV"
+  ],
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [
+    {
+      "indice": 1,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 1: CAPA / HERO",
+      "tituloSecao": "CONSUMIDOR ·RS",
+      "subtitulos": [],
+      "paragrafos": [
+        "Mídia Kit Oficial",
+        "Com Fernanda Appel",
+        "Claro TV (Canal 524) • RS PLAY TV"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Mídia Kit Oficial\nCONSUMIDOR ·RS\nCom Fernanda Appel\nClaro TV (Canal 524) • RS PLAY TV\nInformação\nEducação\nComunicação"
+    },
+    {
+      "indice": 2,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 2: SOBRE OS APRESENTADORES E HISTÓRIA DO PROGRAMA",
+      "tituloSecao": "Fernanda Appel",
+      "subtitulos": [
+        "27 Anos de História"
+      ],
+      "paragrafos": [
+        "A jornalista e comunicadora Fernanda Appel é a voz da defesa dos direitos e interesses do cidadão gaúcho. Com credibilidade inquestionável, traduz informações complexas sobre consumo, saúde e cidadania em conteúdo direto e acessível para o público.",
+        "No ar ininterruptamente há quase três décadas, o Consumidor RS não é apenas um programa de televisão, mas uma ferramenta de utilidade pública consolidada. Nascido para educar, informar e promover a comunicação entre empresas e cidadãos."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Fernanda Appel\nA Apresentadora\nFernanda Appel\nA jornalista e comunicadora Fernanda Appel é a voz da defesa dos direitos e interesses do cidadão gaúcho. Com credibilidade inquestionável, traduz informações complexas sobre consumo, saúde e cidadania em conteúdo direto e acessível para o público.\n27 Anos de História\nNo ar ininterruptamente há quase três décadas, o Consumidor RS não é apenas um programa de televisão, mas uma ferramenta de utilidade pública consolidada. Nascido para educar, informar e promover a comunicação entre empresas e cidadãos.\nCredibilidade\nTradição na TV Gaúcha\nMediação Ativa\nResolução de Conflitos"
+    },
+    {
+      "indice": 3,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 3: FICHA TÉCNICA E FORMATO",
+      "tituloSecao": "O Formato do Programa",
+      "subtitulos": [
+        "Gênero",
+        "Estilo",
+        "Histórico",
+        "Transmissão"
+      ],
+      "paragrafos": [
+        "\"Direitos do consumidor, saúde, negócios e utilidade pública em um só lugar.\"",
+        "Jornalismo & Utilidade Pública",
+        "Entrevistas, Reportagens & Mediação",
+        "27 Anos de Continuidade",
+        "Simultânea para o RS e Portal Digital"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "O Formato do Programa\n\"Direitos do consumidor, saúde, negócios e utilidade pública em um só lugar.\"\nGênero\nJornalismo & Utilidade Pública\nEstilo\nEntrevistas, Reportagens & Mediação\nHistórico\n27 Anos de Continuidade\nTransmissão\nSimultânea para o RS e Portal Digital"
+    },
+    {
+      "indice": 4,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 4: ALCANCE E PERFORMANCE",
+      "tituloSecao": "Alcance e Performance",
+      "subtitulos": [
+        "YouTube",
+        "Instagram",
+        "TikTok"
+      ],
+      "paragrafos": [
+        "Audiência multiplataforma sólida, com forte engajamento e retenção.",
+        "14.388 Milhões",
+        "Alcance total da emissora multiplataforma",
+        "16M",
+        "Acessos Plataforma TVSPLAY",
+        "2M",
+        "Alcance Claro TV+ (Canal 524)",
+        "Dados da Plataforma",
+        "1,2M+",
+        "Visualizações",
+        "19K",
+        "Inscritos",
+        "@rsplaydigital",
+        "+5.0M",
+        "Alcance",
+        "163K",
+        "Interações",
+        "784K",
+        "48K",
+        "Curtidas"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Alcance e Performance\nAudiência multiplataforma sólida, com forte engajamento e retenção.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+    },
+    {
+      "indice": 5,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 5: MARCAS QUE CONFIAM",
+      "tituloSecao": "Marcas que Confiam",
+      "subtitulos": [],
+      "paragrafos": [
+        "Um programa apoiado pelos maiores players e entidades de diversos setores da economia do Rio Grande do Sul."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Marcas que Confiam\nUm programa apoiado pelos maiores players e entidades de diversos setores da economia do Rio Grande do Sul.\nZAFFARI / BOURBON\nUNIMED\nPANVEL\nRODOIL\nGBOEX\nLOJAS LEBES\nSINDILOJAS POA\nSULPETRO"
+    },
+    {
+      "indice": 6,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "SLIDE 6: VISUAL IDENTITY / BASTIDORES (MARQUEE CAROUSEL)",
+      "tituloSecao": "Universo Consumidor RS",
+      "subtitulos": [],
+      "paragrafos": [
+        "Bastidores, entrevistas, coberturas e muita informação."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Universo Consumidor RS\nBastidores, entrevistas, coberturas e muita informação."
+    },
+    {
+      "indice": 7,
+      "origemUrl": "https://www.rsplay.com.br/consumidor.html",
+      "identificadorSlideOuSecao": "FOOTER / CONTACT",
+      "tituloSecao": "Faça Parte Deste Legado",
+      "subtitulos": [],
+      "paragrafos": [
+        "Associe sua empresa à credibilidade de 27 anos de história em defesa da informação e educação do cidadão."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Faça Parte Deste Legado\nAssocie sua empresa à credibilidade de 27 anos de história em defesa da informação e educação do cidadão.\nO Portal\n@consumidorrs\nFale Conosco\nCom Fernanda Appel\n•\nClaro TV 524 | RS Play\n•\n© 2026 Consumidor RS"
+    }
+  ],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "temasAbordados",
+      "formato",
+      "periodicidade",
+      "horario",
+      "canalPlataforma",
+      "contatos",
+      "redesSociais",
+      "links",
+      "imagens",
+      "textosPromocionais"
+    ],
+    "informacaoDerivadaDaEstrutura": [
+      "propostaEditorial",
+      "informacoesComerciais"
+    ],
+    "informacaoAusente": [
+      "subtitulo",
+      "conceito",
+      "publico",
+      "especialistasConvidadosRecorrentes",
+      "quadros",
+      "duracao",
+      "diferenciais",
+      "videos",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "https://www.rsplay.com.br/",
+    "https://www.rsplay.com.br/midia2026.html",
+    "https://www.rsplay.com.br/consumidor.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

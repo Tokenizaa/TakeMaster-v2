@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/marcasempauta-20260706122431-1e1fffdf.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "MARCAS EM PAUTA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — MARCAS EM PAUTA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "MARCAS EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/novos/Rafaela%20Vissoky.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "MARCAS EM PAUTA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — MARCAS EM PAUTA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "MARCAS EM PAUTA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/marcasempauta/marcasempauta8.JPG",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/marcasempauta.html",
+    "altText": "Rafaela Vissoky",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "MARCAS EM PAUTA"
+  }
+]

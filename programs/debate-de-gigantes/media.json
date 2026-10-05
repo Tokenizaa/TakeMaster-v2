@@ -1,0 +1,101 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/debategigantes.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "DEBATE DE GIGANTES",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — DEBATE DE GIGANTES",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/logo_gigantes.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "Logo Debate de Gigantes",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante1.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "Márcio Lima",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante2.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante4.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante5.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante6.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante8.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante9.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante7.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gigantes/gigante3.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/debategigantes.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "DEBATE DE GIGANTES"
+  }
+]

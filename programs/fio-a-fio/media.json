@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fioafio/card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "FIO A FIO — com Diego Albernás",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — FIO A FIO",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "FIO A FIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/fioafio/logo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fioafio.html",
+    "altText": "FIO A FIO",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "FIO A FIO"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/glamour/diego.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/fioafio.html",
+    "altText": "Diego Albernás",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "FIO A FIO"
+  }
+]

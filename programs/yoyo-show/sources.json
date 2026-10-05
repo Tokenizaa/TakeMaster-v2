@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "YOYO SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"yoyo_show\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"yoyo_show\",\"title\":\"YOYO SHOW\",\"host\":\"Yolanda Panda\",\"description\":\"Diversão, animação e muito entretenimento com Yolanda Panda.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/Yoyo-Show---Yolanda-Panda.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/yoyo.html\",\"mediaKitFile\":\"yoyo.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Infantil\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "YOYO SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"yoyo_show\",\"title\":\"YOYO SHOW\",\"host\":\"Yolanda Panda\",\"description\":\"Diversão, animação e muito entretenimento com Yolanda Panda.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/Yoyo-Show---Yolanda-Panda.jpg\",\"colorHex\":\"#f97316\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/yoyo.html",
+    "urlCanonica": "https://www.rsplay.com.br/yoyo.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Yoyo Show",
+    "dataHoraScrape": "2026-10-05T02:06:30.551Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "YOYO SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Yoyo",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "Mídia Kit Oficial\nYoyo\nSHOW\nO TALK SHOW SEM FILTRO DA @AYOYOPANDA\nEntretenimento\n•\nCausas Sociais\n•\nAutenticidade\n•\nOpinião"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE A APRESENTADORA E HISTÓRIA DO PROGRAMA — Yolanda Panda (Yoyo)",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "A Apresentadora\nYolanda Panda (Yoyo)\nComunicadora, influenciadora digital e criadora do Yoyocast! e do Yoyo Show . Sua trajetória une arte, comunicação e posicionamento, construindo uma presença marcante baseada na autenticidade e na coragem de abordar temas que muitos evitam discutir.\nSua história começou no teatro, na adolescência, onde desenvolveu habilidade de expressão, presença de palco e forte conexão com o público — sendo inclusive premiada como Melhor Atriz em Canoas . Essa experiência artística reflete hoje em uma comunicação intensa, emocional e impactante.\nNo ambiente digital, Yoyo produz conteúdos que misturam entretenimento, opinião e conscientização. Seus vídeos alcançam milhares de pessoas e se destacam pelo tom verdadeiro, espontâneo e provocador . Além disso, cria estratégias humanizadas para marcas, pois acredita que antes da venda é preciso gerar conexão, confiança e identificação real.\nO Propósito do Programa\nMais do que apenas uma influenciadora, Yoyo transforma vivências em conteúdo e conteúdo em impacto. O Yoyo Show é um espaço ativo, que além do entretenimento, se posiciona ativamente em pautas sociais relevantes.\nDefesa das Mulheres\nProteção Infantojuvenil\nValorização Empreendedora\nCombate à Intolerância"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA E FORMATO — O Formato",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "O Formato\n\"Onde a verdade encontra o microfone. Sem roteiros engessados, apenas conexão.\"\nGênero\nEntretenimento, Opinião & Pautas Sociais\nEstilo\nVideocast dinâmico e Talk Show Sem Filtro\nDuração\n57 Minutos por Episódio\n+ 1 Especial de 2 Horas\nAgenda\nConteúdo Multiplataforma & Cortes Virais"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE VÍDEO E TV (YouTube/TikTok + Emissora) — Distribuição e Audiência",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "Distribuição e Audiência\nAlcance massivo nas redes de vídeo e consolidação na TV e Streaming.\nEMISSORA OFICIAL\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nYoyo Show Videocast\n1,2M+\nVisualizações\n19K\nInscritos\nTikTok\n@ayoyopanda\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: PERFORMANCE INSTAGRAM (Exclusivo) — Impacto no Instagram",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "Impacto no Instagram\nForte engajamento, retenção orgânica e alcance massivo na conta da apresentadora.\nInstagram\n@ayoyopanda\nÚltimos 90 dias (18 Fev - 18 Mai)\n25,1M\nVisualizações\nTotal: 25.120.682\n4,3M\nContas Alcançadas\n+193,6%\nTotal: 4.309.021\nDistribuição de Público\nSeguidores\n49,1%\nNão seguidores\n50,9%\nPor Tipo de Conteúdo\nReels\n68,6%\nStories\n21,7%\nPosts\n9,5%"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: VISUAL IDENTITY (MARQUEE CAROUSEL) — Universo Yoyo Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "Universo Yoyo Show\nEntretenimento, Palco, Luzes e Conexão Real."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — Faça Parte do Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/yoyo.html",
+        "textoOriginal": "Faça Parte do Show\nAssocie sua marca à comunicação sem filtro de Yoyo, gerando conexão, impacto e identificação verdadeira com o público.\n@ayoyopanda\nApresentação: Yolanda Panda\n•\nYoyo Show Videocast\n•\n© 2026"
+      }
+    ]
+  }
+]

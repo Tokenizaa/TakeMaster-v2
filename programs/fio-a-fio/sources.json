@@ -1,0 +1,84 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "FIO A FIO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"glamour_negocios\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"glamour_negocios\",\"title\":\"FIO A FIO\",\"menuTitle\":\"Fio a Fio\",\"kitTitle\":\"Fio a Fio\",\"host\":\"Diego Albernás\",\"description\":\"Beleza, transformação e grandes histórias dos bastidores — com o hair stylist Diego Albernás.\",\"schedule\":\"Mensal | 55 min\",\"image\":\"https://rsplay.com.br/img/mediakit/fioafio/card.jpg\",\"imageAlt\":\"FIO A FIO — com Diego Albernás\",\"bannerImage\":\"\",\"colorHex\":\"#C9A24B\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"fioafio.html\",\"mediaKitFile\":\"fioafio.html\",\"tags\":[\"Beleza\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[],\"novo\":true}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/fioafio.html",
+    "urlCanonica": "https://www.rsplay.com.br/fioafio.html",
+    "tituloDaPagina": "Mídia Kit Oficial — FIO A FIO • com Diego Albernás • RS Play",
+    "dataHoraScrape": "2026-10-05T02:06:30.816Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "FIO A FIO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "===================== CAPA / HERO ===================== — ===================== CAPA / HERO =====================",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\n\"Todo grande momento começa nos bastidores. E todo grande glamour tem uma história para contar.\"\nBeleza •\nTransformação •\nGrandes Histórias\ncom Diego Albernás • RS Play • Claro TV+ Canal 524\nRole"
+      },
+      {
+        "secaoOrigem": "===================== APRESENTADOR ===================== — Diego Albernás",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "O Apresentador\nDiego Albernás\nHair Stylist • Referência em penteados\nDiego Albernás iniciou a carreira em 2001 , dando início a uma longa trajetória para se destacar num mercado que, na época, não tinha tanta tecnologia nem redes de contato.\nDedicou-se desafiando obstáculos e dificuldades para não ser mais um cabeleireiro, e sim um Hair Stylist com um diferencial : criar e elevar a autoestima da mulher em até 5 minutos.\nHoje é autoridade no que entrega, com dedicação e carinho em cada finalização — para ele, criar penteados não é trabalho, é terapia. Reconhecido por cuidar dos cabelos de rainhas, princesas, misses, musas e personalidades ."
+      },
+      {
+        "secaoOrigem": "===================== CONCEITO ===================== — FIO A FIO",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "O Conceito\nFIO A FIO\nUm programa dedicado ao universo da beleza e a todo o empreendedorismo que a envolve — estética, penteados, maquiagens, looks e posicionamento no mercado dos grandes eventos de glamour.\nO grande diferencial é mostrar o que acontece por trás dos cabelos impecáveis que chegam às passarelas, tapetes vermelhos, concursos e grandes produções. O público conhece não apenas o resultado final, mas toda a história que existe por trás dele: a preparação, a escolha do visual, os produtos, a correria, os desafios e as tendências.\n\"Todo grande momento começa nos bastidores. E todo grande glamour tem uma história para contar.\""
+      },
+      {
+        "secaoOrigem": "===================== MUNDO DAS RAINHAS ===================== — O mundo das rainhas, princesas, misses e musas",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Bastidores exclusivos\nO mundo das rainhas, princesas, misses e musas\nDiego mostra como funciona a preparação de uma personalidade para um grande evento — um universo que normalmente fica restrito aos bastidores.\nQuem escolhe o penteado?\nQuanto tempo leva a produção?\nComo é trabalhar sob pressão?\nO que acontece quando algo dá errado?\nComo escolher o cabelo de acordo com o vestido?\nQuais tendências e produtos são indispensáveis?"
+      },
+      {
+        "secaoOrigem": "===================== QUADROS ===================== — Cada episódio, uma história",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Os Quadros\nCada episódio, uma história\n01 Ela passou pelas mãos do Diego Albernás\nO principal quadro de entrevistas. Celebridades, rainhas, misses e musas relembram eventos, penteados marcantes, bastidores e a relação de confiança com o profissional.\n02 Por trás do glamour\nQuadro externo. Diego acompanha a rotina real de preparação para um evento: chegada, escolha, produtos, ajustes de última hora, imprevistos e o resultado final.\n03 Diego faz\nQuadro prático e educativo: penteados, técnicas, tendências e cuidados para festas, concursos e noivas. Forte potencial comercial para marcas profissionais.\n04 Depoimento de glamour\nClientes contam o que aquele momento representou — uma coroação, um casamento, uma premiação. Humaniza o profissional e mostra o impacto do trabalho.\n05 Antes do tapete\nA transformação completa: cabelo + maquiagem + figurino + acessórios. Recebe maquiadores, stylists, designers e fotógrafos que constroem a imagem.\n06 Profissão glamour\nEspaço para outros profissionais da beleza falarem de carreira, mercado, desafios e sucesso — dando visibilidade à classe por trás das grandes produções.\n07 Do sonho ao sucesso\nHistórias de quem começou pequeno e construiu uma carreira de destaque: primeiros clientes, crises, oportunidades e a construção da marca pessoal."
+      },
+      {
+        "secaoOrigem": "===================== CONTEÚDO EXTERNO ===================== — Cada episódio, um cenário",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Conteúdo Externo\nCada episódio, um cenário\nForte presença externa leva o público para dentro dos eventos — uma atmosfera diferente e visualmente rica a cada programa.\nConcursos de beleza\nEventos de misses\nDesfiles\nPremiações\nCasamentos\nEventos sociais\nProduções fotográficas\nSalões de beleza\nEventos de celebridades"
+      },
+      {
+        "secaoOrigem": "===================== ALCANCE DA EMISSORA ===================== — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n15.359 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "===================== GALERIA ===================== — Diego em cena",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Galeria\nDiego em cena"
+      },
+      {
+        "secaoOrigem": "===================== POTENCIAL COMERCIAL ===================== — Forte potencial comercial",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Para a sua marca\nForte potencial comercial\nConectado diretamente ao mercado da beleza, o programa insere a marca de forma natural dentro do conteúdo.\nMarcas que se conectam\nProdutos profissionais\nShampoos e tratamentos\nFinalizadores e fixadores\nSecadores e ferramentas\nChapinhas e modeladores\nCosméticos e maquiagem\nSalões e clínicas de estética\nModa e joalherias\nHotéis e espaços de eventos\nOrganizadores de concursos\nAtivações para patrocinadores\nProduto em destaque — Diego utiliza o produto durante a produção.\nProduto da semana — apresentação de um produto e seus benefícios.\nPenteado patrocinado — produção completa com produtos do parceiro.\nMerchandising — Diego apresenta a marca diretamente ao público.\nAção externa — a marca acompanha Diego num evento de grande visibilidade.\nDesafio de transformação — uma convidada se transforma com produtos do patrocinador.\nConteúdo digital — cortes, Reels, Stories e chamadas para as redes da marca."
+      },
+      {
+        "secaoOrigem": "===================== OBJETIVO ===================== — Visibilidade, alcance e autoridade",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Objetivo do Projeto\nVisibilidade, alcance e autoridade\nAmpliar a imagem e o trabalho de Diego Albernás, consolidando seu posicionamento de autoridade no segmento de penteados e fortalecendo o network dentro do universo da beleza e do glamour. Programa mensal de 55 minutos, com reprises."
+      },
+      {
+        "secaoOrigem": "===================== COTAS / CONTATO ===================== — Associe sua marca à transformação .",
+        "origemDoTrecho": "https://www.rsplay.com.br/fioafio.html",
+        "textoOriginal": "Comercial & Cotas de Parceria\nAssocie sua marca à transformação .\nUm programa sobre beleza, pessoas, carreira e histórias — e o universo que existe por trás de cada grande produção.\ncomercial@rsplay.com.br\nRS Play • FIO A FIO • com Diego Albernás"
+      }
+    ]
+  }
+]

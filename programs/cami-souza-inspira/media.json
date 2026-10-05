@@ -1,0 +1,83 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/inspira---cami-souza.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "CAMI SOUZA INSPIRA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — CAMI SOUZA INSPIRA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "Logo Cami Souza Inspira",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "Cami Souza",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/cami/inspira5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  },
+  {
+    "url": "https://www.youtube.com/@CamiSouzaVidaSaudavel",
+    "tipo": "youtube",
+    "paginaDeOrigem": "https://www.rsplay.com.br/inspiracami.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "Canal / Playlist / Vídeo YouTube",
+    "contexto": "youtube_referencia",
+    "programaRelacionado": "CAMI SOUZA INSPIRA"
+  }
+]

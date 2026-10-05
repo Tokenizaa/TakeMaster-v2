@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "LADO B",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1783343093515\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1783343093515\",\"title\":\"LADO B\",\"menuTitle\":\"\",\"kitTitle\":\"\",\"host\":\"Misael\",\"description\":\"O Lado B nasceu da necessidade de falar sobre um lado da música que poucos tinham coragem de falar. Com a missão de desenvolver músicos e transformar a cena musical. O que começou com um vídeo hoje é um programa de televisão.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/melhorar_imagem_em_estudio_profi_202607061005-20260706100547-cbdcbc82.jpeg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"ladob.html\",\"mediaKitFile\":\"ladob.html\",\"tags\":[\"Música\"],\"badgeText\":\"ESTREIA EM BREVE\",\"showBadge\":true,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/ladob.html",
+    "urlCanonica": "https://www.rsplay.com.br/ladob.html",
+    "tituloDaPagina": "Mídia Kit Oficial — ladoB com Misael Silva",
+    "dataHoraScrape": "2026-10-05T02:06:31.579Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "LADO B",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "Mídia Kit Oficial\nlado B\nCOM MISAEL SILVA\nRS Play • Claro tv+ Canal 524\nMúsica\n•\nCarreira\n•\nReflexões"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: O APRESENTADOR — Misael Silva",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "O Apresentador\nMisael Silva\nMúsico, empreendedor e comunicador.\nMisael Silva dedica-se ao desenvolvimento dos músicos e à transformação da cena musical, conectando quem vive de música a conversas que unem carreira, propósito e crescimento real.\nMúsica\nCarreira\nReflexões"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: SOBRE O PROGRAMA — O Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "O Programa\n\"Verdades que a música precisa ouvir — com respeito e leveza.\"\nO ladoB nasceu da necessidade de falar sobre um lado da música que poucos tinham coragem de abordar — com a missão de desenvolver músicos e transformar a cena musical. O que começou com um vídeo, hoje é um programa de televisão."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: LINHA EDITORIAL & DIRETRIZES — Linha Editorial",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "Conexão & Profissionalismo\nLinha Editorial\nConversas Reais\nCriar um espaço para conversas reais sobre a vida de quem vive de música, abordando temas como carreira, comportamento, profissionalismo e os desafios da profissão.\nConteúdo Multiplataforma\nAlém da televisão, o projeto foi pensado para gerar conteúdo multiplataforma e ampliar essa mensagem através do ambiente digital.\nImpacto Real\nMais do que falar sobre música, o ladoB busca impactar pessoas através de histórias, experiências e reflexões."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: CONSIDERAÇÕES ADICIONAIS — Considerações Adicionais",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "Formato & Dinâmica\nConsiderações Adicionais\nO programa possui cinco quadros fixos e uma entrevista principal, combinando entretenimento, informação e identificação com a audiência.\nAlém da exibição na RS Play, o projeto foi desenvolvido para gerar cortes e conteúdos para as plataformas digitais, ampliando o alcance da mensagem e das marcas associadas ao programa."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: UNIVERSO / CARROSSEL — Universo ladoB",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "Bastidores & Palco\nUniverso ladoB\nGravações, encontros e a energia de quem vive de música."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\nStreaming & Emissora\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos plataforma TVSPlay\n2M\nAlcance Claro tv+ (Canal 524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — FOOTER / CONTATO",
+        "origemDoTrecho": "https://www.rsplay.com.br/ladob.html",
+        "textoOriginal": "lado B\nDesenvolvendo músicos e transformando a cena musical.\nRS PLAY • CANAL 524 DA CLARO\nMisael Silva\n•\nRS Play\n•\nladoB © 2026"
+      }
+    ]
+  }
+]

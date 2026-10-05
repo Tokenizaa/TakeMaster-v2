@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/gabipalma.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "GABI PALMA SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — GABI PALMA SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "Gabi Palma no Digital",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi1.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "Gabi Palma",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi2.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi3.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi4.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi5.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi6.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi7.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi8.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi9.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/gabipalma/gabi10.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/gabipalma.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "GABI PALMA SHOW"
+  }
+]

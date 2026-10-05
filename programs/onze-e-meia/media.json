@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/onzeemeia/onzeemeiacapa.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Onze e Meia — Flávia Portal",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ONZE E MEIA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ONZE E MEIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/novos/Fl%C3%A1via%20Portal.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "Onze e Meia — Flávia Portal",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ONZE E MEIA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ONZE E MEIA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/onzeemeia/onzeemeia13.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/onzeemeia.html",
+    "altText": "Flávia Portal",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ONZE E MEIA"
+  }
+]

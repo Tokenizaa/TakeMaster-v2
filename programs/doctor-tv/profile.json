@@ -1,0 +1,317 @@
+{
+  "slug": "doctor-tv",
+  "idOriginalCms": "20",
+  "tipoRegistro": "programa",
+  "ativoNoCms": true,
+  "midiaKitUrl": "https://www.rsplay.com.br/doctortv.html",
+  "midiaKitUrlsConsolidadas": [
+    "https://www.rsplay.com.br/doctortv.html"
+  ],
+  "midiaKitStatusHttp": 200,
+  "midiaKitCapturadoComSucesso": true,
+  "nomeDoPrograma": "DOCTOR TV",
+  "titulo": "Mídia Kit Oficial — DOCTOR TV com Dr. Daniel Dias Machado",
+  "subtitulo": "não informado na fonte",
+  "descricao": "Saúde, unindo medicina, estética e ciência.",
+  "propostaEditorial": "[Democratização do Conhecimento Científico] O DOCTOR TV é um programa de televisão especializado em saúde, ciência, educação e qualidade de vida, concebido sob os princípios da comunicação científica responsável. O programa atua como uma plataforma de divulgação científica, promovendo debates qualificados sobre temas que impactam diretamente a sociedade. Cada edição é desenvolvida para transformar conteúdos técnicos e científicos em informações acessíveis, compreensíveis e de extrema relevância, estabelecendo conexões permanentes entre universidades, profissionais de saúde e a sociedade civil. Em um cenário marcado pela rápida circulação de dados, o DOCTOR TV surge como um canal conhecido e comprometido com a verdade científica baseada em evidências, fortalecendo a cultura da prevenção, do autocuidado e da cidadania em saúde.\n\n[Sustentabilidade & Valores] \"Um ecossistema ético comprometido com o rigor científico e a verdade.\" Promover educação em saúde abrangente, disseminar conhecimento científico de alto nível e contribuir ativamente para o desenvolvimento de uma sociedade mais consciente e informada. Consolidar-se como uma das mais relevantes e integradoras plataformas brasileiras de divulgação científica, educação em saúde e esclarecimento médico para o público nacional e internacional. Nossa conduta apoia-se firmemente na Ciência de evidências, na Ética profissional, na Credibilidade de fontes acadêmicas, Inovação permanente, Responsabilidade Social, Humanização do cuidado e Transparência absoluta. A marca DOCTOR TV possui licenciamento comercial exclusivo para utilização em todo o território nacional pelo Dr. Daniel Dias Machado, por intermédio da empresa registrada sob o CNPJ nº 58.523.771/0001-43, observadas estritamente todas as disposições legais aplicáveis à propriedade intelectual e ao uso exclusivo de marca do INPI.",
+  "conceito": "não informado na fonte",
+  "publico": "[Dr. Daniel Dias Machado] Cirurgião Bucomaxilofacial • Pesquisador • Conferencista Internacional • Comunicador Com sólida atuação acadêmica e clínica no Brasil e no exterior, dedica-se à integração entre ciência, educação e comunicação em saúde. Sua trajetória reúne ampla experiência clínica e midiática, o que confere uma visão multidisciplinar sobre os desafios contemporâneos da saúde e do desenvolvimento humano.",
+  "apresentador": "Daniel Machado Dias — [Dr. Daniel Dias Machado] Cirurgião Bucomaxilofacial • Pesquisador • Conferencista Internacional • Comunicador Com sólida atuação acadêmica e clínica no Brasil e no exterior, dedica-se à integração entre ciência, educação e comunicação em saúde. Sua trajetória reúne ampla experiência clínica e midiática, o que confere uma visão multidisciplinar sobre os desafios contemporâneos da saúde e do desenvolvimento humano.",
+  "especialistasConvidadosRecorrentes": "não informado na fonte",
+  "temasAbordados": [
+    "Saúde",
+    "Propósito Editorial",
+    "O DOCTOR TV é um programa de televisão especializado em saúde, ciência, educação e qualidade de vida, concebido sob os princípios da comunicação científica responsável. O programa atua como uma plataforma de divulgação científica, promovendo debates qualificados sobre temas que impactam diretamente a sociedade.",
+    "Cada edição é desenvolvida para transformar conteúdos técnicos e científicos em informações acessíveis, compreensíveis e de extrema relevância, estabelecendo conexões permanentes entre universidades, profissionais de saúde e a sociedade civil.",
+    "Em um cenário marcado pela rápida circulação de dados, o DOCTOR TV surge como um canal conhecido e comprometido com a verdade científica baseada em evidências, fortalecendo a cultura da prevenção, do autocuidado e da cidadania em saúde.",
+    "Evidências Científicas",
+    "Cirurgia & Tecnologia",
+    "Saúde Coletiva",
+    "Estilo de Vida Integral",
+    "Saúde Mental & Neuro",
+    "Pesquisa & Desenvolvimento",
+    "RS PLAY — Canal 524 da Claro TV",
+    "\"Formato dinâmico unindo interviews exclusivas, análises técnicas e debates especializados.\"",
+    "Medicina e Odontologia baseadas em rigor acadêmico e credibilidade de fontes primárias.",
+    "Inovações cirúrgicas contemporâneas, robótica médica e novas biotecnologias aplicadas.",
+    "Análise técnica de políticas de saúde, gestão de sistemas e sustentabilidade hospitalar.",
+    "Medicina integrativa, prevenção ativa de doenças crônicas, longevidade e metabolismo humano.",
+    "Debates sobre neurociência clínica, neuroplasticidade, saúde mental contemporânea e emoções.",
+    "O elo vital entre universidades, institutos científicos, mercado tecnológico e sociedade.",
+    "O DOCTOR TV é exibido semanalmente para todo o território nacional. Estreias inéditas todos os sábados das 08h00 às 08h20.",
+    "YouTube",
+    "Instagram",
+    "TikTok",
+    "Sólida audiência com alto índice de credibilidade em ambiente de interesse público [3].",
+    "14.388 Milhões",
+    "Alcance total da emissora multiplataforma",
+    "16M",
+    "Acessos Plataforma TVSPLAY",
+    "2M",
+    "Alcance Claro TV+ (Canal 524)",
+    "Dados da Emissora",
+    "1,2M+",
+    "Visualizações",
+    "19K",
+    "Inscritos",
+    "@rsplaynodigital",
+    "+5.0M",
+    "Alcance",
+    "163K",
+    "Interações",
+    "@rsplaydigital",
+    "784K",
+    "48K",
+    "Curtidas"
+  ],
+  "quadros": "não informado na fonte",
+  "formato": "[Temas & Conteúdo] \"Formato dinâmico unindo interviews exclusivas, análises técnicas e debates especializados.\" Medicina e Odontologia baseadas em rigor acadêmico e credibilidade de fontes primárias. Inovações cirúrgicas contemporâneas, robótica médica e novas biotecnologias aplicadas. Análise técnica de políticas de saúde, gestão de sistemas e sustentabilidade hospitalar. Medicina integrativa, prevenção ativa de doenças crônicas, longevidade e metabolismo humano. Debates sobre neurociência clínica, neuroplasticidade, saúde mental contemporânea e emoções. O elo vital entre universidades, institutos científicos, mercado tecnológico e sociedade. O DOCTOR TV é exibido semanalmente para todo o território nacional. Estreias inéditas todos os sábados das 08h00 às 08h20.",
+  "duracao": "não informado na fonte",
+  "periodicidade": "Sábado | 20h",
+  "horario": "Sábado | 20h",
+  "canalPlataforma": "Claro TV+ (Canal 524) • Ecossistema RS Play / Streaming • YouTube • Instagram • TikTok",
+  "informacoesComerciais": [
+    "[Alcance e Distribuição] Sólida audiência com alto índice de credibilidade em ambiente de interesse público [3]. 14.388 Milhões Alcance total da emissora multiplataforma 16M Acessos Plataforma TVSPLAY 2M Alcance Claro TV+ (Canal 524) Dados da Emissora 1,2M+ Visualizações 19K Inscritos @rsplaynodigital +5.0M Alcance 163K Interações @rsplaydigital 784K 48K Curtidas",
+    "[Ciência que Transforma] Conecte a relevância da sua marca a debates fundamentados de utilidade e saúde pública."
+  ],
+  "diferenciais": "não informado na fonte",
+  "contatos": "não informado na fonte",
+  "redesSociais": [
+    "https://www.instagram.com/doctor.tv.br?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    "https://www.instagram.com/rsplaynodigital/",
+    "@rsplaynodigital",
+    "@rsplaydigital",
+    "@doctor.tv.br"
+  ],
+  "links": [
+    "https://www.rsplay.com.br/doctortv.html",
+    "https://www.instagram.com/doctor.tv.br?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    "https://www.instagram.com/rsplaynodigital/"
+  ],
+  "videos": "não informado na fonte",
+  "imagens": [
+    "https://www.rsplay.com.br/imgmidia/doctor_tv.jpg",
+    "https://doctor.tv.br/wp-content/uploads/2025/09/Doctor-tv-Branco.png",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv8.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv2.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv1.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv3.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv4.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv6.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv7.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv9.jpeg",
+    "https://www.rsplay.com.br/img/mediakit/doctortv/drtv10.jpeg"
+  ],
+  "textosPromocionais": [
+    "Mídia Kit Oficial",
+    "O Programa que Conecta Ciência, Saúde e Sociedade",
+    "\"Ciência que Informa. Conhecimento que Transforma. Saúde que Aproxima Pessoas.\""
+  ],
+  "chamadas": "não informado na fonte",
+  "secoesDoMidiaKit": [
+    {
+      "indice": 1,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 1: CAPA / HERO",
+      "tituloSecao": "SLIDE 1: CAPA / HERO",
+      "subtitulos": [],
+      "paragrafos": [
+        "Mídia Kit Oficial",
+        "O Programa que Conecta Ciência, Saúde e Sociedade",
+        "\"Ciência que Informa. Conhecimento que Transforma. Saúde que Aproxima Pessoas.\""
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Mídia Kit Oficial\nO Programa que Conecta Ciência, Saúde e Sociedade\n\"Ciência que Informa. Conhecimento que Transforma. Saúde que Aproxima Pessoas.\"\nCiência\n•\nSaúde Pública\n•\nEducação Médica\n•\nTecnologia"
+    },
+    {
+      "indice": 2,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 2: O PROGRAMA & PROPÓSITO EDITORIAL",
+      "tituloSecao": "Democratização do Conhecimento Científico",
+      "subtitulos": [
+        "Propósito Editorial"
+      ],
+      "paragrafos": [
+        "O DOCTOR TV é um programa de televisão especializado em saúde, ciência, educação e qualidade de vida, concebido sob os princípios da comunicação científica responsável. O programa atua como uma plataforma de divulgação científica, promovendo debates qualificados sobre temas que impactam diretamente a sociedade.",
+        "Cada edição é desenvolvida para transformar conteúdos técnicos e científicos em informações acessíveis, compreensíveis e de extrema relevância, estabelecendo conexões permanentes entre universidades, profissionais de saúde e a sociedade civil.",
+        "Em um cenário marcado pela rápida circulação de dados, o DOCTOR TV surge como um canal conhecido e comprometido com a verdade científica baseada em evidências, fortalecendo a cultura da prevenção, do autocuidado e da cidadania em saúde."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "O Programa\nDemocratização do\nConhecimento Científico\nO DOCTOR TV é um programa de televisão especializado em saúde, ciência, educação e qualidade de vida, concebido sob os princípios da comunicação científica responsável. O programa atua como uma plataforma de divulgação científica, promovendo debates qualificados sobre temas que impactam diretamente a sociedade.\nCada edição é desenvolvida para transformar conteúdos técnicos e científicos em informações acessíveis, compreensíveis e de extrema relevância, estabelecendo conexões permanentes entre universidades, profissionais de saúde e a sociedade civil.\nPropósito Editorial\nEm um cenário marcado pela rápida circulação de dados, o DOCTOR TV surge como um canal conhecido e comprometido com a verdade científica baseada em evidências, fortalecendo a cultura da prevenção, do autocuidado e da cidadania em saúde."
+    },
+    {
+      "indice": 3,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 3: O APRESENTADOR (SEGUNDA FOTO DE PERFIL / AVATAR)",
+      "tituloSecao": "Dr. Daniel Dias Machado",
+      "subtitulos": [
+        "Formação Acadêmica Internacional"
+      ],
+      "paragrafos": [
+        "Cirurgião Bucomaxilofacial • Pesquisador • Conferencista Internacional • Comunicador",
+        "Com sólida atuação acadêmica e clínica no Brasil e no exterior, dedica-se à integração entre ciência, educação e comunicação em saúde. Sua trajetória reúne ampla experiência clínica e midiática, o que confere uma visão multidisciplinar sobre os desafios contemporâneos da saúde e do desenvolvimento humano."
+      ],
+      "itensLista": [
+        "● Mestre em Cirurgia de Cabeça e Pescoço",
+        "● Mestrando em DTM e Dor Orofacial",
+        "● Pós-Graduado em Cirurgia Bucomaxilofacial",
+        "● Pós-Graduado em Harmonização Orofacial Cirúrgica",
+        "● Pós-Graduado em Cirurgia Dermatológica",
+        "● Pós-Graduado em Medicina Integrativa (Suíça)",
+        "● Pós-Graduado em Ozonioterapia (Itália)",
+        "● Especialista em Sedação Consciente (Óxido Nitroso)",
+        "● Pesquisador em Neurociência",
+        "● Pesquisador em Medicina do Estilo de Vida"
+      ],
+      "textoOriginalLimpo": "Apresentador & Cientista\nDr. Daniel Dias Machado\nCirurgião Bucomaxilofacial • Pesquisador • Conferencista Internacional • Comunicador\nCom sólida atuação acadêmica e clínica no Brasil e no exterior, dedica-se à integração entre ciência, educação e comunicação em saúde. Sua trajetória reúne ampla experiência clínica e midiática, o que confere uma visão multidisciplinar sobre os desafios contemporâneos da saúde e do desenvolvimento humano.\nFormação Acadêmica Internacional\n● Mestre em Cirurgia de Cabeça e Pescoço\n● Mestrando em DTM e Dor Orofacial\n● Pós-Graduado em Cirurgia Bucomaxilofacial\n● Pós-Graduado em Harmonização Orofacial Cirúrgica\n● Pós-Graduado em Cirurgia Dermatológica\n● Pós-Graduado em Medicina Integrativa (Suíça)\n● Pós-Graduado em Ozonioterapia (Itália)\n● Especialista em Sedação Consciente (Óxido Nitroso)\n● Pesquisador em Neurociência\n● Pesquisador em Medicina do Estilo de Vida"
+    },
+    {
+      "indice": 4,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 4: TEMAS ABORDADOS & FORMATO",
+      "tituloSecao": "Temas & Conteúdo",
+      "subtitulos": [
+        "Evidências Científicas",
+        "Cirurgia & Tecnologia",
+        "Saúde Coletiva",
+        "Estilo de Vida Integral",
+        "Saúde Mental & Neuro",
+        "Pesquisa & Desenvolvimento",
+        "RS PLAY — Canal 524 da Claro TV"
+      ],
+      "paragrafos": [
+        "\"Formato dinâmico unindo interviews exclusivas, análises técnicas e debates especializados.\"",
+        "Medicina e Odontologia baseadas em rigor acadêmico e credibilidade de fontes primárias.",
+        "Inovações cirúrgicas contemporâneas, robótica médica e novas biotecnologias aplicadas.",
+        "Análise técnica de políticas de saúde, gestão de sistemas e sustentabilidade hospitalar.",
+        "Medicina integrativa, prevenção ativa de doenças crônicas, longevidade e metabolismo humano.",
+        "Debates sobre neurociência clínica, neuroplasticidade, saúde mental contemporânea e emoções.",
+        "O elo vital entre universidades, institutos científicos, mercado tecnológico e sociedade.",
+        "O DOCTOR TV é exibido semanalmente para todo o território nacional. Estreias inéditas todos os sábados das 08h00 às 08h20."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Temas & Conteúdo\n\"Formato dinâmico unindo interviews exclusivas, análises técnicas e debates especializados.\"\nEvidências Científicas\nMedicina e Odontologia baseadas em rigor acadêmico e credibilidade de fontes primárias.\nCirurgia & Tecnologia\nInovações cirúrgicas contemporâneas, robótica médica e novas biotecnologias aplicadas.\nSaúde Coletiva\nAnálise técnica de políticas de saúde, gestão de sistemas e sustentabilidade hospitalar.\nEstilo de Vida Integral\nMedicina integrativa, prevenção ativa de doenças crônicas, longevidade e metabolismo humano.\nSaúde Mental & Neuro\nDebates sobre neurociência clínica, neuroplasticidade, saúde mental contemporânea e emoções.\nPesquisa & Desenvolvimento\nO elo vital entre universidades, institutos científicos, mercado tecnológico e sociedade.\nGrade de Exibição\nRS PLAY — Canal 524 da Claro TV\nO DOCTOR TV é exibido semanalmente para todo o território nacional. Estreias inéditas todos os sábados das 08h00 às 08h20.\nDia\nSábados\nHorário\n08:00 às 08:20"
+    },
+    {
+      "indice": 5,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 5: ALCANCE E ECOSSISTEMA RS PLAY",
+      "tituloSecao": "Alcance e Distribuição",
+      "subtitulos": [
+        "YouTube",
+        "Instagram",
+        "TikTok"
+      ],
+      "paragrafos": [
+        "Sólida audiência com alto índice de credibilidade em ambiente de interesse público [3].",
+        "14.388 Milhões",
+        "Alcance total da emissora multiplataforma",
+        "16M",
+        "Acessos Plataforma TVSPLAY",
+        "2M",
+        "Alcance Claro TV+ (Canal 524)",
+        "Dados da Emissora",
+        "1,2M+",
+        "Visualizações",
+        "19K",
+        "Inscritos",
+        "@rsplaynodigital",
+        "+5.0M",
+        "Alcance",
+        "163K",
+        "Interações",
+        "@rsplaydigital",
+        "784K",
+        "48K",
+        "Curtidas"
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Alcance e Distribuição\nSólida audiência com alto índice de credibilidade em ambiente de interesse público [3].\nECOSSISTEMA RS PLAY\nCanais & Emissoras\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos Plataforma TVSPLAY\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Emissora\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaynodigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+    },
+    {
+      "indice": 6,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 6: MISSÃO, VISÃO, VALORES & PROPRIEDADE INTELECTUAL",
+      "tituloSecao": "Sustentabilidade & Valores",
+      "subtitulos": [
+        "Educar e Disseminar",
+        "Ser Referência",
+        "Valores",
+        "Licenciamento & Proteção Regulatória"
+      ],
+      "paragrafos": [
+        "\"Um ecossistema ético comprometido com o rigor científico e a verdade.\"",
+        "Promover educação em saúde abrangente, disseminar conhecimento científico de alto nível e contribuir ativamente para o desenvolvimento de uma sociedade mais consciente e informada.",
+        "Consolidar-se como uma das mais relevantes e integradoras plataformas brasileiras de divulgação científica, educação em saúde e esclarecimento médico para o público nacional e internacional.",
+        "Nossa conduta apoia-se firmemente na Ciência de evidências, na Ética profissional, na Credibilidade de fontes acadêmicas, Inovação permanente, Responsabilidade Social, Humanização do cuidado e Transparência absoluta.",
+        "A marca DOCTOR TV possui licenciamento comercial exclusivo para utilização em todo o território nacional pelo Dr. Daniel Dias Machado, por intermédio da empresa registrada sob o CNPJ nº 58.523.771/0001-43, observadas estritamente todas as disposições legais aplicáveis à propriedade intelectual e ao uso exclusivo de marca do INPI."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Sustentabilidade & Valores\n\"Um ecossistema ético comprometido com o rigor científico e a verdade.\"\nMissão\nEducar e Disseminar\nPromover educação em saúde abrangente, disseminar conhecimento científico de alto nível e contribuir ativamente para o desenvolvimento de uma sociedade mais consciente e informada.\nVisão\nSer Referência\nConsolidar-se como uma das mais relevantes e integradoras plataformas brasileiras de divulgação científica, educação em saúde e esclarecimento médico para o público nacional e internacional.\nPilares\nValores\nNossa conduta apoia-se firmemente na Ciência de evidências, na Ética profissional, na Credibilidade de fontes acadêmicas, Inovação permanente, Responsabilidade Social, Humanização do cuidado e Transparência absoluta.\nLicenciamento & Proteção Regulatória\nA marca DOCTOR TV possui licenciamento comercial exclusivo para utilização em todo o território nacional pelo Dr. Daniel Dias Machado, por intermédio da empresa registrada sob o CNPJ nº 58.523.771/0001-43, observadas estritamente todas as disposições legais aplicáveis à propriedade intelectual e ao uso exclusivo de marca do INPI."
+    },
+    {
+      "indice": 7,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "SLIDE 7: GALERIA DE FOTOS (CARROSSEL INFINITO COM APENAS IMAGENS REAIS E NOVAS DA CLIENTE - drtv5 removida e drtv9 e drtv10 adicionadas nas repetidas)",
+      "tituloSecao": "Estúdio & Bastidores DOCTOR TV",
+      "subtitulos": [],
+      "paragrafos": [
+        "A ciência unindo histórias, público e tecnologia."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Estúdio & Bastidores\nDOCTOR TV\nA ciência unindo histórias, público e tecnologia."
+    },
+    {
+      "indice": 8,
+      "origemUrl": "https://www.rsplay.com.br/doctortv.html",
+      "identificadorSlideOuSecao": "FOOTER / CONTATO COMERCIAL",
+      "tituloSecao": "Ciência que Transforma",
+      "subtitulos": [],
+      "paragrafos": [
+        "Conecte a relevância da sua marca a debates fundamentados de utilidade e saúde pública."
+      ],
+      "itensLista": [],
+      "textoOriginalLimpo": "Ciência que Transforma\nConecte a relevância da sua marca a debates fundamentados de utilidade e saúde pública.\nPrograma DOCTOR TV\nRS Play — Claro TV+ Canal 524\nResponsável Técnico\nDr. Daniel Dias Machado\n@doctor.tv.br\n@rsplaynodigital\nApresentação: Dr. Daniel Dias Machado\n•\nDOCTOR TV na Televisão\n•\n© 2026"
+    }
+  ],
+  "classificacaoDaInformacao": {
+    "informacaoEncontrada": [
+      "nomeDoPrograma",
+      "titulo",
+      "descricao",
+      "apresentador",
+      "temasAbordados",
+      "formato",
+      "periodicidade",
+      "horario",
+      "canalPlataforma",
+      "redesSociais",
+      "links",
+      "imagens",
+      "textosPromocionais"
+    ],
+    "informacaoDerivadaDaEstrutura": [
+      "propostaEditorial",
+      "publico",
+      "informacoesComerciais"
+    ],
+    "informacaoAusente": [
+      "subtitulo",
+      "conceito",
+      "especialistasConvidadosRecorrentes",
+      "quadros",
+      "duracao",
+      "diferenciais",
+      "contatos",
+      "videos",
+      "chamadas"
+    ]
+  },
+  "fontes": [
+    "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "https://www.rsplay.com.br/",
+    "https://www.rsplay.com.br/midia2026.html",
+    "https://www.rsplay.com.br/doctortv.html"
+  ],
+  "atualizadoEm": "2026-10-05T02:06:26.301Z"
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/sa%C3%BAde-da-coluna---Dr.-Cl%C3%A1udio-Falc%C3%A3o.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "SAÚDE DA COLUNA",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — SAÚDE DA COLUNA",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao2.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "Dr. Cláudio Falcão",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao1.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao3.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao4.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao5.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao6.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao7.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao8.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/falcao/falcao9.jpeg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/saudecoluna.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "SAÚDE DA COLUNA"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CRESCENDO COM AMOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1786040893268\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1786040893268\",\"title\":\"CRESCENDO COM AMOR\",\"menuTitle\":\"CRESCENDO COM AMOR\",\"kitTitle\":\"\",\"host\":\"Nicole Alegretti e Priscilla Miranda\",\"description\":\"Crescendo com Amor reúne duas especialistas em primeira infância para conversar sobre desenvolvimento infantil, alimentação do bebê e maternidade — com informação baseada em evidências e linguagem acessível.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/crescendo_com_amo-20260806152925-78b3a0dd.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"crescendo.html\",\"mediaKitFile\":\"crescendo.html\",\"tags\":[\"Família\"],\"badgeText\":\"ESTREIA EM BREVE\",\"showBadge\":true,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/crescendo.html",
+    "urlCanonica": "https://www.rsplay.com.br/crescendo.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Crescendo com Amor",
+    "dataHoraScrape": "2026-10-05T02:06:31.321Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CRESCENDO COM AMOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "============ SLIDE 1: CAPA ============ — ============ SLIDE 1: CAPA ============",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\n“Informação baseada em evidências, com acolhimento — para famílias e profissionais da saúde.”\nDesenvolvimento Infantil\n♥\nBebês\n♥\nAlimentação\n♥\nMaternidade\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 2: NICOLE ALEGRETTI ============ — Nicole Alegretti, o cuidado que acontece com amor",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "A Apresentadora\nNicole Alegretti, o cuidado que acontece com amor\nFundadora da Com Amor Acontece , clínica especializada em saúde infantil localizada em Porto Alegre. Atua há mais de 15 anos como fisioterapeuta pediátrica, com foco no desenvolvimento infantil, acompanhamento de bebês, prevenção e tratamento de torcicolo congênito , assimetrias cranianas e desenvolvimento motor — sempre por meio de uma abordagem interdisciplinar.\nÉ também idealizadora do projeto Mães que Acontecem , iniciativa voltada ao fortalecimento e à conexão entre mães.\nDedica sua carreira à divulgação de informações baseadas em evidências para famílias e profissionais da saúde.\n15+\nAnos de\nfisioterapia pediátrica\n♥\nFundadora\nCom Amor Acontece\nPOA\nClínica em\nPorto Alegre\n✦\nIdealizadora\nMães que Acontecem"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 3: PRISCILLA MIRANDA ============ — Priscilla Miranda, alimentação como experiência leve",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "A Apresentadora\nPriscilla Miranda, alimentação como experiência leve\nMestre e fonoaudióloga , com mais de 10 anos de experiência no atendimento de dificuldades alimentares infantis. Desde 2020 atua especialmente com bebês, no desenvolvimento da alimentação e das funções orais.\nAcredita que o atendimento humanizado , baseado em evidências científicas , e o cuidado integral fazem a diferença.\nAlém do acolhimento para transformar a alimentação em experiências mais leves para o bebê e sua família.\n10+\nAnos com\nalimentação infantil\nMSc\nMestre e\nfonoaudióloga\n2020\nAtuação\ndedicada a bebês\n✓\nBaseado em\nevidências científicas"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 4: O PROGRAMA / PROPOSTA ============ — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nCrescendo com Amor reúne duas especialistas em primeira infância para conversar sobre desenvolvimento infantil, alimentação do bebê e maternidade — com informação baseada em evidências e linguagem acessível.\nUm espaço de acolhimento para famílias e de atualização para profissionais da saúde, onde o cuidado técnico caminha junto com o olhar humano .\nGênero\nEntrevistas — Saúde Infantil & Maternidade\nApresentação\nNicole Alegretti e Priscilla Miranda\nDuração\n27 minutos\nDistribuição\nInédito 1x/semana (48 ep/ano)\nPúblico\n♥\nMães, pais e famílias com bebês e crianças pequenas — e profissionais da saúde que atuam na primeira infância."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 5: OBJETIVOS ============ — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Crescendo com Amor\nObjetivos\n01\nPosicionamento como autoridade\nConsolidar as apresentadoras como referências em primeira infância .\n02\nCompartilhamento de conhecimentos\nLevar conteúdo técnico ao público com linguagem acessível .\n03\nDivulgação dos serviços\nApresentar os atendimentos e as áreas de atuação de cada especialista.\n04\nExpansão da rede\nAmpliar a rede de relacionamento com colegas, marcas e famílias.\n05\nInformação com evidências\nCombater a desinformação com conteúdo baseado em ciência .\n06\nAcolher quem cuida\nTransformar o cuidado com o bebê em experiências mais leves para toda a família."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 6: TEMAS ============ — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nDesenvolvimento Infantil\nAcompanhamento de Bebês\nAlimentação do Bebê\nFunções Orais\nTorcicolo & Assimetrias\nDesenvolvimento Motor\nMaternidade & Rede de Apoio\nEvidências Científicas"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 7: ALCANCE DA EMISSORA ============ — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\nDados da plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 8: GALERIA ============ — Crescendo com Amor",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Galeria\nCrescendo com Amor"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 9: COTAS & CONTATO ============ — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/crescendo.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a um conteúdo de confiança sobre primeira infância, cuidado e maternidade.\nPrograma + Instagram\nCota MARCA\nInserção qualificada de patrocínio\n♥ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n♥ 1 Reels em Collab no Instagram (Programa + Marca).\n♥ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram\nPatrocinador Oficial de Episódio\nAssociação ao convidado da semana\n♥ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n♥ 1 Postagem no Instagram comunicando o convidado da semana e a marca patrocinadora.\n♥ 1 Sequência de Stories trazendo a marca como patrocinadora oficial do episódio.\nSolicitar Proposta\nExclusividade\nSob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n♥ 1 Programa completo dedicado: o convidado apresenta sua história, marca e propósito.\n♥ 4 Recortes de vídeo em Collab tripla, distribuídos 1x por semana.\n♥ Agradecimento aos patrocinadores nos outros 4 programas do mês .\n♥ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para construir uma parceria com propósito?\n(51) 99910-8548\n♥\nwww.rsplay.com.br\nCrescendo com Amor\n♥\nNicole Alegretti & Priscilla Miranda\n♥\nRS Play — Canal 524 Claro\n♥\n© 2026"
+      }
+    ]
+  }
+]

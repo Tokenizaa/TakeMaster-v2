@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/atividade.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "ATIVIDADE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — ATIVIDADE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "ATIVIDADE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/atividade/atividade2-min.JPG",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/atividade.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ATIVIDADE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/atividade/atividade3-min.JPG",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/atividade.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "ATIVIDADE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/atividade/atividade1-min.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/atividade.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "ATIVIDADE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/atividade/atividade4-min.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/atividade.html",
+    "altText": "não informado na fonte",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "background_visual_secao",
+    "programaRelacionado": "ATIVIDADE"
+  }
+]

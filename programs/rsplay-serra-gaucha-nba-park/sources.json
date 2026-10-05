@@ -1,0 +1,53 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+    "urlCanonica": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+    "tituloDaPagina": "RSPLAY Serra Gaúcha + NBA Park",
+    "dataHoraScrape": "2026-10-05T02:06:28.004Z",
+    "tipoDePagina": "apresentacao_especial",
+    "statusHttp": 200,
+    "programaRelacionado": "RSPLAY SERRA GAÚCHA + NBA PARK",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SECTION #1 — SERRA GAÚCHA",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "+\nSERRA GAÚCHA\nNova era da comunicação televisiva e digital\ndo RS para o mundo\nPROJETO APROVADO"
+      },
+      {
+        "secaoOrigem": "SECTION #2 — VISÃO GERAL",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "01\nVISÃO GERAL\nLançamento da RSPLAY TV como emissora multiplataforma sediada na Serra Gaúcha\nMultiplataforma\nConexão entre televisão tradicional, streaming e redes sociais\nConteúdo Local\nFoco em turismo, cultura, empreendedorismo e entretenimento\nPolo Audiovisual\nIntegração com NBA PARK consolidando Gramado como referência"
+      },
+      {
+        "secaoOrigem": "SECTION #3 — LOCALIZAÇÃO",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "02\nLOCALIZAÇÃO\nSTUDIO RSPLAY / NBA PARK\nGRAMADO - RS\n4K\nResolução\n24/7\nTransmissão\n✓\nInstalação física dentro do NBA PARK\n✓\nCenários digitais com painel de LED\n✓\nEstrutura técnica profissional\n✓\nParcerias hoteleiras para hospedagem"
+      },
+      {
+        "secaoOrigem": "SECTION #4 — EQUIPE PRINCIPAL",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "03\nEQUIPE PRINCIPAL\n📺 RSPLAY NA SERRA GAÚCHA\nConteúdo jornalístico, cultural e entretenimento com foco no dia a dia das cidades da Serra\nRicardo Macchi\n@ricardomacchioficial\nJunior Soares\n@juniornaarte\nMarcela Cipriani\n@marcelacipriani\nNando Gross\n@nandogross\nDaniele Jacobsen\n@danielejacobsen\nDanieli Lira\n@danielilira56\nEliane Davila\n@elianedavila\nAndreia Miranda\n@andreia_bmiranda\nMelissa Oliveira\n@melissaoliveiratv\nBarbara Hocsman\n@barbarahocsman\nJulia Guerra\n@juliaguerra_"
+      },
+      {
+        "secaoOrigem": "SECTION #5 — INFRAESTRUTURA",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "04\nINFRAESTRUTURA\n4\nCâmeras 4K\nHD\nFull HD\n24/7\nAo Vivo\nEquipe Técnica Fixa\nProdução e filmagem profissional dedicada\nÁudio & Iluminação Broadcast\nPadrão profissional de televisão\nMultiplataforma\nTV, streaming e redes sociais integradas"
+      },
+      {
+        "secaoOrigem": "SECTION #6 — OS PROGRAMAS",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "05\nOS PROGRAMAS\n🏀\nNBA PARK TV\nJovem, esportivo, cultural\nAções, bastidores, lifestyle e experiências no NBA PARK\n🗻\nRSPLAY NA SERRA\nAtual e informativo\nPanorama dos acontecimentos e tendências\n🎄\nO NATAL DA SERRA\nEmocional e encantador\nBastidores dos espetáculos e impacto cultural\n🌄\nTURISTANDO\nInspirador, leve e explorador\nVivências reais nos destinos turísticos da Serra\n🏢\nEMPRESAS DE SUCESSO\nEstratégico e inspirador\nHistórias de inovação e crescimento regional\n👠\nDE MULHER PARA MULHERES\nAcolhedor e provocativo\nTemas femininos, autoestima e protagonismo\n🌟\nSERRA EM FOCO\nPoético, sensível e real.\nTrajetórias transformadoras de personagens invisíveis à grande mídia."
+      },
+      {
+        "secaoOrigem": "SECTION #7 — ASSISTA AGORA RSPLAY AO VIVO",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "AO VIVO\nASSISTA AGORA RSPLAY AO VIVO\nSintonize a nova era da comunicação da Serra Gaúcha.\nPara ver este vídeo, por favor, ative o JavaScript e considere atualizar para um navegador que\nsuporta vídeo HTML5"
+      },
+      {
+        "secaoOrigem": "SECTION #8 — RSPLAY + NBA PARK",
+        "origemDoTrecho": "https://www.rsplay.com.br/apresentacoes/nba_park.html",
+        "textoOriginal": "MANIFESTO\nRSPLAY + NBA PARK\nÉ mais do que mídia.\nÉ movimento.\nUma vitrine viva da Serra Gaúcha para o mundo\nComunicação com alma, estratégia com emoção\nTurismo com verdade\nA televisão do futuro é feita aqui,\ncom sotaque local e impacto global.\n+"
+      }
+    ]
+  }
+]

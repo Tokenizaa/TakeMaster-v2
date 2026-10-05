@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CONHEÇA SEU DINHEIRO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"15\",\"title\":\"CONHEÇA SEU DINHEIRO\",\"host\":\"Eduardo Cereja\",\"description\":\"Programa que descomplica o mercado financeiro.\",\"schedule\":\"Em breve\",\"image\":\"https://rsplay.com.br/imgmidia/conheçaseudinheiro.jpg\",\"colorHex\":\"#84cc16\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  }
+]

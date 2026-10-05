@@ -1,0 +1,111 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CONEXÕES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"14\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"14\",\"title\":\"CONEXÕES\",\"host\":\"Rose Mazucco\",\"description\":\"Entrevistas marcantes e cobertura de eventos culturais.\",\"schedule\":\"Quinta-feira | 21h30\",\"image\":\"https://rsplay.com.br/imgmidia/conexoes.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/midiakit_rose.html\",\"mediaKitFile\":\"midiakit_rose.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Cultura\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "CONEXÕES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"14\",\"title\":\"CONEXÕES\",\"host\":\"Rose Mazucco\",\"description\":\"Entrevistas marcantes e cobertura de eventos culturais.\",\"schedule\":\"Quinta-feira | 21h\",\"image\":\"https://rsplay.com.br/imgmidia/conexoes.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CONEXÕES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"14\",\"title\":\"CONEXÕES\",\"host\":\"Rose Mazucco\",\"description\":\"Entrevistas marcantes e cobertura de eventos culturais.\",\"schedule\":\"Quinta-feira | 21h30\",\"image\":\"https://rsplay.com.br/imgmidia/conexoes.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midiakit_rose.html",
+    "urlCanonica": "https://www.rsplay.com.br/midiakit_rose.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Rose Mazuco",
+    "dataHoraScrape": "2026-10-05T02:06:28.762Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CONEXÕES",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Conexões com Rose Mazuco",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Mídia Kit Oficial\nConexões com\nRose Mazuco\nProjeto Especial 2026\nFé\n•\nTurismo\n•\nArte\n•\nPropósito"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE — Sobre Rose Mazuco",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Apresentadora\nSobre\nRose Mazuco\nAtriz, apresentadora e influenciadora digital, Rose Mazuco é reconhecida por seu carisma, credibilidade e elegância na comunicação. À frente do programa “Conexões com Rose Mazuco” , transmitido todas as quintas-feiras, às 21h, pelo canal 524 da Claro TV (RS Play).\nRose conduz entrevistas com personalidades do cinema, turismo, empreendedorismo, moda e cultura, conectando histórias inspiradoras que emocionam e transformam.\nCom atuações em produções audiovisuais e coberturas em eventos nacionais e internacionais — como o Newport Beach Film Fest , Festival de Cinema de Gramado , Festuris , LABRFF em Los Angeles e o UFC Institute em Las Vegas — ela se destaca como uma comunicadora global."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA — O Programa Conexões",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "O Programa\nConexões\nFicha Técnica\nExibição\nRS Play / Claro TV Canal 524\nApresentação\nRose Mazuco\nPeriodicidade\nSemanal, episódios inéditos\nDuração\n30 minutos\nPlataformas Digitais\n@conexoes_programa_\n@rosemazuco\nConexões com Rose Mazuco\nRS Play On Demand\nPúblico-Alvo\nHomens e mulheres interessados em viagens, cultura, fé, entretenimento e lifestyle, com alto poder de consumo.\nRS\nPLAY"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE E PERFORMANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Alcance e Performance\nAudiência multiplataforma sólida da emissora RS Play\nECOSSISTEMA RS PLAY Streaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nApp Smart TV\nCrescimento de 60% ao mês\n678.224\nAcessos & Downloads\nBrasil\nFoco Nacional\n72\nProgramas\nExclusivos\n24h\nProgramação\nIninterrupta\nRedes Sociais Integradas\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nViews\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: ISRAEL 2026 — Conexões na Terra Santa ISRAEL 2026",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Projeto Especial\nConexões na\nTerra Santa\nISRAEL 2026\n\"Um projeto que une fé, emoção e comunicação.\"\nEm parceria com a US Travel Turismo , Rose Mazuco lidera uma viagem especial à Terra Santa, com gravações exclusivas do Conexões nos principais marcos bíblicos de Israel.\nDestaques do Projeto\nEpisódios especiais gravados em Israel\nConteúdo para TV, Instagram, YouTube e RS Play\nParticipação de convidados especiais\nOportunidades de patrocínio e exposição\n2026\nTerra Santa"
+      },
+      {
+        "secaoOrigem": "SLIDE 6: SERVIÇOS — Cobertura de Eventos & Apresentação",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Serviços\nCobertura de Eventos\n& Apresentação\nAlém das gravações do programa, Rose Mazuco realiza cobertura jornalística, apresentação de eventos e mediação de painéis. Com experiência em red carpets, feiras, lançamentos e festivais, Rose oferece presença de palco, carisma e profissionalismo para eventos corporativos, culturais e turísticos.\nMestre de Cerimônias\nApresentação profissional com presença de palco e carisma.\nCoberturas ao Vivo\nEntrevistas e reportagens em feiras, festivais e red carpets.\nCriação de Conteúdo\nReels institucionais e divulgação digital estratégica.\nPresença VIP\nAssociação de imagem e prestígio para marcas."
+      },
+      {
+        "secaoOrigem": "SLIDE 7: COBERTURA NEWPORT — Newport Beach Film Fest",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Destaque Internacional\nNewport Beach\nFilm Fest\nRose Mazuco marcou presença no prestigiado tapete vermelho da Califórnia, levando o nome do Brasil e da RS Play para o cenário mundial.\nRed Carpet Coverage"
+      },
+      {
+        "secaoOrigem": "SLIDE 8: POR QUE PATROCINAR — Por Que Patrocinar?",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Por Que\nPatrocinar?\n01\nVisibilidade Nacional\nAlcance multiplataforma via TV (Claro), streaming (RS Play) e redes sociais.\n02\nPrestígio e Propósito\nAssociação da sua marca a um conteúdo de alta qualidade estética e emocional.\n03\nPúblico Qualificado\nConexão direta com tomadores de decisão e consumidores de lifestyle."
+      },
+      {
+        "secaoOrigem": "SLIDE 9: OPORTUNIDADES — Oportunidades de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Oportunidades de Parceria\nDiamond\nExclusividade Total\n◆ Logo e vinheta (Abertura/Enc.)\n◆ Participação em episódio especial\n◆ Entrevista exclusiva\n◆ Divulgação multiplataforma\nGold\nAlta Visibilidade\n◆ Logo (Abertura/Créditos)\n◆ Menções nas redes sociais\n◆ Marca em cards e Reels\nSilver\nBranding Essencial\n◆ Logo em materiais\n◆ Agradecimento nas redes\n◆ Créditos do episódio\nApoio\nPermuta & Serviços\n◆ Hospedagem e Transporte\n◆ Beleza e Gastronomia\n◆ Divulgação proporcional"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — FOOTER / CONTACT",
+        "origemDoTrecho": "https://www.rsplay.com.br/midiakit_rose.html",
+        "textoOriginal": "Email\nrosemazuco@hotmail.com\nWhatsApp\n(51) 98136-2071\nInstagram\n@rosemazuco\nDisponível em\nRS\nPLAY\n© 2026 Rose Mazuco. Todos os direitos reservados."
+      }
+    ]
+  }
+]

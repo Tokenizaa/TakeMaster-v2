@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "ONZE E MEIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"flavia_portal\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"flavia_portal\",\"title\":\"ONZE E MEIA\",\"host\":\"Flávia Portal\",\"description\":\"Um programa que celebra a cultura, a arte, o entretenimento e as boas histórias.\\n\\nTodas as semanas, Flávia Portal recebe artistas, músicos, empreendedores e personalidades em entrevistas leves, inspiradoras e cheias de conteúdo.\\n\",\"schedule\":\" quinta-feira, às 23h30\",\"image\":\"https://www.rsplay.com.br/img/mediakit/onzeemeia/onzeemeiacapa.jpg\",\"colorHex\":\"#10b981\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"Estreia em breve\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"onzeemeia.html\",\"mediaKitFile\":\"onzeemeia.html\",\"tags\":[\"Entretenimento\"],\"gallery\":[],\"menuTitle\":\"ONZE E MEIA\",\"kitTitle\":\"Onze e Meia\",\"imageAlt\":\"Onze e Meia — Flávia Portal\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "ONZE E MEIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"flavia_portal\",\"title\":\"FLÁVIA PORTAL\",\"host\":\"Estreia em breve\",\"description\":\"Em breve na nossa programação.\",\"schedule\":\"Em breve\",\"image\":\"https://www.rsplay.com.br/img/novos/Fl%C3%A1via%20Portal.jpeg\",\"colorHex\":\"#10b981\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/onzeemeia.html",
+    "urlCanonica": "https://www.rsplay.com.br/onzeemeia.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Onze e Meia",
+    "dataHoraScrape": "2026-10-05T02:06:31.844Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "ONZE E MEIA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "CAPA — Onze e Meia",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "Mídia Kit Oficial • 2026\nOnze e Meia\ncom Flávia Portal\n“Um encontro marcado com a cultura, a arte, o entretenimento e as boas histórias.”\nCultura ✦\nArte ✦\nEntretenimento ✦\nBoas Histórias\nRS Play • Claro TV+ Canal 524"
+      },
+      {
+        "secaoOrigem": "APRESENTADORA — Flávia Portal",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "A Apresentadora\nFlávia Portal\nJornalista, administradora e empresária, mãe do João Filipe, Ana Beatriz e Miguel. Casada e apaixonada pela área comercial e pela comunicação social, orquestra conexões humanas de valor e negócios com sensibilidade e visão.\nÀ frente do Onze e Meia , conduz cada conversa com um equilíbrio raro entre acolhimento, inteligência e autoridade — recebendo artistas, músicos, empreendedores e personalidades em entrevistas leves, inspiradoras e cheias de conteúdo.\nJornalista\nComunicação social\nEmpresária\nVisão comercial\nApresentadora\nConexões de valor\nCultura\nArte e histórias"
+      },
+      {
+        "secaoOrigem": "PROPOSTA + FICHA — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nO Onze e Meia celebra a cultura, a arte, o entretenimento e as boas histórias. Toda semana, Flávia Portal recebe artistas, músicos, empreendedores e personalidades em conversas leves, inspiradoras e cheias de conteúdo.\nUm espaço elegante e acolhedor, feito para revelar a pessoa por trás da obra — com profundidade, bom humor e a chancela de uma curadoria refinada.\nFicha Técnica\nFormato Cultura & entrevistas\nPeriodicidade Inédito 1x/semana\nApresentação Flávia Portal\nExibição RS Play\nCanal 524 · Claro TV+\nPúblico\nAmantes de cultura, arte e entretenimento — um público qualificado, curioso e conectado, que valoriza conversas de verdade e boas histórias."
+      },
+      {
+        "secaoOrigem": "OBJETIVOS — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "Estratégia\nObjetivos\n01\nCelebrar a cultura, a arte e o entretenimento com curadoria refinada.\n02\nDar voz a artistas, músicos, empreendedores e personalidades.\n03\nEntregar entrevistas leves, inspiradoras e cheias de conteúdo.\n04\nCriar conexões humanas de valor entre marcas, público e talentos.\n05\nDivulgar marcas, produtos e projetos com elegância e relevância."
+      },
+      {
+        "secaoOrigem": "ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n15.359 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\n@rsplaydigital\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "GALERIA — Flávia Portal",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "Galeria Flávia Portal"
+      },
+      {
+        "secaoOrigem": "COTAS & CONTATO — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/onzeemeia.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca à cultura, à arte e às grandes conversas do Onze e Meia.\nPrograma + Instagram Cota MARCA\nInserção qualificada de patrocínio\n✦ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n✦ 1 Reels em Collab no Instagram (Programa + Marca).\n✦ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram Patrocinador de Episódio\nAssociação ao convidado da semana\n✦ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n✦ 1 Postagem no Instagram comunicando o convidado da semana e a marca.\n✦ 1 Sequência de Stories com a marca como patrocinadora do episódio.\nSolicitar Proposta\nExclusividade Sob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n✦ 1 Programa completo dedicado à marca, produto ou projeto.\n✦ 4 Recortes de vídeo distribuídos 1x por semana.\n✦ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nVamos construir uma parceria com elegância e propósito?\n(51) 99910-8548\n✦\ncomercial@rsplay.com.br\nOnze e Meia ✦ Flávia Portal ✦ RS Play — Canal 524 Claro ✦ © 2026"
+      }
+    ]
+  }
+]

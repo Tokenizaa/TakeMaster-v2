@@ -1,0 +1,80 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "SAÚDE DA COLUNA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"saude_da_coluna\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"saude_da_coluna\",\"title\":\"SAÚDE DA COLUNA\",\"host\":\"Cláudio Falcão\",\"description\":\"Saúde da coluna vertebral, prevenção e tratamento com o Dr. Cláudio Falcão.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/sa%C3%BAde-da-coluna---Dr.-Cl%C3%A1udio-Falc%C3%A3o.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://www.rsplay.com.br/saudecoluna.html\",\"mediaKitFile\":\"saudecoluna.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Saúde\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "SAÚDE DA COLUNA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"saude_da_coluna\",\"title\":\"SAÚDE DA COLUNA\",\"host\":\"Dr. Cláudio Falcão\",\"description\":\"Saúde da coluna vertebral, prevenção e tratamento com o Dr. Cláudio Falcão.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/sa%C3%BAde-da-coluna---Dr.-Cl%C3%A1udio-Falc%C3%A3o.jpg\",\"colorHex\":\"#0ea5e9\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/saudecoluna.html",
+    "urlCanonica": "https://www.rsplay.com.br/saudecoluna.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Saúde da Coluna com Dr. Cláudio Falcão",
+    "dataHoraScrape": "2026-10-05T02:06:30.298Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "SAÚDE DA COLUNA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Saúde da Coluna",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "Mídia Kit Oficial\nPrograma\nSaúde da Coluna\nCom Dr. Cláudio Falcão\nClaro TV (Canal 524) • RS PLAY\nNeurocirurgia\n•\nPrevenção\n•\nQualidade de Vida"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE O APRESENTADOR — Dr. Cláudio Falcão",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "O Anfitrião\nDr. Cláudio Falcão\nFormado em medicina pela UFPE em 1997, realizou residência médica em neurocirurgia no Hospital da Restauração e é membro da prestigiada North American Spine Society , instituição de referência mundial na área.\nA vontade de ajudar o próximo sempre foi uma constante. Um momento decisivo ocorreu no primeiro período da faculdade de medicina: ao presenciar uma cirurgia, ele ficou profundamente impressionado com a precisão e o impacto do procedimento na vida do paciente.\n\"Quando vi a cirurgia, enlouqueci. Ali percebi que era aquilo que eu queria fazer.\"\nOptou por se dedicar à cirurgia da coluna ao observar o grande número de pacientes jovens que sofriam com dores, impedidos de trabalhar e ter uma vida normal. A coordenação da enfermaria de trauma raquimedular (pacientes paraplégicos e tetraplégicos) fortaleceu ainda mais seu compromisso.\nBuscou aprimoramento internacional, realizando cursos na França, Alemanha e Estados Unidos .\n\"É como lapidar um diamante. Você pega uma base forte e vai aprimorando.\""
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA & FORMATO — A Operação Clínica",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "A Operação Clínica\n\"Conhecimento médico acessível para transformar vidas.\"\nGênero\nSaúde, Prevenção e Medicina\nEstilo\nTalk Show Médico & Entrevistas\nDuração\n60 Minutos (Episódios inéditos)\nAgenda\n3x na semana no Ecossistema RS Play"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: MÉTRICAS E ALCANCE MULTIPLATAFORMA — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "Alcance e Performance\nA vitrine multiplataforma para impactar a vida e a saúde de milhões.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nInstagram\n@drclaudiofalcao\n164K\nSeguidores\n+150K\nVisualizações\n10.000\nInterações Mensais\nWebsite\nAutoridade Digital\nPlataforma centralizada para agendamento, artigos médicos e contato direto com pacientes.\ndoutorclaudiofalcao.com.br\nRS Play Digital\nYouTube & Redes\n1,2M+\nVisualizações\n19K\nInscritos\nForte impacto na base"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: INTEGRAÇÃO DE MARCAS — Oportunidades de Integração",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "Oportunidades de Integração\n\"Associe sua marca à autoridade, prevenção e qualidade de vida.\"\nO Programa Saúde da Coluna atinge um público que valoriza o bem-estar e busca soluções confiáveis para uma vida sem dor e com mais performance.\nErgonomia & Bem-estar\nConexão direta e orgânica para marcas de colchões tecnológicos, cadeiras ergonômicas, travesseiros ortopédicos e mobiliário voltado à saúde postural.\nMedTech & Farmacêutica\nVitrine qualificada para laboratórios, suplementação articular, equipamentos de diagnóstico, próteses e inovações em tratamentos neurocirúrgicos.\nHospitais & Convênios\nFortalecimento de marca para planos de saúde, complexos hospitalares, clínicas de fisioterapia e centros de reabilitação física.\nEsporte & Qualidade de Vida\nIdeal para academias, estúdios de pilates, clínicas de fortalecimento muscular e marcas esportivas focadas em movimento seguro e saudável."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: ATMOSFERA (MARQUEE CAROUSEL) — Excelência Médica",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "Excelência Médica\nCuidado, precisão e tecnologia a serviço da vida."
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTACT — Saúde, Confiança e Audiência",
+        "origemDoTrecho": "https://www.rsplay.com.br/saudecoluna.html",
+        "textoOriginal": "Saúde, Confiança e Audiência\nVincule sua marca ao cuidado especializado e a um estilo de vida mais saudável com o Dr. Cláudio Falcão.\n@drclaudiofalcao\nWebsite Oficial\nSaúde da Coluna\n•\nClaro TV RS Play\n•\nMídia Kit 2026"
+      }
+    ]
+  }
+]

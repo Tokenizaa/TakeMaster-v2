@@ -1,0 +1,18 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CIDADES EM MOVIMENTO",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"cidades_em_movimento\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"cidades_em_movimento\",\"title\":\"CIDADES EM MOVIMENTO\",\"host\":\"Márcio Lima\",\"description\":\"Márcio Lima recebe gestores e representantes de prefeituras para conversas sobre o presente e o futuro dos municípios — crescimento, projetos, investimentos e desenvolvimento.\",\"schedule\":\"Quarta-feira | 12h30\",\"image\":\"https://rsplay.com.br/img/mediakit/cidades_em_movimento/cidades_card.jpg\",\"colorHex\":\"#2E9E5B\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"#\",\"mediaKitFile\":\"#\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":true,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Gestão Pública\"],\"gallery\":[],\"menuTitle\":\"Cidades em Movimento\",\"kitTitle\":\"Cidades em Movimento\",\"imageAlt\":\"\",\"novo\":true}"
+      }
+    ]
+  }
+]

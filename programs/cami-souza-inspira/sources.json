@@ -1,0 +1,75 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMI SOUZA INSPIRA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"inspira\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"inspira\",\"title\":\"CAMI SOUZA INSPIRA\",\"host\":\"Cami Souza\",\"description\":\"Inspiração, propósito e transformação pessoal com Cami Souza.\",\"schedule\":\"quarta | 7h30\",\"image\":\"https://www.rsplay.com.br/imgmidia/inspira---cami-souza.jpg\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"https://rsplay.com.br/inspiracami.html\",\"mediaKitFile\":\"inspiram.html\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"tags\":[\"Inspiração\"],\"gallery\":[],\"menuTitle\":\"CAMI SOUZA INSPIRA\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMI SOUZA INSPIRA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"inspira\",\"title\":\"INSPIRA\",\"host\":\"Cami Souza\",\"description\":\"Inspiração, propósito e transformação pessoal com Cami Souza.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/imgmidia/inspira---cami-souza.jpg\",\"colorHex\":\"#f59e0b\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/inspiracami.html",
+    "urlCanonica": "https://www.rsplay.com.br/inspiracami.html",
+    "tituloDaPagina": "Media Kit Oficial — Cami Souza Inspira",
+    "dataHoraScrape": "2026-10-05T02:06:29.537Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "CAMI SOUZA INSPIRA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — SLIDE 1: CAPA / HERO",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "Media Kit Oficial\nCom Cami Souza\n\"Vida saudável de verdade não é ausência de doença, é uma vida que vale a pena ser vivida, cheia de energia e realização.\"\nEstilo de vida\n•\nSaúde física, mental e espiritual\n•\nAutodesenvolvimento\n•\nRealização"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: SOBRE — Cami Souza, A Voz do Equilíbrio",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "A Idealizadora\nCami Souza, A Voz do Equilíbrio\nApaixonada pelo estilo de vida saudável há mais de 15 anos, Cami se especializou em gastronomia funcional, Ayurveda e análise existencial. Toda essa bagagem a fez compreender como cada escolha do dia tem impacto direto na qualidade da nossa jornada.\nAtravés de uma abordagem acolhedora e sem radicalismo, ela defende que escolhas conscientes e hábitos diários bem construídos são as melhores ferramentas para transformar a nossa vida ."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: FICHA TÉCNICA — Formato do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "Formato do Programa\n\"Conteúdo estruturado de forma simples e objetiva na prática.\"\nGênero\nSaúde & Bem-Estar\nCenário\nSala com elementos da natureza que comunicam aconchego\nDuração\n27 minutos dinâmicos\nDistribuição\nInédito 1x/Semana (48 Ep/Ano)\nConheça o programa\nAssista aos episódios no canal do YouTube da Cami Souza.\n@CamiSouzaVidaSaudavel"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: ALCANCE — Alcance e Performance",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "Alcance e Performance\nConectando marcas com uma audiência genuína e qualificada.\nInstagram — @camisouza.inspira & @eu.camisouza\n300.584\nVisualizações\nRegistrado nos últimos 30 dias\n89,0%\nPúblico Feminino\nComunidade altamente focada em bem-estar\n64,2%\nFaixa de 35 a 54 anos\nDecisores de compra qualificados (40% de 35-44 e 24,2% de 45-54)\n24,1%\nEm Porto Alegre\nPresença consolidada no RS, São Paulo, RJ e Florianópolis\nContas alcançadas: 33.245 na plataforma\n•\nEngajamento constante: mais de 2.181 visitas recentes ao perfil\n•\nPostagens Recentes: Destaques de 15 mil, 9.2 mil e 5.8 mil visualizações\nDistribuição & Rede RS PLAY\nECOSSISTEMA RS PLAY\n14.388 Milhões\nAlcance total multiplataforma\n16M\nAcessos TVSPLAY\n2M\nClaro TV+ (524)\nYouTube\n1,2M+\nVisualizações\nInstagram @rsplay\n+5.0M\nAlcance Mensal\nTikTok\n784K\nVisualizações"
+      },
+      {
+        "secaoOrigem": "SLIDE 5: UNIVERSO — Universo Cami Souza Inspira",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "Universo Cami Souza Inspira\nConhecimento, Histórias de vida, hábitos reais e saúde de verdade."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: COMERCIAL E CONTATO (ATUALIZADO COM AS COTAS OFICIAIS E REDES) — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/inspiracami.html",
+        "textoOriginal": "Oportunidades & Cotas de Parceria\nIncorpore a credibilidade e o posicionamento natural da Cami no planejamento da sua marca.\nMais Completa\nPatrocinador oficial\nCota INSPIRA\nPresença máxima no programa e nas redes\n1 comercial de até 1 minuto antes do início de cada programa (possibilidade da Cami gravar apresentando a marca).\n8 inserções comerciais (logo + slogan) de 30 segundos durante cada programa.\nInserção da marca no post de lançamento de cada episódio como patrocinador oficial.\n2 entrevistas especiais com foco na marca ou empresa patrocinadora (conexão do público com a história da marca).\nEntrega de 8 cortes virais das entrevistas, em formato vertical, para uso nas redes sociais.\n2 postagens no feed (reels) com corte viral das duas entrevistas.\nEntrega do programa completo em formato horizontal após a exibição na emissora.\nPossibilidade de produto da marca no cenário .\nPossibilidade de enviar mimos e brindes para que a apresentadora presenteie os convidados durante as gravações.\n8 Stories por mês no Instagram da apresentadora, divulgando a marca.\n1 publicação no feed por mês no Instagram da apresentadora, reforçando a parceria e a marca.\nInvestimento\n10x R$ 3.500,00\nTemporada 1 — 12 meses · 48 programas\nMês único: R$ 4.200,00\nSem entrevista e cortes exclusivos\nMês único: R$ 7.200,00\nCom 1 entrevista e cortes exclusivos\nContratar Plano\nOferecimento\nCota TRANSFORMA\nPresença consistente com entrevista dedicada\n1 comercial de 30 segundos antes do início de cada programa.\n5 inserções comerciais de 20 segundos durante cada programa.\nInserção da marca no post de lançamento de cada episódio como oferecimento.\n1 entrevista especial com foco na marca ou empresa patrocinadora.\n4 cortes virais da entrevista, em formato vertical, para uso nas redes sociais.\n1 postagem no feed (reels) com corte viral da entrevista.\nEntrega do programa completo em formato horizontal após a exibição na emissora.\nPossibilidade de produto da marca no cenário .\nPossibilidade de enviar mimos e brindes para que a apresentadora presenteie os convidados durante as gravações.\n4 Stories por mês no Instagram da apresentadora, divulgando a marca.\n1 publicação no feed por mês no Instagram da apresentadora.\nInvestimento\n10x R$ 2.200,00\nTemporada 1 — 12 meses · 48 programas\nMês único: R$ 3.500,00\nSem entrevista e cortes exclusivos\nMês único: R$ 6.800,00\nCom entrevista e cortes exclusivos\nContratar Plano\nApoio\nCota IMPACTA\nPresença de marca com investimento enxuto\n3 inserções comerciais (logo + slogan) de 15 segundos durante cada programa.\nInserção da marca no post de lançamento de cada episódio como apoio.\nPossibilidade de enviar mimos e brindes para que a apresentadora presenteie os convidados durante as gravações.\n2 Stories por mês no Instagram da apresentadora, divulgando a marca.\n1 publicação no feed por mês no Instagram da apresentadora.\nInvestimento\n10x R$ 1.000,00\nTemporada 1 — 12 meses · 48 programas\nMês único: R$ 2.200,00\nContratação avulsa\nContratar Plano\nEntre em Contato\nPronto para construir uma parceria de valor e posicionamento autêntico?\n@CamiSouzaVidaSaudavel (Conheça o programa)\ncomercial@rsplay.com.br\n@camisouza.inspira (Programa)\n@eu.camisouza (Pessoal)\nCami Souza Inspira — Media Kit © 2026"
+      }
+    ]
+  }
+]

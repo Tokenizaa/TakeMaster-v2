@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/assets/uploads/likeshow_ilsa_ariska-20260619171905-3fe89cee.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "LIKE SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — LIKE SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "LIKE SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/imgmidia/likeshow.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "LIKE SHOW",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — LIKE SHOW",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "LIKE SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/likeshow/imagem_topo.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/likeshow.html",
+    "altText": "Like Show Destaque",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "LIKE SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/likeshow/ilsa.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/likeshow.html",
+    "altText": "Ilsa Mara Marques",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "LIKE SHOW"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/likeshow/ariscamel.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/likeshow.html",
+    "altText": "Ariska Mel",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "LIKE SHOW"
+  }
+]

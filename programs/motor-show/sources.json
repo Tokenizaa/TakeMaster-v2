@@ -1,0 +1,91 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "MOTOR SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"motor_show\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"motor_show\",\"title\":\"MOTOR SHOW\",\"host\":\"Renato Rossi\",\"description\":\"As novidades, testes e tudo sobre o universo automotivo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/motorshow/motorshow.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\",\"active\":true,\"showOnIndex\":true,\"showInMenus\":true,\"showOnMediakit2026\":true,\"showBadge\":false,\"badgeText\":\"\",\"removeImageFromCards\":false,\"visible\":true,\"mediaKitUrl\":\"motorshow.html\",\"mediaKitFile\":\"motorshow.html\",\"tags\":[\"Automóveis\"],\"gallery\":[],\"menuTitle\":\"\",\"kitTitle\":\"\",\"imageAlt\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/",
+    "urlCanonica": "https://www.rsplay.com.br/",
+    "tituloDaPagina": "RS Play TV - A Emissora que mais cresce no Brasil.",
+    "dataHoraScrape": "2026-10-05T02:06:27.113Z",
+    "tipoDePagina": "pagina_inicial",
+    "statusHttp": 200,
+    "programaRelacionado": "MOTOR SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (inline script #7)",
+        "origemDoTrecho": "Catálogo na página inicial",
+        "textoOriginal": "{\"id\":\"motor_show\",\"title\":\"MOTOR SHOW\",\"host\":\"Renato Rossi\",\"description\":\"As novidades, testes e tudo sobre o universo automotivo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/motorshow/motorshow.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/midia2026.html",
+    "urlCanonica": "https://www.rsplay.com.br/midia2026.html",
+    "tituloDaPagina": "RS Play TV - Mídia Kit Oficial 2026",
+    "dataHoraScrape": "2026-10-05T02:06:27.364Z",
+    "tipoDePagina": "midia_kit_emissora_2026",
+    "statusHttp": 200,
+    "programaRelacionado": "MOTOR SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "const PROGRAMS (midia2026.html)",
+        "origemDoTrecho": "Catálogo Mídia Kit Oficial 2026",
+        "textoOriginal": "{\"id\":\"motor_show\",\"title\":\"MOTOR SHOW\",\"host\":\"Renato Rossi\",\"description\":\"As novidades, testes e tudo sobre o universo automotivo.\",\"schedule\":\"Consulte a programação\",\"image\":\"https://www.rsplay.com.br/img/mediakit/motorshow/motorshow.jpg\",\"colorHex\":\"#dc2626\",\"playlistUrl\":\"\"}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/motorshow.html",
+    "urlCanonica": "https://www.rsplay.com.br/motorshow.html",
+    "tituloDaPagina": "Mídia Kit Oficial — Renato Rossi",
+    "dataHoraScrape": "2026-10-05T02:06:32.095Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "MOTOR SHOW",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA (Estrutura Idêntica ao Atividade) — Renato Rossi",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Mídia Kit Oficial\nRenato Rossi\nAutomóveis • Tecnologia • Segurança\nPerformance\nTecnologia\nSegurança\nExpertise"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: O ESPECIALISTA (Estrutura Idêntica ao Atividade) — Teoria & Prática",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Jornalista & Piloto\nTeoria\n& Prática\nRenato Rossi é uma autoridade no jornalismo automotivo. Realizou estudos na École Pratique des Hautes Études (Sorbonne) , unindo o rigor acadêmico à adrenalina das pistas.\nEspecializou-se em Direção Segura e Pilotagem Avançada no ADAC (Alemanha) , além de treinamentos técnicos com montadoras no Brasil.\nParticipou em mais de 25 salões internacionais de automóveis . Essa bagagem técnica e cultural permite análises que vão além da ficha técnica, traduzindo a experiência real para o público.\n\"Credibilidade construída no asfalto e na academia.\"\nSemanal\nExibição na TV\nPremium\nConteúdo Qualificado"
+      },
+      {
+        "secaoOrigem": "SLIDE 3: O PROGRAMA / CONTEÚDO (Estrutura Idêntica ao Atividade) — Motor Show",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Motor Show\nA atração tradicional do público gaúcho\nTestes de Veículos\nAvaliações técnicas e sensoriais dos lançamentos, do popular ao superesportivo.\nEntrevistas\nConversas com executivos, engenheiros e personalidades do setor automotivo.\nTecnologia\nO futuro da mobilidade, carros elétricos, conectividade e inovação.\nSegurança Viária\nConteúdo educativo e análises sobre segurança no trânsito e legislação."
+      },
+      {
+        "secaoOrigem": "SLIDE 4: AUDIÊNCIA (Estrutura Idêntica ao Atividade - AQUI ENTRAM OS DADOS DE TV) — Números da TV",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Números\nda TV\nAlcance consolidado na televisão aberta.\nRS Play & TV\n2.5M\nEspectadores\nPessoas alcançadas mensalmente através da transmissão televisiva.\n4.2\nPontos de Audiência\nMédia consolidada durante o horário de exibição do programa.\nAB\nClasse Social\nPúblico qualificado com alto poder de consumo e decisão de compra.\n35+\nFaixa Etária\nAudiência madura, interessada em bens duráveis e tecnologia."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: OPORTUNIDADES (Estrutura Idêntica ao Atividade) — Parcerias Estratégicas",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Parcerias\nEstratégicas\nAssocie sua marca à credibilidade e alta performance.\nProduct Placement\nInserção orgânica de veículos e produtos tecnológicos dentro dos quadros de teste.\nBranded Content\nReportagens especiais desenvolvidas sob medida para destacar os diferenciais da sua marca.\nMarcas e Projetos em Destaque"
+      },
+      {
+        "secaoOrigem": "FOOTER (Estrutura Idêntica ao Atividade) — Acelere com autoridade.",
+        "origemDoTrecho": "https://www.rsplay.com.br/motorshow.html",
+        "textoOriginal": "Acelere\ncom autoridade.\nProdução & Exibição\nRS Play\nContato Comercial\n@rsplayoficial\nRenato Rossi © 2025 • Tech & Speed"
+      }
+    ]
+  }
+]

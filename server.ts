@@ -20,6 +20,7 @@ import {
   deleteShow,
   getDbConnection,
   getEpisodeById,
+  getShowById,
   listAuditLogs,
   listBillingInvoices,
   listEpisodes,
@@ -36,6 +37,7 @@ import {
   populateOrganizationWorkspace,
   processAutomaticRenewalCycle,
   recordAuditLog,
+  registerSaaSAccountWithSubscription,
   subscribeOrUpdatePlan,
   toggleSubscriptionAutoRenew,
   updateEpisode,
@@ -69,10 +71,17 @@ import {
   generateEditorialResearch,
   generateFollowUpRepiques,
   generatePlannedShorts,
+  generateProgramEditorialIdentity,
+  generateProgramPitchSuggestions,
   generateSmartOutline,
   generateStudioScript,
+  getNimModelConfig,
   isGeminiConfigured,
 } from './src/server/ai';
+import {
+  listAvailableKnowledgeBasePrograms,
+  resolveProgramKnowledge,
+} from './src/server/programKnowledge';
 import {
   getSystemMetrics,
   incrementMetric,
@@ -98,6 +107,7 @@ export function createApiApp() {
         ai: {
           geminiConfigured: isGeminiConfigured(),
           model: 'gemini-3-flash-preview',
+          nim: getNimModelConfig(),
         },
         metrics: getSystemMetrics(),
       });
@@ -148,6 +158,24 @@ export function createApiApp() {
         }
       );
       res.json({ session });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/auth/register', (req, res, next) => {
+    try {
+      const organizationId = req.body?.organizationId || 'org-takemaster-studio';
+      const result = registerSaaSAccountWithSubscription(req.body || {}, organizationId);
+      const session = buildAuthSession(result.user.id, organizationId);
+      res.status(201).json({
+        session,
+        user: result.user,
+        show: result.show,
+        subscription: result.subscription,
+        invoice: result.invoice,
+        gatewayEvent: result.gatewayEvent,
+      });
     } catch (err) {
       next(err);
     }
@@ -399,6 +427,116 @@ export function createApiApp() {
       );
       deleteShow(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // --- RS PLAY KNOWLEDGE BASE, PROGRAM IDENTITY & PAUTAS CURATION (FASES 1 a 8) ---
+  app.get('/api/knowledge-base/programs', (_req, res, next) => {
+    try {
+      res.json(listAvailableKnowledgeBasePrograms());
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.get('/api/shows/:id/knowledge', requireAuth, (req, res, next) => {
+    try {
+      const auth = getAuthContext(req);
+      assertUserCanAccessShow(
+        auth.organizationId,
+        auth.userId,
+        auth.role,
+        req.params.id,
+        'canView'
+      );
+      const show = getShowById(auth.organizationId, req.params.id);
+      const { summary } = resolveProgramKnowledge(show);
+      res.json(summary);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/shows/:id/editorial-identity', requireAuth, async (req, res, next) => {
+    try {
+      const auth = getAuthContext(req);
+      assertUserCanAccessShow(
+        auth.organizationId,
+        auth.userId,
+        auth.role,
+        req.params.id,
+        'canView'
+      );
+      const show = getShowById(auth.organizationId, req.params.id);
+      const episodes = listEpisodes(auth.organizationId, show.id);
+      const guests = listParticipants(auth.organizationId);
+      const identity = await generateProgramEditorialIdentity({
+        show,
+        episodes,
+        guests,
+        simulatePrimaryFailure: Boolean(req.body?.simulatePrimaryFailure),
+        simulateTotalFailure: Boolean(
+          req.body?.simulateTotalFailure || req.body?.simulateBothFailure
+        ),
+      });
+      recordAuditLog(
+        auth.organizationId,
+        auth.userId,
+        'show_editorial_identity',
+        show.id,
+        'generated',
+        {
+          showTitle: show.title,
+          modelUsed: identity.modelUsed,
+          usedFallback: identity.usedFallback,
+        }
+      );
+      res.json(identity);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/shows/:id/suggest-pautas', requireAuth, async (req, res, next) => {
+    try {
+      const auth = getAuthContext(req);
+      assertUserCanAccessShow(
+        auth.organizationId,
+        auth.userId,
+        auth.role,
+        req.params.id,
+        'canView'
+      );
+      const show = getShowById(auth.organizationId, req.params.id);
+      const episodes = listEpisodes(auth.organizationId, show.id);
+      const guests = listParticipants(auth.organizationId);
+      const curation = await generateProgramPitchSuggestions({
+        show,
+        episodes,
+        guests,
+        input: req.body || {},
+        simulatePrimaryFailure: Boolean(req.body?.simulatePrimaryFailure),
+        simulateTotalFailure: Boolean(
+          req.body?.simulateTotalFailure || req.body?.simulateBothFailure
+        ),
+      });
+      recordAuditLog(
+        auth.organizationId,
+        auth.userId,
+        'show_pautas_curation',
+        show.id,
+        'suggested',
+        {
+          showTitle: show.title,
+          queryUsed: curation.queryUsed,
+          pautasCount: curation.pautas.length,
+          modelUsed: curation.modelUsed,
+          usedFallback: curation.usedFallback,
+        }
+      );
+      res.json(curation);
     } catch (err) {
       next(err);
     }

@@ -1,0 +1,69 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "HISTÓRIAS COM SABOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1786041223965\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1786041223965\",\"title\":\"HISTÓRIAS COM SABOR\",\"menuTitle\":\"HISTÓRIAS COM SABOR\",\"kitTitle\":\"\",\"host\":\"Carina Lentz\",\"description\":\"O programa tem como objetivo promover qualidade de vida por meio de conteúdos acessíveis, inspiradores e aplicáveis ao cotidiano das pessoas.\\n\\nA proposta é criar um conteúdo leve, acolhedor e relevante para um público adulto que busca mais qualidade de vida, equilíbrio emocional, crescimento pessoal e inspiração para viver melhor.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/sabor-20260806153357-6b7f7dc7.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"historias_sabor.html\",\"mediaKitFile\":\"historias_sabor.html\",\"tags\":[\"Gastronomia\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/historias_sabor.html",
+    "urlCanonica": "https://www.rsplay.com.br/historias_sabor.html",
+    "tituloDaPagina": "Histórias com Sabores — Mídia Kit Oficial",
+    "dataHoraScrape": "2026-10-05T02:06:31.321Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "HISTÓRIAS COM SABOR",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "SLIDE 1: CAPA / HERO — Com Carina Lentz",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "Mídia Kit Oficial\nCom Carina Lentz\n@caianalowcarb\nRS PLAY • Claro-tv Canal 524\nSaúde\nCulinária\nBem-Estar\nHistórias"
+      },
+      {
+        "secaoOrigem": "SLIDE 2: A APRESENTADORA — CARINA LENTZ",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "A Apresentadora\nCARINA LENTZ\nCarina Lentz é chef de cozinha funcional, terapeuta de emagrecimento e comunicadora . Formada em Relações Públicas e Direito pela PUCRS, encontrou na gastronomia e no comportamento alimentar a forma de unir duas grandes paixões: comunicar e transformar vidas.\nApós enfrentar na própria pele o efeito sanfona, a compulsão alimentar e diferentes extremos na relação com a comida, especializou-se em gastronomia funcional e alimentação de baixo carboidrato, estudando no Brasil e nos Estados Unidos. Hoje, ensina que emagrecer não precisa significar abrir mão do prazer de comer ou dos momentos à mesa.\nCriadora do perfil no Instagram @caianalowcarb , Carina produz conteúdos, ministra cursos, palestras e desenvolve receitas que conciliam saúde, sabor e praticidade. Sua abordagem une culinária, comportamento e acolhimento, ajudando milhares de mulheres a construírem uma relação mais leve e duradoura com a alimentação.\nSeu propósito é mostrar que a comida vai muito além da nutrição: ela é memória, afeto, cultura e uma ferramenta poderosa de transformação."
+      },
+      {
+        "secaoOrigem": "SLIDE 3: ALCANCE DA EMISSORA — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "Alcance da Emissora\nO poder da multiplataforma da emissora que transmite o programa.\nECOSSISTEMA RS PLAY\nStreaming & Emissora\n14.388 Milhões\nAlcance Total da Emissora Multiplataforma\n16M\nAcessos Plataforma TVSPlay\n2M\nAlcance Claro TV+ (Canal 524)\nYouTube\nDados da Plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@RSPLAYDIGITAL\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@RSPLAYDIGITAL\n784K\nVisualizações\n48K\nCurtidas\nCrescimento Viral"
+      },
+      {
+        "secaoOrigem": "SLIDE 4: OBJETIVOS — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "Programa Histórias com Sabores\nObjetivos\nFortalecer a autoridade da apresentadora nas áreas de saúde, bem-estar e qualidade de vida;\nCompartilhar conhecimento prático e experiências transformadoras;\nInspirar mudanças positivas de hábitos;\nGerar conexões com especialistas, profissionais e empreendedores;\nDivulgar projetos, iniciativas e negócios alinhados ao propósito do programa;\nConstruir uma comunidade engajada em torno de temas relacionados à saúde integral, espiritualidade e desenvolvimento humano."
+      },
+      {
+        "secaoOrigem": "SLIDE 5: O PROGRAMA — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nO programa tem como objetivo promover qualidade de vida por meio de conteúdos acessíveis, inspiradores e aplicáveis ao cotidiano das pessoas.\nA proposta é criar um conteúdo leve, acolhedor e relevante para um público adulto que busca mais qualidade de vida, equilíbrio emocional, crescimento pessoal e inspiração para viver melhor."
+      },
+      {
+        "secaoOrigem": "SLIDE 6: TEMAS — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nSaúde e Bem-Estar\nCulinária Saudável\nTerapia de Emagrecimento\nDesenvolvimento Humano\nEspiritualidade\nVariedades"
+      },
+      {
+        "secaoOrigem": "SLIDE 7: GALERIA — Histórias com Sabores",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "Galeria\nHistórias com Sabores"
+      },
+      {
+        "secaoOrigem": "FOOTER / CONTATO — FOOTER / CONTATO",
+        "origemDoTrecho": "https://www.rsplay.com.br/historias_sabor.html",
+        "textoOriginal": "@caianalowcarb\nApresentação: Carina Lentz\n•\nHistórias com Sabores\n•\nRS Play — Canal 524 Claro\n•\n© 2026"
+      }
+    ]
+  }
+]

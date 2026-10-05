@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pense_grande/pensegrande_card.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "altText": "PENSE GRANDE",
+    "tituloOuCaption": "Card / Imagem oficial de catálogo — PENSE GRANDE",
+    "contexto": "card_catalogo_cms",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1811.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "PENSE GRANDE — OpenGraph Image",
+    "tituloOuCaption": "Imagem de compartilhamento (og:image)",
+    "contexto": "open_graph_capa",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/logo.png",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "logo_programa",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1754.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1802.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1755.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1804.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1753.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1809.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  },
+  {
+    "url": "https://www.rsplay.com.br/img/mediakit/pensegrande/pg1752.jpg",
+    "tipo": "imagem",
+    "paginaDeOrigem": "https://www.rsplay.com.br/pense_grande.html",
+    "altText": "Pense Grande",
+    "tituloOuCaption": "não informado na fonte",
+    "contexto": "imagem_editorial_pagina",
+    "programaRelacionado": "PENSE GRANDE"
+  }
+]

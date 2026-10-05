@@ -1,0 +1,74 @@
+[
+  {
+    "urlOriginal": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "urlCanonica": "https://www.rsplay.com.br/data/rsplay_cms.json",
+    "tituloDaPagina": "RS Play CMS Data Catalog (data/rsplay_cms.json)",
+    "dataHoraScrape": "2026-10-05T02:06:27.494Z",
+    "tipoDePagina": "catalogo_cms_json",
+    "statusHttp": 200,
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "programs[id=\"programa_1786041031703\"]",
+        "origemDoTrecho": "Registro JSON do CMS da emissora",
+        "textoOriginal": "{\"id\":\"programa_1786041031703\",\"title\":\"OUVIR É SINÔNIMO DE VIDA\",\"menuTitle\":\"OUVIR É SINÔNIMO DE VIDA\",\"kitTitle\":\"\",\"host\":\"José Camargo e Pâmela Teixeira\",\"description\":\"Ouvir é Sinônimo de Vida nasce para promover educação em saúde auditiva e conscientizar sobre a importância de ouvir bem — compartilhando conhecimento por meio de especialistas e histórias reais.\",\"schedule\":\"Consulte a programação\",\"image\":\"assets/uploads/ouvir-20260806153148-8797efdc.jpg\",\"imageAlt\":\"\",\"bannerImage\":\"\",\"colorHex\":\"#A000FF\",\"playlistUrl\":\"\",\"mediaKitUrl\":\"ouvir.html\",\"mediaKitFile\":\"ouvir.html\",\"tags\":[\"Saúde\"],\"badgeText\":\"\",\"showBadge\":false,\"active\":true,\"showOnIndex\":true,\"showOnMediakit2026\":true,\"showInMenus\":true,\"removeImageFromCards\":false,\"gallery\":[]}"
+      }
+    ]
+  },
+  {
+    "urlOriginal": "https://www.rsplay.com.br/ouvir.html",
+    "urlCanonica": "https://www.rsplay.com.br/ouvir.html",
+    "tituloDaPagina": "Midia Kit Oficial — Ouvir é Sinônimo de Vida",
+    "dataHoraScrape": "2026-10-05T02:06:31.321Z",
+    "tipoDePagina": "midia_kit_programa",
+    "statusHttp": 200,
+    "programaRelacionado": "OUVIR É SINÔNIMO DE VIDA",
+    "trechosExtraidos": [
+      {
+        "secaoOrigem": "============ SLIDE 1: CAPA ============ — ============ SLIDE 1: CAPA ============",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Midia Kit Oficial • 2026\n“Histórias reais. Soluções que transformam. Ouvir que muda vidas.”\nSaúde Auditiva\n◆\nPrevenção\n◆\nTecnologia\n◆\nQualidade de Vida\n◆\nHistórias Reais\nEstreia\n|\nDomingo 02/08\n|\n10h30\nRS Play • Claro TV+ Canal 524\nUma realização Surtel Aparelhos Auditivos"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 2: JOSÉ CAMARGO ============ — José Camargo, 31 anos devolvendo a audição",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "O Apresentador\nJosé Camargo, 31 anos devolvendo a audição\nApresentador, empresário, fundador e diretor da Surtel Aparelhos Auditivos — empresa que há 31 anos dedica sua história ao cuidado da saúde auditiva dos gaúchos. Reconhecido por sua trajetória de empreendedorismo, comprometimento e propósito, construiu uma carreira pautada na valorização da vida, da escuta e do atendimento humanizado .\nÀ frente da Surtel, tornou-se referência no segmento, conduzindo uma empresa que alia tecnologia, inovação e acolhimento . Seu trabalho vai além da reabilitação auditiva: tem como missão devolver autonomia, fortalecer vínculos familiares e permitir que milhares de pessoas voltem a ouvir os sons e os momentos mais importantes da vida.\nApaixonado pela comunicação, utiliza os meios de comunicação para conscientizar a população sobre a importância da prevenção, do diagnóstico precoce e do tratamento da perda auditiva. Por meio de entrevistas, programas e conteúdos educativos, busca democratizar o acesso à informação e incentivar o cuidado com a audição em todas as fases da vida.\nAo longo de mais de três décadas, consolidou a Surtel como uma empresa reconhecida pela credibilidade, ética e excelência no atendimento , sempre mantendo como princípio o respeito às pessoas e o compromisso de transformar vidas por meio da audição.\n31\nAnos de\nSurtel\n3\nDécadas em\nsaúde auditiva\nRS\nReferência\nno Rio Grande do Sul\n+\nFundador\ne Diretor"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 3: PÂMELA TEIXEIRA ============ — Pâmela Teixeira, comunicação que conecta",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "A Apresentadora\nPâmela Teixeira, comunicação que conecta\nEntrevistadora, criadora de conteúdo e estudante de Nutrição , com formação prevista para o início de 2027. Apaixonada por saúde, marketing e meios de comunicação, construiu sua trajetória unindo conhecimento técnico, estratégia e comunicação.\nSeu trabalho tem como propósito transformar informação em conteúdo relevante , levando temas de saúde e bem-estar de forma leve, acessível e baseada em evidências. Como entrevistadora e comunicadora, busca conectar pessoas, histórias e marcas por meio de uma comunicação autêntica, humana e de impacto.\nCom olhar estratégico para o marketing e forte presença nas redes sociais, desenvolve projetos que unem credibilidade, criatividade e propósito , criando conexões genuínas entre marcas e seu público.\n2027\nFormação\nem Nutrição\n★\nCriadora\nde conteúdo\n✓\nConteúdo baseado\nem evidências\n@\nForte presença\nem redes sociais"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 4: O PROGRAMA / PROPOSTA ============ — Nossa Proposta",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "O Programa\nNossa Proposta\nOuvir é Sinônimo de Vida nasce para promover educação em saúde auditiva e conscientizar sobre a importância de ouvir bem — compartilhando conhecimento por meio de especialistas e histórias reais.\nUm programa que fortalece a autoridade da Surtel e incentiva a prevenção e a qualidade de vida em todas as fases da vida.\nGênero\nEntrevistas — Saúde Auditiva & Qualidade de Vida\nApresentação\nJosé Camargo e Pâmela Teixeira\nExibição\nDomingos, 10h30\nDistribuição\nInédito 1x/semana (48 ep/ano)\nPúblico\n◆\nPessoas com perda auditiva e seus familiares , profissionais de saúde e todo público que se preocupa com prevenção e qualidade de vida."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 5: OBJETIVOS ============ — Objetivos",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Ouvir é Sinônimo de Vida\nObjetivos\n01\nPromover educação em saúde auditiva de forma acessível e baseada em evidências.\n02\nConscientizar sobre a importância de ouvir bem em todas as fases da vida.\n03\nCompartilhar conhecimento por meio de especialistas e histórias reais .\n04\nFortalecer a autoridade da Surtel como referência em saúde auditiva.\n05\nIncentivar a prevenção e o diagnóstico precoce da perda auditiva.\n06\nTransformar vidas por meio da audição — devolvendo autonomia e vínculos familiares ."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 6: TEMAS ============ — Temas do Programa",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Conteúdo\nTemas do Programa\nSaúde Auditiva\nPrevenção\nDiagnóstico Precoce\nTecnologia & Inovação\nVínculos Familiares\nHistórias Reais\nEducação em Saúde\nQualidade de Vida"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 7: ALCANCE DA EMISSORA ============ — Alcance da Emissora",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Distribuição\nAlcance da Emissora\nO poder multiplataforma da emissora que transmite o programa.\nEcossistema RS Play\n14.388 Milhões\nAlcance total da emissora multiplataforma\n16M\nAcessos\nPlataforma TVSPlay\n2M\nAlcance\nClaro TV+ (Canal 524)\nYouTube\nDados da plataforma\n1,2M+\nVisualizações\n19K\nInscritos\nInstagram\n@rsplaydigital\n+5.0M\nAlcance\n163K\nInterações\nTikTok\n@rsplaydigital\n784K\nVisualizações\n48K\nCurtidas"
+      },
+      {
+        "secaoOrigem": "============ SLIDE 8: ESTREIA ============ — A Estreia",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Lançamento\nA Estreia\n“Histórias reais. Soluções que transformam. Ouvir que muda vidas.”\nData\n02/08\nDomingo\nHorário\n10h30\nSemanal\nOnde\n524\nClaro TV+ / RS Play\nRealização\nUma realização Surtel Aparelhos Auditivos — 31 anos cuidando da saúde auditiva dos gaúchos, com tecnologia, inovação e acolhimento."
+      },
+      {
+        "secaoOrigem": "============ SLIDE 9: COTAS & CONTATO ============ — Oportunidades & Cotas de Parceria",
+        "origemDoTrecho": "https://www.rsplay.com.br/ouvir.html",
+        "textoOriginal": "Comercial\nOportunidades & Cotas de Parceria\nAssocie sua marca a um conteúdo de saúde, prevenção e qualidade de vida — com credibilidade e propósito.\nPrograma + Instagram\nCota MARCA\nInserção qualificada de patrocínio\n◆ Agradecimento institucional aos patrocinadores em 4 episódios do mês.\n◆ 1 Reels em Collab no Instagram (Programa + Marca).\n◆ 4 Stories ao longo do mês (1 por semana).\nSolicitar Proposta\nMais Procurada\nEpisódio + Instagram\nPatrocinador Oficial de Episódio\nAssociação ao convidado da semana\n◆ Logo na abertura e no encerramento do programa como Patrocinador Oficial de 1 episódio.\n◆ 1 Postagem no Instagram comunicando o convidado da semana e a marca patrocinadora.\n◆ 1 Sequência de Stories trazendo a marca como patrocinadora oficial do episódio.\nSolicitar Proposta\nExclusividade\nSob aprovação\nCota ESPECIAL\nPrograma dedicado + Instagram\n◆ 1 Programa completo dedicado: o convidado apresenta sua história, marca e propósito.\n◆ 4 Recortes de vídeo em Collab tripla, distribuídos 1x por semana.\n◆ Agradecimento aos patrocinadores nos outros 4 programas do mês .\n◆ 1 Reels Collab adicional e 4 Stories ao longo do mês.\nSolicitar Aprovação\nEntre em Contato\nPronto para associar sua marca a um conteúdo que transforma vidas?\ncomercial@rsplay.com.br\n◆\nwww.rsplay.com.br\nOuvir é Sinônimo de Vida\n◆\nJosé Camargo & Pâmela Teixeira\n◆\nSurtel Aparelhos Auditivos\n◆\nRS Play — Canal 524 Claro\n◆\n© 2026"
+      }
+    ]
+  }
+]
