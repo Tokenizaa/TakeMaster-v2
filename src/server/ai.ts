@@ -889,7 +889,6 @@ function buildDeterministicGroundedPitches(params: {
   guests?: Guest[];
 }): ProgramPitchSuggestion[] {
   const { knowledge, input, guests = [] } = params;
-  const slug = knowledge.slug;
   const customTopic = [
     input?.prompt,
     input?.tema,
@@ -901,196 +900,66 @@ function buildDeterministicGroundedPitches(params: {
     .filter(Boolean)
     .join(' — ')
     .trim();
-  const customGuest = input?.convidado?.trim() || guests[0]?.name || '';
-
-  if (slug === 'advogada-do-leque') {
-    return [
-      {
-        title: customTopic
-          ? `Planejamento Previdenciário & Direitos em Pauta: ${customTopic}`
-          : 'Planejamento Previdenciário Consultivo: Como Garantir a Melhor Aposentadoria Antes de Pedir o Benefício',
-        hook: 'A maioria dos segurados perde patrimônio por desconhecer o planejamento previdenciário consultivo antes de protocolar o pedido no INSS.',
-        score: 96,
-        fit: 'alto',
-        reason:
-          'Alinha-se diretamente ao objetivo central declarado por Taise Vielmo Côrtes no Mídia Kit Oficial: posicionar autoridade na área consultiva de planejamento previdenciário e realizar o momento tira-dúvidas com @advogadadoleque.',
-        angle:
-          'Combinar orientação prática sobre direito a benefícios previdenciários (Bloco 1), mentoria de gestão para advogados associados ao IARGS (Bloco 2) e fechamento leve valorizando a cultura flamenca e a saúde emocional dos profissionais.',
-        suggestedGuest:
-          customGuest ||
-          'Especialista convidado(a) em Direito Previdenciário / Seguridade Social ou liderança jurídica do IARGS',
-        questions: [
-          'Quais são os erros mais comuns que fazem o trabalhador perder dinheiro por não fazer o planejamento previdenciário consultivo?',
-          'No momento Tira-Dúvidas com a Advogada do Leque: quando vale a pena revisar o histórico contributivo antes de pedir a aposentadoria?',
-          'Como os escritórios de advocacia podem estruturar o atendimento consultivo para transformar a relação com o cliente?',
-          'De que forma atividades culturais como a dança flamenca atuam como válvula de escape e saúde mental para advogados que lidam com as dores humanas?',
-        ],
-      },
-      {
-        title:
-          'Liderança Feminina na Advocacia e na Sociedade: Lugar de Mulher é Aonde Ela Quiser',
-        hook: 'Como mulheres na liderança jurídica e empresarial constroem redes de negócios, mentoria e empoderamento real no Rio Grande do Sul e em Santa Catarina.',
-        score: 93,
-        fit: 'alto',
-        reason:
-          'Sustentado diretamente pelo Mídia Kit Oficial (Slides 2, 4 e 6), que destaca a atuação de Taise na ONG @bpwpoa (coordenadora do jurídico), sua coautoria no livro "Lugar de Mulher é aonde ela quiser" e a divulgação do grupo @flamencosdosul.',
-        angle:
-          'Conversa inspiradora unindo gestão de escritórios de advocacia, formação de novos advogados/estagiários ao longo de 30 anos de carreira e o poder terapêutico e cultural da arte flamenca (@deniseflamenco).',
-        suggestedGuest:
-          customGuest ||
-          'Liderança feminina associada à BPW Porto Alegre (@bpwpoa) ou coautora/integrante do grupo @flamencosdosul',
-        questions: [
-          'Quais foram os maiores desafios para construir e gerir unidades jurídicas no RS (Porto Alegre e Viamão) e em SC (Palhoça)?',
-          'Como o trabalho da BPWPOA fortalece o protagonismo feminino e gera novas oportunidades de negócios?',
-          'Por que a expressão cultural — como o flamenco no Teatro São Pedro — fortalece a autoestima e a liderança da mulher?',
-        ],
-      },
-      {
-        title:
-          'Mentoria para Advogados & Gestão de Escritórios: Como Construir Autoridade e Novos Negócios',
-        hook: 'Trinta anos formando estagiários e advogados que hoje lideram seus próprios negócios: o que a faculdade não ensina sobre gestão jurídica.',
-        score: 89,
-        fit: 'alto',
-        reason:
-          'Reflete a proposta explícita do Slide 4 ("sou mentora de advogados, associada do IARGS... já formei inúmeros estagiários e advogados que passaram por minha empresa").',
-        angle:
-          'Pauta voltada ao fortalecimento de marca pessoal e empresarial (@advogadadoleque e @pachecoecortes), abordando carreira jurídica, networking na emissora e qualidade de vida.',
-        suggestedGuest:
-          customGuest || 'Advogado(a) mentorado(a) ou gestor(a) de banca jurídica parceira',
-        questions: [
-          'Qual é o passo decisivo para um advogado deixar de atuar apenas no contencioso reativo e construir autoridade consultiva?',
-          'Como construir uma marca pessoal autêntica no meio jurídico sem abrir mão do rigor técnico?',
-          'Quais hábitos de saúde, leitura e escrita sustentam uma carreira jurídica longeva de mais de três décadas?',
-        ],
-      },
-    ];
-  }
-
-  if (slug === 'as-pessoas-inspiram') {
-    return [
-      {
-        title: customTopic
-          ? `Histórias que Transformam: ${customTopic} sob o olhar de Cultura e Impacto Social`
-          : 'Da Crise ao Propósito: Trajetórias Reais que Conectam Cultura, Sustentabilidade e Impacto Social',
-        hook: '"Onde grandes histórias encontram seu palco": como escolhas guiadas por propósito transformam comunidades inteiras.',
-        score: 95,
-        fit: 'alto',
-        reason:
-          'Totalmente aderente à proposta conduzida pela Dra. Eliane Davila (PhD em Processos e Manifestações Culturais), que já soma mais de 250 episódios conectando cultura, propósito, sustentabilidade e impacto social.',
-        angle:
-          'Talk show dinâmico de 30 minutos explorando a origem da vocação do convidado, o ponto de virada humano e o legado prático deixado na comunidade.',
-        suggestedGuest:
-          customGuest ||
-          'Líder social, empreendedor(a) de impacto ou gestor(a) cultural com projeto transformador no RS',
-        questions: [
-          'Qual foi o momento exato em que a sua trajetória profissional deixou de ser apenas um trabalho e se tornou uma missão de impacto social?',
-          'Como a cultura e o diálogo atuam como pontes para transformar realidades locais?',
-          'Que aprendizado prático dessa caminhada pode inspirar quem hoje busca alinhar carreira e propósito?',
-        ],
-      },
-      {
-        title: 'Inovação Social e Empreendedorismo com Alma: Lideranças que Inspiram pelo Exemplo',
-        hook: 'Mais do que números, o impacto real de um negócio se mede pelas vidas que ele eleva ao redor.',
-        score: 91,
-        fit: 'alto',
-        reason:
-          'Conecta os três pilares editoriais declarados no Mídia Kit de As Pessoas Inspiram: Informativo, Empreendedorismo & Cultural.',
-        angle:
-          'Entrevista humanizada conduzida por Dra. Eliane Davila destacando cidadãos comuns, artistas e líderes que inovam com responsabilidade socioambiental.',
-        suggestedGuest:
-          customGuest || 'Empreendedor(a) cultural, artista ou pesquisador(a) de inovação sustentável',
-        questions: [
-          'Como equilibrar viabilidade econômica e sensibilidade humana em projetos de longo prazo?',
-          'Qual história de bastidor resume o verdadeiro propósito do seu projeto?',
-          'O que significa inspirar pessoas em um tempo de mudanças tão aceleradas?',
-        ],
-      },
-      {
-        title: 'Memória, Arte e Manifestações Culturais: O Poder das Histórias de Vida',
-        hook: 'Um projeto que nasceu na pandemia para levar esperança e evoluiu para o palco televisivo no Canal 524.',
-        score: 88,
-        fit: 'alto',
-        reason:
-          'Valoriza a formação acadêmica da apresentadora (PhD em Processos e Manifestações Culturais) e o DNA histórico do programa.',
-        angle:
-          'Diálogo intimista sobre identidade cultural gaúcha, literatura, artes e protagonismo comunitário.',
-        suggestedGuest:
-          customGuest || 'Escritor(a), produtor(a) cultural ou educador(a) comunitário(a)',
-        questions: [
-          'Por que contar e preservar histórias reais fortalece o tecido cultural de uma cidade?',
-          'Qual encontro ou personagem transformou a sua maneira de enxergar o mundo?',
-          'Que mensagem você deixaria para quem deseja tirar um projeto cultural do papel?',
-        ],
-      },
-    ];
-  }
-
-  // Generic / Limited-base program (e.g., Bem Viver or custom show)
-  const temaBase =
+  const customGuest = input?.convidado?.trim() || guests[0]?.name?.trim() || '';
+  const theme =
     knowledge.temasPrincipais[0] ||
-    (knowledge.descricao !== NAO_IDENTIFICADO_NA_BASE ? knowledge.descricao : knowledge.nome);
+    knowledge.descricao ||
+    knowledge.nome;
+  const guestLabel =
+    customGuest ||
+    (knowledge.apresentador !== NAO_IDENTIFICADO_NA_BASE
+      ? knowledge.apresentador
+      : NAO_IDENTIFICADO_NA_BASE);
+  const subject = customTopic || theme;
 
   return [
     {
       title: customTopic
         ? `${knowledge.nome} em Pauta: ${customTopic}`
-        : `${knowledge.nome}: Evidências Práticas e Hábitos sobre ${temaBase}`,
-      hook: `Uma conversa clara e fundamentada com ${
-        knowledge.apresentador !== NAO_IDENTIFICADO_NA_BASE
-          ? knowledge.apresentador
-          : 'a apresentação do programa'
-      } sobre o que realmente funciona no dia a dia.`,
-      score: knowledge.coverageLevel === 'completa' ? 92 : 84,
-      fit: 'alto',
-      reason: `Aderente à descrição oficial registrada na base (${knowledge.descricao}) e ao perfil de condução de ${knowledge.apresentador}.`,
+        : `${knowledge.nome}: ${theme}`,
+      hook: `Explorar ${subject} a partir das informações disponíveis na base oficial do programa, sem extrapolar o que a fonte sustenta.`,
+      score: knowledge.coverageLevel === 'completa' ? 90 : knowledge.coverageLevel === 'parcial' ? 80 : 65,
+      fit: knowledge.coverageLevel === 'completa' ? 'alto' : knowledge.coverageLevel === 'parcial' ? 'medio' : 'baixo',
+      reason: `A pauta usa como referência a identidade, os temas e a descrição registrados na base do programa: ${knowledge.descricao}.`,
       angle: customTopic
-        ? `Abordar "${customTopic}" conectando informação confiável, exemplos práticos e aplicação imediata para o público da RS Play.`
-        : `Desmistificar dúvidas frequentes dentro do eixo "${temaBase}", priorizando linguagem acessível e embasamento prático.`,
-      suggestedGuest:
-        customGuest ||
-        `Especialista convidado(a) com atuação comprovada em ${
-          knowledge.temasPrincipais[0] || 'temas correlatos ao programa'
-        }`,
+        ? `Relacionar "${customTopic}" aos temas e ao formato explicitamente registrados para ${knowledge.nome}.`
+        : `Desenvolver o tema "${theme}" respeitando o formato, o público e a proposta editorial identificados na fonte.`,
+      suggestedGuest: guestLabel,
       questions: [
-        `O que a experiência prática e a ciência mostram hoje de mais relevante sobre ${
-          customTopic || temaBase
-        }?`,
-        'Quais são os principais mitos que confundem o público quando esse assunto entra em pauta?',
-        'Qual é a recomendação prática que o espectador pode aplicar imediatamente na sua rotina?',
+        `O que é essencial compreender sobre ${subject} dentro do contexto deste programa?`,
+        `Qual aspecto de ${subject} merece ser aprofundado com o convidado?`,
+        `Que pergunta ajuda o público a sair da conversa com uma compreensão mais clara de ${subject}?`,
       ],
     },
     {
-      title: `Prevenção, Rotina e Tomada de Decisão: O Olhar de Especialistas no ${knowledge.nome}`,
-      hook: 'Pequenas escolhas diárias apoiadas em conhecimento técnico geram transformações duradouras.',
-      score: knowledge.coverageLevel === 'completa' ? 88 : 79,
+      title: `${knowledge.nome}: perguntas que aprofundam ${theme}`,
+      hook: `Uma abordagem centrada nas questões que ajudam a transformar o tema em uma conversa relevante para o público do programa.`,
+      score: knowledge.coverageLevel === 'completa' ? 86 : knowledge.coverageLevel === 'parcial' ? 76 : 60,
       fit: knowledge.coverageLevel === 'completa' ? 'alto' : 'medio',
       reason:
         knowledge.coverageLevel === 'parcial'
-          ? 'Sugestão ancorada nos dados de catálogo disponíveis na fonte oficial (título, apresentador e sinopse), respeitando a cobertura parcial da base.'
-          : 'Conecta os temas centrais e o formato editorial do programa na grade da RS Play TV.',
-      angle:
-        'Estruturar o episódio em três momentos: diagnóstico do problema real, análise com especialista convidado e guia prático de ação.',
-      suggestedGuest: customGuest || 'Profissional de referência ou pesquisador(a) convidado(a)',
+          ? 'Sugestão limitada aos dados explicitamente disponíveis no catálogo oficial.'
+          : 'Sugestão baseada nos campos editoriais disponíveis na base oficial.',
+      angle: `Estruturar a conversa em torno de ${theme}, usando somente informações confirmadas na base e dados fornecidos pelo produtor.`,
+      suggestedGuest: customGuest || NAO_IDENTIFICADO_NA_BASE,
       questions: [
-        'Quais sinais indicam que é hora de buscar orientação especializada neste tema?',
-        'Como separar modismos passageiros de práticas realmente comprovadas?',
-        'Que caso real ilustra a importância de agir de forma preventiva?',
+        `Qual é a questão mais importante que o público deveria fazer sobre ${theme}?`,
+        `Que experiência ou evidência disponível na fonte ajuda a esclarecer esse assunto?`,
+        'Que ponto ainda precisa ser confirmado antes da gravação?',
       ],
     },
     {
-      title: `Perguntas da Audiência & Casos Reais em ${knowledge.nome}`,
-      hook: 'Respondendo de forma direta às dúvidas mais recorrentes de quem acompanha a RS Play.',
-      score: 76,
-      fit: 'medio',
-      reason:
-        'Formato de alta retenção compatível com a grade multiplataforma (Canal 524 Claro TV+ e cortes digitais).',
-      angle:
-        'Bloco interativo de perguntas e respostas conduzido pelo(a) apresentador(a) a partir de situações reais do cotidiano.',
-      suggestedGuest: customGuest || 'Convidado(a) especialista ou participação da bancada do programa',
+      title: `${knowledge.nome}: pauta aberta para ${subject}`,
+      hook: 'Abrir espaço para uma conversa orientada por perguntas, fontes e informações que possam ser confirmadas antes da gravação.',
+      score: knowledge.coverageLevel === 'completa' ? 78 : knowledge.coverageLevel === 'parcial' ? 70 : 55,
+      fit: knowledge.coverageLevel === 'completa' ? 'medio' : 'baixo',
+      reason: 'A pauta funciona como ponto de partida e não adiciona fatos que não estejam presentes na base.',
+      angle: 'Usar a pauta como briefing inicial e complementar somente com informações verificadas pelo produtor ou pelo convidado.',
+      suggestedGuest: customGuest || NAO_IDENTIFICADO_NA_BASE,
       questions: [
-        'Qual é a dúvida número um que chega até você sobre este tema?',
-        'Qual erro comum pode ser evitado com informação de qualidade?',
-        'Qual é a mensagem principal deste episódio para quem nos assiste no Canal 524?',
+        `O que a fonte oficial já permite afirmar sobre ${subject}?`,
+        'Quais informações precisam ser pesquisadas ou confirmadas antes da gravação?',
+        'Qual pergunta pode gerar o principal momento de descoberta do episódio?',
       ],
     },
   ];
