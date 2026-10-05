@@ -127,7 +127,7 @@ export function createApiApp() {
   // --- AUTHENTICATION & PROGRAM-LEVEL RBAC SESSION ---
   app.get('/api/auth/session', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const session = buildAuthSession(auth.userId, auth.organizationId);
       const directory = await listUsersAndOrganizations();
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
@@ -183,7 +183,7 @@ export function createApiApp() {
 
   app.post('/api/auth/switch-org', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const { organizationId } = req.body || {};
       if (!organizationId || typeof organizationId !== 'string') {
         throw new AppError(400, 'VALIDATION_ERROR', 'organizationId é obrigatório.');
@@ -206,7 +206,7 @@ export function createApiApp() {
   // --- WORKSPACE STATE AGGREGATOR (Filtered by Program-Level RBAC) ---
   app.get('/api/state', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const session = buildAuthSession(auth.userId, auth.organizationId);
       const allowedFilter = session.isFullAccessAdmin ? undefined : session.allowedShowIds;
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
@@ -230,7 +230,7 @@ export function createApiApp() {
   // --- RSPLAY TV SAAS BILLING & PAYMENT GATEWAY ENDPOINTS ---
   app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       res.json({
         plans: await listSaaSPlans(),
         subscriptions: await listOrganizationSubscriptions(auth.organizationId),
@@ -244,7 +244,7 @@ export function createApiApp() {
 
   app.post('/api/billing/subscribe', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const {
         planId,
         showId,
@@ -278,7 +278,7 @@ export function createApiApp() {
 
   app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const { autoRenew } = req.body || {};
       const updated = await toggleSubscriptionAutoRenew(
         auth.organizationId,
@@ -294,7 +294,7 @@ export function createApiApp() {
 
   app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const { simulateFailure } = req.body || {};
       const result = await processAutomaticRenewalCycle(
         auth.organizationId,
@@ -311,7 +311,7 @@ export function createApiApp() {
   // --- RSPLAY TV SAAS ADMIN PANEL ENDPOINTS (Users, RBAC, Subscriptions & Detailed Reports) ---
   app.get('/api/admin/overview', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       res.json({
         users: await listOrganizationUsersWithPermissions(auth.organizationId),
         shows: await listShows(auth.organizationId),
@@ -329,7 +329,7 @@ export function createApiApp() {
 
   app.post('/api/admin/users', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const created = await createOrganizationUserWithShowPermissions(
         auth.organizationId,
         req.body || {},
@@ -343,7 +343,7 @@ export function createApiApp() {
 
   app.put('/api/admin/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const { permissions } = req.body || {};
       if (!Array.isArray(permissions)) {
         throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
@@ -362,7 +362,7 @@ export function createApiApp() {
 
   app.put('/api/admin/users/:id/status', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const updated = await updateOrganizationUserStatusOrRole(
         auth.organizationId,
         req.params.id,
@@ -378,7 +378,7 @@ export function createApiApp() {
   // --- SHOWS & CATALOG (Filtered by Program-Level RBAC) ---
   app.get('/api/shows', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
       res.json(await listShows(auth.organizationId, allowedFilter));
     } catch (err) {
@@ -388,7 +388,7 @@ export function createApiApp() {
 
   app.post('/api/shows', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateShowPayload(req.body, false);
       const created = await createShow(auth.organizationId, validated, auth.userId);
       res.status(201).json(created);
@@ -399,7 +399,7 @@ export function createApiApp() {
 
   app.put('/api/shows/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await assertUserCanAccessShow(
         auth.organizationId,
         auth.userId,
@@ -417,7 +417,7 @@ export function createApiApp() {
 
   app.delete('/api/shows/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await assertUserCanAccessShow(
         auth.organizationId,
         auth.userId,
@@ -443,7 +443,7 @@ export function createApiApp() {
 
   app.get('/api/shows/:id/knowledge', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await assertUserCanAccessShow(
         auth.organizationId,
         auth.userId,
@@ -461,7 +461,7 @@ export function createApiApp() {
 
   app.post('/api/shows/:id/editorial-identity', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await assertUserCanAccessShow(
         auth.organizationId,
         auth.userId,
@@ -501,7 +501,7 @@ export function createApiApp() {
 
   app.post('/api/shows/:id/suggest-pautas', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await assertUserCanAccessShow(
         auth.organizationId,
         auth.userId,
@@ -545,7 +545,7 @@ export function createApiApp() {
   // --- PRODUCTIONS / SEASONS (Filtered by Program-Level RBAC) ---
   app.get('/api/productions', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const showId = req.query.showId as string | undefined;
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
       res.json(await listProductions(auth.organizationId, showId, allowedFilter));
@@ -556,7 +556,7 @@ export function createApiApp() {
 
   app.post('/api/productions', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateProductionPayload(req.body, false);
       await assertUserCanAccessShow(
         auth.organizationId,
@@ -574,7 +574,7 @@ export function createApiApp() {
 
   app.put('/api/productions/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateProductionPayload(req.body, true);
       const updated = await updateProduction(auth.organizationId, req.params.id, validated, auth.userId);
       res.json(updated);
@@ -585,7 +585,7 @@ export function createApiApp() {
 
   app.delete('/api/productions/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await deleteProduction(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
     } catch (err) {
@@ -596,7 +596,7 @@ export function createApiApp() {
   // --- EPISODES & EDITORIAL CORE (Filtered & Guarded by Program-Level RBAC) ---
   app.get('/api/episodes', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const showId = req.query.showId as string | undefined;
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
       res.json(await listEpisodes(auth.organizationId, showId, allowedFilter));
@@ -607,7 +607,7 @@ export function createApiApp() {
 
   app.get('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const ep = await getEpisodeById(auth.organizationId, req.params.id);
       await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, ep.showId, 'canView');
       res.json(ep);
@@ -618,7 +618,7 @@ export function createApiApp() {
 
   app.post('/api/episodes', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateEpisodePayload(req.body, false);
       await assertUserCanAccessShow(
         auth.organizationId,
@@ -636,7 +636,7 @@ export function createApiApp() {
 
   app.put('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const existing = await getEpisodeById(auth.organizationId, req.params.id);
       await assertUserCanAccessShow(
         auth.organizationId,
@@ -655,7 +655,7 @@ export function createApiApp() {
 
   app.delete('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const existing = await getEpisodeById(auth.organizationId, req.params.id);
       await assertUserCanAccessShow(
         auth.organizationId,
@@ -674,7 +674,7 @@ export function createApiApp() {
   // --- PARTICIPANTS / GUESTS (Phase 1 & 2) ---
   const handleListGuests = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       res.json(await listParticipants(auth.organizationId));
     } catch (err) {
       next(err);
@@ -683,7 +683,7 @@ export function createApiApp() {
 
   const handleCreateGuest = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateParticipantPayload(req.body, false);
       const created = await createParticipant(auth.organizationId, validated, auth.userId);
       res.status(201).json(created);
@@ -694,7 +694,7 @@ export function createApiApp() {
 
   const handleUpdateGuest = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateParticipantPayload(req.body, true);
       const updated = await updateParticipant(auth.organizationId, req.params.id, validated, auth.userId);
       res.json(updated);
@@ -705,7 +705,7 @@ export function createApiApp() {
 
   const handleDeleteGuest = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await deleteParticipant(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
     } catch (err) {
@@ -726,7 +726,7 @@ export function createApiApp() {
   // --- SCHEDULE / AGENDA DE PRODUÇÃO (Filtered by Program-Level RBAC) ---
   app.get('/api/schedule', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const showId = req.query.showId as string | undefined;
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
       res.json(await listScheduleEvents(auth.organizationId, showId, allowedFilter));
@@ -737,7 +737,7 @@ export function createApiApp() {
 
   app.post('/api/schedule', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateScheduleEventPayload(req.body, false);
       await assertUserCanAccessShow(
         auth.organizationId,
@@ -755,7 +755,7 @@ export function createApiApp() {
 
   app.put('/api/schedule/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateScheduleEventPayload(req.body, true);
       const updated = await updateScheduleEvent(
         auth.organizationId,
@@ -771,7 +771,7 @@ export function createApiApp() {
 
   app.delete('/api/schedule/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await deleteScheduleEvent(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
     } catch (err) {
@@ -782,7 +782,7 @@ export function createApiApp() {
   // --- LIBRARY ASSETS / BIBLIOTECA DE ASSETS (Filtered by Program-Level RBAC) ---
   app.get('/api/library', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const showId = req.query.showId as string | undefined;
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
       res.json(await listLibraryAssets(auth.organizationId, showId, allowedFilter));
@@ -793,7 +793,7 @@ export function createApiApp() {
 
   app.post('/api/library', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateLibraryAssetPayload(req.body, false);
       if (validated.showId) {
         await assertUserCanAccessShow(
@@ -813,7 +813,7 @@ export function createApiApp() {
 
   app.put('/api/library/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const validated = validateLibraryAssetPayload(req.body, true);
       const updated = await updateLibraryAsset(
         auth.organizationId,
@@ -829,7 +829,7 @@ export function createApiApp() {
 
   app.delete('/api/library/:id', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       await deleteLibraryAsset(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
     } catch (err) {
@@ -840,7 +840,7 @@ export function createApiApp() {
   // --- AUDIT LOGS & EXPLICIT DEMO SEED RESET ---
   app.get('/api/audit', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       res.json(await listAuditLogs(auth.organizationId, 50));
     } catch (err) {
       next(err);
@@ -849,7 +849,7 @@ export function createApiApp() {
 
   app.post('/api/seed/reset', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const db = getDbConnection();
       await populateOrganizationWorkspace(db, auth.organizationId);
       await recordAuditLog(
@@ -880,7 +880,7 @@ export function createApiApp() {
   // --- RELIABLE AI GENERATION ENDPOINTS (Phase 4) ---
   app.post('/api/ai/diagnosis', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const diagnosis = await generateEditorialDiagnosis(req.body || {});
       await recordAuditLog(auth.organizationId, auth.userId, 'ai_generation', 'diagnosis', 'generated', {
         episodeTitle: req.body?.episodeTitle,
@@ -893,7 +893,7 @@ export function createApiApp() {
 
   app.post('/api/ai/research', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const research = await generateEditorialResearch(req.body || {});
       await recordAuditLog(auth.organizationId, auth.userId, 'ai_generation', 'research', 'generated', {
         guestName: req.body?.guestName,
@@ -906,7 +906,7 @@ export function createApiApp() {
 
   app.post('/api/ai/outline', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const result = await generateSmartOutline(req.body || {});
       await recordAuditLog(auth.organizationId, auth.userId, 'ai_generation', 'outline', 'generated', {
         episodeId: req.body?.episode?.id,
@@ -919,7 +919,7 @@ export function createApiApp() {
 
   app.post('/api/ai/script', requireAuth, async (req, res, next) => {
     try {
-      const auth = getAuthContext(req);
+      const auth = await getAuthContext(req);
       const result = await generateStudioScript(req.body || {});
       await recordAuditLog(auth.organizationId, auth.userId, 'ai_generation', 'script', 'generated', {
         episodeId: req.body?.episode?.id,
