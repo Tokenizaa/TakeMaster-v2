@@ -95,7 +95,7 @@ export function createApiApp() {
   app.use(requestTracingMiddleware);
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
-  app.get('/api/health', (_req, res) => {
+  app.get('/api/health', async (_req, res) => {
     try {
       const dbHealth = await checkDatabaseHealth();
       res.json({
@@ -120,12 +120,12 @@ export function createApiApp() {
     }
   });
 
-  app.get('/api/metrics', requireAuth, (_req, res) => {
+  app.get('/api/metrics', requireAuth, async (_req, res) => {
     res.json(getSystemMetrics());
   });
 
   // --- AUTHENTICATION & PROGRAM-LEVEL RBAC SESSION ---
-  app.get('/api/auth/session', requireAuth, (req, res, next) => {
+  app.get('/api/auth/session', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const session = buildAuthSession(auth.userId, auth.organizationId);
@@ -141,7 +141,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/auth/login', (req, res, next) => {
+  app.post('/api/auth/login', async (req, res, next) => {
     try {
       const { emailOrUserId, organizationId, loginCode } = req.body || {};
       const session = loginWithEmailOrUserId(emailOrUserId, organizationId, loginCode);
@@ -163,7 +163,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/auth/register', (req, res, next) => {
+  app.post('/api/auth/register', async (req, res, next) => {
     try {
       const organizationId = req.body?.organizationId || 'org-takemaster-studio';
       const result = await registerSaaSAccountWithSubscription(req.body || {}, organizationId);
@@ -181,7 +181,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/auth/switch-org', requireAuth, (req, res, next) => {
+  app.post('/api/auth/switch-org', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const { organizationId } = req.body || {};
@@ -204,7 +204,7 @@ export function createApiApp() {
   });
 
   // --- WORKSPACE STATE AGGREGATOR (Filtered by Program-Level RBAC) ---
-  app.get('/api/state', requireAuth, (req, res, next) => {
+  app.get('/api/state', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const session = buildAuthSession(auth.userId, auth.organizationId);
@@ -228,7 +228,7 @@ export function createApiApp() {
   });
 
   // --- RSPLAY TV SAAS BILLING & PAYMENT GATEWAY ENDPOINTS ---
-  app.get('/api/billing/overview', requireAuth, (req, res, next) => {
+  app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       res.json({
@@ -242,7 +242,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/billing/subscribe', requireAuth, (req, res, next) => {
+  app.post('/api/billing/subscribe', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const {
@@ -276,7 +276,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, (req, res, next) => {
+  app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const { autoRenew } = req.body || {};
@@ -292,7 +292,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, (req, res, next) => {
+  app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const { simulateFailure } = req.body || {};
@@ -309,7 +309,7 @@ export function createApiApp() {
   });
 
   // --- RSPLAY TV SAAS ADMIN PANEL ENDPOINTS (Users, RBAC, Subscriptions & Detailed Reports) ---
-  app.get('/api/admin/overview', requireAuth, (req, res, next) => {
+  app.get('/api/admin/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       res.json({
@@ -327,7 +327,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/admin/users', requireAuth, (req, res, next) => {
+  app.post('/api/admin/users', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const created = await createOrganizationUserWithShowPermissions(
@@ -341,7 +341,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/admin/users/:id/permissions', requireAuth, (req, res, next) => {
+  app.put('/api/admin/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const { permissions } = req.body || {};
@@ -360,7 +360,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/admin/users/:id/status', requireAuth, (req, res, next) => {
+  app.put('/api/admin/users/:id/status', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const updated = await updateOrganizationUserStatusOrRole(
@@ -376,7 +376,7 @@ export function createApiApp() {
   });
 
   // --- SHOWS & CATALOG (Filtered by Program-Level RBAC) ---
-  app.get('/api/shows', requireAuth, (req, res, next) => {
+  app.get('/api/shows', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const allowedFilter = auth.isFullAccessAdmin ? undefined : auth.allowedShowIds;
@@ -386,7 +386,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/shows', requireAuth, (req, res, next) => {
+  app.post('/api/shows', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateShowPayload(req.body, false);
@@ -397,7 +397,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/shows/:id', requireAuth, (req, res, next) => {
+  app.put('/api/shows/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -415,7 +415,7 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/shows/:id', requireAuth, (req, res, next) => {
+  app.delete('/api/shows/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -441,7 +441,7 @@ export function createApiApp() {
     }
   });
 
-  app.get('/api/shows/:id/knowledge', requireAuth, (req, res, next) => {
+  app.get('/api/shows/:id/knowledge', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -459,7 +459,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/shows/:id/editorial-identity', requireAuth, async (req, res, next) => {
+  app.post('/api/shows/:id/editorial-identity', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -499,7 +499,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/shows/:id/suggest-pautas', requireAuth, async (req, res, next) => {
+  app.post('/api/shows/:id/suggest-pautas', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await assertUserCanAccessShow(
@@ -543,7 +543,7 @@ export function createApiApp() {
   });
 
   // --- PRODUCTIONS / SEASONS (Filtered by Program-Level RBAC) ---
-  app.get('/api/productions', requireAuth, (req, res, next) => {
+  app.get('/api/productions', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const showId = req.query.showId as string | undefined;
@@ -554,7 +554,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/productions', requireAuth, (req, res, next) => {
+  app.post('/api/productions', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateProductionPayload(req.body, false);
@@ -572,7 +572,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/productions/:id', requireAuth, (req, res, next) => {
+  app.put('/api/productions/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateProductionPayload(req.body, true);
@@ -583,7 +583,7 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/productions/:id', requireAuth, (req, res, next) => {
+  app.delete('/api/productions/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await deleteProduction(auth.organizationId, req.params.id, auth.userId);
@@ -594,7 +594,7 @@ export function createApiApp() {
   });
 
   // --- EPISODES & EDITORIAL CORE (Filtered & Guarded by Program-Level RBAC) ---
-  app.get('/api/episodes', requireAuth, (req, res, next) => {
+  app.get('/api/episodes', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const showId = req.query.showId as string | undefined;
@@ -605,7 +605,7 @@ export function createApiApp() {
     }
   });
 
-  app.get('/api/episodes/:id', requireAuth, (req, res, next) => {
+  app.get('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const ep = await getEpisodeById(auth.organizationId, req.params.id);
@@ -616,7 +616,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/episodes', requireAuth, (req, res, next) => {
+  app.post('/api/episodes', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateEpisodePayload(req.body, false);
@@ -634,7 +634,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/episodes/:id', requireAuth, (req, res, next) => {
+  app.put('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const existing = await getEpisodeById(auth.organizationId, req.params.id);
@@ -653,7 +653,7 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/episodes/:id', requireAuth, (req, res, next) => {
+  app.delete('/api/episodes/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const existing = await getEpisodeById(auth.organizationId, req.params.id);
@@ -724,7 +724,7 @@ export function createApiApp() {
   app.delete('/api/participants/:id', requireAuth, handleDeleteGuest);
 
   // --- SCHEDULE / AGENDA DE PRODUÇÃO (Filtered by Program-Level RBAC) ---
-  app.get('/api/schedule', requireAuth, (req, res, next) => {
+  app.get('/api/schedule', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const showId = req.query.showId as string | undefined;
@@ -735,7 +735,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/schedule', requireAuth, (req, res, next) => {
+  app.post('/api/schedule', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateScheduleEventPayload(req.body, false);
@@ -753,7 +753,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/schedule/:id', requireAuth, (req, res, next) => {
+  app.put('/api/schedule/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateScheduleEventPayload(req.body, true);
@@ -769,7 +769,7 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/schedule/:id', requireAuth, (req, res, next) => {
+  app.delete('/api/schedule/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await deleteScheduleEvent(auth.organizationId, req.params.id, auth.userId);
@@ -780,7 +780,7 @@ export function createApiApp() {
   });
 
   // --- LIBRARY ASSETS / BIBLIOTECA DE ASSETS (Filtered by Program-Level RBAC) ---
-  app.get('/api/library', requireAuth, (req, res, next) => {
+  app.get('/api/library', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const showId = req.query.showId as string | undefined;
@@ -791,7 +791,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/library', requireAuth, (req, res, next) => {
+  app.post('/api/library', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateLibraryAssetPayload(req.body, false);
@@ -811,7 +811,7 @@ export function createApiApp() {
     }
   });
 
-  app.put('/api/library/:id', requireAuth, (req, res, next) => {
+  app.put('/api/library/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const validated = validateLibraryAssetPayload(req.body, true);
@@ -827,7 +827,7 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/library/:id', requireAuth, (req, res, next) => {
+  app.delete('/api/library/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       await deleteLibraryAsset(auth.organizationId, req.params.id, auth.userId);
@@ -838,7 +838,7 @@ export function createApiApp() {
   });
 
   // --- AUDIT LOGS & EXPLICIT DEMO SEED RESET ---
-  app.get('/api/audit', requireAuth, (req, res, next) => {
+  app.get('/api/audit', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       res.json(await listAuditLogs(auth.organizationId, 50));
@@ -847,7 +847,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/seed/reset', requireAuth, (req, res, next) => {
+  app.post('/api/seed/reset', requireAuth, async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const db = getDbConnection();
@@ -878,7 +878,7 @@ export function createApiApp() {
   });
 
   // --- RELIABLE AI GENERATION ENDPOINTS (Phase 4) ---
-  app.post('/api/ai/diagnosis', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/diagnosis', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const diagnosis = await generateEditorialDiagnosis(req.body || {});
@@ -891,7 +891,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/research', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/research', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const research = await generateEditorialResearch(req.body || {});
@@ -904,7 +904,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/outline', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/outline', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const result = await generateSmartOutline(req.body || {});
@@ -917,7 +917,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/script', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/script', requireAuth, async async (req, res, next) => {
     try {
       const auth = getAuthContext(req);
       const result = await generateStudioScript(req.body || {});
@@ -930,7 +930,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/repiques', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/repiques', requireAuth, async async (req, res, next) => {
     try {
       const result = await generateFollowUpRepiques(req.body || {});
       res.json({ followUps: result });
@@ -939,7 +939,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/shorts', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/shorts', requireAuth, async async (req, res, next) => {
     try {
       const result = await generatePlannedShorts(req.body || {});
       res.json(result);
@@ -948,7 +948,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/editor-script', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/editor-script', requireAuth, async async (req, res, next) => {
     try {
       const result = await generateEditorScriptSynthesis(req.body || {});
       res.json(result);
@@ -957,7 +957,7 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/ai/assist', requireAuth, async (req, res, next) => {
+  app.post('/api/ai/assist', requireAuth, async async (req, res, next) => {
     try {
       const result = await generateContextualAssist(req.body || {});
       res.json(result);
@@ -1012,7 +1012,7 @@ async function startServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const distPath = path.join(__dirname, 'dist');
     app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
+    app.get('*', async (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
