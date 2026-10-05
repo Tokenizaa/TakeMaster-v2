@@ -24,7 +24,7 @@ export interface AuthenticatedContext {
   showPermissions: UserShowPermission[];
 }
 
-const INTERNAL_SESSION_KEY = 'takemaster-v2-canonical-secret-key-2026';
+const INTERNAL_SESSION_KEY = process.env.INTERNAL_SESSION_KEY || '';
 
 function signSessionPayload(payload: { userId: string; organizationId: string }): string {
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
@@ -38,7 +38,7 @@ function signSessionPayload(payload: { userId: string; organizationId: string })
 export function verifySessionToken(
   token: string
 ): { userId: string; organizationId: string } | null {
-  if (!token || !token.startsWith('tmv2.')) return null;
+  if (!INTERNAL_SESSION_KEY || !token || !token.startsWith('tmv2.')) return null;
   const parts = token.split('.');
   if (parts.length !== 3) return null;
   const [, data, sig] = parts;
@@ -58,7 +58,7 @@ export function verifySessionToken(
   }
 }
 
-export function buildAuthSession(userId: string, organizationId?: string): AuthSession {
+export function buildAuthSession(userId: string, organizationId?: string): AuthSession {\n  if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
   const { users } = listUsersAndOrganizations();
   const user = users.find((u) => u.id === userId) || users[0];
   if (!user) {
@@ -182,7 +182,7 @@ export function resolveRequestAuthContext(req: Request): AuthenticatedContext {
     };
   }
 
-  const defaultSession = buildAuthSession('usr-producer-01', headerOrgId);
+  incrementMetric('authFailuresTotal');\n  throw new AppError(401, 'UNAUTHORIZED', 'Autenticação obrigatória: cabeçalho Authorization Bearer ausente.');
   return {
     token: defaultSession.token,
     userId: defaultSession.user.id,
