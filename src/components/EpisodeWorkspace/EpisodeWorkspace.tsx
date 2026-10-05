@@ -49,9 +49,9 @@ export const EpisodeWorkspace: React.FC<EpisodeWorkspaceProps> = ({
     : (program?.defaultCameras && program.defaultCameras.length > 0)
     ? program.defaultCameras
     : [
-        { id: 'cam-1', name: 'CAM 1 (Apresentador)', type: 'close', target: 'Apresentador (Close)', shotType: 'close' },
-        { id: 'cam-2', name: 'CAM 2 (Convidado)', type: 'close', target: 'Convidado Principal', shotType: 'close' },
-        { id: 'cam-3', name: 'CAM 3 (Plano Conjunto)', type: 'wide', target: 'Mesa / Cenário Geral', shotType: 'wide' }
+        { id: 'cam-1', name: 'CAM 1 (Apresentador)', label: 'CAM 1', purpose: 'Apresentador', framing: 'close', active: true },
+        { id: 'cam-2', name: 'CAM 2 (Convidado)', label: 'CAM 2', purpose: 'Convidado Principal', framing: 'close', active: true },
+        { id: 'cam-3', name: 'CAM 3 (Plano Conjunto)', label: 'CAM 3', purpose: 'Mesa / Cenário Geral', framing: 'wide', active: true }
       ];
 
   const handleUpdateEpisodeFields = (fields: Partial<Episode>) => {
