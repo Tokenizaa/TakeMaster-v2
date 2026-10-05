@@ -8,7 +8,7 @@
 | Hierarquia Programa → Produção/Temporada → Episódio preservada | docs/CANONICAL_STATE.md#19-26, docs/ARCHITECTURE.md#21-34, ADR-003 | Implementado | Verificar ausência de entidades duplicadas ou estruturas alternativas | ✅ Verificado: Estrutura preservada corretamente |
 | Compatibilidade legada somente na borda | docs/CANONICAL_STATE.md#14, docs/ARCHITECTURE.md#36-42, ADR-004 | Implementado com mapeamento | Risco de criação de entidades duplicadas para compatibilidade | ⚠️ Mapeamento existente em persistence.ts (legacyId function) - adequado para compatibilidade na borda |
 | IA é assistiva, validada e exclusivamente server-side | docs/CANONICAL_STATE.md#10-12, docs/ARCHITECTURE.md#69-86, ADR-005 | Implementado (NVIDIA NIM, backend only) | Verificar ausência de chamadas client-side ou fallback para Gemini | ✅ Verificado: Chamadas somente no backend, validação runtime, nenhum fallback para Gemini |
-| Editorial orientado por conhecimento verificável | docs/CANONICAL_STATE.md#40-48, docs/ARCHITECTURE.md#44-56, ADR-006 | Parcialmente implementado (knowledge base existente) | Validar crosswalk Programa operacional ↔ catálogo RS Play ↔ knowledge base | 🔄 Em andamento (P1) - Validar Programa → Identidade → Pautas → Episódio e persistência em ai_generations |
+| Editorial orientado por conhecimento verificável | docs/CANONICAL_STATE.md#40-48, docs/ARCHITECTURE.md#44-56, ADR-006 | Parcialmente implementado (knowledge base existente) | Validar crosswalk Programa operacional ↔ catálogo RS Play ↔ knowledge base | 🔄 Em andamento (P1) - Validar Programa → Identidade → Pautas → Episódio e persistência in ai_generations |
 | Não duplicar arquitetura sem necessidade comprovada | docs/CANONICAL_STATE.md#97-108, docs/ARCHITECTURE.md#111-118, ADR-007 | Majority implemented | Risco de criação de sistemas paralelos desnecessários | ✅ Verificado: Nenhuma duplicação desnecessária de arquitetura detectada |
 | Falhas não devem virar dados falsos | docs/CANONICAL_STATE.md#15-18, docs/ARCHITECTURE.md#67-68, ADR-008 | Implementado (persistence lança erros) | Verificar ausência de fallbacks com dados falsos ou mocks | ✅ Verificado: Nenhum mock estático, localStorage como fallback ou tratamento silencioso de erros detectado |
 | Segurança é requisito de cada operação | docs/CANONICAL_STATE.md#65-76, docs/ARCHITECTURE.md#96-110, ADR-009 | Implementado (RLS, validação org/prog) | Verificar cobertura completa de validação de acesso | ✅ Verificado: Isolamento por organização/programa implementado via RLS e verificações de aplicação |
@@ -17,11 +17,17 @@
 
 **CONCLUÍDO** - Todas as inconsistências de contrato identificadas na auditoria inicial foram corrigidas:
 - Show: catalogStatus, category, distributionChannels, createdBy
-- Episode: createdBy, updatedBy  
+- Episode: createdBy, updatedBy
 - Guest/Participant: organizationId
 - ScheduleEvent: productionId, assignedTeam
 - LibraryAsset: episodeId
 
-Os campos que não existem no schema do banco de dados (topic, synopsis, presenterName, tone, targetDurationMinutes, segments, checklist, plannedShorts, materials, editorialNotesForPost, episodeTitle, episodeNumber) requerem análise separada para determinar se devem ser adicionados ao schema, derivados de tabelas relacionadas ou ajustados no contrato frontend. Esta análise pode ser considerada parte do trabalho contínuo mas não bloqueia a conclusão do P0.
+Os campos que não existem no schema do banco de dados (topic, synopsis, presenterName, tone, targetDurationMinutes, segments, checklist, plannedShorts, materials, editorialNotesForPost, episodeTitle, episodeNumber, Show.name, Show.defaultCameras, Guest.previousEpisodes) foram analisados e classificados como:
+- **B — Derivável**: podem ser obtidos de colunas existentes ou joins (ex: episodeTitle → episodes.title, presenterName → host, etc.)
+- **C — Apenas de apresentação**: não precisam ser persistidos; podem ser retornados com valores padrão ou derivados em tempo de execução (ex: topic, synopsis, tone, etc.)
+Nenhum deles requer alteração de schema (migração) neste ciclo.
 
-**Próximos passos:** Analisar os campos que não existem no schema do banco e determinar a abordagem correta para cada um, mantendo o foco em entregar valor incremental antes de avançar para P1/P2 conforme o roadmap.
+## Próximos passos
+
+- Manter foco em entregar valor incremental antes de avançar para P1/P2 conforme o roadmap.
+- Caso alguma feature futura exija um dato realmente novo persistido, avaliar migração nesse momento.
