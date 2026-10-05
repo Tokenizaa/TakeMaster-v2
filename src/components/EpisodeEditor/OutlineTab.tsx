@@ -52,7 +52,10 @@ export const OutlineTab: React.FC<OutlineTabProps> = ({
         idea: episode.idea || episode.topic || '',
         guestName: episode.guestName || (episode.participants?.[0]?.name) || 'Convidado',
         targetDurationMin: episode.targetDurationMin || episode.targetDurationMinutes || 45,
-        diagnosis: episode.diagnosis || { centralTheme: '' },
+        diagnosis: episode.diagnosis || {
+          centralTheme: '', potentialStory: '', primaryConflict: '', primaryTransformation: '',
+          whyWatch: '', whatToDiscover: '', researchPoints: [], highImpactMoments: [], approved: false,
+        },
         research: episode.research,
       });
 
