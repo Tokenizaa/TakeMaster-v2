@@ -616,6 +616,7 @@ export interface DatabaseState {
 }
 
 export type ApiErrorCode =
+  | 'CONFIGURATION_ERROR'
   | 'VALIDATION_ERROR'
   | 'UNAUTHORIZED'
   | 'FORBIDDEN_CONTEXT'
