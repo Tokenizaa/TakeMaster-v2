@@ -1,19 +1,15 @@
 # Loop Checkpoint
 
-This file records checkpoints taken during loop execution.
+Registrar somente estado verificável.
 
-## Format
+## Formato
 
-- Checkpoint ID
-- Timestamp
-- Description
-- Evidence collected
+### Checkpoint-NNN
+**Timestamp:** YYYY-MM-DD HH:MM
+**Commit:** SHA
+**Objetivo:**
+**Comandos:**
+**Resultado:**
+**Pendências:**
 
-## Example
-
-### Checkpoint-001
-**Timestamp:** 2026-10-03 10:00:00
-**Description:** Initial state before G0
-**Evidence:** 
-- git status clean
-- features.json updated with current_gate
+Não registrar exemplos fictícios como checkpoints reais.
