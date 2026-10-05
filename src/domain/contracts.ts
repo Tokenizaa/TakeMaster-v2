@@ -243,6 +243,8 @@ export interface Show {
   editorialStyle: string;
   scenario: string;
   cameras: CameraConfig[];
+  defaultCameras?: CameraConfig[];
+  name?: string;
   standardStructure: string[];
   defaultOpening: string;
   defaultClosing: string;
@@ -439,6 +441,12 @@ export interface PlannedShort {
   estimatedDuration: string;
   status: 'Planejado' | 'Capturado' | 'Excelente' | 'Não aconteceu';
   notes?: string;
+  suggestedHook?: string;
+  narrativeArc?: string;
+  expectedDurationSeconds?: number;
+  cameraFocus?: string;
+  bRollNotes?: string;
+  targetPlatform?: string[];
 }
 
 export interface ProductionAsset {
@@ -452,6 +460,9 @@ export interface ProductionAsset {
   fileUrl?: string;
   tags?: string[];
   reusable?: boolean;
+  displayTime?: string;
+  content?: string;
+  notes?: string;
 }
 
 export interface LibraryAsset extends ProductionAsset {
