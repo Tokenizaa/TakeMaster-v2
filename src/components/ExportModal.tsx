@@ -52,19 +52,23 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     const divider = '======================================================================\n';
     let text = '';
 
+    const presenter = episode.presenterName || episode.host || 'Apresentador';
+    const participantsList = episode.participants?.map(p => `${p.name} (${p.role})`).join(', ') || episode.guestName || 'Solo';
+    const duration = episode.targetDurationMinutes || episode.targetDurationMin || 60;
+    const epNum = episode.episodeNumber || 1;
+
     switch (activeExportType) {
       case 'script_full':
         text += `TAKEMASTER - ROTEIRO TÉCNICO COMPLETO\n`;
-        text += `EPISÓDIO #${episode.episodeNumber}: ${episode.title}\n`;
-        text += `CONVIDADO: ${episode.guestName || 'Solo'} | FORMATO: ${episode.format} | META: ${episode.targetDurationMin} MIN\n`;
+        text += `EPISÓDIO #${epNum}: ${episode.title}\n`;
+        text += `PARTICIPANTES: ${participantsList} | FORMATO: ${episode.format} | META: ${duration} MIN\n`;
         text += divider;
-        (episode.script || []).forEach((item) => {
-          text += `\n[${item.timestamp}] - ${item.camera} (${item.speaker})\n`;
-          if (item.eyeDirection) text += `Direção: ${item.eyeDirection}\n`;
-          if (item.directionalMarkers?.length) {
-            text += `Marcadores: [${item.directionalMarkers.join(' · ')}]\n`;
-          }
-          text += `Fala: "${item.content}"\n`;
+        (episode.script || []).forEach((item, idx) => {
+          const cam = item.cameraInstruction || (item as any).camera || 'CAM 1';
+          const txt = item.teleprompterText || (item as any).content || '';
+          text += `\n[Bloco ${idx + 1}] - ${cam} (${item.speaker})\n`;
+          if (item.notes) text += `Direção/Tom: ${item.notes}\n`;
+          text += `Texto/Fala: "${txt}"\n`;
         });
         break;
 
@@ -72,40 +76,60 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         text += `TAKEMASTER - PAUTA RESUMIDA DE GRAVAÇÃO\n`;
         text += `EPISÓDIO: ${episode.title}\n`;
         text += divider;
-        (episode.outline || []).forEach((b) => {
-          text += `\nBLOCO ${b.blockNumber}: ${b.title} (${b.estimatedDurationMin} min)\n`;
-          text += `Objetivo: ${b.objective}\n`;
-          if (b.transitionText) text += `Transição: "${b.transitionText}"\n`;
-        });
+        if (episode.segments && episode.segments.length > 0) {
+          episode.segments.forEach((seg, sIdx) => {
+            text += `\nQUADRO ${sIdx + 1}: ${seg.title} (${seg.estimatedDurationMinutes} min)\n`;
+            text += `Objetivo: ${seg.objective || seg.description}\n`;
+            if (seg.questions && seg.questions.length > 0) {
+              text += `Perguntas-chave:\n`;
+              seg.questions.forEach((q, qIdx) => {
+                text += `  P${qIdx + 1}: "${q.text}"\n`;
+              });
+            }
+          });
+        } else {
+          (episode.outline || []).forEach((b) => {
+            text += `\nBLOCO ${b.blockNumber}: ${b.title} (${b.estimatedDurationMin} min)\n`;
+            text += `Objetivo: ${b.objective}\n`;
+            if (b.transitionText) text += `Transição: "${b.transitionText}"\n`;
+          });
+        }
         break;
 
       case 'host_sheet':
         text += `TAKEMASTER - FOLHA DE BANCADA DO APRESENTADOR\n`;
-        text += `APRESENTADOR: ${episode.host || 'Apresentador'} | CONVIDADO: ${episode.guestName}\n`;
+        text += `APRESENTADOR: ${presenter} | ELENCO: ${participantsList}\n`;
         text += divider;
-        (episode.questions || []).forEach((q, idx) => {
-          text += `\nPERGUNTA #${idx + 1} (${q.suggestedCamera}):\n`;
+        const allQuestions = (episode.segments?.flatMap(s => s.questions || [])) || episode.questions || [];
+        allQuestions.forEach((q, idx) => {
+          text += `\nPERGUNTA #${idx + 1} (${q.recommendedCamera || (q as any).suggestedCamera || 'CAM 1'}):\n`;
           text += `"${q.text}"\n`;
           text += `Objetivo: ${q.objective}\n`;
           if (q.followUps?.length) {
             text += `Repiques Estratégicos:\n`;
             q.followUps.forEach((fu) => {
-              text += `  -> [${fu.triggerCondition}] ${fu.actionOrQuestion}\n`;
+              text += `  -> [${fu.condition || (fu as any).triggerCondition}] ${fu.action || (fu as any).actionOrQuestion}\n`;
             });
           }
         });
         break;
 
       case 'guest_sheet':
-        text += `TAKEMASTER - BRIEFING PARA O CONVIDADO\n`;
-        text += `OLÁ, ${episode.guestName?.toUpperCase() || 'CONVIDADO'}! BEM-VINDO AO NOSSO ESTÚDIO.\n`;
+        text += `TAKEMASTER - BRIEFING PARA PARTICIPANTES\n`;
+        text += `OLÁ! BEM-VINDO AO NOSSO ESTÚDIO.\n`;
         text += `PROGRAMA: ${episode.title}\n`;
-        text += `DURAÇÃO PREVISTA: ~${episode.targetDurationMin} minutos de gravação.\n`;
+        text += `DURAÇÃO PREVISTA: ~${duration} minutos de gravação.\n`;
         text += divider;
         text += `\nTEMAS QUE IREMOS PERCORRER NA CONVERSA:\n`;
-        (episode.outline || []).forEach((b) => {
-          text += `• ${b.title}: ${b.objective}\n`;
-        });
+        if (episode.segments && episode.segments.length > 0) {
+          episode.segments.forEach((s) => {
+            text += `• ${s.title}: ${s.objective || s.description}\n`;
+          });
+        } else {
+          (episode.outline || []).forEach((b) => {
+            text += `• ${b.title}: ${b.objective}\n`;
+          });
+        }
         text += `\nFIQUE TRANQUILO: Não buscamos respostas perfeitas, mas sim histórias reais e espontâneas!\n`;
         break;
 
@@ -113,23 +137,23 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         text += `TAKEMASTER - MAPA & SETUP TÉCNICO DE CÂMERAS\n`;
         text += divider;
         (episode.cameras || []).forEach((cam) => {
-          text += `\n[${cam.name}] - ${cam.label}\n`;
-          text += `Enquadramento: ${cam.framing}\n`;
-          text += `Função: ${cam.purpose}\n`;
+          text += `\n[${cam.name}] - ${cam.target || cam.label || ''}\n`;
+          text += `Enquadramento: ${cam.shotType || cam.framing || 'Médio'}\n`;
         });
         break;
 
       case 'editor_script':
-        text += episode.editorScriptSynthesis || `ROTEIRO DE EDIÇÃO\nNenhum roteiro sintetizado ainda.`;
+        text += episode.editorialNotesForPost || episode.editorScriptSynthesis || `ROTEIRO DE EDIÇÃO\nNenhum roteiro sintetizado ainda.`;
         break;
 
       case 'shorts_plan':
         text += `TAKEMASTER - ESTRATÉGIA DE CORTES DIGITAIS (SHORTS/REELS)\n`;
         text += divider;
-        (episode.shorts || []).forEach((sh, idx) => {
-          text += `\nSHORT #${idx + 1}: ${sh.title} (${sh.estimatedDuration}) [${sh.status}]\n`;
-          text += `GANCHO (0-3s): "${sh.hook}"\n`;
-          text += `PERGUNTA GERADORA: "${sh.generatingQuestion}"\n`;
+        const shortsList = episode.plannedShorts || episode.shorts || [];
+        shortsList.forEach((sh, idx) => {
+          text += `\nSHORT #${idx + 1}: ${sh.title} (${(sh as any).expectedDurationSeconds || (sh as any).estimatedDuration || 45}s)\n`;
+          text += `GANCHO (0-3s): "${(sh as any).suggestedHook || (sh as any).hook || ''}"\n`;
+          text += `FOCO DE CÂMERA: ${(sh as any).cameraFocus || 'CAM 1'}\n`;
         });
         break;
     }

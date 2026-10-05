@@ -1,201 +1,205 @@
 import React from 'react';
 import {
-  Film,
-  Tv,
-  Users,
-  Sliders,
-  Sparkles,
-  BookOpen,
-  ListOrdered,
-  FileText,
-  Camera,
-  FolderOpen,
-  Scissors,
-  CheckCircle2,
-  FileCheck,
-  PlayCircle,
   Clapperboard,
-  LayoutDashboard
+  LayoutDashboard,
+  Tv,
+  Film,
+  Users,
+  Video,
+  Plus,
+  Calendar,
+  FolderKanban,
+  CreditCard,
+  ShieldCheck,
+  Lock,
 } from 'lucide-react';
-import { Episode, Show } from '../types';
+import { AuthSession } from '../types';
+
+export type NavSection =
+  | 'dashboard'
+  | 'shows'
+  | 'episodes'
+  | 'guests'
+  | 'schedule'
+  | 'library'
+  | 'studio'
+  | 'billing'
+  | 'admin';
 
 interface SidebarProps {
-  currentView: string;
-  onNavigate: (view: string) => void;
-  activeEpisode: Episode | null;
-  activeEpisodeTab: string;
-  onSelectEpisodeTab: (tab: string) => void;
-  onOpenStudioMode: () => void;
-  onNewEpisodeClick: () => void;
-  shows: Show[];
-  activeShowId: string;
-  onSelectShowId: (id: string) => void;
+  activeSection: NavSection;
+  onSelectSection: (section: NavSection) => void;
+  onNewEpisode: () => void;
+  episodesCount: number;
+  showsCount: number;
+  guestsCount: number;
+  scheduleCount?: number;
+  libraryCount?: number;
+  organizationName?: string;
+  session?: AuthSession | null;
+  onOpenLoginModal?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
-  currentView,
-  onNavigate,
-  activeEpisode,
-  activeEpisodeTab,
-  onSelectEpisodeTab,
-  onOpenStudioMode,
-  onNewEpisodeClick,
-  shows,
-  activeShowId,
-  onSelectShowId,
+  activeSection,
+  onSelectSection,
+  onNewEpisode,
+  episodesCount,
+  showsCount,
+  guestsCount,
+  scheduleCount = 0,
+  libraryCount = 0,
+  organizationName = 'RSPlay TV — Rede Broadcast',
+  session,
+  onOpenLoginModal,
 }) => {
-  const currentShow = shows.find((s) => s.id === activeShowId) || shows[0];
-
-  const mainNav = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'episodes', label: 'Episódios', icon: Film },
-    { id: 'shows', label: 'Programas', icon: Tv },
-    { id: 'guests', label: 'Convidados', icon: Users },
-    { id: 'studio-setup', label: 'Setup de Câmeras', icon: Sliders },
+  const editorialItems: {
+    id: NavSection;
+    label: string;
+    icon: React.FC<{ className?: string }>;
+    badge?: number;
+  }[] = [
+    { id: 'dashboard', label: 'Painel do Programa', icon: LayoutDashboard },
+    { id: 'episodes', label: 'Episódios & Roteiros', icon: Film, badge: episodesCount },
+    { id: 'guests', label: 'Participantes & Convidados', icon: Users, badge: guestsCount },
   ];
 
-  const episodeTabs = [
-    { id: 'diagnosis', label: 'Visão Geral & IA', icon: Sparkles },
-    { id: 'research', label: 'Pesquisa Factual', icon: BookOpen },
-    { id: 'outline', label: 'Pauta & Blocos', icon: ListOrdered },
-    { id: 'script', label: 'Roteiro & Câmeras', icon: FileText },
-    { id: 'cameras', label: 'Mapa de Câmeras', icon: Camera },
-    { id: 'assets', label: 'Materiais & B-Roll', icon: FolderOpen },
-    { id: 'shorts', label: 'Cortes & Shorts', icon: Scissors },
-    { id: 'prep', label: 'Checklist Técnico', icon: CheckCircle2 },
-    { id: 'editor', label: 'Roteiro de Edição', icon: FileCheck },
+  const operationalItems: {
+    id: NavSection;
+    label: string;
+    icon: React.FC<{ className?: string }>;
+    badge?: number;
+  }[] = [
+    { id: 'shows', label: 'Catálogo & Temporadas', icon: Tv, badge: showsCount },
+    { id: 'schedule', label: 'Agenda de Produção', icon: Calendar, badge: scheduleCount },
+    { id: 'library', label: 'Biblioteca de Assets', icon: FolderKanban, badge: libraryCount },
+    { id: 'studio', label: 'Estúdio & Câmeras', icon: Video },
   ];
+
+  const saasAdminItems: {
+    id: NavSection;
+    label: string;
+    icon: React.FC<{ className?: string }>;
+  }[] = [
+    { id: 'billing', label: 'Assinatura & Gateway', icon: CreditCard },
+    { id: 'admin', label: 'Painel Administrativo', icon: ShieldCheck },
+  ];
+
+  const renderNavItem = (item: {
+    id: NavSection;
+    label: string;
+    icon: React.FC<{ className?: string }>;
+    badge?: number;
+  }) => {
+    const Icon = item.icon;
+    const isActive = activeSection === item.id;
+    return (
+      <button
+        key={item.id}
+        onClick={() => onSelectSection(item.id)}
+        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer whitespace-nowrap ${
+          isActive
+            ? 'bg-zinc-900 text-amber-400 border border-zinc-800 shadow-sm'
+            : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 border border-transparent'
+        }`}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-amber-400' : 'text-zinc-500'}`} />
+          <span className="truncate">{item.label}</span>
+        </div>
+        {item.badge !== undefined && (
+          <span
+            className={`text-xs px-2 py-0.5 rounded-md font-mono tabular-nums ${
+              isActive ? 'bg-amber-500/20 text-amber-300' : 'bg-zinc-900 text-zinc-500'
+            }`}
+          >
+            {item.badge}
+          </span>
+        )}
+      </button>
+    );
+  };
+
+  const isRestrictedProfile = session && !session.isFullAccessAdmin;
 
   return (
-    <aside className="w-64 bg-zinc-900/90 border-r border-zinc-800 flex flex-col h-screen select-none shrink-0 text-sm">
+    <aside className="w-64 bg-zinc-950 border-r border-zinc-800/80 flex flex-col h-screen shrink-0 select-none">
       {/* Brand Header */}
-      <div className="p-4 border-b border-zinc-800/80 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
-            <Clapperboard className="w-5 h-5" />
+      <div className="p-5 border-b border-zinc-800/80 flex items-center justify-between">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20 shrink-0">
+            <Clapperboard className="w-5 h-5 text-zinc-950" />
           </div>
-          <div>
-            <h1 className="font-bold text-zinc-100 text-base leading-tight tracking-tight">TakeMaster</h1>
-            <p className="text-[11px] text-zinc-400 uppercase tracking-wider font-mono">Direção & Roteiro</p>
+          <div className="min-w-0">
+            <div className="font-bold text-base tracking-tight text-zinc-100 truncate">
+              RSPlay TV SaaS
+            </div>
+            <p className="text-[11px] text-zinc-500 truncate">{organizationName}</p>
           </div>
         </div>
       </div>
 
-      {/* Show Selector */}
-      <div className="px-3 pt-3 pb-2 border-b border-zinc-800/60">
-        <label className="text-[10px] uppercase font-mono tracking-wider text-zinc-400 block mb-1">
-          Programa Ativo
-        </label>
-        <select
-          value={activeShowId}
-          onChange={(e) => onSelectShowId(e.target.value)}
-          aria-label="Selecionar Programa Ativo"
-          className="w-full bg-zinc-950 border border-zinc-800 text-zinc-200 text-xs rounded-md px-2.5 py-1.5 focus:outline-none focus:border-amber-500/50"
-        >
-          {shows.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.title} ({s.format})
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Main Navigation */}
-      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-6">
-        <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 px-2 block mb-1.5">
-            Navegação Geral
-          </span>
-          <nav className="space-y-0.5">
-            {mainNav.map((item) => {
-              const Icon = item.icon;
-              const isActive = currentView === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onNavigate(item.id)}
-                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md font-medium text-xs transition-colors ${
-                    isActive
-                      ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60'
-                  }`}
-                >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* Active Episode Workflow Tabs */}
-        {activeEpisode && (
-          <div className="pt-2 border-t border-zinc-800/80">
-            <div className="flex items-center justify-between px-2 mb-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400/90 font-semibold">
-                Produção Atual
-              </span>
-              <span className="text-[10px] font-mono text-zinc-400">
-                EP #{activeEpisode.episodeNumber}
-              </span>
-            </div>
-
-            <div className="px-2 mb-2">
-              <p className="text-xs font-semibold text-zinc-200 truncate" title={activeEpisode.title}>
-                {activeEpisode.title}
-              </p>
-              <p className="text-[11px] text-zinc-400 truncate">
-                {activeEpisode.guestName} · {activeEpisode.targetDurationMin} min
-              </p>
-            </div>
-
-            {/* Quick Button: Start Studio Mode */}
-            <button
-              onClick={onOpenStudioMode}
-              className="w-full mb-3 flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-500 text-white rounded-md font-semibold text-xs transition-all shadow-md shadow-red-950/40 group active:scale-[0.98]"
-            >
-              <PlayCircle className="w-4 h-4 fill-white/20 group-hover:scale-110 transition-transform" />
-              <span>Modo Estúdio (Gravação)</span>
-            </button>
-
-            <nav className="space-y-0.5">
-              {episodeTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isTabActive = currentView === 'episode-detail' && activeEpisodeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      onNavigate('episode-detail');
-                      onSelectEpisodeTab(tab.id);
-                    }}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                      isTabActive
-                        ? 'bg-zinc-800 text-amber-300 font-semibold'
-                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <Icon className="w-3.5 h-3.5 shrink-0" />
-                      <span className="truncate">{tab.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        )}
-      </div>
-
-      {/* Bottom CTA */}
-      <div className="p-3 border-t border-zinc-800 bg-zinc-950/40">
+      {/* Primary CTA */}
+      <div className="p-4">
         <button
-          onClick={onNewEpisodeClick}
-          className="w-full py-2 px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border border-zinc-700 hover:border-zinc-600 rounded-md font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          onClick={onNewEpisode}
+          className="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/15 transition-all cursor-pointer whitespace-nowrap"
         >
-          <span className="text-amber-400 font-bold text-sm">+</span>
+          <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>Novo Episódio</span>
         </button>
+      </div>
+
+      {/* Navigation Sections */}
+      <nav className="flex-1 px-3 space-y-5 overflow-y-auto">
+        <div className="space-y-1">
+          <div className="px-3 py-1 text-xs font-medium text-zinc-500">
+            Núcleo Editorial
+          </div>
+          {editorialItems.map(renderNavItem)}
+        </div>
+
+        <div className="space-y-1">
+          <div className="px-3 py-1 text-xs font-medium text-zinc-500">
+            Operação & Estúdio
+          </div>
+          {operationalItems.map(renderNavItem)}
+        </div>
+
+        <div className="space-y-1">
+          <div className="px-3 py-1 text-xs font-medium text-zinc-500">
+            SaaS, Planos & Admin
+          </div>
+          {saasAdminItems.map(renderNavItem)}
+        </div>
+      </nav>
+
+      {/* Active Profile & Program Isolation Footer */}
+      <div className="p-4 border-t border-zinc-800/80">
+        <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800/80 space-y-2">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 text-amber-400 text-xs font-semibold truncate">
+              <Lock className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">
+                {isRestrictedProfile ? 'Login Isolado por Programa' : 'Acesso Master Admin'}
+              </span>
+            </div>
+          </div>
+          <p className="text-[11px] text-zinc-400 leading-relaxed">
+            {isRestrictedProfile
+              ? `Visualizando apenas ${showsCount} programa(s) liberado(s) para ${session?.user.name.split(' ')[0]}.`
+              : `Todos os ${showsCount} programas e relatórios liberados.`}
+          </p>
+          {onOpenLoginModal && (
+            <button
+              type="button"
+              onClick={onOpenLoginModal}
+              className="w-full py-1.5 px-2.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-medium text-zinc-200 transition-colors cursor-pointer"
+            >
+              Alternar Login de Programa
+            </button>
+          )}
+        </div>
       </div>
     </aside>
   );

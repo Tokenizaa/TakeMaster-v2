@@ -3,183 +3,198 @@ import {
   Film,
   Plus,
   Search,
-  Clock,
-  PlayCircle,
-  ArrowRight,
   Filter,
-  Trash2
+  Clock,
+  Users,
+  FileText,
+  Video,
+  ArrowRight,
+  Tv,
+  CheckCircle,
+  Play
 } from 'lucide-react';
-import { Episode, EpisodeStatus } from '../types';
-import { getStatusColorClass, getStatusLabel } from '../utils/format';
+import { Episode, Program, EpisodeStatus } from '../types';
 
 interface EpisodesListViewProps {
   episodes: Episode[];
-  onSelectEpisode: (ep: Episode, tab?: string) => void;
-  onNewEpisodeClick: () => void;
-  onOpenStudioMode: (ep: Episode) => void;
-  onDeleteEpisode: (id: string) => Promise<void>;
+  programs: Program[];
+  onSelectEpisode: (episode: Episode) => void;
+  onOpenNewEpisodeModal: (programId?: string) => void;
 }
 
 export const EpisodesListView: React.FC<EpisodesListViewProps> = ({
   episodes,
+  programs,
   onSelectEpisode,
-  onNewEpisodeClick,
-  onOpenStudioMode,
-  onDeleteEpisode,
+  onOpenNewEpisodeModal,
 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [selectedProgram, setSelectedProgram] = useState<string>('all');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredEpisodes = episodes.filter((ep) => {
+  const filteredEpisodes = episodes.filter(ep => {
+    const matchesProgram = selectedProgram === 'all' || ep.programId === selectedProgram;
+    const matchesStatus = selectedStatus === 'all' || ep.status === selectedStatus;
     const matchesSearch =
-      ep.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ep.guestName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ep.idea.toLowerCase().includes(searchTerm.toLowerCase());
+      !searchQuery ||
+      ep.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (ep.topic || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (ep.presenterName || '').toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesStatus = statusFilter === 'all' || ep.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    return matchesProgram && matchesStatus && matchesSearch;
   });
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 max-w-7xl mx-auto w-full">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="space-y-6">
+      {/* Top Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Film className="w-5 h-5 text-amber-400" />
-            <h1 className="text-xl md:text-2xl font-bold text-zinc-100">Episódios da Produção</h1>
-          </div>
-          <p className="text-xs text-zinc-400">
-            Gerencie o pipeline completo de gravação: rascunhos, pautas, roteiros aprovados e pós-gravação.
+          <h1 className="text-xl font-bold text-white flex items-center gap-2">
+            <Film className="w-5 h-5 text-purple-400" />
+            Todos os Episódios
+          </h1>
+          <p className="text-xs text-slate-400">
+            Gerencie toda a grade de episódios, status de roteirização e prontidão de gravação.
           </p>
         </div>
 
         <button
-          onClick={onNewEpisodeClick}
-          className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs rounded-lg flex items-center gap-2 transition-colors cursor-pointer shrink-0"
+          onClick={() => onOpenNewEpisodeModal()}
+          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-semibold shadow-md transition"
         >
-          <Plus className="w-4 h-4 stroke-[3]" />
-          <span>Novo Episódio</span>
+          <Plus className="w-4 h-4" />
+          + Novo Episódio
         </button>
       </div>
 
-      {/* Filters and Search Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="relative max-w-md w-full">
-          <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
+      {/* Filter and Search Bar */}
+      <div className="flex flex-col md:flex-row items-center gap-3 bg-slate-900 border border-slate-800 rounded-xl p-3">
+        <div className="relative flex-1 w-full">
+          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar por título, convidado ou tema..."
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Buscar por título, tema, apresentador..."
+            className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
           />
         </div>
 
-        {/* Filter buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-          {[
-            { id: 'all', label: 'Todos' },
-            { id: 'ready', label: 'Pronto p/ Gravar' },
-            { id: 'scripting', label: 'Roteirizando' },
-            { id: 'outline', label: 'Em Pauta' },
-            { id: 'recorded', label: 'Gravados' },
-          ].map((flt) => (
-            <button
-              key={flt.id}
-              onClick={() => setStatusFilter(flt.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                statusFilter === flt.id
-                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
-              }`}
-            >
-              {flt.label}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          {/* Program select */}
+          <select
+            value={selectedProgram}
+            onChange={e => setSelectedProgram(e.target.value)}
+            className="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200"
+          >
+            <option value="all">Todos os Programas</option>
+            {programs.map(p => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
+
+          {/* Status select */}
+          <select
+            value={selectedStatus}
+            onChange={e => setSelectedStatus(e.target.value)}
+            className="bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200"
+          >
+            <option value="all">Todos os Status</option>
+            <option value="draft">Rascunho</option>
+            <option value="diagnosis">Diagnóstico</option>
+            <option value="research">Pesquisa</option>
+            <option value="outline">Pauta</option>
+            <option value="scripting">Roteiro</option>
+            <option value="ready">Pronto p/ Gravar</option>
+            <option value="recording">Gravando</option>
+            <option value="recorded">Gravado</option>
+            <option value="editing">Edição</option>
+            <option value="published">Publicado</option>
+          </select>
         </div>
       </div>
 
-      {/* Episodes Table / Cards */}
-      <div className="space-y-3">
-        {filteredEpisodes.length === 0 ? (
-          <div className="text-center py-16 border border-dashed border-zinc-800 rounded-2xl bg-zinc-900/30">
-            <Film className="w-10 h-10 text-zinc-600 mx-auto mb-2" />
-            <p className="text-xs text-zinc-400">Nenhum episódio encontrado com os filtros selecionados.</p>
-          </div>
-        ) : (
-          filteredEpisodes.map((ep) => (
-            <div
-              key={ep.id}
-              className="bg-zinc-900/70 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl p-5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group"
-            >
+      {/* Episode Cards Grid */}
+      {filteredEpisodes.length === 0 ? (
+        <div className="p-12 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
+          <Film className="w-12 h-12 text-slate-600 mx-auto" />
+          <p className="text-base text-slate-300 font-semibold">Nenhum episódio encontrado</p>
+          <p className="text-xs text-slate-400">Tente ajustar seus filtros de busca ou crie um novo episódio.</p>
+          <button
+            onClick={() => onOpenNewEpisodeModal()}
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg text-xs font-semibold"
+          >
+            Criar Episódio
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredEpisodes.map(ep => {
+            const prog = programs.find(p => p.id === ep.programId);
+
+            return (
               <div
+                key={ep.id}
                 onClick={() => onSelectEpisode(ep)}
-                className="flex-1 cursor-pointer space-y-1.5"
+                className="bg-slate-900 border border-slate-800 hover:border-purple-500/60 rounded-xl p-4 cursor-pointer transition flex flex-col justify-between group shadow-sm hover:shadow-purple-950/20 space-y-3"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="font-mono text-xs font-bold text-amber-400">
-                    EP {String(ep.episodeNumber).padStart(3, '0')}
-                  </span>
-                  <span className="text-zinc-600">·</span>
-                  <span className="text-xs text-zinc-400 font-mono">{ep.format}</span>
-                  <span className="text-zinc-600">·</span>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${getStatusColorClass(ep.status)}`}>
-                    {getStatusLabel(ep.status)}
-                  </span>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    {prog ? (
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950 text-purple-300 border border-purple-800">
+                        {prog.name}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-slate-500">Sem Programa</span>
+                    )}
+
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                      ep.status === 'ready'
+                        ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+                        : ep.status === 'recording'
+                        ? 'bg-red-950 text-red-300 border border-red-800 animate-pulse'
+                        : 'bg-slate-800 text-slate-300'
+                    }`}>
+                      {ep.status}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-bold text-white group-hover:text-purple-300 transition line-clamp-2">
+                    {ep.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-400 line-clamp-2">
+                    {ep.topic || ep.synopsis}
+                  </p>
                 </div>
 
-                <h3 className="text-base font-bold text-zinc-100 group-hover:text-amber-300 transition-colors">
-                  {ep.title}
-                </h3>
+                <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                  <div className="flex items-center justify-between text-[11px] text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-slate-500" />
+                      {ep.targetDurationMinutes} min
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users className="w-3 h-3 text-slate-500" />
+                      {(ep.participants || []).length} pessoas
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <FileText className="w-3 h-3 text-slate-500" />
+                      {(ep.script || []).length} falas
+                    </span>
+                  </div>
 
-                <p className="text-xs text-zinc-400 line-clamp-1">
-                  {ep.guestName ? <strong className="text-zinc-300">{ep.guestName} · </strong> : ''}
-                  {ep.idea}
-                </p>
-
-                <div className="flex items-center gap-4 text-xs font-mono text-zinc-500 pt-1">
-                  <span>⏱ {ep.targetDurationMin} min</span>
-                  <span>·</span>
-                  <span>{ep.outline?.length || 0} blocos</span>
-                  <span>·</span>
-                  <span>{ep.questions?.length || 0} perguntas</span>
-                  <span>·</span>
-                  <span>{ep.shorts?.length || 0} shorts planejados</span>
+                  <div className="text-right">
+                    <span className="text-xs text-purple-400 font-semibold group-hover:translate-x-1 inline-flex items-center gap-1 transition-transform">
+                      Abrir Workspace &rarr;
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              {/* Quick Actions */}
-              <div className="flex items-center gap-2 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-zinc-800">
-                <button
-                  onClick={() => onOpenStudioMode(ep)}
-                  className="px-3.5 py-2 bg-red-600/90 hover:bg-red-500 text-white font-bold text-xs rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shadow-md shadow-red-950/40"
-                  title="Abrir diretamente no Modo Estúdio para gravação"
-                >
-                  <PlayCircle className="w-3.5 h-3.5" />
-                  <span>Modo Estúdio</span>
-                </button>
-
-                <button
-                  onClick={() => onSelectEpisode(ep)}
-                  className="px-3.5 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
-                >
-                  <span>Abrir Editor</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-
-                <button
-                  onClick={() => onDeleteEpisode(ep.id)}
-                  className="p-2 text-zinc-600 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors cursor-pointer"
-                  title="Excluir episódio"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

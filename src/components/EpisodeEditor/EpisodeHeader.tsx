@@ -38,7 +38,8 @@ export const EpisodeHeader: React.FC<EpisodeHeaderProps> = ({
     (acc, b) => acc + (b.estimatedDurationMin || 0),
     0
   );
-  const diffMinutes = plannedMinutes - episode.targetDurationMin;
+  const targetMin = episode.targetDurationMin || episode.targetDurationMinutes || 60;
+  const diffMinutes = plannedMinutes - targetMin;
 
   const tabs = [
     { id: 'diagnosis', label: '1. Visão Geral & Conceito' },

@@ -42,9 +42,9 @@ export const CamerasTab: React.FC<CamerasTabProps> = ({
   const startEdit = (cam: CameraConfig) => {
     setEditingCamId(cam.id);
     setEditName(cam.name);
-    setEditLabel(cam.label);
-    setEditPurpose(cam.purpose);
-    setEditFraming(cam.framing);
+    setEditLabel(cam.label || '');
+    setEditPurpose(cam.purpose || '');
+    setEditFraming(cam.framing || '');
   };
 
   const saveEdit = () => {

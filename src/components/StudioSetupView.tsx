@@ -24,6 +24,7 @@ export const StudioSetupView: React.FC<StudioSetupViewProps> = ({
     const newCam: CameraConfig = {
       id: `cam-${Date.now()}`,
       name: `CAM ${nextNum}`,
+      role: 'Estúdio Auxiliar',
       label: `Câmera ${nextNum}`,
       purpose: 'Enquadramento auxiliar de estúdio',
       framing: 'Plano Geral',
@@ -44,9 +45,9 @@ export const StudioSetupView: React.FC<StudioSetupViewProps> = ({
   const startEdit = (cam: CameraConfig) => {
     setEditingCamId(cam.id);
     setName(cam.name);
-    setLabel(cam.label);
-    setPurpose(cam.purpose);
-    setFraming(cam.framing);
+    setLabel(cam.label || '');
+    setPurpose(cam.purpose || '');
+    setFraming(cam.framing || '');
   };
 
   const saveEdit = async () => {

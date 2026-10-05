@@ -56,7 +56,7 @@ export const ScriptTab: React.FC<ScriptTabProps> = ({
   const handleWriteScriptWithAi = async () => {
     setLoading(true);
     try {
-      const res = await api.aiScript(episode);
+      const res = await api.aiScript({ episode });
       if (res.script && res.script.length > 0) {
         onUpdateEpisode({ script: res.script, status: 'scripting' });
       }
@@ -232,7 +232,7 @@ export const ScriptTab: React.FC<ScriptTabProps> = ({
           script.map((item) => {
             const camStyle = getCameraColor(item.camera);
             const matchingQuestion = questions.find(
-              (q) => q.id === item.questionRefId || item.content.includes(q.text.slice(0, 20))
+              (q) => q.id === item.questionRefId || (item.content || item.teleprompterText || '').includes(q.text.slice(0, 20))
             );
             const isQuestionExpanded = matchingQuestion
               ? !!expandedQuestionIds[matchingQuestion.id]

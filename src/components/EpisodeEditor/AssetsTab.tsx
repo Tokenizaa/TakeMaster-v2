@@ -161,11 +161,11 @@ export const AssetsTab: React.FC<AssetsTabProps> = ({
                   <button
                     onClick={() => handleToggleStatus(asset.id)}
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border transition-colors cursor-pointer ${getStatusBadge(
-                      asset.status
+                      asset.status || 'pendente'
                     )}`}
                     title="Clique para alternar o status do material"
                   >
-                    {asset.status.toUpperCase()}
+                    {(asset.status || 'pendente').toUpperCase()}
                   </button>
                 </div>
 

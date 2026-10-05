@@ -37,7 +37,7 @@ export const ShortsTab: React.FC<ShortsTabProps> = ({
   const handleGenerateShortsWithAi = async () => {
     setLoading(true);
     try {
-      const res = await api.aiShorts(episode);
+      const res = await api.aiShorts({ episode });
       if (res.shorts && res.shorts.length > 0) {
         onUpdateEpisode({ shorts: res.shorts });
       }
@@ -174,7 +174,7 @@ export const ShortsTab: React.FC<ShortsTabProps> = ({
                     )}`}
                     title="Alternar status: Planejado -> Capturado -> Excelente -> Não aconteceu"
                   >
-                    {short.status.toUpperCase()}
+                    {(short.status || 'Planejado').toUpperCase()}
                   </button>
                 </div>
 

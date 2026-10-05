@@ -36,8 +36,8 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
   const filteredGuests = guests.filter(
     (g) =>
       g.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      g.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      g.role.toLowerCase().includes(searchTerm.toLowerCase())
+      (g.company || g.companyOrGroup || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (g.role || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,11 +48,13 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
       name,
       role,
       company,
+      companyOrGroup: company,
       bio,
       contacts,
       notes,
       links: [],
-      previousEpisodes: [],
+      previousEpisodes: 0,
+      createdAt: new Date().toISOString(),
     });
 
     setName('');
@@ -114,7 +116,7 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
                 <div>
                   <h3 className="text-sm font-bold text-zinc-100">{guest.name}</h3>
                   <p className="text-xs text-zinc-400">
-                    {guest.role} {guest.company ? `· ${guest.company}` : ''}
+                    {guest.role} {guest.company || guest.companyOrGroup ? `· ${guest.company || guest.companyOrGroup}` : ''}
                   </p>
                 </div>
               </div>
@@ -132,7 +134,7 @@ export const GuestsView: React.FC<GuestsViewProps> = ({
 
             <div className="pt-3 border-t border-zinc-800 flex items-center justify-between">
               <span className="text-[11px] font-mono text-zinc-500">
-                {(guest.previousEpisodes || []).length} episódios gravados
+                {typeof guest.previousEpisodes === 'number' ? guest.previousEpisodes : 0} episódios gravados
               </span>
 
               <button

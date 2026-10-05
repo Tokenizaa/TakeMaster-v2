@@ -57,9 +57,9 @@ export const ResearchTab: React.FC<ResearchTabProps> = ({
     setLoading(true);
     try {
       const generated = await api.aiResearch({
-        guestName: episode.guestName || 'Convidado',
+        guestName: episode.guestName || (episode.participants?.[0]?.name) || 'Convidado',
         company: episode.additionalInfo,
-        idea: episode.idea,
+        idea: episode.idea || episode.topic || '',
         diagnosis: episode.diagnosis,
       });
       setResearch(generated);
@@ -291,7 +291,7 @@ export const ResearchTab: React.FC<ResearchTabProps> = ({
           </p>
         ) : (
           <div className="space-y-2.5">
-            {research.sources.map((src) => (
+            {(research.sources || []).map((src) => (
               <div
                 key={src.id}
                 className="bg-zinc-950/70 border border-zinc-800/80 rounded-lg p-3 flex items-start justify-between gap-4"

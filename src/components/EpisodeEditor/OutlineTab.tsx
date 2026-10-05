@@ -49,15 +49,15 @@ export const OutlineTab: React.FC<OutlineTabProps> = ({
     setLoading(true);
     try {
       const result = await api.aiOutline({
-        idea: episode.idea,
-        guestName: episode.guestName || 'Convidado',
-        targetDurationMin: episode.targetDurationMin,
-        diagnosis: episode.diagnosis,
+        idea: episode.idea || episode.topic || '',
+        guestName: episode.guestName || (episode.participants?.[0]?.name) || 'Convidado',
+        targetDurationMin: episode.targetDurationMin || episode.targetDurationMinutes || 45,
+        diagnosis: episode.diagnosis || { centralTheme: '' },
         research: episode.research,
       });
 
       onUpdateEpisode({
-        outline: result.outline,
+        outline: result.segments || (result as any).outline,
         questions: result.questions?.length ? result.questions : episode.questions,
       });
     } catch (err) {
@@ -78,7 +78,7 @@ export const OutlineTab: React.FC<OutlineTabProps> = ({
         const lastDuration = Math.max(2, targetMinutes - distributed);
         return { ...b, estimatedDurationMin: lastDuration };
       }
-      const newDur = Math.max(2, Math.round(b.estimatedDurationMin * factor));
+      const newDur = Math.max(2, Math.round((b.estimatedDurationMin || 5) * factor));
       distributed += newDur;
       return { ...b, estimatedDurationMin: newDur };
     });
@@ -131,8 +131,8 @@ export const OutlineTab: React.FC<OutlineTabProps> = ({
   const startEditing = (block: OutlineBlock) => {
     setEditingBlockId(block.id);
     setEditTitle(block.title);
-    setEditDuration(block.estimatedDurationMin);
-    setEditObjective(block.objective);
+    setEditDuration(block.estimatedDurationMin || block.estimatedDurationMinutes || 5);
+    setEditObjective(block.objective || block.description || '');
     setEditTransition(block.transitionText || '');
   };
 

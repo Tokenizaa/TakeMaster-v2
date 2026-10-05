@@ -54,9 +54,25 @@ export function getStatusColorClass(status: string): string {
   }
 }
 
-export function getCameraColor(cameraName: string): { bg: string; text: string; border: string; badge: string } {
+export function getCameraColor(cameraName: string = ''): { bg: string; text: string; border: string; badge: string } {
   const clean = cameraName.toUpperCase();
-  if (clean.includes('CAM 1') || clean.includes('FRONTAL')) {
+  if (clean.includes('BANDA') || clean.includes('CAM 4') || clean.includes('MUSICAL')) {
+    return {
+      bg: 'bg-purple-500/10',
+      text: 'text-purple-400',
+      border: 'border-purple-500/30',
+      badge: 'bg-purple-600 text-white',
+    };
+  }
+  if (clean.includes('PLATEIA') || clean.includes('AUDITÓRIO') || clean.includes('CAM 5')) {
+    return {
+      bg: 'bg-emerald-500/10',
+      text: 'text-emerald-400',
+      border: 'border-emerald-500/30',
+      badge: 'bg-emerald-600 text-white',
+    };
+  }
+  if (clean.includes('CAM 1') || clean.includes('FRONTAL') || clean.includes('GERAL')) {
     return {
       bg: 'bg-red-500/10',
       text: 'text-red-400',
@@ -64,7 +80,7 @@ export function getCameraColor(cameraName: string): { bg: string; text: string; 
       badge: 'bg-red-500 text-white',
     };
   }
-  if (clean.includes('CAM 2') || clean.includes('45') && clean.includes('APRESENTADOR')) {
+  if (clean.includes('CAM 2') || clean.includes('APRESENTADOR')) {
     return {
       bg: 'bg-amber-500/10',
       text: 'text-amber-400',
@@ -72,7 +88,7 @@ export function getCameraColor(cameraName: string): { bg: string; text: string; 
       badge: 'bg-amber-500 text-zinc-950',
     };
   }
-  if (clean.includes('CAM 3') || clean.includes('CONVIDADO')) {
+  if (clean.includes('CAM 3') || clean.includes('CONVIDADO') || clean.includes('SOFÁ')) {
     return {
       bg: 'bg-sky-500/10',
       text: 'text-sky-400',
@@ -86,4 +102,9 @@ export function getCameraColor(cameraName: string): { bg: string; text: string; 
     border: 'border-zinc-700',
     badge: 'bg-zinc-700 text-white',
   };
+}
+
+export function getCameraColorClass(cameraName: string = ''): string {
+  const c = getCameraColor(cameraName);
+  return `${c.bg} ${c.text} ${c.border}`;
 }

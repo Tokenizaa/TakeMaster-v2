@@ -40,7 +40,14 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
 }) => {
   const script = episode.script || [];
   const outline = episode.outline || [];
-  const questions = episode.questions || [];
+  const segments = episode.segments || [];
+  const questions = (episode.questions && episode.questions.length > 0)
+    ? episode.questions
+    : segments.flatMap(s => s.questions || []);
+
+  // Target duration fallback
+  const targetDurationMin = episode.targetDurationMinutes || episode.targetDurationMin || 60;
+  const episodeNumber = episode.episodeNumber || 1;
 
   // Studio Timers
   const [totalSecondsElapsed, setTotalSecondsElapsed] = useState(episode.recordingTimeElapsed || 0);
@@ -96,10 +103,20 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
   const currentItem: ScriptItem | undefined = script[currentIndex] || script[0];
   const nextItem: ScriptItem | undefined = script[currentIndex + 1];
 
-  // Find corresponding outline block
+  const currentItemText = currentItem?.teleprompterText || (currentItem as any)?.content || '';
+  const currentItemCamera = currentItem?.cameraInstruction || (currentItem as any)?.camera || 'CAM 1';
+
+  // Find corresponding outline block or segment
   const currentBlock: OutlineBlock | undefined = outline.find(
-    (b) => b.id === currentItem?.blockId
-  ) || outline[0];
+    (b) => b.id === (currentItem as any)?.blockId
+  ) || (segments[0] ? {
+    id: segments[0].id,
+    blockNumber: 1,
+    title: segments[0].title,
+    objective: segments[0].objective || '',
+    estimatedDurationMin: segments[0].estimatedDurationMinutes || 5,
+    suggestedCameraId: segments[0].primaryCamera || 'CAM 1',
+  } as any : outline[0]);
 
   const blockTargetSeconds = (currentBlock?.estimatedDurationMin || 5) * 60;
   const isBlockTimeExceeded = blockSecondsElapsed > blockTargetSeconds;
@@ -108,7 +125,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
 
   // Find linked question and followups
   const currentQuestion = questions.find(
-    (q) => q.id === currentItem?.questionRefId || (currentItem && currentItem.content.includes(q.text.slice(0, 15)))
+    (q) => q.id === (currentItem as any)?.questionRefId || (currentItemText && currentItemText.includes(q.text.slice(0, 15)))
   );
   const currentFollowups: FollowUpItem[] = currentQuestion?.followUps || [];
 
@@ -121,7 +138,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
       formattedTime: formatted,
       type,
       blockTitle: currentBlock?.title || 'Gravação',
-      referenceText: currentItem?.content?.slice(0, 60) || '',
+      referenceText: currentItemText.slice(0, 60),
       comment,
     };
 
@@ -183,8 +200,8 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
     onClose();
   };
 
-  const currentCamStyle = currentItem
-    ? getCameraColor(currentItem.camera)
+  const currentCamStyle = currentItemCamera
+    ? getCameraColor(currentItemCamera)
     : { bg: 'bg-zinc-800', text: 'text-zinc-200', border: 'border-zinc-700', badge: 'bg-zinc-700 text-white' };
 
   return (
@@ -201,7 +218,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
           </div>
           <span className="text-zinc-700">|</span>
           <span className="text-xs font-mono font-bold text-zinc-300">
-            EP {String(episode.episodeNumber).padStart(3, '0')}
+            EP {String(episodeNumber).padStart(3, '0')}
           </span>
           <span className="text-xs text-zinc-400 font-medium truncate max-w-xs sm:max-w-md">
             {episode.title}
@@ -219,7 +236,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
               </span>
               <span className="text-xs text-zinc-600">/</span>
               <span className="text-xs text-zinc-500">
-                {episode.targetDurationMin}:00
+                {targetDurationMin}:00
               </span>
             </div>
           </div>
@@ -328,7 +345,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
                 className={`px-4 py-2 rounded-xl font-mono font-extrabold text-lg tracking-wider flex items-center gap-2 shadow-lg ${currentCamStyle.badge}`}
               >
                 <Camera className="w-5 h-5" />
-                <span>{currentItem?.camera || 'CAM 1'}</span>
+                <span>{currentItemCamera}</span>
               </div>
 
               {currentItem?.eyeDirection && (
@@ -340,9 +357,9 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
             </div>
 
             {/* Teleprompter button if applicable */}
-            {currentItem?.content && (
+            {currentItemText && (
               <button
-                onClick={() => openInTeleprompter(currentItem.content)}
+                onClick={() => openInTeleprompter(currentItemText)}
                 className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
@@ -364,7 +381,7 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
             </div>
 
             <p className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-zinc-100 leading-tight tracking-tight selection:bg-amber-500/30">
-              {currentItem?.content || 'Carregando roteiro...'}
+              {currentItemText || 'Carregando roteiro...'}
             </p>
 
             {/* Directional markers */}
@@ -387,10 +404,10 @@ export const StudioModeModal: React.FC<StudioModeModalProps> = ({
             <div className="flex items-center gap-3 px-4 py-2.5 bg-zinc-950/70 border border-zinc-850 rounded-xl text-xs text-zinc-400 font-mono">
               <span className="text-zinc-500 uppercase font-bold">Próximo:</span>
               <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-200 font-bold">
-                {nextItem.camera}
+                {nextItem.cameraInstruction || (nextItem as any).camera || 'CAM 2'}
               </span>
               <span className="truncate text-zinc-300 font-sans">
-                {nextItem.speaker}: "{nextItem.content.slice(0, 80)}..."
+                {nextItem.speaker}: "{(nextItem.teleprompterText || (nextItem as any).content || '').slice(0, 80)}..."
               </span>
             </div>
           )}

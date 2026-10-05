@@ -1,94 +1,200 @@
 import React from 'react';
-import { Plus, Check, Clock, Radio, Tv } from 'lucide-react';
-import { Show, Episode } from '../types';
+import {
+  Search,
+  Tv,
+  Radio,
+  CheckCircle2,
+  Loader2,
+  Building2,
+  ShieldCheck,
+  AlertTriangle,
+  RotateCcw,
+  Lock,
+  CreditCard,
+} from 'lucide-react';
+import { AuthSession, Show } from '../types';
 
 interface HeaderProps {
-  currentView: string;
-  activeEpisode: Episode | null;
-  activeShow: Show | null;
-  savingStatus: 'saved' | 'saving' | 'idle';
-  onNewEpisodeClick: () => void;
-  onNewShowClick: () => void;
-  onBackToEpisodes: () => void;
+  shows: Show[];
+  selectedShowId: string;
+  onSelectShow: (id: string) => void;
+  searchQuery: string;
+  onSearchChange: (q: string) => void;
+  saveStatus: 'saved' | 'saving' | 'error';
+  saveErrorMessage?: string | null;
+  activeEpisodeTitle?: string;
+  onOpenStudioMode?: () => void;
+  session?: AuthSession | null;
+  onSwitchOrganization?: (orgId: string) => void;
+  onResetWorkspaceSeed?: () => void;
+  onOpenLoginModal?: () => void;
+  onOpenBilling?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  currentView,
-  activeEpisode,
-  activeShow,
-  savingStatus,
-  onNewEpisodeClick,
-  onNewShowClick,
-  onBackToEpisodes,
+  shows,
+  selectedShowId,
+  onSelectShow,
+  searchQuery,
+  onSearchChange,
+  saveStatus,
+  saveErrorMessage,
+  activeEpisodeTitle,
+  onOpenStudioMode,
+  session,
+  onSwitchOrganization,
+  onResetWorkspaceSeed,
+  onOpenLoginModal,
+  onOpenBilling,
 }) => {
+  const isRestrictedProfile = session && !session.isFullAccessAdmin;
+
   return (
-    <header className="h-14 border-b border-zinc-800 bg-zinc-900/60 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-10">
-      {/* Left Breadcrumb & Context */}
-      <div className="flex items-center gap-3">
-        {currentView === 'episode-detail' && activeEpisode ? (
-          <div className="flex items-center gap-2 text-xs">
-            <button
-              onClick={onBackToEpisodes}
-              className="text-zinc-400 hover:text-zinc-200 transition-colors font-medium flex items-center gap-1 cursor-pointer"
+    <header className="h-16 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 px-6 flex items-center justify-between shrink-0 z-20 gap-4">
+      {/* Left: Context Hierarchy (Organization -> Show) & Search */}
+      <div className="flex items-center gap-3 flex-1 max-w-3xl min-w-0">
+        {/* Multi-Tenant Organization Selector */}
+        {session && session.memberships && session.memberships.length > 0 && (
+          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5 shrink-0">
+            <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <select
+              value={session.activeOrganization.id}
+              onChange={(e) => onSwitchOrganization && onSwitchOrganization(e.target.value)}
+              className="bg-transparent text-xs font-semibold text-zinc-200 focus:outline-none cursor-pointer pr-1"
+              title="Alternar Organização (Isolamento Multi-Tenant)"
             >
-              <span>← Episódios</span>
-            </button>
-            <span className="text-zinc-600">/</span>
-            <span className="text-zinc-400 font-mono">EP {String(activeEpisode.episodeNumber).padStart(3, '0')}</span>
-            <span className="text-zinc-600">/</span>
-            <span className="text-zinc-100 font-semibold truncate max-w-sm">{activeEpisode.title}</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 text-xs text-zinc-400">
-              <Tv className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-zinc-200 font-semibold">{activeShow?.title || 'TakeMaster Studio'}</span>
-              <span className="text-zinc-600">·</span>
-              <span className="text-zinc-400">{activeShow?.format || 'Produção Audiovisual'}</span>
-            </div>
+              {session.memberships.map((m) => (
+                <option
+                  key={m.organizationId}
+                  value={m.organizationId}
+                  className="bg-zinc-900 text-zinc-200"
+                >
+                  {m.organizationName}
+                </option>
+              ))}
+            </select>
           </div>
         )}
+
+        {/* Show Selector (Filtered strictly to allowed programs for this user) */}
+        <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5 shrink-0">
+          <Tv className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+          <select
+            value={selectedShowId}
+            onChange={(e) => onSelectShow(e.target.value)}
+            className="bg-transparent text-xs font-medium text-zinc-200 focus:outline-none cursor-pointer pr-2 max-w-[210px] truncate"
+          >
+            <option value="ALL" className="bg-zinc-900 text-zinc-200">
+              {isRestrictedProfile
+                ? `Meus Programas Liberados (${shows.length})`
+                : `Todos os Programas (${shows.length})`}
+            </option>
+            {shows.map((s) => (
+              <option key={s.id} value={s.id} className="bg-zinc-900 text-zinc-200">
+                {s.title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Search Input */}
+        <div className="relative flex-1 max-w-xs hidden md:block">
+          <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Buscar episódio, convidado, pauta..."
+            className="w-full bg-zinc-900/70 border border-zinc-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-amber-500/60 transition-all"
+          />
+        </div>
       </div>
 
-      {/* Right Controls */}
-      <div className="flex items-center gap-4">
-        {/* Autosave Indicator */}
-        <div className="flex items-center gap-1.5 text-[11px] font-mono">
-          {savingStatus === 'saving' ? (
+      {/* Right: Subscription Plan Button, User Program Login Switcher & Studio Mode */}
+      <div className="flex items-center gap-2.5 shrink-0">
+        {/* Rule 5: Honest Autosave indicator */}
+        <div
+          className="hidden xl:flex items-center gap-1.5 text-xs text-zinc-400 px-2.5 py-1.5"
+          title={
+            saveStatus === 'error'
+              ? saveErrorMessage || 'Erro ao confirmar gravação no banco de dados'
+              : 'Persistência relacional confirmada pelo backend'
+          }
+        >
+          {saveStatus === 'saving' ? (
             <>
-              <Clock className="w-3.5 h-3.5 text-amber-400 animate-spin" />
-              <span className="text-amber-400">Salvando...</span>
+              <Loader2 className="w-3.5 h-3.5 text-amber-400 animate-spin" />
+              <span className="text-amber-300 font-medium">Salvando...</span>
+            </>
+          ) : saveStatus === 'saved' ? (
+            <>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-zinc-400">Salvo</span>
             </>
           ) : (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-zinc-400">Salvo no banco</span>
+              <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+              <span className="text-red-400 font-medium">
+                {saveErrorMessage ? `Falha: ${saveErrorMessage.slice(0, 22)}` : 'Erro'}
+              </span>
             </>
           )}
         </div>
 
-        {/* Studio Status Live dot */}
-        <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-zinc-950 border border-zinc-800 rounded-full text-[11px]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-zinc-300 font-medium font-mono">Estúdio Conectado</span>
-        </div>
+        {/* Active Subscription Quick Button */}
+        {session?.activeSubscription && onOpenBilling && !activeEpisodeTitle && (
+          <button
+            type="button"
+            onClick={onOpenBilling}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 transition-colors cursor-pointer whitespace-nowrap"
+            title="Gerenciar Plano Mensal e Renovação Automática no Gateway"
+          >
+            <CreditCard className="w-3.5 h-3.5 text-amber-400" />
+            <span>{session.activeSubscription.planName}</span>
+          </button>
+        )}
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        {/* Authenticated User & Program Login Switcher Button */}
+        {session && (
           <button
-            onClick={onNewShowClick}
-            className="px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 rounded-md text-xs font-medium transition-colors cursor-pointer"
+            type="button"
+            onClick={onOpenLoginModal}
+            className="flex items-center gap-2 text-xs bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
+            title="Clique para trocar o Login Individual de Programa e testar as permissões de acesso"
           >
-            + Programa
+            {isRestrictedProfile ? (
+              <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            ) : (
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            )}
+            <span className="font-medium text-zinc-200 max-w-[160px] truncate">
+              {session.user.name}
+            </span>
+            <span className="text-[11px] text-amber-400 font-medium">· Trocar Login</span>
           </button>
+        )}
+
+        {/* Explicit Seed Reset Button */}
+        {onResetWorkspaceSeed && !activeEpisodeTitle && (
           <button
-            onClick={onNewEpisodeClick}
-            className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+            onClick={onResetWorkspaceSeed}
+            className="hidden 2xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 text-xs transition cursor-pointer whitespace-nowrap"
+            title="Restaurar dados demonstrativos (Seed) desta organização"
           >
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Novo Episódio</span>
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Restaurar Seed</span>
           </button>
-        </div>
+        )}
+
+        {activeEpisodeTitle && onOpenStudioMode && (
+          <button
+            onClick={onOpenStudioMode}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 font-semibold text-xs transition-all cursor-pointer whitespace-nowrap"
+          >
+            <Radio className="w-3.5 h-3.5 animate-pulse" />
+            <span>Modo Estúdio (Ao Vivo)</span>
+          </button>
+        )}
       </div>
     </header>
   );

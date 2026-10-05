@@ -48,20 +48,22 @@ export const EditorTab: React.FC<EditorTabProps> = ({
       }
     });
 
-    if ((episode.recordingMarkers || []).length > 0) {
+    const markers = episode.recordingMarkers || [];
+    if (markers.length > 0) {
       lines.push(`\n------------------------------------------------------------------`);
       lines.push(`--- MARCADORES AO VIVO DO APRESENTADOR (MODO ESTÚDIO) ---`);
-      episode.recordingMarkers.forEach((m) => {
+      markers.forEach((m) => {
         const icon = m.type === 'momento_forte' ? '🔥 MOMENTO FORTE' : m.type === 'corte' ? '✂ CORTE' : '📝 NOTA';
         lines.push(`${m.formattedTime} - ${icon}: ${m.blockTitle}`);
         lines.push(`    Detalhe: "${m.referenceText}" ${m.comment ? `[Nota: ${m.comment}]` : ''}`);
       });
     }
 
-    if ((episode.assets || []).length > 0) {
+    const assets = episode.assets || [];
+    if (assets.length > 0) {
       lines.push(`\n------------------------------------------------------------------`);
       lines.push(`--- PONTOS DE INSERÇÃO DE B-ROLL & ARQUIVOS ---`);
-      episode.assets.forEach((ast) => {
+      assets.forEach((ast) => {
         lines.push(`[${ast.type.toUpperCase()}] "${ast.title}" -> ${ast.moment}`);
       });
     }
@@ -74,7 +76,7 @@ export const EditorTab: React.FC<EditorTabProps> = ({
   const handleSynthesizeWithAi = async () => {
     setLoading(true);
     try {
-      const res = await api.aiEditorScript(episode);
+      const res = await api.aiEditorScript({ episode });
       if (res.editorScript) {
         setEditorText(res.editorScript);
         onUpdateEpisode({ editorScriptSynthesis: res.editorScript });
@@ -156,12 +158,12 @@ export const EditorTab: React.FC<EditorTabProps> = ({
           <div className="flex items-center gap-2">
             <Flame className="w-4 h-4 text-amber-400" />
             <h3 className="text-xs font-bold font-mono text-zinc-200 uppercase">
-              Momentos Marcados Durante a Gravação ({episode.recordingMarkers.length})
+              Momentos Marcados Durante a Gravação ({(episode.recordingMarkers || []).length})
             </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {episode.recordingMarkers.map((m) => (
+            {(episode.recordingMarkers || []).map((m) => (
               <div
                 key={m.id}
                 className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-xs space-y-1"

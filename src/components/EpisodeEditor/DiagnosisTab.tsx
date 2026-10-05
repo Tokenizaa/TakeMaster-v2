@@ -46,10 +46,10 @@ export const DiagnosisTab: React.FC<DiagnosisTabProps> = ({
     setLoading(true);
     try {
       const diagnosis = await api.aiDiagnose({
-        idea: episode.idea,
-        guestName: episode.guestName,
+        idea: episode.idea || episode.topic || '',
+        guestName: episode.guestName || (episode.participants?.[0]?.name) || '',
         format: episode.format,
-        durationMin: episode.targetDurationMin,
+        durationMin: episode.targetDurationMin || episode.targetDurationMinutes || 60,
         objective: episode.objective,
         additionalInfo: episode.additionalInfo,
       });

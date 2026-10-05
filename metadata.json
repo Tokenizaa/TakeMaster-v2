@@ -1,8 +1,5 @@
 {
-  "name": "TakeMaster - Direção & Roteiro Audiovisual",
-  "description": "Sistema profissional de pré-produção, roteirização, direção de câmeras e estúdio de gravação assistido por IA.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "name": "TakeMaster V2 — Produção Editorial & Comando de Estúdio",
+  "description": "Plataforma de direção editorial, operação de produção, catálogo de programas, agenda de estúdio, biblioteca de assets e gravação multicâmera com persistência relacional e IA validada.",
+  "requestFramePermissions": []
 }
