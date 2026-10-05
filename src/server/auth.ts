@@ -31,7 +31,7 @@ const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || '';
 const authClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false } }) : null;
 
 function signSessionPayload(payload: { userId: string; organizationId: string }): string {
-  const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const data = Buffer.from(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12 })).toString('base64url');
   const sig = crypto
     .createHmac('sha256', INTERNAL_SESSION_KEY)
     .update(data)
@@ -53,7 +53,7 @@ export function verifySessionToken(
   if (sig !== expectedSig) return null;
   try {
     const parsed = JSON.parse(Buffer.from(data, 'base64url').toString('utf-8'));
-    if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string') {
+    if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string' && typeof parsed.exp === 'number' && parsed.exp > Math.floor(Date.now() / 1000)) {
       return parsed;
     }
     return null;
