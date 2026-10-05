@@ -160,7 +160,7 @@ export async function generateEditorialDiagnosis(input: {
     approved: false,
   };
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateDiagnosisOutput(fallback, fallback, 'fallback').data;
   }
@@ -236,7 +236,7 @@ export async function generateEditorialResearch(input: {
     ],
   };
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateResearchOutput(fallback, fallback, 'fallback').data;
   }
@@ -355,7 +355,7 @@ export async function generateSmartOutline(input: {
     },
   ];
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateOutlineOutput(
       { outline: fallbackOutline, questions: fallbackQuestions },
@@ -469,7 +469,7 @@ export async function generateStudioScript(input: {
     },
   ];
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateScriptOutput({ script: fallbackScript }, fallbackScript, 'fallback').data;
   }
@@ -524,7 +524,7 @@ export async function generateFollowUpRepiques(input: {
     },
   ];
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateFollowUps(fallback, fallback);
   }
@@ -582,7 +582,7 @@ export async function generatePlannedShorts(input: {
     },
   ];
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return validateShortsOutput({ shorts: fallback }, fallback, 'fallback').data;
   }
@@ -623,7 +623,7 @@ Convidado: ${ctx.guestName || 'Convidado'} | Apresentação: ${ctx.host || 'Apre
 1. Priorizar trechos marcados como **MELHOR MOMENTO** e **CORTE / SHORT** na timeline.
 2. Aplicar correção de áudio e nivelamento LUFS (-14 LUFS para plataformas digitais).`;
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return { synthesis: fallbackSynthesis };
   }
@@ -649,7 +649,7 @@ export async function generateContextualAssist(input: {
   const action = input.action || 'assist';
   const fallbackSuggestion = `Sugestão Editorial (${action}): Explore um exemplo concreto com data, conflito real e decisão tomada sob pressão para elevar a retenção do público.`;
 
-  if (!isGeminiConfigured()) {
+  if (!isAiConfigured()) {
     incrementMetric('aiFallbacksTotal');
     return { suggestion: fallbackSuggestion };
   }
@@ -689,7 +689,6 @@ export async function executeNimEditorialCall(options: {
   }
 
   const hasNimKey = Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5);
-  const gemini = getGeminiClient();
 
   if (hasNimKey || options.simulatePrimaryFailure) {
     try {
@@ -708,32 +707,21 @@ export async function executeNimEditorialCall(options: {
         fallbackModel,
         error: String(primaryErr),
       });
-      if (!fallbackModel || fallbackModel === primaryModel) {
-        throw primaryErr;
-      }
-      if (hasNimKey) {
-        try {
-          const fallbackRes = await callNim(fallbackModel, options.prompt, 'application/json');
-          return {
-            text: fallbackRes.text || '',
-            modelUsed: fallbackModel,
-            usedFallback: true,
-          };
-        } catch (fallbackErr) {
-          logStructured('WARN', 'nim_fallback_model_failed_using_grounded_kb', {
-            primaryModel,
-            fallbackModel,
-            error: String(fallbackErr),
-          });
-          incrementMetric('aiFallbacksTotal');
-          return {
-            text: '',
-            modelUsed: fallbackModel,
-            usedFallback: true,
-          };
-        }
-      } else {
-        // Simulated primary failure when testing without live NIM key -> mark fallback model used
+      if (!fallbackModel || fallbackModel === primaryModel) throw primaryErr;
+      try {
+        const fallbackRes = await callNim(fallbackModel, options.prompt, 'application/json');
+        return {
+          text: fallbackRes.text || '',
+          modelUsed: fallbackModel,
+          usedFallback: true,
+        };
+      } catch (fallbackErr) {
+        logStructured('WARN', 'nim_fallback_model_failed_using_grounded_kb', {
+          primaryModel,
+          fallbackModel,
+          error: String(fallbackErr),
+        });
+        incrementMetric('aiFallbacksTotal');
         return {
           text: '',
           modelUsed: fallbackModel,
@@ -741,19 +729,6 @@ export async function executeNimEditorialCall(options: {
         };
       }
     }
-  }
-
-  if (gemini) {
-    const res = await gemini.models.generateContent({
-      model: GEMINI_MODEL_NAME,
-      contents: options.prompt,
-      config: { responseMimeType: 'application/json' },
-    });
-    return {
-      text: res.text || '',
-      modelUsed: GEMINI_MODEL_NAME,
-      usedFallback: false,
-    };
   }
 
   return {
