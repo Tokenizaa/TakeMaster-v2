@@ -137,18 +137,18 @@ export async function loginWithEmailOrUserId(
     throw new AppError(401, 'UNAUTHORIZED', 'Credenciais de login de programa inválidas.');
   }
 
-  if (
-    loginCode &&
-    loginCode.trim() !== '' &&
-    matchedUser.loginCode &&
-    loginCode.trim() !== matchedUser.loginCode
-  ) {
+  if (!loginCode || !loginCode.trim() || !authClient) {
     incrementMetric('authFailuresTotal');
-    throw new AppError(
-      401,
-      'UNAUTHORIZED',
-      'Código de acesso / senha incorreto para este login de programa.'
-    );
+    throw new AppError(401, 'UNAUTHORIZED', 'Código de acesso / senha é obrigatório.');
+  }
+
+  const authResult = await authClient.auth.signInWithPassword({
+    email: matchedUser.email,
+    password: loginCode.trim(),
+  });
+  if (authResult.error || !authResult.data.user || authResult.data.user.id !== matchedUser.id) {
+    incrementMetric('authFailuresTotal');
+    throw new AppError(401, 'UNAUTHORIZED', 'Código de acesso / senha incorreto para este login de programa.');
   }
 
   return await buildAuthSession(matchedUser.id, organizationId);
