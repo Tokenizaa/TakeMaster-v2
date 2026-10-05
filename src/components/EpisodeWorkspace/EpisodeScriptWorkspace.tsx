@@ -74,15 +74,15 @@ export const EpisodeScriptWorkspace: React.FC<EpisodeScriptWorkspaceProps> = ({
       followUps: [
         {
           id: `fu-${Date.now()}-1`,
-          condition: 'Se a resposta for técnica demais ou prolixa',
-          action: 'Intervir pedindo um exemplo prático: "Como isso funcionou no dia mais difícil?"',
-          cameraCue: 'Cortar para CAM 1 ou Plano Médio'
+          triggerCondition: 'Se a resposta for técnica demais ou prolixa',
+          actionOrQuestion: 'Intervir pedindo um exemplo prático: "Como isso funcionou no dia mais difícil?"',
+          tag: 'APROFUNDAR'
         },
         {
           id: `fu-${Date.now()}-2`,
-          condition: 'Se houver hesitação ou emoção forte',
-          action: 'Silenciar por 3 segundos e aprofundar com: "O que você sentiu exatamente naquele segundo?"',
-          cameraCue: 'Fechar para Close-up no Convidado'
+          triggerCondition: 'Se houver hesitação ou emoção forte',
+          actionOrQuestion: 'Silenciar por 3 segundos e aprofundar com: "O que você sentiu exatamente naquele segundo?"',
+          tag: 'APROFUNDAR'
         }
       ]
     };
@@ -120,8 +120,16 @@ export const EpisodeScriptWorkspace: React.FC<EpisodeScriptWorkspaceProps> = ({
   const handleAddScriptBlock = () => {
     const newBlock: ScriptItem = {
       id: `sc-${Date.now()}`,
-      order: (episode.script?.length || 0) + 1,
+      timestamp: '',
+      type: 'opening',
+      camera: availableCameras[0]?.name || 'CAM 1 (Apresentador)',
       speaker: episode.presenterName || 'Apresentador',
+      eyeDirection: 'Olhar para a câmera',
+      shotType: 'Plano Médio',
+      content: 'Boa noite e sejam muito bem-vindos a mais uma edição!',
+      directionalMarkers: ['Olhar fixo na câmera com tom solene e enérgico.'],
+      isTeleprompter: true,
+      order: (episode.script?.length || 0) + 1,
       cameraInstruction: availableCameras[0]?.name || 'CAM 1 (Apresentador)',
       teleprompterText: 'Boa noite e sejam muito bem-vindos a mais uma edição!',
       estimatedDurationSeconds: 45,
