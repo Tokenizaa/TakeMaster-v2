@@ -216,7 +216,7 @@ export async function requireStrictBearerAuth(req: Request, _res: Response, next
   }
 }
 
-export async function await getAuthContext(req: Request): AuthenticatedContext {
+export async function getAuthContext(req: Request): Promise<AuthenticatedContext> {
   if ((req as any).auth) {
     return (req as any).auth as AuthenticatedContext;
   }
