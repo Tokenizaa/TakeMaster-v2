@@ -65,12 +65,12 @@ export const EpisodeScriptWorkspace: React.FC<EpisodeScriptWorkspaceProps> = ({
 
     const newQuestion: QuestionItem = {
       id: `q-${Date.now()}`,
-      segmentId: segId,
-      speaker: newQuestionSpeaker,
+      blockId: segId,
+      order: (activeSegment?.questions?.length || 0) + 1,
       text: newQuestionText,
       objective: newQuestionObjective || 'Explorar detalhes da história e provocar revelação',
-      recommendedCamera: newQuestionCamera,
-      status: 'pending',
+      suggestedCamera: newQuestionCamera,
+      eyeDirection: 'Olhar para o convidado',
       followUps: [
         {
           id: `fu-${Date.now()}-1`,
