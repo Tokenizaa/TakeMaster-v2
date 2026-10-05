@@ -83,13 +83,15 @@ export const EpisodeOverviewWorkspace: React.FC<EpisodeOverviewWorkspaceProps> =
     if (!newPartName.trim()) return;
 
     const newParticipant: EpisodeParticipant = {
+      id: `part-${Date.now()}`,
+      organizationId: episode.organizationId || '',
+      episodeId: episode.id,
       participantId: `part-${Date.now()}`,
-      name: newPartName.trim(),
-      type: newPartType,
-      role: newPartRole.trim() || 'Participante',
-      order: participants.length + 1,
-      isFeatured: true,
-      estimatedTimeMin: 15,
+      participantName: newPartName.trim(),
+      participantRole: newPartRole.trim() || 'Participante',
+      roleInEpisode: 'main_guest',
+      confirmationStatus: 'invited',
+      notes: '',
     };
 
     const updated = [...participants, newParticipant];
