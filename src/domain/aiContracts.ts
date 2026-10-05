@@ -112,7 +112,7 @@ const VALID_SOURCE_CATEGORIES: ResearchSource['category'][] = [
 export function validateResearchOutput(
   raw: any,
   fallback: ResearchData,
-  source: 'gemini' | 'fallback'
+  source: 'nim' | 'gemini' | 'fallback'
 ): ValidatedAIResult<ResearchData> {
   const warnings: string[] = [];
   if (!raw || typeof raw !== 'object') {
