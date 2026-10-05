@@ -241,11 +241,8 @@ export function buildGroundedEditorialIdentity(
   }
 
   const temas = cleanStringList(profile.temasAbordados);
-  // Temas devem vir exclusivamente dos campos estruturados da fonte.\n  // Não adicionar palavras-chave programáticas específicas aqui.\n  if (temas.length === 0 && descricao) {
-    if (/saúde|bem-estar|qualidade de vida/i.test(descricao)) {
-      temas.push('Saúde', 'Bem-estar', 'Qualidade de Vida com Ciência');
-    }
-  }
+  // Temas devem vir exclusivamente dos campos estruturados da fonte.
+  // Não adicionar palavras-chave programáticas específicas aqui.
 
   const formatoRaw = cleanFieldText(profile.formato, '');
   const duracaoRaw = cleanFieldText(profile.duracao, '');
