@@ -76,7 +76,7 @@ import {
   generateSmartOutline,
   generateStudioScript,
   getNimModelConfig,
-  isGeminiConfigured,
+  isAiConfigured,
 } from './src/server/ai';
 import {
   listAvailableKnowledgeBasePrograms,
