@@ -128,7 +128,7 @@ export function createApiApp() {
   app.get('/api/auth/session', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      const session = buildAuthSession(auth.userId, auth.organizationId);
+      const session = await buildAuthSession(auth.userId, auth.organizationId);
       const directory = await listUsersAndOrganizations();
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
       res.json({
@@ -144,7 +144,7 @@ export function createApiApp() {
   app.post('/api/auth/login', async (req, res, next) => {
     try {
       const { emailOrUserId, organizationId, loginCode } = req.body || {};
-      const session = loginWithEmailOrUserId(emailOrUserId, organizationId, loginCode);
+      const session = await loginWithEmailOrUserId(emailOrUserId, organizationId, loginCode);
       await recordAuditLog(
         session.activeOrganization.id,
         session.user.id,
@@ -167,7 +167,7 @@ export function createApiApp() {
     try {
       const organizationId = req.body?.organizationId || 'org-takemaster-studio';
       const result = await registerSaaSAccountWithSubscription(req.body || {}, organizationId);
-      const session = buildAuthSession(result.user.id, organizationId);
+      const session = await buildAuthSession(result.user.id, organizationId);
       res.status(201).json({
         session,
         user: result.user,
@@ -188,7 +188,7 @@ export function createApiApp() {
       if (!organizationId || typeof organizationId !== 'string') {
         throw new AppError(400, 'VALIDATION_ERROR', 'organizationId é obrigatório.');
       }
-      const session = buildAuthSession(auth.userId, organizationId);
+      const session = await buildAuthSession(auth.userId, organizationId);
       await recordAuditLog(
         session.activeOrganization.id,
         session.user.id,
@@ -207,7 +207,7 @@ export function createApiApp() {
   app.get('/api/state', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      const session = buildAuthSession(auth.userId, auth.organizationId);
+      const session = await buildAuthSession(auth.userId, auth.organizationId);
       const allowedFilter = session.isFullAccessAdmin ? undefined : session.allowedShowIds;
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
 
@@ -860,7 +860,7 @@ export function createApiApp() {
         'seed_reset',
         {}
       );
-      const session = buildAuthSession(auth.userId, auth.organizationId);
+      const session = await buildAuthSession(auth.userId, auth.organizationId);
       const allowedFilter = session.isFullAccessAdmin ? undefined : session.allowedShowIds;
       res.json({
         success: true,
