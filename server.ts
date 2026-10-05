@@ -34,6 +34,7 @@ import {
   listShows,
   listUsersAndOrganizations,
   processAutomaticRenewalCycle,
+  recordAiGeneration,
   recordAuditLog,
   registerSaaSAccountWithSubscription,
   subscribeOrUpdatePlan,
@@ -479,6 +480,16 @@ export function createApiApp() {
           req.body?.simulateTotalFailure || req.body?.simulateBothFailure
         ),
       });
+      await recordAiGeneration({
+        organizationId: auth.organizationId,
+        programId: show.id,
+        kind: 'program_editorial_identity',
+        model: identity.modelUsed,
+        prompt: { type: 'editorial_identity', showId: show.id, showTitle: show.title },
+        result: identity,
+        status: 'completed',
+        createdBy: auth.userId,
+      });
       await recordAuditLog(
         auth.organizationId,
         auth.userId,
@@ -519,6 +530,16 @@ export function createApiApp() {
         simulateTotalFailure: Boolean(
           req.body?.simulateTotalFailure || req.body?.simulateBothFailure
         ),
+      });
+      await recordAiGeneration({
+        organizationId: auth.organizationId,
+        programId: show.id,
+        kind: 'program_pauta_curation',
+        model: curation.modelUsed,
+        prompt: { type: 'program_pauta_curation', input: req.body || {}, queryUsed: curation.queryUsed },
+        result: curation,
+        status: 'completed',
+        createdBy: auth.userId,
       });
       await recordAuditLog(
         auth.organizationId,
