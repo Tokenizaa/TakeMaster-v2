@@ -60,7 +60,7 @@ async function mapProduction(r:any): Promise<Production> {
 }
 async function mapEpisode(r:any): Promise<Episode> {
   const p = await one('programs', r.program_id);
-  const [parts, segs, qs, scripts, shorts, assets, markers, versions] = await Promise.all([
+  const [parts, segs, qs, scripts, shortsResult, assets, markersResult, versions] = await Promise.all([
     db.from('episode_participants').select('*').eq('episode_id',r.id).order('order_pos'),
     db.from('segments').select('*').eq('episode_id',r.id).order('order_pos'),
     db.from('questions').select('*').eq('episode_id',r.id).order('order_pos'),
@@ -74,9 +74,9 @@ async function mapEpisode(r:any): Promise<Episode> {
   const segments:any[] = fail(segs).data || [];
   const questions:any[] = fail(qs).data || [];
   const script:any[] = fail(scripts).data || [];
-  const shorts:any[] = fail(shorts).data || [];
+  const shorts:any[] = fail(shortsResult).data || [];
   const prodAssets:any[] = fail(assets).data || [];
-  const markers:any[] = fail(markers).data || [];
+  const markers:any[] = fail(markersResult).data || [];
   const vers:any[] = fail(versions).data || [];
   const participantRows = participants.length ? (await db.from('participants').select('id,legacy_id').in('id',participants.map(x=>x.participant_id).filter(Boolean))).data || [] : [];
   const pmap = new Map(participantRows.map((x:any)=>[x.id,legacyId(x)]));
