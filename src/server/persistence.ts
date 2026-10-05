@@ -174,6 +174,53 @@ export async function createLibraryAsset(org:string,input:any){const p=input.sho
 export async function updateLibraryAsset(org:string,id:string,input:any){const current=await getLibraryAssetById(org,id);if(!current)throw new AppError(404,'NOT_FOUND','Ativo não encontrado.');const raw=await one('library_assets',id);const r=await db.from('library_assets').update({title:input.title,category:input.category,type:input.type,description:input.description,content:input.content,url:input.fileUrl||input.url,tags:input.tags||[],updated_at:now()}).eq('id',raw.id).select('*').single();fail(r);return getLibraryAssetById(org,r.data.id);}
 export async function deleteLibraryAsset(org:string,id:string){const a=await getLibraryAssetById(org,id);if(!a)return false;const raw=await one('library_assets',id);const r=await db.from('library_assets').delete().eq('id',raw.id);fail(r);return true;}
 
+export async function recordAiGeneration(input: {
+  organizationId: string;
+  programId?: string;
+  episodeId?: string;
+  kind: string;
+  model?: string;
+  prompt?: Record<string, any>;
+  result?: Record<string, any>;
+  status?: 'pending' | 'completed' | 'failed' | 'applied';
+  createdBy?: string;
+}) {
+  const programId = input.programId ? await programUuid(input.programId) : null;
+  if (programId) {
+    const program = await one('programs', programId);
+    if (!program || program.organization_id !== input.organizationId) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Programa não pertence à organização.');
+    }
+  }
+  const episodeId = input.episodeId ? await episodeUuid(input.episodeId) : null;
+  if (episodeId) {
+    const episode = await one('episodes', episodeId);
+    if (!episode || episode.program_id === null) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Episódio não pertence ao contexto informado.');
+    }
+    const program = await one('programs', episode.program_id);
+    if (!program || program.organization_id !== input.organizationId) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Episódio não pertence à organização.');
+    }
+    if (programId && episode.program_id !== programId) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Episódio não pertence ao programa informado.');
+    }
+  }
+  const r = await db.from('ai_generations').insert({
+    organization_id: input.organizationId,
+    program_id: programId,
+    episode_id: episodeId,
+    kind: input.kind,
+    model: input.model || null,
+    prompt: input.prompt || null,
+    result: input.result || null,
+    status: input.status || 'completed',
+    created_by: input.createdBy || null,
+  }).select('*').single();
+  fail(r);
+  return r.data;
+}
+
 export async function recordAuditLog(org:string,userId:string,entityType:string,entityId:string,action:string,metadata:any={}){const r=await db.from('audit_log').insert({organization_id:org,actor_user_id:userId||null,action,table_name:entityType,row_id:isUuid(entityId)?entityId:null,metadata});fail(r);return true;}
 export async function listAuditLogs(org:string,limit=50){const r=await db.from('audit_log').select('*').eq('organization_id',org).order('created_at',{ascending:false}).limit(limit);return (fail(r).data||[]).map((x:any):AuditLogEntry=>({id:String(x.id),organizationId:org,userId:x.actor_user_id||undefined,entityType:x.table_name||'',entityId:x.row_id||'',action:x.action,metadata:x.metadata||{},createdAt:x.created_at}));}
 export async function checkDatabaseHealth(){try{const r=await db.from('organizations').select('id').limit(1);return {connected:!r.error,driver:'supabase',error:r.error?.message};}catch(e){return {connected:false,driver:'supabase',error:String(e)};}}
