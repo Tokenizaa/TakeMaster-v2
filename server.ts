@@ -847,35 +847,9 @@ export function createApiApp() {
     }
   });
 
-  app.post('/api/seed/reset', requireAuth, async (req, res, next) => {
-    try {
-      const auth = await getAuthContext(req);
-      const db = getDbConnection();
-      await populateOrganizationWorkspace(db, auth.organizationId);
-      await recordAuditLog(
-        auth.organizationId,
-        auth.userId,
-        'organization',
-        auth.organizationId,
-        'seed_reset',
-        {}
-      );
-      const session = await buildAuthSession(auth.userId, auth.organizationId);
-      const allowedFilter = session.isFullAccessAdmin ? undefined : session.allowedShowIds;
-      res.json({
-        success: true,
-        session,
-        shows: await listShows(auth.organizationId, allowedFilter),
-        productions: await listProductions(auth.organizationId, undefined, allowedFilter),
-        episodes: await listEpisodes(auth.organizationId, undefined, allowedFilter),
-        guests: await listParticipants(auth.organizationId),
-        scheduleEvents: await listScheduleEvents(auth.organizationId, undefined, allowedFilter),
-        libraryAssets: await listLibraryAssets(auth.organizationId, undefined, allowedFilter),
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
+  app.post('/api/seed/reset', requireAuth, async (_req, _res, next) => {
+    next(new AppError(403, 'FORBIDDEN_CONTEXT', 'Seed/reset de dados de produção está desabilitado.'));
+  });;
 
   // --- RELIABLE AI GENERATION ENDPOINTS (Phase 4) ---
   app.post('/api/ai/diagnosis', requireAuth, async (req, res, next) => {
