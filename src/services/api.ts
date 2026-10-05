@@ -467,7 +467,7 @@ export const api = {
     diagnosis?: EditorialDiagnosis;
     research?: ResearchData;
   }) =>
-    request<{ outline: OutlineBlock[]; questions: QuestionItem[] }>('/api/ai/outline', {
+    request<{ outline: OutlineBlock[]; questions: QuestionItem[]; segments?: OutlineBlock[] }>('/api/ai/outline', {
       method: 'POST',
       body: JSON.stringify({
         episode: {
@@ -481,10 +481,10 @@ export const api = {
       }),
     }),
 
-  aiScript: (episode: Episode) =>
+  aiScript: (episode: Episode | { episode: Episode }) =>
     request<{ script: ScriptItem[] }>('/api/ai/script', {
       method: 'POST',
-      body: JSON.stringify({ episode }),
+      body: JSON.stringify({ episode: 'episode' in episode ? episode.episode : episode }),
     }),
 
   aiRepiques: (params: {
@@ -501,16 +501,16 @@ export const api = {
       }),
     }),
 
-  aiShorts: (episode: Episode) =>
+  aiShorts: (episode: Episode | { episode: Episode }) =>
     request<{ shorts: PlannedShort[] }>('/api/ai/shorts', {
       method: 'POST',
-      body: JSON.stringify({ episode }),
+      body: JSON.stringify({ episode: 'episode' in episode ? episode.episode : episode }),
     }),
 
-  aiEditorScript: async (episode: Episode): Promise<{ editorScript: string }> => {
+  aiEditorScript: async (episode: Episode | { episode: Episode }): Promise<{ editorScript: string }> => {
     const res = await request<{ synthesis: string }>('/api/ai/editor-script', {
       method: 'POST',
-      body: JSON.stringify({ episode }),
+      body: JSON.stringify({ episode: 'episode' in episode ? episode.episode : episode }),
     });
     return { editorScript: res.synthesis };
   },
