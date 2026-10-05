@@ -88,6 +88,10 @@ export const EpisodeProductionWorkspace: React.FC<EpisodeProductionWorkspaceProp
     const newShort: PlannedShort = {
       id: `sh-${Date.now()}`,
       title: newShortTitle,
+      hook: newShortHook || 'O momento exato que mudou a história...',
+      generatingQuestion: 'Qual é a pergunta que sustenta este corte?',
+      estimatedDuration: '00:45',
+      status: 'Planejado',
       suggestedHook: newShortHook || 'O momento exato que mudou a história...',
       narrativeArc: 'Início provocativo -> Tensão -> Conclusão chocante',
       expectedDurationSeconds: 45,
