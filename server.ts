@@ -105,8 +105,8 @@ export function createApiApp() {
         timestamp: new Date().toISOString(),
         database: dbHealth,
         ai: {
-          geminiConfigured: isGeminiConfigured(),
-          model: 'gemini-3-flash-preview',
+          configured: isAiConfigured(),
+          provider: 'nvidia-nim',
           nim: getNimModelConfig(),
         },
         metrics: getSystemMetrics(),
