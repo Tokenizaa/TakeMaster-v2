@@ -11,26 +11,28 @@ import {
   getEpisodeById,
   getShowById,
   listEpisodes,
+  listOrganizationsByIds,
   listProductions,
   listShows,
   updateEpisode,
   verifyUserOrganizationAccess,
 } from '../src/server/persistence';
-import { AppError, validateEpisodePayload, validateProductionPayload, validateShowPayload } from '../src/domain/validation';
+import { AppError } from '../src/domain/validation';
 
-const ORG = process.env.TAKE_MASTER_TEST_ORG_ID || 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+const ORG = process.env.TAKE_MASTER_TEST_ORG_ID;
+
+if (process.env.TAKE_MASTER_ALLOW_REMOTE_TEST_WRITES !== '1') {
+  throw new Error('Set TAKE_MASTER_ALLOW_REMOTE_TEST_WRITES=1 to enable integration tests that write to Supabase.');
+}
+if (!ORG) {
+  throw new Error('Set TAKE_MASTER_TEST_ORG_ID to an isolated test organization before running integration tests.');
+}
 
 describe('TakeMaster V2 — canonical Supabase persistence', () => {
   it('connects to the canonical Supabase database', async () => {
     const health = await checkDatabaseHealth();
     assert.equal(health.connected, true);
     assert.equal(health.driver, 'supabase');
-  });
-
-  it('validates the existing API contracts', () => {
-    assert.throws(() => validateShowPayload({ title: 'A' }, false), (err:any) => err instanceof AppError && err.code === 'VALIDATION_ERROR');
-    assert.throws(() => validateEpisodePayload({ title: 'Episódio' }, false), (err:any) => err instanceof AppError && err.code === 'VALIDATION_ERROR');
-    assert.throws(() => validateProductionPayload({ title: 'Temporada', showId:'show-1', status:'invalid_status' }, false), (err:any) => err instanceof AppError && err.code === 'VALIDATION_ERROR');
   });
 
   it('enforces organization isolation', async () => {
@@ -40,6 +42,14 @@ describe('TakeMaster V2 — canonical Supabase persistence', () => {
       () => verifyUserOrganizationAccess('33333333-3333-3333-3333-333333333333', '1007f204-6eef-49bc-a31f-2040a4fcebcb'),
       (err:any) => err instanceof AppError && err.code === 'FORBIDDEN_CONTEXT'
     );
+  });
+
+  it('returns only organizations explicitly associated with the session', async () => {
+    const organizations = await listOrganizationsByIds([
+      ORG,
+      '00000000-0000-4000-8000-000000000000',
+    ]);
+    assert.deepEqual(organizations.map((organization) => organization.id), [ORG]);
   });
 
   it('persists the program → production → episode lifecycle and removes test data', async () => {

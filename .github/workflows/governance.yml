@@ -19,3 +19,9 @@ jobs:
       run: bun install --frozen-lockfile
     - name: Run governance check
       run: bun run governance:check
+    - name: Type check
+      run: bun run lint
+    - name: Run unit tests
+      run: bun run test
+    - name: Build and validate Worker bundle
+      run: bun run build:worker

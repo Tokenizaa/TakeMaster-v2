@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { randomBytes } from 'node:crypto';
 import {
   AdminReportSummary, AuditLogEntry, BillingInvoice, Episode, EpisodeParticipant, Guest,
   LibraryAsset, Organization, OrganizationMembership, OrganizationRole, PaymentGatewayEvent,
@@ -225,10 +226,43 @@ export async function recordAuditLog(org:string,userId:string,entityType:string,
 export async function listAuditLogs(org:string,limit=50){const r=await db.from('audit_log').select('*').eq('organization_id',org).order('created_at',{ascending:false}).limit(limit);return (fail(r).data||[]).map((x:any):AuditLogEntry=>({id:String(x.id),organizationId:org,userId:x.actor_user_id||undefined,entityType:x.table_name||'',entityId:x.row_id||'',action:x.action,metadata:x.metadata||{},createdAt:x.created_at}));}
 export async function checkDatabaseHealth(){try{const r=await db.from('organizations').select('id').limit(1);return {connected:!r.error,driver:'supabase',error:r.error?.message};}catch(e){return {connected:false,driver:'supabase',error:String(e)};}}
 export function getDbConnection(){return db;}
+export async function getAuthUserById(userId:string){
+  const r = await db.auth.admin.getUserById(userId);
+  if (r.error) return null;
+  return r.data.user;
+}
 
-async function authUsers(){const r=await db.auth.admin.listUsers({page:1,perPage:1000});if(r.error)throw new Error(r.error.message);return r.data.users;}
+// ADR-010: `auth.admin.listUsers()` returns HTTP 500 ("Database error finding users") for every
+// `per_page` in this project, so the roster is derived from `organization_members` (distinct,
+// active) and hydrated per id with `getUserById`, which works. Users with no membership in any
+// organization cannot log in (see buildAuthSession) and are therefore not part of the roster.
+async function authUsers(userIds?: string[]): Promise<User[]> {
+  let ids = [...new Set((userIds || []).filter(Boolean))];
+  if (!userIds) {
+    const members = await db.from('organization_members').select('user_id').eq('active', true);
+    fail(members);
+    ids = [...new Set((members.data || []).map((m: any) => m.user_id as string).filter(Boolean))];
+  }
+  const hydrated = await Promise.all(ids.map((id) => db.auth.admin.getUserById(id)));
+  const users = hydrated.filter((r) => !r.error).map((r) => r.data.user);
+  logStructured('INFO', 'auth_roster_resolved', { userCount: users.length, candidateCount: ids.length });
+  return users.map((u: any) => ({
+    id: u.id,
+    email: u.email || '',
+    name: u.user_metadata?.name || u.user_metadata?.full_name || u.email || '',
+    jobTitle: u.user_metadata?.jobTitle,
+    status: (u.banned_until ? 'suspended' : 'active') as UserAccountStatus,
+    loginCode: undefined,
+    avatarUrl: u.user_metadata?.avatarUrl,
+    role: undefined,
+    showPermissions: [],
+    createdAt: u.created_at,
+    updatedAt: u.updated_at || u.created_at,
+  }));
+}
 async function mapUser(u:any,orgId?:string):Promise<User>{const m=orgId?await db.from('organization_members').select('*').eq('user_id',u.id).eq('organization_id',orgId).eq('active',true).limit(1):await db.from('organization_members').select('*').eq('user_id',u.id).eq('active',true).limit(1);const member=m.data?.[0];return {id:u.id,email:u.email||'',name:u.user_metadata?.name||u.user_metadata?.full_name||u.email||'',jobTitle:u.user_metadata?.jobTitle,status:u.banned_until?'suspended':'active',loginCode:undefined,avatarUrl:u.user_metadata?.avatarUrl,role:member?.role,showPermissions:orgId ? await getUserShowPermissions(orgId,u.id) : [],createdAt:u.created_at,updatedAt:u.updated_at||u.created_at};}
 export async function listUsersAndOrganizations(){const [users,orgs]=await Promise.all([authUsers(),db.from('organizations').select('*').order('created_at')]);fail(orgs);return {users:await Promise.all(users.map(u=>mapUser(u))),organizations:(orgs.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}))};}
+export async function listOrganizationsByIds(organizationIds:string[]):Promise<Organization[]>{if(!organizationIds.length)return [];const r=await db.from('organizations').select('*').in('id',organizationIds).order('created_at');fail(r);return (r.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}));}
 export async function getUserMemberships(userId:string){const r=await db.from('organization_members').select('organization_id,role,organizations(name,slug)').eq('user_id',userId).eq('active',true);fail(r);return (r.data||[]).map((x:any):OrganizationMembership=>({organizationId:x.organization_id,organizationName:x.organizations?.name||'',organizationSlug:x.organizations?.slug||'',role:x.role}));}
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
 export async function verifyUserOrganizationAccess(userId:string,orgId:string){const [o,m]=await Promise.all([getOrganizationById(orgId),db.from('organization_members').select('*').eq('organization_id',orgId).eq('user_id',userId).eq('active',true).single()]);if(!o||m.error)throw new AppError(403,'FORBIDDEN_CONTEXT','Usuário não pertence à organização.');return {organization:o,role:m.data.role as OrganizationRole};}
@@ -250,9 +284,9 @@ export async function getUserShowPermissions(orgId:string,userId:string){
 }
 export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){if(['owner','admin','producer'].includes(role))return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:await getUserShowPermissions(orgId,userId)};const permissions=await getUserShowPermissions(orgId,userId); const catalogIds=permissions.map(x=>x.showId); if(!catalogIds.length)return {isFullAccessAdmin:false,allowedShowIds:[] as string[],permissions};return {isFullAccessAdmin:false,allowedShowIds:catalogIds,permissions};}
 export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='view'){const u=await getEffectiveAllowedShowIds(orgId,userId,role);if(u.isFullAccessAdmin)return true;if(u.allowedShowIds.includes(showId))return true;throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');}
-export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users:any[]=await authUsers();return Promise.all((r.data||[]).map((m:any)=>mapUser(users.find((u:any)=>u.id===m.user_id)||{},orgId)));}
+export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users:any[]=await authUsers((r.data||[]).map((m:any)=>m.user_id).filter(Boolean));const byId=new Map(users.map((u:any)=>[u.id,u]));const members=(r.data||[]).filter((m:any)=>{if(byId.has(m.user_id))return true;logStructured('WARN','auth_user_unresolvable',{organizationId:orgId,userId:m.user_id});return false;});return Promise.all(members.map((m:any)=>mapUser(byId.get(m.user_id),orgId)));}
 export async function createOrganizationUserWithShowPermissions(orgId:string,input:any,userId?:string){const r=await db.auth.admin.createUser({email:input.email,password:input.loginCode||cryptoRandom(),email_confirm:true,user_metadata:{name:input.name,jobTitle:input.jobTitle}});if(r.error)throw new Error(r.error.message);await db.from('organization_members').insert({organization_id:orgId,user_id:r.data.user.id,role:input.role||'editor',active:true});return mapUser(r.data.user,orgId);}
-function cryptoRandom(){return `tm-${Date.now()}-${Math.random().toString(36).slice(2)}`;}
+function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
 
 export async function updateUserShowPermissions(orgId:string,userId:string,permissions:any[],actorUserId?:string){
   for(const permission of permissions || []) {

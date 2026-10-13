@@ -4,10 +4,10 @@ import { createClient } from '@supabase/supabase-js';
 import { AuthSession, OrganizationRole, UserShowPermission } from '../domain/contracts';
 import { AppError } from '../domain/validation';
 import {
+  getAuthUserById,
   getEffectiveAllowedShowIds,
   getUserMemberships,
   listOrganizationSubscriptions,
-  listUsersAndOrganizations,
   verifyUserOrganizationAccess,
 } from './persistence';
 import { incrementMetric } from './logger';
@@ -29,6 +29,7 @@ const INTERNAL_SESSION_KEY = process.env.INTERNAL_SESSION_KEY || '';
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || '';
 const authClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false } }) : null;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function signSessionPayload(payload: { userId: string; organizationId: string }): string {
   const data = Buffer.from(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12 })).toString('base64url');
@@ -50,7 +51,9 @@ export function verifySessionToken(
     .createHmac('sha256', INTERNAL_SESSION_KEY)
     .update(data)
     .digest('base64url');
-  if (sig !== expectedSig) return null;
+  const providedSignatureHash = crypto.createHash('sha256').update(sig).digest();
+  const expectedSignatureHash = crypto.createHash('sha256').update(expectedSig).digest();
+  if (!crypto.timingSafeEqual(providedSignatureHash, expectedSignatureHash)) return null;
   try {
     const parsed = JSON.parse(Buffer.from(data, 'base64url').toString('utf-8'));
     if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string' && typeof parsed.exp === 'number' && parsed.exp > Math.floor(Date.now() / 1000)) {
@@ -64,13 +67,14 @@ export function verifySessionToken(
 
 export async function buildAuthSession(userId: string, organizationId?: string): Promise<AuthSession> {
   if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
-  const { users } = await listUsersAndOrganizations();
-  const user = users.find((u) => u.id === userId);
+
+  // Admin auth lookup requires the service-role client (see getAuthUserById), not the publishable client.
+  const user = await getAuthUserById(userId);
   if (!user) {
     throw new AppError(401, 'UNAUTHORIZED', 'Usuário não encontrado na base de autenticação.');
   }
 
-  if (user.status === 'suspended') {
+  if (user.banned_until) {
     throw new AppError(
       403,
       'FORBIDDEN_CONTEXT',
@@ -102,12 +106,26 @@ export async function buildAuthSession(userId: string, organizationId?: string):
   const subscriptions = await listOrganizationSubscriptions(organization.id);
   const activeSubscription = subscriptions[0];
 
+  const userObj = {
+    id: user.id,
+    email: user.email || '',
+    name: user.user_metadata?.name || user.user_metadata?.full_name || user.email || '',
+    jobTitle: user.user_metadata?.jobTitle,
+    status: user.banned_until ? ('suspended' as const) : ('active' as const),
+    loginCode: undefined,
+    avatarUrl: user.user_metadata?.avatarUrl,
+    role: undefined,
+    showPermissions: permissions,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at || user.created_at,
+  };
+
   const token = signSessionPayload({ userId: user.id, organizationId: organization.id });
 
   return {
     token,
     user: {
-      ...user,
+      ...userObj,
       role,
       showPermissions: permissions,
     },
@@ -126,32 +144,49 @@ export async function loginWithEmailOrUserId(
   organizationId?: string,
   loginCode?: string
 ): Promise<AuthSession> {
-  const { users } = await listUsersAndOrganizations();
   const clean = (identifier || '').trim().toLowerCase();
-  const matchedUser = users.find(
-    (u) => u.id.toLowerCase() === clean || u.email.toLowerCase() === clean
-  );
-
-  if (!matchedUser) {
+  if (!clean) {
     incrementMetric('authFailuresTotal');
-    throw new AppError(401, 'UNAUTHORIZED', 'Credenciais de login de programa inválidas.');
+    throw new AppError(401, 'UNAUTHORIZED', 'Email ou ID de usuário é obrigatório.');
   }
 
-  if (!loginCode || !loginCode.trim() || !authClient) {
+  if (!authClient) {
+    throw new AppError(500, 'CONFIGURATION_ERROR', 'Supabase auth client não configurado.');
+  }
+
+  if (!loginCode || !loginCode.trim()) {
     incrementMetric('authFailuresTotal');
     throw new AppError(401, 'UNAUTHORIZED', 'Código de acesso / senha é obrigatório.');
   }
 
-  const authResult = await authClient.auth.signInWithPassword({
-    email: matchedUser.email,
-    password: loginCode.trim(),
-  });
-  if (authResult.error || !authResult.data.user || authResult.data.user.id !== matchedUser.id) {
-    incrementMetric('authFailuresTotal');
-    throw new AppError(401, 'UNAUTHORIZED', 'Código de acesso / senha incorreto para este login de programa.');
+  let email: string;
+
+  if (clean.includes('@')) {
+    email = clean;
+  } else {
+    // auth-js throws on non-UUID input instead of returning an error, so shape-check first.
+    if (!UUID_RE.test(clean)) {
+      incrementMetric('authFailuresTotal');
+      throw new AppError(401, 'UNAUTHORIZED', 'Credenciais de login de programa inválidas.');
+    }
+    const user = await getAuthUserById(clean);
+    if (!user?.email) {
+      incrementMetric('authFailuresTotal');
+      throw new AppError(401, 'UNAUTHORIZED', 'Credenciais de login de programa inválidas.');
+    }
+    email = user.email;
   }
 
-  return await buildAuthSession(matchedUser.id, organizationId);
+  const authResult = await authClient.auth.signInWithPassword({
+    email,
+    password: loginCode.trim(),
+  });
+  if (authResult.error || !authResult.data.user) {
+    incrementMetric('authFailuresTotal');
+    throw new AppError(401, 'UNAUTHORIZED', 'Código de acesso / senha incorreto.');
+  }
+
+  return await buildAuthSession(authResult.data.user.id, organizationId);
 }
 
 /**

@@ -24,6 +24,7 @@ import {
   listBillingInvoices,
   listEpisodes,
   listLibraryAssets,
+  listOrganizationsByIds,
   listOrganizationSubscriptions,
   listOrganizationUsersWithPermissions,
   listParticipants,
@@ -32,7 +33,6 @@ import {
   listSaaSPlans,
   listScheduleEvents,
   listShows,
-  listUsersAndOrganizations,
   processAutomaticRenewalCycle,
   recordAiGeneration,
   recordAuditLog,
@@ -91,6 +91,12 @@ import {
 export function createApiApp() {
   const app = express();
   app.use(express.json({ limit: '10mb' }));
+
+  const requireOrganizationAdmin = (role: string) => {
+    if (!['owner', 'admin'].includes(role)) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
+    }
+  };
   app.use(requestTracingMiddleware);
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
@@ -128,12 +134,14 @@ export function createApiApp() {
     try {
       const auth = await getAuthContext(req);
       const session = await buildAuthSession(auth.userId, auth.organizationId);
-      const directory = await listUsersAndOrganizations();
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
+      const availableOrganizations = await listOrganizationsByIds(
+        session.memberships.map((membership) => membership.organizationId)
+      );
       res.json({
         session,
-        availableUsers: orgUsers.length > 0 ? orgUsers : directory.users,
-        availableOrganizations: directory.organizations,
+        availableUsers: orgUsers,
+        availableOrganizations,
       });
     } catch (err) {
       next(err);
@@ -244,6 +252,7 @@ export function createApiApp() {
   app.post('/api/billing/subscribe', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const {
         planId,
         showId,
@@ -278,6 +287,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const { autoRenew } = req.body || {};
       const updated = await toggleSubscriptionAutoRenew(
         auth.organizationId,
@@ -294,6 +304,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const { simulateFailure } = req.body || {};
       const result = await processAutomaticRenewalCycle(
         auth.organizationId,
@@ -311,6 +322,7 @@ export function createApiApp() {
   app.get('/api/admin/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       res.json({
         users: await listOrganizationUsersWithPermissions(auth.organizationId),
         shows: await listShows(auth.organizationId),
@@ -329,6 +341,7 @@ export function createApiApp() {
   app.post('/api/admin/users', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const created = await createOrganizationUserWithShowPermissions(
         auth.organizationId,
         req.body || {},
@@ -343,6 +356,7 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const { permissions } = req.body || {};
       if (!Array.isArray(permissions)) {
         throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
@@ -362,6 +376,7 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/status', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
       const updated = await updateOrganizationUserStatusOrRole(
         auth.organizationId,
         req.params.id,
