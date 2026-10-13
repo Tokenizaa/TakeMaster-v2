@@ -2,17 +2,20 @@
 
 ## Estado
 
-Baseline técnico estável.
+Baseline técnico em consolidação.
 
-- lint: PASS
-- testes: 4/4 PASS
-- build: PASS
+- lint via Bun: PASS
+- governança: PASS
+- testes: bloqueados sem configuração/mocks Supabase reproduzíveis
+- build: ainda não validado; execução excedeu o timeout observado
+- CI: corrigido para Bun e lockfile `bun.lock`
 
 ## P0 — Em andamento
 
 - Auditoria frontend/API.
 - Auditoria dos contratos reais.
 - Validação final de isolamento e registros órfãos.
+- Crosswalk obrigatório entre schema runtime e migrations versionadas (`docs/SCHEMA_RUNTIME_AUDIT.md`).
 
 ## P1 — Em andamento
 
