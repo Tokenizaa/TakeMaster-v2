@@ -76,5 +76,7 @@ Até a conclusão desse crosswalk, alterações de schema devem ser somente leit
 
 ## Aplicação
 
-A aplicação via `supabase db query`/`db push` ainda não foi concluída porque a CLI tenta conectar ao host IPv6 legado e o ambiente atual não possui rota IPv6. O dump remoto foi obtido com sucesso. É necessário executar a verificação usando uma URL de conexão IPv4/pooler e então registrar o resultado.
+A baseline foi registrada como aplicada após a confirmação do dump remoto e a migration `20261013183000_verify_canonical_runtime_schema.sql` foi aplicada com sucesso via `supabase db push`. O histórico remoto agora corresponde às duas migrations canônicas deste checkout.
+
+Antes da consolidação, foi criado um backup de dados públicos em `/tmp/takemaster-public-data.sql`.
 
