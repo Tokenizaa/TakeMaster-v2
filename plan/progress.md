@@ -15,7 +15,7 @@ Baseline técnico em consolidação.
 - Auditoria frontend/API.
 - Auditoria dos contratos reais.
 - Validação final de isolamento e registros órfãos.
-- Crosswalk obrigatório entre schema runtime e migrations versionadas (`docs/SCHEMA_RUNTIME_AUDIT.md`).
+- Crosswalk remoto concluído em nível de tabelas; falta versionar uma baseline reproduzível (`docs/SCHEMA_RUNTIME_AUDIT.md`).
 
 ## P1 — Em andamento
 
