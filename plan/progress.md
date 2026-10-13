@@ -9,6 +9,7 @@ Baseline técnico em consolidação.
 - testes: bloqueados sem configuração/mocks Supabase reproduzíveis
 - build: ainda não validado; execução excedeu o timeout observado
 - CI: corrigido para Bun e lockfile `bun.lock`
+- baseline do schema remoto versionada; aplicação bloqueada pela conexão SQL IPv6 da CLI
 
 ## P0 — Em andamento
 

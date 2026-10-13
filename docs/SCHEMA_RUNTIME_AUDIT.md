@@ -69,3 +69,12 @@ Não aplicar as migrations atuais em produção. Elas devem ser tratadas como hi
 
 Até a conclusão desse crosswalk, alterações de schema devem ser somente leitura/auditoria. Nenhuma tabela deve ser renomeada, removida ou duplicada para “fazer o teste passar”.
 
+## Artefatos gerados
+
+- `supabase/baseline/canonical-public-schema.sql`: snapshot somente de schema do projeto remoto, sem dados.
+- `supabase/migrations/20261013183000_verify_canonical_runtime_schema.sql`: verificação não destrutiva de tabelas, colunas e RLS.
+
+## Aplicação
+
+A aplicação via `supabase db query`/`db push` ainda não foi concluída porque a CLI tenta conectar ao host IPv6 legado e o ambiente atual não possui rota IPv6. O dump remoto foi obtido com sucesso. É necessário executar a verificação usando uma URL de conexão IPv4/pooler e então registrar o resultado.
+
