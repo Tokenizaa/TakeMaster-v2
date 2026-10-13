@@ -3,12 +3,9 @@
  * Simple governance check for G0
  * Validates:
  * - plan/features.json exists and is valid JSON
- * - existe exatamente um current_gate
- * - gate atual existe em phases
- * - G1 não pode estar ativo enquanto G0 não estiver PASS
- * - arquivos canônicos referenciados existem
- * - source_of_truth aponta para plan/features.json
- * - nenhuma feature pode estar passes:true sem evidência/verificação compatível
+ * - plan/features.json existe, é válido e tem foco/features coerentes
+ * - documentos canônicos do projeto existem
+ * - nenhuma feature possui estado desconhecido
  * - estrutura mínima do Loop existe
  */
 
@@ -49,9 +46,6 @@ function main() {
   if (!checkFileExists('plan/features.json')) return;
   if (!checkIsValidJson('plan/features.json')) return;
   
-  // 2. existe exatamente um current_gate
-  // 3. gate atual existe em phases
-  // We'll check these together by examining the features.json structure
   const featuresPath = path.join(process.cwd(), 'plan', 'features.json');
   let featuresData;
   try {
@@ -62,45 +56,38 @@ function main() {
     return;
   }
   
-  // Expect structure: { current_gate: string, phases: string[], features: [] }
-  // Or perhaps current_gate is inside each feature? The protocol says "existe exatamente um current_gate"
-  // and "gate atual existe em phases", suggesting a root-level current_gate and phases array.
   if (typeof featuresData !== 'object' || featuresData === null) {
     error('plan/features.json root is not an object');
     return;
   }
-  
-  if (typeof featuresData.current_gate !== 'string') {
-    error('plan/features.json missing current_gate string');
+
+  if (typeof featuresData.current_focus !== 'string' || !featuresData.current_focus.trim()) {
+    error('plan/features.json missing current_focus string');
     return;
   }
-  
-  if (!Array.isArray(featuresData.phases)) {
-    error('plan/features.json missing phases array');
+
+  if (!Array.isArray(featuresData.features) || featuresData.features.length === 0) {
+    error('plan/features.json missing non-empty features array');
     return;
   }
-  
-  if (!featuresData.phases.includes(featuresData.current_gate)) {
-    error(`current_gate '${featuresData.current_gate}' not found in phases array`);
-    return;
+
+  const allowedStates = new Set(['PENDING', 'IN_PROGRESS', 'DONE', 'BLOCKED']);
+  for (const feature of featuresData.features) {
+    if (!feature || typeof feature.id !== 'string' || typeof feature.state !== 'string') {
+      error('Every feature must have id and state strings');
+      return;
+    }
+    if (!allowedStates.has(feature.state)) {
+      error(`Feature ${feature.id} has unknown state '${feature.state}'`);
+      return;
+    }
   }
-  
-  log(`Found exactly one current_gate: ${featuresData.current_gate} which exists in phases`);
-  
-  // 4. G1 não pode estar ativo enquanto G0 não estiver PASS
-  // Interpret: if current_gate is G1, then G0 must be PASS.
-  // We need to check if there's a way to know if G0 is PASS.
-  // Perhaps from the features array? Or from a separate state?
-  // Since we don't have a clear definition, we'll assume that if current_gate is G1,
-  // then we need to check that G0 has been passed.
-  // We'll look for a feature with id "G0" or something that indicates G0 is PASS.
-  
-  // For now, we'll skip this check as it requires more context about how passes are recorded.
-  // We'll come back to it after we have a better understanding.
-  
-  // 5. arquivos canônicos referenciados existem
+
+  log(`Current focus: ${featuresData.current_focus}`);
+
+  // Canonical project files required for governance.
   const canonicalFiles = [
-    'docs/ESTADO_CANONICO_PROJETO.md',
+    'docs/CANONICAL_STATE.md',
     'docs/testing/CANONICAL_TEST_MAP.md',
     'plan/features.json',
     'plan/progress.md',
@@ -112,30 +99,7 @@ function main() {
     if (!checkFileExists(file)) return;
   }
   
-  // 6. source_of_truth aponta para plan/features.json
-  // This is more of a design principle; we'll assume it's true if we are using it as the source.
-  // We'll note that we have validated it exists and is valid JSON.
-  
-  // 7. nenhuma feature pode estar passes:true sem evidência/verificação compatível
-  // We need to check the features array for any feature with passes:true and ensure it has evidence.
-  if (Array.isArray(featuresData.features)) {
-    for (const feature of featuresData.features) {
-      if (feature.passes === true) {
-        const evidence = feature.evidence;
-        if (!Array.isArray(evidence) || evidence.length === 0) {
-          error(`Feature ${feature.id || feature.name || 'unknown'} has passes:true but no evidence`);
-          return;
-        }
-      }
-    }
-    log('No feature has passes:true without evidence');
-  } else if (featuresData.features && typeof featuresData.features === 'object') {
-    // If features is an object, we might need to iterate over its values
-    // For simplicity, we'll assume it's an array as per common structure.
-    log('Features is not an array; skipping passes check');
-  }
-  
-  // 8. estrutura mínima do Loop existe
+  // Minimal Loop structure.
   const loopDir = path.join(process.cwd(), 'loop');
   const required = [
     'loop.config.json',

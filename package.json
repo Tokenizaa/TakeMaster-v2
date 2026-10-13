@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "test": "tsx --test tests/v2.integration.test.ts"
+    "test": "tsx --test tests/v2.integration.test.ts",
+    "governance:check": "node scripts/governance-check.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
