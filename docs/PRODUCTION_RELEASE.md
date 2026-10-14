@@ -1,5 +1,7 @@
 # Production release runbook
 
+For the executed production-green acceptance criteria and evidence, see [PLANO_ACEITE_PRODUCAO_VERDE.md](./PLANO_ACEITE_PRODUCAO_VERDE.md).
+
 Production URL: `https://takemaster-v2.olfnetto.workers.dev`
 
 ## Before release
