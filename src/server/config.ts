@@ -5,12 +5,23 @@ export function requireEnv(name: string): string {
 }
 
 export function getServerConfig() {
+  const primaryNimApiKey = process.env.NIM_API_KEY || process.env.NVIDIA_API_KEY || '';
+  const secondaryNimApiKey =
+    process.env.NIM_API_KEY_SECONDARY ||
+    (process.env.NIM_API_KEY && process.env.NVIDIA_API_KEY !== process.env.NIM_API_KEY
+      ? process.env.NVIDIA_API_KEY
+      : '');
+  const nimApiKeys = [
+    ...new Set([primaryNimApiKey, secondaryNimApiKey].map((key) => key.trim()).filter(Boolean)),
+  ];
+
   return {
     supabaseUrl: process.env.SUPABASE_URL || '',
     supabasePublishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || '',
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
     nimBaseUrl: (process.env.NIM_BASE_URL || 'https://integrate.api.nvidia.com').replace(/\/$/, ''),
-    nimApiKey: process.env.NIM_API_KEY || process.env.NVIDIA_API_KEY || '',
+    nimApiKey: nimApiKeys[0] || '',
+    nimApiKeys,
     nimPrimaryModel: process.env.NIM_PRIMARY_MODEL || 'nvidia/nemotron-3-super-120b-a12b',
     nimFallbackModel:
       process.env.NIM_FALLBACK_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b',

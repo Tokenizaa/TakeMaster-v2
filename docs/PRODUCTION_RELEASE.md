@@ -30,6 +30,8 @@ The Worker reads Supabase, session-signing, and NVIDIA NIM credentials from Clou
 wrangler secret list --name takemaster-v2
 ```
 
+`NIM_API_KEY` is the primary NVIDIA credential. `NIM_API_KEY_SECONDARY` is optional; when provisioned with a distinct valid NVIDIA key, the Worker retries 401/403 authentication failures with it. It does not rotate or revoke keys at NVIDIA, and it deliberately does not try another key on 429 rate limits. Set the secondary via Wrangler's secure secret prompt; never commit it or put it in `vars`.
+
 Deploy the validated main branch with:
 
 ```sh

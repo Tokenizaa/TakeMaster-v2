@@ -27,6 +27,7 @@ import {
 } from '../domain/aiContracts';
 import { buildProgramEditorialAiContext } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
+import { NimProviderError, withNimCredentialFailover } from './nimCredentials';
 
 type GenerateOptions = {
   model?: string;
@@ -37,13 +38,14 @@ type GenerateResponse = { text?: string };
 
 export function isAiConfigured(): boolean {
   const c = getServerConfig();
-  return Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5);
+  return c.nimApiKeys.some((key) => key.length > 5);
 }
 
 export function getNimModelConfig() {
   const c = getServerConfig();
   return {
-    configured: Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5),
+    configured: c.nimApiKeys.some((key) => key.length > 5),
+    credentialFailoverConfigured: c.nimApiKeys.length > 1,
     primaryModel: c.nimPrimaryModel,
     fallbackModel: c.nimFallbackModel,
     baseUrl: c.nimBaseUrl,
@@ -53,17 +55,17 @@ export function getNimModelConfig() {
 async function callNim(
   model: string,
   contents: string,
-  responseMimeType?: string
+  responseMimeType: string | undefined,
+  apiKey: string
 ): Promise<GenerateResponse> {
   const c = getServerConfig();
-  if (!c.nimApiKey) throw new Error('NVIDIA NIM não configurado: defina NIM_API_KEY.');
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), c.nimTimeoutMs);
   try {
     const response = await fetch(c.nimBaseUrl + '/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + c.nimApiKey,
+        Authorization: 'Bearer ' + apiKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -77,7 +79,7 @@ async function callNim(
       signal: controller.signal,
     });
     const raw = await response.text();
-    if (!response.ok) throw new Error('NVIDIA NIM HTTP ' + response.status);
+    if (!response.ok) throw new NimProviderError(response.status);
     const data = JSON.parse(raw);
     const text = data?.choices?.[0]?.message?.content;
     if (!text || typeof text !== 'string') {
@@ -94,15 +96,38 @@ async function callNim(
   }
 }
 
+async function callNimWithCredentialFailover(
+  model: string,
+  contents: string,
+  responseMimeType?: string
+): Promise<GenerateResponse> {
+  const { nimApiKeys } = getServerConfig();
+  return withNimCredentialFailover(
+    nimApiKeys,
+    (apiKey) => callNim(model, contents, responseMimeType, apiKey),
+    (credentialIndex, status) => {
+      incrementMetric('aiFallbacksTotal');
+      logStructured('WARN', 'nim_credential_rejected_trying_secondary', {
+        credentialIndex,
+        statusCode: status,
+        model,
+      });
+    }
+  );
+}
+
 async function generateWithFallback(options: GenerateOptions): Promise<GenerateResponse> {
   const c = getServerConfig();
   const primary = c.nimPrimaryModel;
   try {
-    return await callNim(primary, options.contents, options.config?.responseMimeType);
+    return await callNimWithCredentialFailover(primary, options.contents, options.config?.responseMimeType);
   } catch (primaryError) {
+    if (primaryError instanceof NimProviderError && [401, 403].includes(primaryError.status)) {
+      throw primaryError;
+    }
     if (!c.nimFallbackModel || c.nimFallbackModel === primary) throw primaryError;
     try {
-      return await callNim(c.nimFallbackModel, options.contents, options.config?.responseMimeType);
+      return await callNimWithCredentialFailover(c.nimFallbackModel, options.contents, options.config?.responseMimeType);
     } catch {
       throw new Error('IA indisponível após tentativa no modelo principal e fallback.');
     }
@@ -688,20 +713,23 @@ export async function executeNimEditorialCall(options: {
     throw new Error('IA indisponível após tentativa no modelo principal e fallback.');
   }
 
-  const hasNimKey = Boolean(c.nimApiKey && c.nimApiKey.trim().length > 5);
+  const hasNimKey = c.nimApiKeys.some((key) => key.length > 5);
 
   if (hasNimKey || options.simulatePrimaryFailure) {
     try {
       if (options.simulatePrimaryFailure) {
         throw new Error(`Falha simulada no modelo principal (${primaryModel}).`);
       }
-      const primaryRes = await callNim(primaryModel, options.prompt, 'application/json');
+      const primaryRes = await callNimWithCredentialFailover(primaryModel, options.prompt, 'application/json');
       return {
         text: primaryRes.text || '',
         modelUsed: primaryModel,
         usedFallback: false,
       };
     } catch (primaryErr) {
+      if (primaryErr instanceof NimProviderError && [401, 403].includes(primaryErr.status)) {
+        throw primaryErr;
+      }
       logStructured('WARN', 'nim_primary_model_failed_trying_fallback', {
         primaryModel,
         fallbackModel,
@@ -709,7 +737,7 @@ export async function executeNimEditorialCall(options: {
       });
       if (!fallbackModel || fallbackModel === primaryModel) throw primaryErr;
       try {
-        const fallbackRes = await callNim(fallbackModel, options.prompt, 'application/json');
+        const fallbackRes = await callNimWithCredentialFailover(fallbackModel, options.prompt, 'application/json');
         return {
           text: fallbackRes.text || '',
           modelUsed: fallbackModel,

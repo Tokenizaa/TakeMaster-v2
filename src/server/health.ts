@@ -12,7 +12,7 @@ export async function getHealth() {
     timestamp: new Date().toISOString(),
     dependencies: {
       supabase: supabase.connected ? { status: 'ok', latencyMs: supabase.latencyMs } : { status: 'error', latencyMs: supabase.latencyMs, error: supabase.error },
-      nvidia: config.nimApiKey ? { status: 'configured' } : { status: 'not_configured' },
+      nvidia: config.nimApiKey ? { status: 'configured', credentialFailoverConfigured: config.nimApiKeys.length > 1 } : { status: 'not_configured' },
     },
   };
 }
