@@ -186,6 +186,15 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('O plano não possui um preço BRL válido para cobrança.'), { statusCode: 409, code: 'PLAN_PRICE_INVALID' });
   }
 
+  if (program.catalog_program_id) {
+    const catalogLink = await getDb().from('organization_programs').select('program_id')
+      .eq('organization_id', input.organizationId).eq('catalog_program_id', program.catalog_program_id).maybeSingle();
+    if (catalogLink.error) throw new Error(catalogLink.error.message);
+    if (catalogLink.data?.program_id && catalogLink.data.program_id !== program.id) {
+      throw Object.assign(new Error('Este programa do catálogo já está vinculado a outra instância nesta organização.'), { statusCode: 409, code: 'CATALOG_PROGRAM_ALREADY_LINKED' });
+    }
+  }
+
   const existingSubscription = await getDb().from('program_subscriptions').select('id')
     .eq('organization_id', input.organizationId).eq('program_id', program.id).eq('status', 'active').maybeSingle();
   if (existingSubscription.error) throw new Error(existingSubscription.error.message);
