@@ -119,7 +119,7 @@ export async function listShows(org:string, allowed?:string[]) {
   return Promise.all(filtered.map(mapShow));
 }
 export async function getShowById(org:string,id:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return undefined; return mapShow(p); }
-export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,catalog_program_id:input.catalogProgramId||null,executive_user_id:userId||null,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); return mapShow(r.data); }
+export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,catalog_program_id:input.catalogProgramId||null,executive_user_id:userId||null,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); if(userId) await upsertProgramMembership(org,r.data.legacy_id||r.data.id,userId,{canView:true,canEditEditorial:true,canEditScript:true,canOperateStudio:true,canManageSchedule:true,canManageAssets:true,canExport:true},'executive',userId); return mapShow(r.data); }
 export async function updateShow(org:string,id:string,input:any,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)throw new AppError(404,'NOT_FOUND','Programa não encontrado.'); const row:any={updated_at:now()}; const map:any={title:'title',description:'description',host:'host',format:'format',defaultDurationMin:'default_duration_min',editorialStyle:'editorial_style',scenario:'scenario',standardStructure:'standard_structure',defaultOpening:'default_opening',defaultClosing:'default_closing'}; for(const [k,v] of Object.entries(map) as [string,string][]){if(k in input)row[v]=input[k];} if('title' in input)row.name=input.title; const r=await db.from('programs').update(row).eq('id',p.id).select('*').single(); fail(r); return mapShow(r.data); }
 export async function deleteShow(org:string,id:string,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return false; const r=await db.from('programs').delete().eq('id',p.id); fail(r); return true; }
 
@@ -267,23 +267,62 @@ export async function getUserMemberships(userId:string){const r=await db.from('o
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
 export async function verifyUserOrganizationAccess(userId:string,orgId:string){const [o,m]=await Promise.all([getOrganizationById(orgId),db.from('organization_members').select('*').eq('organization_id',orgId).eq('user_id',userId).eq('active',true).single()]);if(!o||m.error)throw new AppError(403,'FORBIDDEN_CONTEXT','Usuário não pertence à organização.');return {organization:o,role:m.data.role as OrganizationRole};}
 export async function getUserShowPermissions(orgId:string,userId:string){
-  const r=await db.from('program_user_access').select('catalog_program_id,role,status,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
-  fail(r);
-  const rows:any[] = r.data || [];
+  const membershipResult=await db.from('program_memberships').select('program_id,role,status,permissions,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(membershipResult);
   const out:UserShowPermission[]=[];
-  for(const x of rows){
-    const p=await db.from('programs').select('legacy_id,title').eq('organization_id',orgId).eq('catalog_program_id',x.catalog_program_id).limit(1);
-    const program=p.data?.[0];
-    if(!program) continue;
-    const full=['admin','producer'].includes(x.role);
-    out.push({id:`${userId}:${program.legacy_id}`,organizationId:orgId,userId,showId:program.legacy_id,showTitle:program.title,
-      canView:true,canEditEditorial:full,canEditScript:full,canOperateStudio:full,canManageSchedule:full,canManageAssets:full,canExport:true,
+  const seen=new Set<string>();
+  for(const x of (membershipResult.data||[]) as any[]){
+    const p=await db.from('programs').select('legacy_id,title').eq('id',x.program_id).eq('organization_id',orgId).maybeSingle();
+    if(p.error) throw new Error(p.error.message);
+    if(!p.data) continue;
+    const id=p.data.legacy_id||x.program_id;
+    const perms=x.permissions||{};
+    seen.add(id);
+    out.push({id:`${userId}:${id}`,organizationId:orgId,userId,showId:id,showTitle:p.data.title||'',
+      canView:perms.canView!==false,canEditEditorial:perms.canEditEditorial===true,canEditScript:perms.canEditScript===true,
+      canOperateStudio:perms.canOperateStudio===true,canManageSchedule:perms.canManageSchedule===true,
+      canManageAssets:perms.canManageAssets===true,canExport:perms.canExport===true,
       createdAt:x.created_at,updatedAt:x.updated_at});
+  }
+
+  // Preserve access granted by the previous catalog-based model while memberships
+  // are migrated to program instances.
+  const legacy=await db.from('program_user_access').select('catalog_program_id,role,status,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(legacy);
+  for(const x of (legacy.data||[]) as any[]){
+    const programs=await db.from('programs').select('legacy_id,title').eq('organization_id',orgId).eq('catalog_program_id',x.catalog_program_id);
+    fail(programs);
+    for(const p of (programs.data||[]) as any[]){
+      const id=p.legacy_id||'';
+      if(!id||seen.has(id)) continue;
+      const full=['admin','producer'].includes(x.role);
+      out.push({id:`${userId}:${id}`,organizationId:orgId,userId,showId:id,showTitle:p.title||'',
+        canView:true,canEditEditorial:full,canEditScript:full,canOperateStudio:full,canManageSchedule:full,canManageAssets:full,canExport:true,
+        createdAt:x.created_at,updatedAt:x.updated_at});
+      seen.add(id);
+    }
   }
   return out;
 }
-export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){if(['owner','admin','producer'].includes(role))return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:await getUserShowPermissions(orgId,userId)};const permissions=await getUserShowPermissions(orgId,userId); const catalogIds=permissions.map(x=>x.showId); if(!catalogIds.length)return {isFullAccessAdmin:false,allowedShowIds:[] as string[],permissions};return {isFullAccessAdmin:false,allowedShowIds:catalogIds,permissions};}
-export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='view'){const u=await getEffectiveAllowedShowIds(orgId,userId,role);if(u.isFullAccessAdmin)return true;if(u.allowedShowIds.includes(showId))return true;throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');}
+
+export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){
+  if(['owner','admin'].includes(role)) return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:await getUserShowPermissions(orgId,userId)};
+  const permissions=await getUserShowPermissions(orgId,userId);
+  const allowedShowIds=permissions.filter(x=>x.canView).map(x=>x.showId);
+  return {isFullAccessAdmin:false,allowedShowIds,permissions};
+}
+
+export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string){
+  const program=await one('programs',programId);
+  if(!program||program.organization_id!==orgId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa não encontrado nesta organização.');
+  const r=await db.from('program_memberships').upsert({
+    organization_id:orgId,program_id:program.id,user_id:userId,role,status:'active',
+    permissions:permissions||{canView:true},authorized_by:actorUserId||userId,authorized_at:now(),revoked_at:null,updated_at:now()
+  },{onConflict:'program_id,user_id'}).select('*').single();
+  fail(r);
+  return r.data;
+}
+
 export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users:any[]=await authUsers((r.data||[]).map((m:any)=>m.user_id).filter(Boolean));const byId=new Map(users.map((u:any)=>[u.id,u]));const members=(r.data||[]).filter((m:any)=>{if(byId.has(m.user_id))return true;logStructured('WARN','auth_user_unresolvable',{organizationId:orgId,userId:m.user_id});return false;});return Promise.all(members.map((m:any)=>mapUser(byId.get(m.user_id),orgId)));}
 export async function createOrganizationUserWithShowPermissions(orgId:string,input:any,userId?:string){const r=await db.auth.admin.createUser({email:input.email,password:input.loginCode||cryptoRandom(),email_confirm:true,user_metadata:{name:input.name,jobTitle:input.jobTitle}});if(r.error)throw new Error(r.error.message);await db.from('organization_members').insert({organization_id:orgId,user_id:r.data.user.id,role:input.role||'editor',active:true});return mapUser(r.data.user,orgId);}
 function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
@@ -291,11 +330,13 @@ function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
 export async function updateUserShowPermissions(orgId:string,userId:string,permissions:any[],actorUserId?:string){
   for(const permission of permissions || []) {
     if (!permission?.showId) continue;
-    const program = await one('programs', permission.showId);
-    if (!program || program.organization_id !== orgId) continue;
-    const catalogId = program.catalog_program_id;
-    if (!catalogId) continue;
-    await db.from('program_user_access').upsert({organization_id:orgId,user_id:userId,catalog_program_id:catalogId,role:permission.canEditEditorial?'producer':'editor',status:'active',updated_at:now()},{onConflict:'organization_id,user_id,catalog_program_id'});
+    const role=permission.role==='executive'?'executive':permission.canEditEditorial?'producer':'editor';
+    await upsertProgramMembership(orgId,permission.showId,userId,{
+      canView:permission.canView!==false,canEditEditorial:permission.canEditEditorial===true,
+      canEditScript:permission.canEditScript===true,canOperateStudio:permission.canOperateStudio===true,
+      canManageSchedule:permission.canManageSchedule===true,canManageAssets:permission.canManageAssets===true,
+      canExport:permission.canExport===true
+    },role,actorUserId);
   }
   const users:any[]=await authUsers(); return mapUser(users.find((u:any)=>u.id===userId)||{},orgId);
 }
