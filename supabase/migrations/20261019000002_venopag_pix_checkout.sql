@@ -8,6 +8,76 @@ CREATE INDEX IF NOT EXISTS programs_executive_user_idx
   ON public.programs (executive_user_id)
   WHERE executive_user_id IS NOT NULL;
 
+CREATE TABLE IF NOT EXISTS public.program_memberships (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id uuid NOT NULL REFERENCES public.organizations(id) ON DELETE RESTRICT,
+  program_id uuid NOT NULL REFERENCES public.programs(id) ON DELETE CASCADE,
+  user_id uuid NOT NULL,
+  role text NOT NULL DEFAULT 'editor'
+    CHECK (role IN ('executive','producer','editor','host','viewer')),
+  status text NOT NULL DEFAULT 'active'
+    CHECK (status IN ('pending','active','revoked')),
+  permissions jsonb NOT NULL DEFAULT '{"canView":true,"canEditEditorial":false,"canEditScript":false,"canOperateStudio":false,"canManageSchedule":false,"canManageAssets":false,"canExport":false}'::jsonb,
+  authorized_by uuid,
+  authorized_at timestamptz,
+  revoked_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (program_id, user_id)
+);
+
+CREATE INDEX IF NOT EXISTS program_memberships_user_status_idx
+  ON public.program_memberships (organization_id, user_id, status);
+CREATE INDEX IF NOT EXISTS program_memberships_program_status_idx
+  ON public.program_memberships (program_id, status);
+
+ALTER TABLE public.program_memberships ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.program_memberships FROM PUBLIC, anon, authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.program_memberships TO service_role;
+
+-- RLS helper must not grant every organization member access to every program.
+-- Organization owner/admin remain global administrators; other users require an active program membership.
+CREATE OR REPLACE FUNCTION public.has_program_access(p_program_id uuid) RETURNS boolean
+LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path = public
+AS $
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.programs p
+    WHERE p.id = p_program_id
+      AND (
+        EXISTS (
+          SELECT 1 FROM public.organization_members om
+          WHERE om.organization_id = p.organization_id
+            AND om.user_id = auth.uid()
+            AND om.active = true
+            AND om.role IN ('owner','admin')
+        )
+        OR EXISTS (
+          SELECT 1 FROM public.program_memberships pm
+          WHERE pm.organization_id = p.organization_id
+            AND pm.program_id = p.id
+            AND pm.user_id = auth.uid()
+            AND pm.status = 'active'
+        )
+        OR EXISTS (
+          SELECT 1
+          FROM public.organization_programs op
+          JOIN public.program_user_access pua
+            ON pua.organization_id = op.organization_id
+           AND pua.catalog_program_id = op.catalog_program_id
+          WHERE op.program_id = p.id
+            AND op.status = 'active'
+            AND pua.user_id = auth.uid()
+            AND pua.status = 'active'
+        )
+      )
+  );
+$;
+
+REVOKE ALL ON FUNCTION public.has_program_access(uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.has_program_access(uuid) TO authenticated, service_role;
+
 CREATE TABLE IF NOT EXISTS public.program_subscriptions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id uuid NOT NULL REFERENCES public.organizations(id) ON DELETE RESTRICT,
