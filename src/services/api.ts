@@ -449,6 +449,12 @@ export const api = {
       body: JSON.stringify({}),
     }),
 
+  discoverEditorialChannel: (url: string, continuation?: string) =>
+    request<{ channelUrl: string; channelTitle: string | null; videos: Array<{ videoId: string; title: string; publishedLabel: string | null; durationLabel: string | null }>; pages: number; reachedEnd: boolean; truncated: boolean; nextContinuation: string | null; errors: string[] }>('/api/editorial/channels/discover', {
+      method: 'POST',
+      body: JSON.stringify({ url, continuation }),
+    }),
+
   importEditorialChannel: (url: string, catalogProgramId?: string, maxVideos = 5000) =>
     request<any>('/api/editorial/channels/import', {
       method: 'POST',
