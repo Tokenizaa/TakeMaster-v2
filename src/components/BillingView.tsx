@@ -179,7 +179,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
               <div className="flex-1 space-y-3">
                 <h3 className="font-semibold text-zinc-100">{plan.name}</h3>
                 <p className="text-sm text-zinc-400">{plan.tagline}</p>
-                <p className="text-2xl font-bold text-zinc-100">{formatBRL(plan.monthlyPriceCents)}<span className="ml-1 text-xs font-normal text-zinc-400">/ ciclo cadastrado</span></p>
+                <p className="text-2xl font-bold text-zinc-100">{formatBRL(plan.monthlyPriceCents)}<span className="ml-1 text-xs font-normal text-zinc-400">valor da contratação</span></p>
                 <ul className="space-y-2 pt-2">
                   {plan.features.map((feature, index) => <li key={index} className="flex gap-2 text-xs text-zinc-300"><CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />{feature}</li>)}
                 </ul>
@@ -233,7 +233,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
             <div>
               <p className="text-xs font-medium text-emerald-400">Checkout VenoPag · PIX</p>
               <h3 className="mt-1 text-xl font-bold text-zinc-100">{selectedPlan.name}</h3>
-              <p className="mt-1 text-sm text-zinc-400">{formatBRL(selectedPlan.monthlyPriceCents)} · pagamento PIX</p>
+              <p className="mt-1 text-sm text-zinc-400">{formatBRL(selectedPlan.monthlyPriceCents)} · pagamento PIX avulso</p>
             </div>
             <label className="block space-y-2 text-sm text-zinc-300">
               <span>Programa</span>
