@@ -149,9 +149,12 @@ export function App() {
     setActiveEpisodeId(null);
     setSelectedShowId('ALL');
     try {
-      const isOrgId = orgOrCode && orgOrCode.startsWith('org-');
-      const orgId = isOrgId ? orgOrCode : session?.activeOrganization.id;
-      const loginCode = isOrgId ? maybeCode : orgOrCode;
+      // The canonical organization uses a UUID, not the legacy "org-" prefix.
+      // The modal passes (identifier, organizationId, loginCode) when the third argument exists;
+      // otherwise the second argument is the login code.
+      const hasExplicitOrganizationAndCode = maybeCode !== undefined;
+      const orgId = hasExplicitOrganizationAndCode ? orgOrCode : session?.activeOrganization.id;
+      const loginCode = hasExplicitOrganizationAndCode ? maybeCode : orgOrCode;
       await api.login(emailOrUserId, orgId, loginCode);
       await loadWorkspaceState();
     } catch (err: any) {
