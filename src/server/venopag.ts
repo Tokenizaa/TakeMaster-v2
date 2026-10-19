@@ -127,9 +127,11 @@ function publicIntent(row: IntentRow) {
   };
 }
 
-async function readIntent(id: string, organizationId: string): Promise<IntentRow | null> {
-  const result = await getDb().from('program_payment_intents')
-    .select('*').eq('id', id).eq('organization_id', organizationId).maybeSingle();
+async function readIntent(id: string, organizationId: string, createdBy?: string): Promise<IntentRow | null> {
+  let query = getDb().from('program_payment_intents')
+    .select('*').eq('id', id).eq('organization_id', organizationId);
+  if (createdBy) query = query.eq('created_by', createdBy);
+  const result = await query.maybeSingle();
   if (result.error) throw new Error(result.error.message);
   return (result.data as IntentRow | null) || null;
 }
@@ -272,24 +274,26 @@ export async function createVenoPagPixCheckout(input: {
   }
 }
 
-export async function getVenoPagPixCheckout(id: string, organizationId: string) {
+export async function getVenoPagPixCheckout(id: string, organizationId: string, createdBy?: string) {
   if (!UUID_RE.test(id)) {
     throw Object.assign(new Error('Identificador de cobrança inválido.'), { statusCode: 400, code: 'INVALID_PAYMENT_INTENT_ID' });
   }
-  const row = await readIntent(id, organizationId);
+  const row = await readIntent(id, organizationId, createdBy);
   if (!row) throw Object.assign(new Error('Cobrança não encontrada.'), { statusCode: 404, code: 'PAYMENT_INTENT_NOT_FOUND' });
   return publicIntent(row);
 }
 
-export async function listVenoPagPixCheckouts(organizationId: string) {
-  const result = await getDb().from('program_payment_intents').select('*')
+export async function listVenoPagPixCheckouts(organizationId: string, createdBy?: string) {
+  let query = getDb().from('program_payment_intents').select('*')
     .eq('organization_id', organizationId).order('created_at', { ascending: false }).limit(20);
+  if (createdBy) query = query.eq('created_by', createdBy);
+  const result = await query;
   if (result.error) throw new Error(result.error.message);
   return ((result.data || []) as IntentRow[]).map(publicIntent);
 }
 
-export async function verifyVenoPagPixCheckout(id: string, organizationId: string) {
-  const row = await readIntent(id, organizationId);
+export async function verifyVenoPagPixCheckout(id: string, organizationId: string, createdBy?: string) {
+  const row = await readIntent(id, organizationId, createdBy);
   if (!row) throw Object.assign(new Error('Cobrança não encontrada.'), { statusCode: 404, code: 'PAYMENT_INTENT_NOT_FOUND' });
   if (row.status === 'confirmed' && row.subscription_id) return publicIntent(row);
   if (!row.provider_request_number) {
@@ -322,7 +326,7 @@ export async function verifyVenoPagPixCheckout(id: string, organizationId: strin
     },
   });
   if (finalized.error) throw new Error(finalized.error.message);
-  const updated = await readIntent(id, organizationId);
+  const updated = await readIntent(id, organizationId, createdBy);
   if (!updated) throw new Error('Cobrança desapareceu após a conciliação.');
   return publicIntent(updated);
 }
