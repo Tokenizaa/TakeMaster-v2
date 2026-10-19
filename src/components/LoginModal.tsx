@@ -317,7 +317,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                           </span>
                           <button
                             type="button"
-                            disabled={submitting || isCurrent}
+                            disabled={submitting || isCurrent || !u.loginCode}
                             onClick={() => handleQuickProfileLogin(u)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${
                               isCurrent
