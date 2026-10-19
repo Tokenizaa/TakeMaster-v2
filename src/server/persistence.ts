@@ -462,6 +462,35 @@ export async function createOrganizationUserWithShowPermissions(orgId:string,inp
 function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
 
 export async function updateUserShowPermissions(orgId:string,userId:string,permissions:any[],actorUserId?:string){
+  const desired=new Set<string>();
+  for(const permission of permissions||[]){
+    if(!permission?.showId) continue;
+    const program=await one('programs',permission.showId);
+    if(program&&program.organization_id===orgId) desired.add(program.id);
+  }
+
+  const current=await db.from('program_memberships').select('program_id,role').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(current);
+  for(const membership of (current.data||[]) as any[]){
+    // The executive owner cannot lose their foundational membership through a generic RBAC edit.
+    if(membership.role==='executive'||desired.has(membership.program_id)) continue;
+    const revoked=await db.from('program_memberships').update({status:'revoked',revoked_at:now(),updated_at:now()})
+      .eq('organization_id',orgId).eq('program_id',membership.program_id).eq('user_id',userId).eq('status','active');
+    fail(revoked);
+  }
+
+  const legacy=await db.from('program_user_access').select('catalog_program_id').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(legacy);
+  for(const grant of (legacy.data||[]) as any[]){
+    const linked=await db.from('programs').select('id').eq('organization_id',orgId).eq('catalog_program_id',grant.catalog_program_id);
+    fail(linked);
+    const ids=(linked.data||[]).map((p:any)=>p.id);
+    if(ids.some((id:string)=>desired.has(id))) continue;
+    const revoked=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',grant.catalog_program_id).eq('status','active');
+    fail(revoked);
+  }
+
   for(const permission of permissions || []) {
     if (!permission?.showId) continue;
     const role=permission.role==='executive'?'executive':permission.canEditEditorial?'producer':'editor';
