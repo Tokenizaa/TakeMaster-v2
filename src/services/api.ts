@@ -443,6 +443,12 @@ export const api = {
       }),
     }),
 
+  analyzeEditorialTranscript: (transcriptId: string) =>
+    request<{ analysis: any }>(`/api/editorial/transcripts/${encodeURIComponent(transcriptId)}/analyze`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
+
   editorialCatalogPrograms: () =>
     request<{ programs: Array<{ id: string; slug: string; name: string; description: string | null; host: string | null; active: boolean; metadata: Record<string, unknown> }> }>('/api/editorial/catalog-programs'),
 
