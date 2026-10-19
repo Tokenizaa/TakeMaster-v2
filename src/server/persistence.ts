@@ -312,6 +312,19 @@ export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role
   return {isFullAccessAdmin:false,allowedShowIds,permissions};
 }
 
+export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='canView'){
+  const access=await getEffectiveAllowedShowIds(orgId,userId,role);
+  if(access.isFullAccessAdmin) return true;
+  const permission=access.permissions.find((item)=>item.showId===showId);
+  if(!permission||permission.canView!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');
+  const modeKey=mode==='view'?'canView':mode;
+  if(!['canView','canEditEditorial','canEditScript','canOperateStudio','canManageSchedule','canManageAssets','canExport'].includes(modeKey)) {
+    throw new AppError(400,'INVALID_PERMISSION_MODE','Permissão solicitada inválida.');
+  }
+  if((permission as any)[modeKey]!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Sua função não permite esta operação neste programa.');
+  return true;
+}
+
 export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string){
   const program=await one('programs',programId);
   if(!program||program.organization_id!==orgId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa não encontrado nesta organização.');
