@@ -262,6 +262,13 @@ async function authUsers(userIds?: string[]): Promise<User[]> {
 }
 async function mapUser(u:any,orgId?:string):Promise<User>{const m=orgId?await db.from('organization_members').select('*').eq('user_id',u.id).eq('organization_id',orgId).eq('active',true).limit(1):await db.from('organization_members').select('*').eq('user_id',u.id).eq('active',true).limit(1);const member=m.data?.[0];return {id:u.id,email:u.email||'',name:u.user_metadata?.name||u.user_metadata?.full_name||u.email||'',jobTitle:u.user_metadata?.jobTitle,status:u.banned_until?'suspended':'active',loginCode:undefined,avatarUrl:u.user_metadata?.avatarUrl,role:member?.role,showPermissions:orgId ? await getUserShowPermissions(orgId,u.id) : [],createdAt:u.created_at,updatedAt:u.updated_at||u.created_at};}
 export async function listUsersAndOrganizations(){const [users,orgs]=await Promise.all([authUsers(),db.from('organizations').select('*').order('created_at')]);fail(orgs);return {users:await Promise.all(users.map(u=>mapUser(u))),organizations:(orgs.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}))};}
+export async function resolveCanonicalOrganizationId(){
+  const result=await db.from('organizations').select('id,name,slug,active').eq('slug','rs-play-tv').eq('active',true).maybeSingle();
+  fail(result);
+  if(!result.data) throw new AppError(500,'CONFIGURATION_ERROR','A organização canônica RS Play TV não foi encontrada ou está inativa.');
+  return result.data.id as string;
+}
+
 export async function listOrganizationsByIds(organizationIds:string[]):Promise<Organization[]>{if(!organizationIds.length)return [];const r=await db.from('organizations').select('*').in('id',organizationIds).order('created_at');fail(r);return (r.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}));}
 export async function getUserMemberships(userId:string){const r=await db.from('organization_members').select('organization_id,role,organizations(name,slug)').eq('user_id',userId).eq('active',true);fail(r);return (r.data||[]).map((x:any):OrganizationMembership=>({organizationId:x.organization_id,organizationName:x.organizations?.name||'',organizationSlug:x.organizations?.slug||'',role:x.role}));}
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
