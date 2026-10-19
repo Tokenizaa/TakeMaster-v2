@@ -257,6 +257,7 @@ export function createApiApp() {
       const intent = await createVenoPagPixCheckout({
         organizationId: auth.organizationId,
         userId: auth.userId,
+        userRole: auth.role,
         programId: String(programId || ''),
         planCode: String(planCode || ''),
         idempotencyKey: String(idempotencyKey || ''),
