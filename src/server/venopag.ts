@@ -165,7 +165,7 @@ export async function createVenoPagPixCheckout(input: {
 
   const programQuery = UUID_RE.test(input.programId)
     ? await getDb().from('programs').select('id,organization_id,catalog_program_id,executive_user_id,title,name').eq('id', input.programId).maybeSingle()
-    : await getDb().from('programs').select('id,organization_id,catalog_program_id,title,name').eq('legacy_id', input.programId).maybeSingle();
+    : await getDb().from('programs').select('id,organization_id,catalog_program_id,executive_user_id,title,name').eq('legacy_id', input.programId).maybeSingle();
   if (programQuery.error) throw new Error(programQuery.error.message);
   const program = programQuery.data;
   if (!program || program.organization_id !== input.organizationId) {
