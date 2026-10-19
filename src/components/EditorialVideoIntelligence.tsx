@@ -27,7 +27,7 @@ export const EditorialVideoIntelligence: React.FC = () => {
   const [programs, setPrograms] = useState<CatalogProgram[]>([]);
   const [programId, setProgramId] = useState('');
   const [url, setUrl] = useState('');
-  const [channelUrl, setChannelUrl] = useState('');
+  const [channelUrl, setChannelUrl] = useState('https://www.youtube.com/@rsplaydigital/videos');
   const [channelProgress, setChannelProgress] = useState('');
   const [videos, setVideos] = useState<EditorialVideo[]>([]);
   const [busy, setBusy] = useState(false);
