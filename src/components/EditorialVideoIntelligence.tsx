@@ -29,7 +29,8 @@ export const EditorialVideoIntelligence: React.FC = () => {
   const [url, setUrl] = useState('');
   const [videos, setVideos] = useState<EditorialVideo[]>([]);
   const [busy, setBusy] = useState(false);
-  const [loading, setLoading] = useState(true);\n  const [analyzingId, setAnalyzingId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [analyzingId, setAnalyzingId] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
