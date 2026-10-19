@@ -449,6 +449,12 @@ export const api = {
       body: JSON.stringify({}),
     }),
 
+  importEditorialChannel: (url: string, catalogProgramId?: string, maxVideos = 5000) =>
+    request<any>('/api/editorial/channels/import', {
+      method: 'POST',
+      body: JSON.stringify({ url, catalogProgramId, maxVideos }),
+    }),
+
   editorialCatalogPrograms: () =>
     request<{ programs: Array<{ id: string; slug: string; name: string; description: string | null; host: string | null; active: boolean; metadata: Record<string, unknown> }> }>('/api/editorial/catalog-programs'),
 
