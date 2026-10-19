@@ -319,7 +319,7 @@ export async function assertUserCanAccessShow(orgId:string,userId:string,role:Or
   if(!permission||permission.canView!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');
   const modeKey=mode==='view'?'canView':mode;
   if(!['canView','canEditEditorial','canEditScript','canOperateStudio','canManageSchedule','canManageAssets','canExport'].includes(modeKey)) {
-    throw new AppError(400,'INVALID_PERMISSION_MODE','Permissão solicitada inválida.');
+    throw new AppError(400,'VALIDATION_ERROR','Permissão solicitada inválida.');
   }
   if((permission as any)[modeKey]!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Sua função não permite esta operação neste programa.');
   return true;
@@ -327,7 +327,7 @@ export async function assertUserCanAccessShow(orgId:string,userId:string,role:Or
 
 export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string){
   const program=await one('programs',programId);
-  if(!program||program.organization_id!==orgId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa não encontrado nesta organização.');
+  if(!program||program.organization_id!==orgId) throw new AppError(404,'NOT_FOUND','Programa não encontrado nesta organização.');
   if(program.catalog_program_id){
     const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
       .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
@@ -363,8 +363,8 @@ export async function listSaaSPlans(){const r=await db.from('commercial_plans').
 export async function listOrganizationSubscriptions(orgId:string){const r=await db.from('organization_subscriptions').select('*,commercial_plans(*)').eq('organization_id',orgId).order('created_at',{ascending:false});fail(r);return (r.data||[]).map((x:any):SaaSSubscription=>({id:x.id,organizationId:orgId,planId:x.commercial_plans?.code||'rsplay_programa_individual',planName:x.commercial_plans?.name||'',billingCycle:x.commercial_plans?.billing_period==='annual'?'annual':'monthly',amountCents:x.commercial_plans?.price_cents||0,currency:x.commercial_plans?.currency||'BRL',status:x.status==='active'?'active':x.status==='trial'?'trialing':'suspended',autoRenew:true,paymentGateway:'',paymentMethodType:'credit_card',paymentMethodLast4:'',paymentMethodBrand:'',gatewayCustomerId:'',gatewaySubscriptionId:'',currentPeriodStart:x.starts_at,currentPeriodEnd:x.ends_at||x.starts_at,lastRenewalAt:undefined,canceledAt:undefined,createdAt:x.created_at,updatedAt:x.updated_at}));}
 export async function listBillingInvoices(_orgId?:string){return [] as BillingInvoice[];}
 export async function listPaymentGatewayEvents(_orgId?:string){return [] as PaymentGatewayEvent[];}
-export async function subscribeOrUpdatePlan(_orgId:string,_input:any,_userId:string){throw new AppError(410,'LEGACY_BILLING_DISABLED','A contratação simulada foi desativada. Use o checkout PIX do VenoPag; a assinatura só é criada após confirmação do pagamento.');}
-export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_autoRenew?:boolean,_userId?:string){throw new AppError(410,'RECURRING_BILLING_UNAVAILABLE','Renovação automática não está disponível na integração inicial VenoPag PIX.');}
+export async function subscribeOrUpdatePlan(_orgId:string,_input:any,_userId:string){throw new AppError(410,'CONFLICT','A contratação simulada foi desativada. Use o checkout PIX do VenoPag; a assinatura só é criada após confirmação do pagamento.');}
+export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_autoRenew?:boolean,_userId?:string){throw new AppError(410,'CONFLICT','Renovação automática não está disponível na integração inicial VenoPag PIX.');}
 export async function processAutomaticRenewalCycle(_orgId:string,_id:string,_simulateFailure?:boolean,_userId?:string){throw new AppError(410,'RECURRING_BILLING_UNAVAILABLE','Renovação simulada foi desativada. A integração inicial VenoPag cobre cobranças PIX avulsas.');}
 export async function buildAdminReportSummary(orgId:string):Promise<AdminReportSummary>{const [subs,users,shows]=await Promise.all([listOrganizationSubscriptions(orgId),listOrganizationUsersWithPermissions(orgId),listShows(orgId)]);return {mrrCents:subs.reduce((a,x)=>a+x.amountCents,0),activeSubscriptionsCount:subs.filter(x=>x.status==='active').length,autoRenewEnabledCount:subs.filter(x=>x.autoRenew).length,paidInvoicesTotalCents:0,pendingInvoicesTotalCents:0,usersCount:users.length,showsReport:await Promise.all(shows.map(async s=>({showId:s.id,showTitle:s.title,format:s.format,host:s.host,episodesCount:(await listEpisodes(orgId,s.id)).length,publishedOrReadyCount:(await listEpisodes(orgId,s.id)).filter(e=>e.status==='published'||e.status==='ready').length,totalPlannedMinutes:0,scheduledSessionsCount:(await listScheduleEvents(orgId,s.id)).length,authorizedUsersCount:users.length})))};}
 export async function populateOrganizationWorkspace(){return true;}
@@ -377,14 +377,14 @@ export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrati
       .select('id,slug,name,description,host,format,active,contractable')
       .eq('slug',payload.knowledgeBaseSlug).eq('active',true).single();
     fail(catalog);
-    if(!catalog.data.contractable) throw new AppError(409,'PROGRAM_NOT_CONTRACTABLE','Este programa do catálogo não está disponível para contratação.');
+    if(!catalog.data.contractable) throw new AppError(409,'CONFLICT','Este programa do catálogo não está disponível para contratação.');
     programSpec={title:catalog.data.name,description:catalog.data.description||'',host:catalog.data.host||'',format:catalog.data.format||'Outro',catalogProgramId:catalog.data.id};
   }else if(payload.showMode==='new'&&payload.newShowTitle?.trim()){
     programSpec={title:payload.newShowTitle.trim(),host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'};
   }else if(payload.showMode==='existing'&&payload.existingShowId){
     existingProgram=await one('programs',payload.existingShowId);
     if(!existingProgram||existingProgram.organization_id!==organizationId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa existente não encontrado nesta organização.');
-    if(existingProgram.executive_user_id) throw new AppError(403,'PROGRAM_EXECUTIVE_CONFLICT','Este programa já possui um diretor executivo responsável. Solicite autorização para integrar a equipe.');
+    if(existingProgram.executive_user_id) throw new AppError(403,'CONFLICT','Este programa já possui um diretor executivo responsável. Solicite autorização para integrar a equipe.');
   }else{
     throw new AppError(400,'VALIDATION_ERROR','Selecione um programa do catálogo, um programa autoral ou um programa existente autorizado.');
   }
