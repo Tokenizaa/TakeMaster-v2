@@ -36,7 +36,7 @@ function extract(html: string, url: string, status: number, contentType: string)
   const candidateName = candidateTitle.replace(/\s+(?:com|por)\s+.+$/i, '').trim();
   const slug = candidateName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const presenter = candidateTitle.match(/\b(?:com|por)\s+(.+)$/i)?.[1]?.trim() || null;
-  const programCandidate = candidateName && slug && (/(mídia kit|programa|RS Play)/i.test(title) || /O Programa|Sobre o Programa/i.test(text))
+  const programCandidate = candidateName && slug && !/^https?:\\/\\/(?:www\\.)?rsplay\\.com\\.br\\/?$/i.test(url) && (/(mídia kit|programa|RS Play)/i.test(title) || /O Programa|Sobre o Programa/i.test(text))
     ? { name: candidateName, slug, presenter }
     : null;
   return { url, status, contentType, title: title || null, description: description || null, canonicalUrl, text, headings, programCandidate, links: [...new Set(links)], socialUrls, youtube, hash: hash(html), fetchedAt: new Date().toISOString() };
