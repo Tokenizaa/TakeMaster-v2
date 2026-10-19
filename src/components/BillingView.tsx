@@ -49,7 +49,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<SaaSPlanDefinition | null>(null);
-  const [selectedProgramId, setSelectedProgramId] = useState(shows[0]?.id || '');
+  const [selectedProgramId, setSelectedProgramId] = useState('');
   const [activeIntent, setActiveIntent] = useState<VenoPagPixIntent | null>(null);
 
   const loadData = useCallback(async () => {
