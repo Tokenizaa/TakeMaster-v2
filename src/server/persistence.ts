@@ -427,13 +427,21 @@ export async function inviteProgramTeamMember(orgId:string,programId:string,acto
   }
   if(!authUser?.id) throw new AppError(500,'PERSISTENCE_ERROR','O provedor de autenticação não retornou o usuário convidado.');
 
-  const orgInsert=await db.from('organization_members').upsert({organization_id:orgId,user_id:authUser.id,role:'editor',active:true,updated_at:now()},{onConflict:'organization_id,user_id'});
-  fail(orgInsert);
+  const existingOrgMembership=await db.from('organization_members').select('active').eq('organization_id',orgId).eq('user_id',authUser.id).maybeSingle();
+  fail(existingOrgMembership);
+  if(existingOrgMembership.data&&!existingOrgMembership.data.active){
+    if(wasInvited) await db.auth.admin.deleteUser(authUser.id);
+    throw new AppError(403,'FORBIDDEN_CONTEXT','Esta conta está suspensa na organização e não pode receber novo acesso.');
+  }
+  const orgInsert=existingOrgMembership.data
+    ? {error:null}
+    : await db.from('organization_members').insert({organization_id:orgId,user_id:authUser.id,role:'editor',active:true});
+  fail(orgInsert as any);
   try{
     const member=await upsertProgramTeamMember(orgId,programId,actorUserId,actorRole,{userId:authUser.id,role});
     return {member,invited:wasInvited};
   }catch(error){
-    await db.from('organization_members').delete().eq('organization_id',orgId).eq('user_id',authUser.id);
+    if(!existingOrgMembership.data) await db.from('organization_members').delete().eq('organization_id',orgId).eq('user_id',authUser.id);
     if(wasInvited) await db.auth.admin.deleteUser(authUser.id);
     throw error;
   }
