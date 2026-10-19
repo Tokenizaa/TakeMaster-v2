@@ -1,6 +1,6 @@
 # TakeMaster V2 — Planejamento da integração de pagamentos VenoPag
 
-**Status:** decisão de planejamento documentada; integração não implementada nem validada.  
+**Status:** implementação em revisão na PR #11; migration, configuração operacional e validação real ainda pendentes.  
 **Repositório do gateway:** https://github.com/Tokenizaa/venopag  
 **Documentação consultada:** README.md, src/client.ts, src/interfaces.ts, src/webhook.ts, src/crypto-utils.ts e package.json, branch master.  
 **Escopo desta decisão:** planejamento somente. Não altera código de produto, banco de dados, credenciais, contratos comerciais ou produção. Nenhum teste de pagamento foi executado.
@@ -134,7 +134,7 @@ O repositório consultado é uma referência técnica útil, mas não substitui 
 6. **Vincular pagamento ao programa:** liberar a contratação e o setup conforme as regras comerciais confirmadas.
 7. **Validar mediante autorização posterior:** cenários de pagamento confirmado, pendente, expirado, notificação repetida, assinatura inválida, falha de rede e divergência de valor/identificador.
 
-Conforme a instrução atual, esta etapa é de planejamento e documentação. Não foram executados testes nem chamadas de pagamento; não foram alterados dados, credenciais ou sistemas de produção.
+Implementação preparada na PR #11: checkout PIX, persistência de intenções, confirmação por webhook/consulta, reconciliação e vínculo da assinatura ao programa. A CI valida o código, mas não foram executadas transações reais; nenhuma migration foi aplicada e nenhum dado, segredo ou sistema de produção foi alterado.
 
 ## 10. Critérios de aceite futuros
 
