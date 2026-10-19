@@ -145,7 +145,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={onOpenLoginModal}
             className="flex items-center gap-2 text-xs bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
-            title="Clique para trocar o Login Individual de Programa e testar as permissões de acesso"
+            title="Gerenciar a sessão da conta; para alternar programas, use o seletor de programa"
           >
             {isRestrictedProfile ? (
               <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -155,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="font-medium text-zinc-200 max-w-[160px] truncate">
               {session.user.name}
             </span>
-            <span className="text-[11px] text-amber-400 font-medium">· Trocar Login</span>
+            <span className="text-[11px] text-amber-400 font-medium">· Trocar conta</span>
           </button>
         )}
 
