@@ -87,10 +87,11 @@ import {
   logStructured,
   requestTracingMiddleware,
 } from './src/server/logger';
+import { createVenoPagPixCheckout, getVenoPagPixCheckout, handleVenoPagWebhook, verifyVenoPagWebhook } from './src/server/venopag';
 
 export function createApiApp() {
   const app = express();
-  app.use(express.json({ limit: '10mb' }));
+  app.use(express.json({ limit: '10mb', verify: (req, _res, buffer) => { (req as Request & { rawBody?: Buffer }).rawBody = Buffer.from(buffer); } }));
 
   const requireOrganizationAdmin = (role: string) => {
     if (!['owner', 'admin'].includes(role)) {
@@ -231,6 +232,61 @@ export function createApiApp() {
       });
     } catch (err) {
       next(err);
+    }
+  });
+
+  // --- VenoPag PIX checkout and signed webhook ---
+  app.post('/api/billing/pix-checkout', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const { programId, planCode, idempotencyKey, customerName } = req.body || {};
+      const intent = await createVenoPagPixCheckout({
+        organizationId: auth.organizationId,
+        userId: auth.userId,
+        programId: String(programId || ''),
+        planCode: String(planCode || ''),
+        idempotencyKey: String(idempotencyKey || ''),
+        customerName: typeof customerName === 'string' ? customerName.slice(0, 120) : undefined,
+      });
+      res.status(201).json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.get('/api/billing/pix-checkout/:id', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const intent = await getVenoPagPixCheckout(req.params.id, auth.organizationId);
+      res.json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.post('/api/webhooks/venopag', async (req, res) => {
+    const rawBody = (req as Request & { rawBody?: Buffer }).rawBody;
+    const signature = String(req.header('X-Veno-Signature') || '');
+    if (!rawBody || !verifyVenoPagWebhook(signature, rawBody)) {
+      res.status(401).json({ code: 'INVALID_WEBHOOK_SIGNATURE', message: 'Assinatura do webhook inválida ou expirada.' });
+      return;
+    }
+    try {
+      const result = await handleVenoPagWebhook(req.body);
+      res.status(200).json({ received: true, result });
+    } catch (err: any) {
+      const status = Number.isInteger(err?.statusCode) ? err.statusCode : 500;
+      res.status(status).json({ code: err?.code || 'VENOPAG_WEBHOOK_FAILED', message: err?.message || 'Falha ao processar webhook.' });
     }
   });
 
