@@ -443,6 +443,18 @@ export const api = {
       }),
     }),
 
+  editorialCatalogPrograms: () =>
+    request<{ programs: Array<{ id: string; slug: string; name: string; description: string | null; host: string | null; active: boolean; metadata: Record<string, unknown> }> }>('/api/editorial/catalog-programs'),
+
+  editorialVideos: (catalogProgramId?: string) =>
+    request<{ videos: any[] }>(`/api/editorial/videos${catalogProgramId ? `?catalogProgramId=${encodeURIComponent(catalogProgramId)}` : ''}`),
+
+  importEditorialVideo: (url: string, catalogProgramId?: string) =>
+    request<any>('/api/editorial/videos/import', {
+      method: 'POST',
+      body: JSON.stringify({ url, catalogProgramId }),
+    }),
+
   aiResearch: (params: {
     guestName: string;
     company?: string;
