@@ -3,7 +3,14 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-const db = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
+let db: ReturnType<typeof createClient> | undefined;
+function getDb() {
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw Object.assign(new Error('Supabase não está configurado no backend.'), { statusCode: 503, code: 'DATABASE_NOT_CONFIGURED' });
+  }
+  if (!db) db = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
+  return db;
+}
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -121,7 +128,7 @@ function publicIntent(row: IntentRow) {
 }
 
 async function readIntent(id: string, organizationId: string): Promise<IntentRow | null> {
-  const result = await db.from('program_payment_intents')
+  const result = await getDb().from('program_payment_intents')
     .select('*').eq('id', id).eq('organization_id', organizationId).maybeSingle();
   if (result.error) throw new Error(result.error.message);
   return (result.data as IntentRow | null) || null;
@@ -142,7 +149,7 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('programId e planCode são obrigatórios.'), { statusCode: 400, code: 'VALIDATION_ERROR' });
   }
 
-  const duplicate = await db.from('program_payment_intents').select('*')
+  const duplicate = await getDb().from('program_payment_intents').select('*')
     .eq('organization_id', input.organizationId).eq('idempotency_key', input.idempotencyKey).maybeSingle();
   if (duplicate.error) throw new Error(duplicate.error.message);
   if (duplicate.data) {
@@ -154,8 +161,8 @@ export async function createVenoPagPixCheckout(input: {
   }
 
   const programQuery = UUID_RE.test(input.programId)
-    ? await db.from('programs').select('id,organization_id,catalog_program_id,title,name').eq('id', input.programId).maybeSingle()
-    : await db.from('programs').select('id,organization_id,catalog_program_id,title,name').eq('legacy_id', input.programId).maybeSingle();
+    ? await getDb().from('programs').select('id,organization_id,catalog_program_id,title,name').eq('id', input.programId).maybeSingle()
+    : await getDb().from('programs').select('id,organization_id,catalog_program_id,title,name').eq('legacy_id', input.programId).maybeSingle();
   if (programQuery.error) throw new Error(programQuery.error.message);
   const program = programQuery.data;
   if (!program || program.organization_id !== input.organizationId) {
@@ -165,7 +172,7 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('Este programa ainda não está vinculado ao catálogo comercial. A cobrança foi bloqueada para evitar uma assinatura sem vínculo de acesso.'), { statusCode: 409, code: 'PROGRAM_NOT_COMMERCIALLY_LINKED' });
   }
 
-  const planResult = await db.from('commercial_plans').select('id,code,name,price_cents,currency,active')
+  const planResult = await getDb().from('commercial_plans').select('id,code,name,price_cents,currency,active')
     .eq('code', input.planCode).eq('active', true).single();
   if (planResult.error || !planResult.data) {
     throw Object.assign(new Error('Plano comercial indisponível.'), { statusCode: 400, code: 'PLAN_NOT_AVAILABLE' });
@@ -176,7 +183,7 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('O plano não possui um preço BRL válido para cobrança.'), { statusCode: 409, code: 'PLAN_PRICE_INVALID' });
   }
 
-  const existingProgramAccess = await db.from('organization_programs').select('status,subscription_id')
+  const existingProgramAccess = await getDb().from('organization_programs').select('status,subscription_id')
     .eq('organization_id', input.organizationId).eq('catalog_program_id', program.catalog_program_id)
     .in('status', ['active','pending']).maybeSingle();
   if (existingProgramAccess.error) throw new Error(existingProgramAccess.error.message);
@@ -185,7 +192,7 @@ export async function createVenoPagPixCheckout(input: {
   }
 
   const config = getConfig();
-  const insert = await db.from('program_payment_intents').insert({
+  const insert = await getDb().from('program_payment_intents').insert({
     organization_id: input.organizationId,
     program_id: program.id,
     catalog_program_id: program.catalog_program_id,
@@ -216,7 +223,7 @@ export async function createVenoPagPixCheckout(input: {
       }),
     });
     if (!charge.request_number) {
-      await db.from('program_payment_intents').update({
+      await getDb().from('program_payment_intents').update({
         status: 'reconciliation_required',
         provider_status: charge.status || 'unknown',
         error_code: 'PROVIDER_REQUEST_NUMBER_MISSING',
@@ -228,8 +235,14 @@ export async function createVenoPagPixCheckout(input: {
     const expiresAt = Number.isFinite(charge.expire_minutes) && Number(charge.expire_minutes) > 0
       ? new Date(Date.now() + Number(charge.expire_minutes) * 60_000).toISOString()
       : null;
-    const updated = await db.from('program_payment_intents').update({
-      status: String(charge.status || 'pending').toLowerCase() === 'confirmed' ? 'pending' : 'pending',
+    const providerStatus = String(charge.status || 'pending').toLowerCase();
+    const initialStatus: VenoPagIntentStatus =
+      providerStatus === 'expired' ? 'expired' :
+      providerStatus === 'canceled' || providerStatus === 'cancelled' ? 'canceled' :
+      providerStatus === 'failed' ? 'failed' : 'pending';
+    const updated = await getDb().from('program_payment_intents').update({
+      // Even if the create response says confirmed, independently reconcile it before activation.
+      status: initialStatus,
       provider_request_number: charge.request_number,
       provider_transaction_id: charge.transaction_id || null,
       provider_status: charge.status || 'pending',
@@ -249,7 +262,7 @@ export async function createVenoPagPixCheckout(input: {
     // A network timeout can happen after the provider creates the charge.
     // Preserve the row and block automatic retries to prevent duplicate charges.
     if (code !== 'VENOPAG_MISSING_REQUEST_NUMBER') {
-      await db.from('program_payment_intents').update({
+      await getDb().from('program_payment_intents').update({
         status: 'reconciliation_required',
         error_code: code,
         updated_at: new Date().toISOString(),
@@ -269,7 +282,7 @@ export async function getVenoPagPixCheckout(id: string, organizationId: string) 
 }
 
 export async function listVenoPagPixCheckouts(organizationId: string) {
-  const result = await db.from('program_payment_intents').select('*')
+  const result = await getDb().from('program_payment_intents').select('*')
     .eq('organization_id', organizationId).order('created_at', { ascending: false }).limit(20);
   if (result.error) throw new Error(result.error.message);
   return ((result.data || []) as IntentRow[]).map(publicIntent);
@@ -296,7 +309,7 @@ export async function verifyVenoPagPixCheckout(id: string, organizationId: strin
     }
   }
 
-  const finalized = await db.rpc('finalize_venopag_payment', {
+  const finalized = await getDb().rpc('finalize_venopag_payment', {
     p_intent_id: row.id,
     p_provider_status: remoteStatus,
     p_transaction_id: remote.transaction_id || row.provider_transaction_id,
@@ -337,7 +350,7 @@ export async function handleVenoPagWebhook(payload: any) {
     throw Object.assign(new Error('Payload do webhook sem request_number/status.'), { statusCode: 400, code: 'INVALID_WEBHOOK_PAYLOAD' });
   }
 
-  const found = await db.from('program_payment_intents').select('*')
+  const found = await getDb().from('program_payment_intents').select('*')
     .eq('provider_request_number', requestNumber).maybeSingle();
   if (found.error) throw new Error(found.error.message);
   if (!found.data) {
@@ -364,7 +377,7 @@ export async function handleVenoPagWebhook(payload: any) {
     authoritativeTransactionId = remote.transaction_id || authoritativeTransactionId;
   }
 
-  const finalized = await db.rpc('finalize_venopag_payment', {
+  const finalized = await getDb().rpc('finalize_venopag_payment', {
     p_intent_id: intent.id,
     p_provider_status: authoritativeStatus,
     p_transaction_id: authoritativeTransactionId,
