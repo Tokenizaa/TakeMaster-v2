@@ -554,6 +554,25 @@ export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_au
 export async function processAutomaticRenewalCycle(_orgId:string,_id:string,_simulateFailure?:boolean,_userId?:string){throw new AppError(410,'CONFLICT','Renovação simulada foi desativada. A integração inicial VenoPag cobre cobranças PIX avulsas.');}
 export async function buildAdminReportSummary(orgId:string):Promise<AdminReportSummary>{const [subs,users,shows]=await Promise.all([listOrganizationSubscriptions(orgId),listOrganizationUsersWithPermissions(orgId),listShows(orgId)]);return {mrrCents:subs.reduce((a,x)=>a+x.amountCents,0),activeSubscriptionsCount:subs.filter(x=>x.status==='active').length,autoRenewEnabledCount:subs.filter(x=>x.autoRenew).length,paidInvoicesTotalCents:0,pendingInvoicesTotalCents:0,usersCount:users.length,showsReport:await Promise.all(shows.map(async s=>({showId:s.id,showTitle:s.title,format:s.format,host:s.host,episodesCount:(await listEpisodes(orgId,s.id)).length,publishedOrReadyCount:(await listEpisodes(orgId,s.id)).filter(e=>e.status==='published'||e.status==='ready').length,totalPlannedMinutes:0,scheduledSessionsCount:(await listScheduleEvents(orgId,s.id)).length,authorizedUsersCount:users.length})))};}
 export async function populateOrganizationWorkspace(){return true;}
+
+/**
+ * Programs eligible for checkout are intentionally separate from operationally authorized programs.
+ * Pending executive memberships may see their own program name for billing, but do not gain workspace access.
+ */
+export async function listBillablePrograms(organizationId: string, userId: string, includeAll: boolean) {
+  let query = db.from('programs')
+    .select('id,legacy_id,title,name')
+    .eq('organization_id', organizationId)
+    .order('created_at', { ascending: true });
+  if (!includeAll) query = query.eq('executive_user_id', userId);
+  const result = await query;
+  fail(result);
+  return (result.data || []).map((program: any) => ({
+    id: legacyId(program),
+    title: program.title || program.name || 'Programa sem título',
+  }));
+}
+
 export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){
   let programSpec:any;
   let existingProgram:any;
