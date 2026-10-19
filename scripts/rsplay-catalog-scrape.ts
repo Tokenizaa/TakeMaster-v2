@@ -7,7 +7,7 @@ const DELAY_MS = Number(process.env.RSPLAY_SCRAPE_DELAY_MS || 150);
 const OUT = process.env.RSPLAY_SCRAPE_OUT || 'artifacts/rsplay-catalog-scrape.json';
 const USER_AGENT = 'TakeMasterEditorialCatalogBot/1.0 (+respectful public-site indexing)';
 
-type Page = { url: string; status: number; contentType: string; title: string | null; description: string | null; canonicalUrl: string; text: string; links: string[]; youtube: string[]; hash: string; fetchedAt: string };
+type Page = { url: string; status: number; contentType: string; title: string | null; description: string | null; canonicalUrl: string; text: string; links: string[]; socialUrls: string[]; youtube: string[]; hash: string; fetchedAt: string };
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const hash = (value: string) => createHash('sha256').update(value).digest('hex');
 const normalize = (raw: string, base: string) => {
@@ -30,7 +30,7 @@ function extract(html: string, url: string, status: number, contentType: string)
   const links = [...html.matchAll(/(?:href|src)=["']([^"'#]+)["']/gi)].map((m) => normalize(decode(m[1]), url)).filter((v): v is string => Boolean(v));
   const youtube = [...new Set([...html.matchAll(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/g)].map((m) => m[1]))];
   const text = decode(html.replace(/<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).trim();
-  return { url, status, contentType, title: title || null, description: description || null, canonicalUrl, text, links: [...new Set(links)], youtube, hash: hash(html), fetchedAt: new Date().toISOString() };
+  return { url, status, contentType, title: title || null, description: description || null, canonicalUrl, text, links: [...new Set(links)], socialUrls, youtube, hash: hash(html), fetchedAt: new Date().toISOString() };
 }
 async function fetchText(url: string): Promise<{ text: string; status: number; type: string } | null> {
   try {
