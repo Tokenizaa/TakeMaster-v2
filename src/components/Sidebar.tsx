@@ -24,6 +24,7 @@ export type NavSection =
   | 'library'
   | 'studio'
   | 'billing'
+  | 'program_team'
   | 'admin';
 
 interface SidebarProps {
@@ -37,6 +38,7 @@ interface SidebarProps {
   libraryCount?: number;
   organizationName?: string;
   session?: AuthSession | null;
+  canManageProgramTeam?: boolean;
   onOpenLoginModal?: () => void;
 }
 
@@ -51,6 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   libraryCount = 0,
   organizationName = 'RSPlay TV — Rede Broadcast',
   session,
+  canManageProgramTeam = false,
   onOpenLoginModal,
 }) => {
   const editorialItems: {
@@ -81,8 +84,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     label: string;
     icon: React.FC<{ className?: string }>;
   }[] = [
-    { id: 'billing', label: 'Assinatura & Gateway', icon: CreditCard },
-    { id: 'admin', label: 'Painel Administrativo', icon: ShieldCheck },
+    ...(canManageProgramTeam || ['owner','admin'].includes(session?.role || '') ? [{ id: 'billing' as NavSection, label: 'Contratação & PIX', icon: CreditCard }] : []),
+    ...(canManageProgramTeam ? [{ id: 'program_team' as NavSection, label: 'Equipe do Programa', icon: Users }] : []),
+    ...(['owner','admin'].includes(session?.role || '') ? [{ id: 'admin' as NavSection, label: 'Painel Administrativo', icon: ShieldCheck }] : []),
   ];
 
   const renderNavItem = (item: {
@@ -166,12 +170,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {operationalItems.map(renderNavItem)}
         </div>
 
-        <div className="space-y-1">
-          <div className="px-3 py-1 text-xs font-medium text-zinc-500">
-            SaaS, Planos & Admin
+        {(saasAdminItems.length > 0) && (
+          <div className="space-y-1">
+            <div className="px-3 py-1 text-xs font-medium text-zinc-500">
+              Programa & Acesso
+            </div>
+            {saasAdminItems.map(renderNavItem)}
           </div>
-          {saasAdminItems.map(renderNavItem)}
-        </div>
+        )}
       </nav>
 
       {/* Active Profile & Program Isolation Footer */}
