@@ -93,15 +93,15 @@ async function fetchChannelPage(url: string) {
   return response.text();
 }
 
-export async function discoverYouTubeChannelVideos(input: string, maxVideos = 5000) {
+export async function discoverYouTubeChannelVideos(input: string, maxVideos = 90, startContinuation?: string | null) {
   if (!Number.isInteger(maxVideos) || maxVideos < 1 || maxVideos > 5000) throw new Error('maxVideos deve estar entre 1 e 5000.');
   const channelUrl = channelVideosUrl(input);
   const firstHtml = await fetchChannelPage(channelUrl);
   const first = parseChannelPage(firstHtml);
-  const found = new Map(first.videos.map((video) => [video.videoId, video]));
+  const found = new Map((startContinuation ? [] : first.videos).map((video) => [video.videoId, video]));
   const context = first.context;
   const apiKey = first.apiKey;
-  let continuation = first.continuations[0] || null;
+  let continuation = startContinuation || first.continuations[0] || null;
   let pages = 1;
   const errors: string[] = [];
   while (continuation && found.size < maxVideos) {
@@ -131,7 +131,7 @@ export async function discoverYouTubeChannelVideos(input: string, maxVideos = 50
     pages++;
     await sleep(150);
   }
-  return { channelUrl, channelTitle: first.channelTitle, videos: [...found.values()].slice(0, maxVideos), pages, reachedEnd: !continuation, truncated: found.size >= maxVideos && Boolean(continuation), errors };
+  return { channelUrl, channelTitle: first.channelTitle, videos: [...found.values()], pages, reachedEnd: !continuation, truncated: found.size >= maxVideos && Boolean(continuation), nextContinuation: continuation, errors };
 }
 
 async function fetchPublicVideo(videoId: string) {
