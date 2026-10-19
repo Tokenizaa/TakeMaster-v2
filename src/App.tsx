@@ -554,7 +554,7 @@ export function App() {
           onOpenBilling={() => {
             setActiveEpisodeId(null);
             setActiveSection('billing');
-          }},
+          }}
           canManageProgramTeam={canManageProgramTeam}
         />
 
