@@ -81,6 +81,8 @@ import {
   listAvailableKnowledgeBasePrograms,
   resolveProgramKnowledge,
 } from './src/server/programKnowledge';
+import { discoverYouTubeChannelVideos, importYouTubeChannel, importYouTubeVideo, listEditorialCatalogPrograms, listEditorialVideos } from './src/server/editorialVideoIntelligence';
+import { analyzeVideoTranscript } from './src/server/videoEditorialAnalysis';
 import {
   getSystemMetrics,
   incrementMetric,
@@ -98,6 +100,101 @@ export function createApiApp() {
     }
   };
   app.use(requestTracingMiddleware);
+
+  app.get('/api/editorial/catalog-programs', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      res.json({ programs: await listEditorialCatalogPrograms() });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // --- EDITORIAL VIDEO INTELLIGENCE (admin-only ingestion and catalog history) ---
+  app.get('/api/editorial/videos', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const catalogProgramId = typeof req.query.catalogProgramId === 'string' ? req.query.catalogProgramId : undefined;
+      res.json({ videos: await listEditorialVideos(catalogProgramId) });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/transcripts/:transcriptId/analyze', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const transcriptId = String(req.params.transcriptId || '');
+      const analysis = await analyzeVideoTranscript(transcriptId);
+      await recordAuditLog(auth.organizationId, auth.userId, 'editorial_transcript', transcriptId, 'analyzed', {
+        analysisId: analysis.id,
+        reviewStatus: analysis.review_status,
+      });
+      res.status(201).json({ analysis });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/channels/discover', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const channelUrl = String(req.body?.url || '').trim();
+      const continuation = typeof req.body?.continuation === 'string' ? req.body.continuation : undefined;
+      const discovery = await discoverYouTubeChannelVideos(channelUrl, 90, continuation);
+      res.status(200).json(discovery);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/channels/import', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const channelUrl = String(req.body?.url || '').trim();
+      const catalogProgramId = req.body?.catalogProgramId ? String(req.body.catalogProgramId) : undefined;
+      const rawLimit = Number(req.body?.maxVideos || 5000);
+      const maxVideos = Number.isInteger(rawLimit) ? Math.min(5000, Math.max(1, rawLimit)) : 5000;
+      const result = await importYouTubeChannel(channelUrl, catalogProgramId, maxVideos);
+      await recordAuditLog(auth.organizationId, auth.userId, 'editorial_channel', null, 'bulk_imported', {
+        channelUrl: result.channelUrl,
+        discovered: result.discovered,
+        imported: result.imported,
+        withTranscript: result.withTranscript,
+        failed: result.failed,
+        reachedEnd: result.reachedEnd,
+        truncated: result.truncated,
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/videos/import', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const { url, catalogProgramId } = req.body || {};
+      if (typeof url !== 'string' || !url.trim()) {
+        throw new AppError(400, 'VALIDATION_ERROR', 'A URL pública do vídeo do YouTube é obrigatória.');
+      }
+      const result = await importYouTubeVideo(url.trim(), typeof catalogProgramId === 'string' ? catalogProgramId : undefined);
+      await recordAuditLog(auth.organizationId, auth.userId, 'editorial_video', result.video.id, 'imported', {
+        provider: 'youtube',
+        externalVideoId: result.video.external_video_id,
+        transcriptStatus: result.video.transcript_status,
+      });
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  });
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
   app.get('/api/health', async (_req, res) => {

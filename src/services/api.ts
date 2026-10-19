@@ -443,6 +443,36 @@ export const api = {
       }),
     }),
 
+  analyzeEditorialTranscript: (transcriptId: string) =>
+    request<{ analysis: any }>(`/api/editorial/transcripts/${encodeURIComponent(transcriptId)}/analyze`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
+
+  discoverEditorialChannel: (url: string, continuation?: string) =>
+    request<{ channelUrl: string; channelTitle: string | null; videos: Array<{ videoId: string; title: string; publishedLabel: string | null; durationLabel: string | null }>; pages: number; reachedEnd: boolean; truncated: boolean; nextContinuation: string | null; errors: string[] }>('/api/editorial/channels/discover', {
+      method: 'POST',
+      body: JSON.stringify({ url, continuation }),
+    }),
+
+  importEditorialChannel: (url: string, catalogProgramId?: string, maxVideos = 5000) =>
+    request<any>('/api/editorial/channels/import', {
+      method: 'POST',
+      body: JSON.stringify({ url, catalogProgramId, maxVideos }),
+    }),
+
+  editorialCatalogPrograms: () =>
+    request<{ programs: Array<{ id: string; slug: string; name: string; description: string | null; host: string | null; active: boolean; metadata: Record<string, unknown> }> }>('/api/editorial/catalog-programs'),
+
+  editorialVideos: (catalogProgramId?: string) =>
+    request<{ videos: any[] }>(`/api/editorial/videos${catalogProgramId ? `?catalogProgramId=${encodeURIComponent(catalogProgramId)}` : ''}`),
+
+  importEditorialVideo: (url: string, catalogProgramId?: string) =>
+    request<any>('/api/editorial/videos/import', {
+      method: 'POST',
+      body: JSON.stringify({ url, catalogProgramId }),
+    }),
+
   aiResearch: (params: {
     guestName: string;
     company?: string;

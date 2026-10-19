@@ -26,6 +26,7 @@ import {
 } from '../types';
 import { ProgramIdentityCard } from './ProgramIdentityCard';
 import { api } from '../services/api';
+import { EditorialVideoIntelligence } from './EditorialVideoIntelligence';
 
 interface ShowsViewProps {
   shows: Show[];
@@ -286,6 +287,8 @@ export const ShowsView: React.FC<ShowsViewProps> = ({
           </button>
         )}
       </div>
+
+      <EditorialVideoIntelligence />
 
       {/* Create / Edit Show Form */}
       {isCreating && (
