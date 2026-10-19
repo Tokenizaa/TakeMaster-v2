@@ -182,12 +182,31 @@ export async function listEditorialVideos(catalogProgramId?: string) {
   return data || [];
 }
 
+function normalizeMatchText(value: string) {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+async function inferCatalogProgram(videoTitle: string, description: string) {
+  const { data: programs, error } = await db.from('program_catalog').select('id,name,slug').eq('active', true);
+  if (error) throw new Error(error.message);
+  const title = normalizeMatchText(videoTitle);
+  const body = normalizeMatchText(description.slice(0, 12000));
+  const matches = (programs || []).filter((program: any) => {
+    const name = normalizeMatchText(String(program.name || ''));
+    const slug = normalizeMatchText(String(program.slug || '').replace(/-/g, ' '));
+    if (name.length >= 5 && new RegExp('(^| )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
+    if (slug.length >= 6 && new RegExp('(^| )' + slug.replace(/[.*+?^${}()|[\]\\]/g, '\\export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
+    return name.length >= 7 && body.includes(name);
+  });
+  return matches.length === 1 ? matches[0].id as string : null;
+}
+
 export async function importYouTubeVideo(input: string, catalogProgramId?: string) {
   const videoId = parseYouTubeVideoId(input);
   const video = await fetchPublicVideo(videoId);
   const { data: priorVideo, error: priorVideoError } = await db.from('program_videos').select('id,catalog_program_id').eq('provider', 'youtube').eq('external_video_id', videoId).maybeSingle();
   if (priorVideoError) throw new Error(priorVideoError.message);
-  const effectiveProgramId = catalogProgramId || priorVideo?.catalog_program_id || null;
+  const inferredProgramId = catalogProgramId || priorVideo?.catalog_program_id ? null : await inferCatalogProgram(video.title, video.description);\n  const effectiveProgramId = catalogProgramId || priorVideo?.catalog_program_id || inferredProgramId;
   if (effectiveProgramId) {
     const { data: program, error: programError } = await db.from('program_catalog').select('id').eq('id', effectiveProgramId).maybeSingle();
     if (programError) throw new Error(programError.message);
