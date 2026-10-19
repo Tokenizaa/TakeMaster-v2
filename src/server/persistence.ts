@@ -119,7 +119,7 @@ export async function listShows(org:string, allowed?:string[]) {
   return Promise.all(filtered.map(mapShow));
 }
 export async function getShowById(org:string,id:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return undefined; return mapShow(p); }
-export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,catalog_program_id:input.catalogProgramId||null,executive_user_id:userId||null,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); if(userId) await upsertProgramMembership(org,r.data.legacy_id||r.data.id,userId,{canView:true,canEditEditorial:true,canEditScript:true,canOperateStudio:true,canManageSchedule:true,canManageAssets:true,canExport:true},'executive',userId); return mapShow(r.data); }
+export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,catalog_program_id:input.catalogProgramId||null,executive_user_id:userId||null,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); if(userId){try{await upsertProgramMembership(org,r.data.legacy_id||r.data.id,userId,{canView:true,canEditEditorial:true,canEditScript:true,canOperateStudio:true,canManageSchedule:true,canManageAssets:true,canExport:true},'executive',userId);}catch(error){await db.from('programs').delete().eq('id',r.data.id);throw error;}} return mapShow(r.data); }
 export async function updateShow(org:string,id:string,input:any,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)throw new AppError(404,'NOT_FOUND','Programa não encontrado.'); const row:any={updated_at:now()}; const map:any={title:'title',description:'description',host:'host',format:'format',defaultDurationMin:'default_duration_min',editorialStyle:'editorial_style',scenario:'scenario',standardStructure:'standard_structure',defaultOpening:'default_opening',defaultClosing:'default_closing'}; for(const [k,v] of Object.entries(map) as [string,string][]){if(k in input)row[v]=input[k];} if('title' in input)row.name=input.title; const r=await db.from('programs').update(row).eq('id',p.id).select('*').single(); fail(r); return mapShow(r.data); }
 export async function deleteShow(org:string,id:string,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return false; const r=await db.from('programs').delete().eq('id',p.id); fail(r); return true; }
 
@@ -328,16 +328,16 @@ export async function assertUserCanAccessShow(orgId:string,userId:string,role:Or
 export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string){
   const program=await one('programs',programId);
   if(!program||program.organization_id!==orgId) throw new AppError(404,'NOT_FOUND','Programa não encontrado nesta organização.');
-  if(program.catalog_program_id){
-    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
-      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
-    fail(legacy);
-  }
   const r=await db.from('program_memberships').upsert({
     organization_id:orgId,program_id:program.id,user_id:userId,role,status:'active',
     permissions:permissions||{canView:true},authorized_by:actorUserId||userId,authorized_at:now(),revoked_at:null,updated_at:now()
   },{onConflict:'program_id,user_id'}).select('*').single();
   fail(r);
+  if(program.catalog_program_id){
+    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
+    fail(legacy);
+  }
   return r.data;
 }
 
