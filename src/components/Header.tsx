@@ -25,7 +25,6 @@ interface HeaderProps {
   activeEpisodeTitle?: string;
   onOpenStudioMode?: () => void;
   session?: AuthSession | null;
-  onSwitchOrganization?: (orgId: string) => void;
   onResetWorkspaceSeed?: () => void;
   onOpenLoginModal?: () => void;
   onOpenBilling?: () => void;
@@ -42,7 +41,6 @@ export const Header: React.FC<HeaderProps> = ({
   activeEpisodeTitle,
   onOpenStudioMode,
   session,
-  onSwitchOrganization,
   onResetWorkspaceSeed,
   onOpenLoginModal,
   onOpenBilling,
@@ -53,26 +51,11 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="h-16 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 px-6 flex items-center justify-between shrink-0 z-20 gap-4">
       {/* Left: Context Hierarchy (Organization -> Show) & Search */}
       <div className="flex items-center gap-3 flex-1 max-w-3xl min-w-0">
-        {/* Multi-Tenant Organization Selector */}
-        {session && session.memberships && session.memberships.length > 0 && (
-          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5 shrink-0">
-            <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <select
-              value={session.activeOrganization.id}
-              onChange={(e) => onSwitchOrganization && onSwitchOrganization(e.target.value)}
-              className="bg-transparent text-xs font-semibold text-zinc-200 focus:outline-none cursor-pointer pr-1"
-              title="Alternar Organização (Isolamento Multi-Tenant)"
-            >
-              {session.memberships.map((m) => (
-                <option
-                  key={m.organizationId}
-                  value={m.organizationId}
-                  className="bg-zinc-900 text-zinc-200"
-                >
-                  {m.organizationName}
-                </option>
-              ))}
-            </select>
+        {/* RS Play TV is the single organization; programs are the workspace context. */}
+        {session && (
+          <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-3 py-1.5 shrink-0">
+            <Building2 className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
+            <span className="text-xs font-semibold text-zinc-200">RS Play TV</span>
           </div>
         )}
 
