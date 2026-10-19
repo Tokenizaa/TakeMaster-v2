@@ -27,6 +27,10 @@ import {
   listOrganizationsByIds,
   listOrganizationSubscriptions,
   listOrganizationUsersWithPermissions,
+  listProgramTeam,
+  inviteProgramTeamMember,
+  upsertProgramTeamMember,
+  revokeProgramTeamMember,
   listParticipants,
   listPaymentGatewayEvents,
   listProductions,
@@ -488,6 +492,43 @@ export function createApiApp() {
     } catch (err) {
       next(err);
     }
+  });
+
+  // --- PROGRAM-SCOPED TEAM MANAGEMENT ---
+  app.get('/api/programs/:programId/team', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      res.json(await listProgramTeam(auth.organizationId, req.params.programId, auth.userId, auth.role));
+    } catch (err) { next(err); }
+  });
+
+  app.post('/api/programs/:programId/team', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const { email, name, jobTitle, role } = req.body || {};
+      const result = await inviteProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, {
+        email: String(email || ''), name: String(name || ''), jobTitle: typeof jobTitle === 'string' ? jobTitle : '', role: String(role || 'editor')
+      });
+      res.status(result.invited ? 201 : 200).json(result);
+    } catch (err) { next(err); }
+  });
+
+  app.put('/api/programs/:programId/team/:userId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const { role, permissions } = req.body || {};
+      const member = await upsertProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, {
+        userId: req.params.userId, role: String(role || 'editor'), permissions: permissions && typeof permissions === 'object' ? permissions : undefined
+      });
+      res.json({ member });
+    } catch (err) { next(err); }
+  });
+
+  app.delete('/api/programs/:programId/team/:userId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      res.json(await revokeProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, req.params.userId));
+    } catch (err) { next(err); }
   });
 
   // --- SHOWS & CATALOG (Filtered by Program-Level RBAC) ---
