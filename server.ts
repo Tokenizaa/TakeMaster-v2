@@ -81,7 +81,7 @@ import {
   listAvailableKnowledgeBasePrograms,
   resolveProgramKnowledge,
 } from './src/server/programKnowledge';
-import { importYouTubeVideo, listEditorialVideos } from './src/server/editorialVideoIntelligence';
+import { importYouTubeVideo, listEditorialCatalogPrograms, listEditorialVideos } from './src/server/editorialVideoIntelligence';
 import {
   getSystemMetrics,
   incrementMetric,
@@ -99,6 +99,16 @@ export function createApiApp() {
     }
   };
   app.use(requestTracingMiddleware);
+
+  app.get('/api/editorial/catalog-programs', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      res.json({ programs: await listEditorialCatalogPrograms() });
+    } catch (err) {
+      next(err);
+    }
+  });
 
   // --- EDITORIAL VIDEO INTELLIGENCE (admin-only ingestion and catalog history) ---
   app.get('/api/editorial/videos', requireAuth, async (req, res, next) => {
