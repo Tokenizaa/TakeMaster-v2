@@ -81,6 +81,7 @@ import {
   listAvailableKnowledgeBasePrograms,
   resolveProgramKnowledge,
 } from './src/server/programKnowledge';
+import { importYouTubeVideo, listEditorialVideos } from './src/server/editorialVideoIntelligence';
 import {
   getSystemMetrics,
   incrementMetric,
@@ -98,6 +99,38 @@ export function createApiApp() {
     }
   };
   app.use(requestTracingMiddleware);
+
+  // --- EDITORIAL VIDEO INTELLIGENCE (admin-only ingestion and catalog history) ---
+  app.get('/api/editorial/videos', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const catalogProgramId = typeof req.query.catalogProgramId === 'string' ? req.query.catalogProgramId : undefined;
+      res.json({ videos: await listEditorialVideos(catalogProgramId) });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/videos/import', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const { url, catalogProgramId } = req.body || {};
+      if (typeof url !== 'string' || !url.trim()) {
+        throw new AppError(400, 'VALIDATION_ERROR', 'A URL pública do vídeo do YouTube é obrigatória.');
+      }
+      const result = await importYouTubeVideo(url.trim(), typeof catalogProgramId === 'string' ? catalogProgramId : undefined);
+      await recordAuditLog(auth.organizationId, auth.userId, 'editorial_video', result.video.id, 'imported', {
+        provider: 'youtube',
+        externalVideoId: result.video.external_video_id,
+        transcriptStatus: result.video.transcript_status,
+      });
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  });
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
   app.get('/api/health', async (_req, res) => {
