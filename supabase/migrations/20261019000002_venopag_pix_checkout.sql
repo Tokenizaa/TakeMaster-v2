@@ -55,6 +55,11 @@ AS $
         )
         OR EXISTS (
           SELECT 1 FROM public.program_memberships pm
+          JOIN public.program_subscriptions ps
+            ON ps.program_id = pm.program_id
+           AND ps.organization_id = pm.organization_id
+           AND ps.status = 'active'
+           AND (ps.ends_at IS NULL OR ps.ends_at > now())
           WHERE pm.organization_id = p.organization_id
             AND pm.program_id = p.id
             AND pm.user_id = auth.uid()
@@ -141,7 +146,7 @@ CREATE INDEX IF NOT EXISTS program_payment_intents_program_status_idx
 -- may be retried; plan changes require a separate commercial flow.
 CREATE UNIQUE INDEX IF NOT EXISTS program_payment_intents_one_live_checkout_idx
   ON public.program_payment_intents (organization_id, program_id)
-  WHERE status IN ('creating','pending','confirmed','reconciliation_required');
+  WHERE status IN ('creating','pending','reconciliation_required');
 
 ALTER TABLE public.program_payment_intents ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON TABLE public.program_payment_intents FROM PUBLIC, anon, authenticated;
@@ -161,6 +166,8 @@ DECLARE
   v_intent public.program_payment_intents%ROWTYPE;
   v_subscription_id uuid;
   v_executive_user_id uuid;
+  v_billing_period text;
+  v_ends_at timestamptz;
   v_mapped_status text;
 BEGIN
   SELECT * INTO v_intent
@@ -209,20 +216,42 @@ BEGIN
     RETURN jsonb_build_object('intent_id', p_intent_id, 'status', v_mapped_status);
   END IF;
 
+  UPDATE public.program_subscriptions
+  SET status = 'expired', updated_at = now()
+  WHERE organization_id = v_intent.organization_id
+    AND program_id = v_intent.program_id
+    AND status = 'active'
+    AND ends_at IS NOT NULL
+    AND ends_at <= now();
+
   SELECT ps.id INTO v_subscription_id
   FROM public.program_subscriptions ps
   WHERE ps.program_id = v_intent.program_id
     AND ps.organization_id = v_intent.organization_id
     AND ps.status = 'active'
+    AND (ps.ends_at IS NULL OR ps.ends_at > now())
   LIMIT 1
   FOR UPDATE;
 
   IF v_subscription_id IS NULL THEN
+    SELECT cp.billing_period INTO v_billing_period
+    FROM public.commercial_plans cp WHERE cp.id = v_intent.plan_id;
+
+    v_ends_at := CASE v_billing_period
+      WHEN 'monthly' THEN now() + interval '1 month'
+      WHEN 'annual' THEN now() + interval '1 year'
+      ELSE NULL
+    END;
+
+    IF v_ends_at IS NULL THEN
+      RAISE EXCEPTION 'unsupported billing period for VenoPag PIX: %', v_billing_period USING ERRCODE = '22023';
+    END IF;
+
     INSERT INTO public.program_subscriptions (
       organization_id, program_id, plan_id, status, starts_at, ends_at,
       external_reference, created_at, updated_at
     ) VALUES (
-      v_intent.organization_id, v_intent.program_id, v_intent.plan_id, 'active', now(), NULL,
+      v_intent.organization_id, v_intent.program_id, v_intent.plan_id, 'active', now(), v_ends_at,
       'venopag:' || v_intent.id::text, now(), now()
     )
     RETURNING id INTO v_subscription_id;
