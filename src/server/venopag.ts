@@ -175,7 +175,7 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('Somente o diretor executivo responsável pode contratar este programa.'), { statusCode: 403, code: 'PROGRAM_EXECUTIVE_REQUIRED' });
   }
 
-  const planResult = await getDb().from('commercial_plans').select('id,code,name,price_cents,currency,active')
+  const planResult = await getDb().from('commercial_plans').select('id,code,name,price_cents,currency,billing_period,active')
     .eq('code', input.planCode).eq('active', true).single();
   if (planResult.error || !planResult.data) {
     throw Object.assign(new Error('Plano comercial indisponível.'), { statusCode: 400, code: 'PLAN_NOT_AVAILABLE' });
@@ -184,6 +184,9 @@ export async function createVenoPagPixCheckout(input: {
   const amountCents = Number(plan.price_cents);
   if (!Number.isInteger(amountCents) || amountCents <= 0 || plan.currency !== 'BRL') {
     throw Object.assign(new Error('O plano não possui um preço BRL válido para cobrança.'), { statusCode: 409, code: 'PLAN_PRICE_INVALID' });
+  }
+  if (!['monthly','annual'].includes(String(plan.billing_period))) {
+    throw Object.assign(new Error('O período comercial deste plano não é compatível com cobrança PIX avulsa.'), { statusCode: 409, code: 'PLAN_PERIOD_UNSUPPORTED' });
   }
 
   if (program.catalog_program_id) {
@@ -195,10 +198,13 @@ export async function createVenoPagPixCheckout(input: {
     }
   }
 
-  const existingSubscription = await getDb().from('program_subscriptions').select('id')
+  const existingSubscription = await getDb().from('program_subscriptions').select('id,ends_at')
     .eq('organization_id', input.organizationId).eq('program_id', program.id).eq('status', 'active').maybeSingle();
   if (existingSubscription.error) throw new Error(existingSubscription.error.message);
-  if (existingSubscription.data) {
+  if (existingSubscription.data?.ends_at && new Date(existingSubscription.data.ends_at).getTime() <= Date.now()) {
+    const expired = await getDb().from('program_subscriptions').update({ status: 'expired', updated_at: new Date().toISOString() }).eq('id', existingSubscription.data.id);
+    if (expired.error) throw new Error(expired.error.message);
+  } else if (existingSubscription.data) {
     throw Object.assign(new Error('Este programa já possui uma assinatura ativa. Alterações de plano exigem o fluxo próprio de alteração comercial.'), { statusCode: 409, code: 'PROGRAM_ALREADY_SUBSCRIBED' });
   }
 
