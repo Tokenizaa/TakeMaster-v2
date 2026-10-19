@@ -160,6 +160,7 @@ AS $$
 DECLARE
   v_intent public.program_payment_intents%ROWTYPE;
   v_subscription_id uuid;
+  v_executive_user_id uuid;
   v_mapped_status text;
 BEGIN
   SELECT * INTO v_intent
@@ -225,6 +226,33 @@ BEGIN
       'venopag:' || v_intent.id::text, now(), now()
     )
     RETURNING id INTO v_subscription_id;
+  END IF;
+
+  SELECT p.executive_user_id INTO v_executive_user_id
+  FROM public.programs p WHERE p.id = v_intent.program_id;
+
+  IF v_executive_user_id IS NOT NULL THEN
+    UPDATE public.program_memberships
+    SET status = 'active',
+        permissions = '{"canView":true,"canEditEditorial":true,"canEditScript":true,"canOperateStudio":true,"canManageSchedule":true,"canManageAssets":true,"canExport":true}'::jsonb,
+        authorized_at = coalesce(authorized_at, now()),
+        revoked_at = NULL,
+        updated_at = now()
+    WHERE organization_id = v_intent.organization_id
+      AND program_id = v_intent.program_id
+      AND user_id = v_executive_user_id
+      AND role = 'executive';
+
+    IF NOT FOUND THEN
+      INSERT INTO public.program_memberships (
+        organization_id, program_id, user_id, role, status, permissions,
+        authorized_by, authorized_at, created_at, updated_at
+      ) VALUES (
+        v_intent.organization_id, v_intent.program_id, v_executive_user_id, 'executive', 'active',
+        '{"canView":true,"canEditEditorial":true,"canEditScript":true,"canOperateStudio":true,"canManageSchedule":true,"canManageAssets":true,"canExport":true}'::jsonb,
+        v_executive_user_id, now(), now(), now()
+      );
+    END IF;
   END IF;
 
   -- Catalog membership is optional for custom programs. Never silently reassign a
