@@ -6,7 +6,7 @@ const MAX_PAGES = Number(process.env.RSPLAY_SCRAPE_MAX_PAGES || 1500);
 const DELAY_MS = Number(process.env.RSPLAY_SCRAPE_DELAY_MS || 150);
 const OUT = process.env.RSPLAY_SCRAPE_OUT || 'artifacts/rsplay-catalog-scrape.json';
 const USER_AGENT = 'TakeMasterEditorialCatalogBot/1.0 (+respectful public-site indexing)';
-type Page = { url: string; status: number; contentType: string; title: string | null; description: string | null; canonicalUrl: string; text: string; links: string[]; socialUrls: string[]; youtube: string[]; hash: string; fetchedAt: string };
+type Page = { url: string; status: number; contentType: string; title: string | null; description: string | null; canonicalUrl: string; text: string; headings: string[]; programCandidate: { name: string; slug: string; presenter: string | null } | null; links: string[]; socialUrls: string[]; youtube: string[]; hash: string; fetchedAt: string };
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const hash = (value: string) => createHash('sha256').update(value).digest('hex');
 const decode = (s: string) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -27,11 +27,19 @@ function extract(html: string, url: string, status: number, contentType: string)
   const description = decode(html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)/i)?.[1] || html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i)?.[1] || '');
   const canonicalRaw = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)/i)?.[1] || url;
   const canonicalUrl = normalize(decode(canonicalRaw), url) || url;
+  const headings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map((m) => decode(m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim())).filter(Boolean);
   const links = [...html.matchAll(/(?:href|src)=["']([^"'#]+)["']/gi)].map((m) => normalize(decode(m[1]), url)).filter((v): v is string => Boolean(v));
   const socialUrls = [...new Set([...html.matchAll(/(?:href|src)=["']([^"'#]+)["']/gi)].map((m) => normalize(decode(m[1]), url, false)).filter((v): v is string => Boolean(v)))];
   const youtube = [...new Set([...html.matchAll(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/g)].map((m) => m[1]))];
   const text = decode(html.replace(/<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).trim();
-  return { url, status, contentType, title: title || null, description: description || null, canonicalUrl, text, links: [...new Set(links)], socialUrls, youtube, hash: hash(html), fetchedAt: new Date().toISOString() };
+  const candidateTitle = (title.match(/(?:Mídia Kit Oficial(?:\s*[-—•:]\s*)?|Documento Mídia Kit Oficial(?:\s*[-—•:]\s*)?)(.+)/i)?.[1] || headings[0] || '').replace(/\s*[|•-]\s*RS Play.*$/i, '').trim();
+  const candidateName = candidateTitle.replace(/\s+(?:com|por)\s+.+$/i, '').trim();
+  const slug = candidateName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const presenter = candidateTitle.match(/\b(?:com|por)\s+(.+)$/i)?.[1]?.trim() || null;
+  const programCandidate = candidateName && slug && (/(mídia kit|programa|RS Play)/i.test(title) || /O Programa|Sobre o Programa/i.test(text))
+    ? { name: candidateName, slug, presenter }
+    : null;
+  return { url, status, contentType, title: title || null, description: description || null, canonicalUrl, text, headings, programCandidate, links: [...new Set(links)], socialUrls, youtube, hash: hash(html), fetchedAt: new Date().toISOString() };
 }
 
 async function fetchText(url: string): Promise<{ text: string; status: number; type: string } | null> {
