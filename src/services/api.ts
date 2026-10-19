@@ -121,6 +121,11 @@ export interface BillingOverviewResponse {
   gatewayEvents: PaymentGatewayEvent[];
 }
 
+export interface BillableProgram {
+  id: string;
+  title: string;
+}
+
 export interface ProgramTeamMember {
   userId: string;
   name: string;
@@ -242,6 +247,9 @@ export const api = {
 
   // RSPlay TV SaaS Billing & Payment Gateway
   getBillingOverview: () => request<BillingOverviewResponse>('/api/billing/overview'),
+
+  getBillablePrograms: () =>
+    request<{ programs: BillableProgram[] }>('/api/billing/eligible-programs'),
 
   createVenoPagPixCheckout: (payload: {
     programId: string;
