@@ -57,9 +57,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [emailInput, setEmailInput] = useState('');
   const [codeInput, setCodeInput] = useState('');
-  const [selectedOrgId] = useState(
-    currentSession?.activeOrganization.id || 'org-takemaster-studio'
-  );
+  // Use the authenticated organization only; public registration resolves the canonical org server-side.
+  const selectedOrgId = currentSession?.activeOrganization.id;
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -107,7 +106,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     setError(null);
     setSubmitting(true);
     try {
-      await onLogin(user.email, selectedOrgId, user.loginCode || 'rsplay123');
+      if (!user.loginCode) {
+        setError('Por segurança, use o formulário de login com sua própria senha.');
+        return;
+      }
+      await onLogin(user.email, selectedOrgId, user.loginCode);
       onClose();
     } catch (err: any) {
       setError(err.message || 'Falha ao autenticar perfil do programa.');
@@ -153,7 +156,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       }
       onClose();
     } catch (err: any) {
-      setError(err.message || 'Falha ao concluir o primeiro cadastro e conexão com o gateway.');
+      setError(err.message || 'Falha ao concluir o cadastro e configurar o programa.');
     } finally {
       setSubmitting(false);
     }
@@ -309,8 +312,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                         </div>
 
                         <div className="flex items-center justify-between pt-2 border-t border-zinc-800/60">
-                          <span className="text-[11px] text-zinc-500 font-mono">
-                            Código: {u.loginCode || 'rsplay123'}
+                          <span className="text-[11px] text-zinc-500">
+                            {u.loginCode ? 'Acesso rápido disponível' : 'Entre com sua própria senha'}
                           </span>
                           <button
                             type="button"
