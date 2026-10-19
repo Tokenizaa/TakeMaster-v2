@@ -88,6 +88,7 @@ import {
   requestTracingMiddleware,
 } from './src/server/logger';
 import { createVenoPagPixCheckout, getVenoPagPixCheckout, handleVenoPagWebhook, listVenoPagPixCheckouts, verifyVenoPagPixCheckout, verifyVenoPagWebhook } from './src/server/venopag';
+import { OrganizationRole } from './src/domain/contracts';
 
 export function createApiApp() {
   const app = express();
@@ -105,7 +106,7 @@ export function createApiApp() {
     }
   };
 
-  const requireProgramBillingAccess = async (auth: { organizationId: string; userId: string; role: string }, programId: string) => {
+  const requireProgramBillingAccess = async (auth: { organizationId: string; userId: string; role: OrganizationRole }, programId: string) => {
     requireBillingOperator(auth.role);
     if (['owner', 'admin'].includes(auth.role)) return;
     if (!programId) throw new AppError(400, 'VALIDATION_ERROR', 'programId é obrigatório.');
