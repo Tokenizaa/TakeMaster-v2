@@ -454,6 +454,11 @@ export async function revokeProgramTeamMember(orgId:string,programId:string,acto
     .eq('organization_id',orgId).eq('program_id',program.id).eq('user_id',targetUserId).eq('status','active').select('user_id').maybeSingle();
   fail(result);
   if(!result.data) throw new AppError(404,'NOT_FOUND','Vínculo de equipe não encontrado.');
+  if(program.catalog_program_id){
+    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',targetUserId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
+    fail(legacy);
+  }
   return {success:true,userId:targetUserId,programId:program.legacy_id||program.id};
 }
 
