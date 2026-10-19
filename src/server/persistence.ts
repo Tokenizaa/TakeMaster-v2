@@ -38,7 +38,7 @@ async function camerasFor(programId: string) {
 async function mapShow(r:any): Promise<Show> {
   const cams = await camerasFor(r.id);
   return {
-    id: legacyId(r), organizationId:r.organization_id || undefined, title:r.title || r.name || '',
+    id: legacyId(r), organizationId:r.organization_id || undefined, executiveUserId:r.executive_user_id || undefined, title:r.title || r.name || '',
     description:r.description||'', host:r.host||'', format:r.format||'Outro',
     defaultDurationMin:r.default_duration_min ?? r.default_episode_duration_minutes ?? 0,
     editorialStyle:r.editorial_style||'', scenario:r.scenario||'', cameras:cams.map(mapCamera),
