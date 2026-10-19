@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   AuthSession,
   Organization,
-  PaymentMethodType,
   SaaSRegistrationPayload,
   ShowFormat,
   SubscriptionPlanId,
@@ -20,7 +19,6 @@ import {
   KeyRound,
   Lock,
   UserPlus,
-  CreditCard,
   Sparkles,
 } from 'lucide-react';
 
@@ -88,10 +86,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     newShowHost: '',
     newShowFormat: 'Entrevista',
     planId: 'rsplay_studio_pro',
-    paymentMethodType: 'credit_card',
-    paymentMethodBrand: 'Visa Corporate',
-    paymentMethodLast4: '4829',
-    autoRenew: true,
+    paymentMethodType: 'pix_automatico',
+    paymentMethodBrand: '',
+    paymentMethodLast4: '',
+    autoRenew: false,
   });
 
   useEffect(() => {
