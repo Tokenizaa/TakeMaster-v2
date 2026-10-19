@@ -227,9 +227,19 @@ BEGIN
     RETURNING id INTO v_subscription_id;
   END IF;
 
-  -- Catalog membership is optional for custom programs. When it exists, activate
-  -- the access mapping without reusing the legacy organization-level subscription FK.
+  -- Catalog membership is optional for custom programs. Never silently reassign a
+  -- catalog entry already bound to a different program instance in this organization.
   IF v_intent.catalog_program_id IS NOT NULL THEN
+    IF EXISTS (
+      SELECT 1 FROM public.organization_programs op
+      WHERE op.organization_id = v_intent.organization_id
+        AND op.catalog_program_id = v_intent.catalog_program_id
+        AND op.program_id IS NOT NULL
+        AND op.program_id <> v_intent.program_id
+    ) THEN
+      RAISE EXCEPTION 'catalog program is already linked to another program instance' USING ERRCODE = '23505';
+    END IF;
+
     UPDATE public.organization_programs
     SET status = 'active',
         program_id = v_intent.program_id,
