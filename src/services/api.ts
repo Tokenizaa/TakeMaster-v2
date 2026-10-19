@@ -84,18 +84,19 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     let errMessage = `Erro HTTP ${res.status}`;
+    let parsedError: any;
     try {
-      const parsed = await res.json();
-      if (parsed && parsed.message) {
-        errMessage = parsed.message;
-      } else if (parsed && parsed.error) {
-        errMessage = parsed.error;
-      }
+      parsedError = await res.json();
+      if (parsedError && parsedError.message) errMessage = parsedError.message;
+      else if (parsedError && parsedError.error) errMessage = parsedError.error;
     } catch {
       const text = await res.text().catch(() => '');
       if (text) errMessage = text;
     }
-    throw new Error(errMessage);
+    const error = new Error(errMessage) as Error & { statusCode?: number; code?: string };
+    error.statusCode = res.status;
+    error.code = typeof parsedError?.code === 'string' ? parsedError.code : undefined;
+    throw error;
   }
 
   return res.json();
