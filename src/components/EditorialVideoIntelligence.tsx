@@ -29,7 +29,7 @@ export const EditorialVideoIntelligence: React.FC = () => {
   const [url, setUrl] = useState('');
   const [videos, setVideos] = useState<EditorialVideo[]>([]);
   const [busy, setBusy] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);\n  const [analyzingId, setAnalyzingId] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -80,6 +80,17 @@ export const EditorialVideoIntelligence: React.FC = () => {
     } catch (e: any) {
       setError(e?.message || 'Falha ao importar vídeo.');
     } finally { setBusy(false); }
+  };
+
+  const analyzeTranscript = async (transcriptId: string) => {
+    setAnalyzingId(transcriptId); setError(''); setNotice('');
+    try {
+      await api.analyzeEditorialTranscript(transcriptId);
+      setNotice('Análise editorial criada e marcada para revisão humana.');
+      await loadVideos(programId);
+    } catch (e: any) {
+      setError(e?.message || 'Falha ao analisar a transcrição.');
+    } finally { setAnalyzingId(null); }
   };
 
   const refresh = async () => {
@@ -134,8 +145,16 @@ export const EditorialVideoIntelligence: React.FC = () => {
                 </div>
                 <span className={`rounded-full border px-2.5 py-1 text-xs ${video.transcript_status === 'available' ? 'border-emerald-900 bg-emerald-950/40 text-emerald-300' : 'border-zinc-700 text-zinc-400'}`}>{statusLabel[video.transcript_status] || video.transcript_status}</span>
               </div>
-              {transcript && <p className="mt-2 flex items-center gap-2 text-xs text-emerald-300"><Captions className="h-4 w-4" /> Transcrição {transcript.language} · versão {transcript.version}</p>}
-              {analysis && <p className="mt-2 text-sm text-zinc-300">{analysis.summary}</p>}
+              {transcript && <div className="mt-2 flex flex-wrap items-center gap-3">
+                <p className="flex items-center gap-2 text-xs text-emerald-300"><Captions className="h-4 w-4" /> Transcrição {transcript.language} · versão {transcript.version}</p>
+                <button type="button" onClick={() => analyzeTranscript(transcript.id)} disabled={Boolean(analyzingId) || busy} className="rounded-md border border-zinc-700 px-2.5 py-1 text-xs text-zinc-200 disabled:opacity-50">
+                  {analyzingId === transcript.id ? 'Analisando…' : 'Analisar conteúdo'}
+                </button>
+              </div>}
+              {analysis && <div className="mt-2 space-y-1">
+                <p className="text-sm text-zinc-300">{analysis.summary}</p>
+                <p className="text-xs text-amber-300">Análise pendente de revisão editorial · não é verificação factual automática.</p>
+              </div>}
               <p className="mt-2 text-xs text-zinc-500">Fonte: YouTube público · {video.language || 'idioma não identificado'} · A transcrição registra o conteúdo falado; não comprova a veracidade das afirmações.</p>
             </article>;
           })}
