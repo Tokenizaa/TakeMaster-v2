@@ -120,6 +120,24 @@ export interface BillingOverviewResponse {
   gatewayEvents: PaymentGatewayEvent[];
 }
 
+export interface VenoPagPixIntent {
+  id: string;
+  programId: string;
+  planId: string;
+  amountCents: number;
+  currency: string;
+  status: 'creating' | 'pending' | 'confirmed' | 'expired' | 'canceled' | 'contested' | 'chargedback' | 'refunded' | 'failed' | 'reconciliation_required';
+  requestNumber: string | null;
+  transactionId: string | null;
+  pixCopyPaste: string | null;
+  qrUrl: string | null;
+  qrImage: string | null;
+  checkoutUrl: string | null;
+  expiresAt: string | null;
+  subscriptionId: string | null;
+  createdAt: string;
+}
+
 export interface AdminOverviewResponse {
   users: User[];
   shows: Show[];
@@ -185,6 +203,29 @@ export const api = {
 
   // RSPlay TV SaaS Billing & Payment Gateway
   getBillingOverview: () => request<BillingOverviewResponse>('/api/billing/overview'),
+
+  createVenoPagPixCheckout: (payload: {
+    programId: string;
+    planCode: SubscriptionPlanId;
+    idempotencyKey: string;
+    customerName?: string;
+  }) =>
+    request<{ intent: VenoPagPixIntent }>('/api/billing/pix-checkout', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  listVenoPagPixCheckouts: () =>
+    request<{ intents: VenoPagPixIntent[] }>('/api/billing/pix-checkouts'),
+
+  getVenoPagPixCheckout: (id: string) =>
+    request<{ intent: VenoPagPixIntent }>(`/api/billing/pix-checkout/${encodeURIComponent(id)}`),
+
+  verifyVenoPagPixCheckout: (id: string) =>
+    request<{ intent: VenoPagPixIntent }>(`/api/billing/pix-checkout/${encodeURIComponent(id)}/verify`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
 
   subscribePlan: (payload: {
     planId: SubscriptionPlanId;
