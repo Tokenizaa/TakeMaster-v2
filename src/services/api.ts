@@ -172,9 +172,9 @@ export const api = {
       session: AuthSession;
       user: User;
       show: Show;
-      subscription: SaaSSubscription;
-      invoice: BillingInvoice;
-      gatewayEvent: PaymentGatewayEvent;
+      subscription?: SaaSSubscription;
+      invoice?: BillingInvoice;
+      gatewayEvent?: PaymentGatewayEvent;
     }>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(payload),
