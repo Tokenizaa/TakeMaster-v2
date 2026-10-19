@@ -554,7 +554,8 @@ export function App() {
           onOpenBilling={() => {
             setActiveEpisodeId(null);
             setActiveSection('billing');
-          }}
+          }},
+          canManageProgramTeam={canManageProgramTeam}
         />
 
         {/* Contextual SaaS Access Banner (shows active program login isolation & quick access to Admin / Billing / Login Switcher) */}
