@@ -41,6 +41,7 @@ import {
   recordAiGeneration,
   recordAuditLog,
   registerSaaSAccountWithSubscription,
+  resolveCanonicalOrganizationId,
   subscribeOrUpdatePlan,
   toggleSubscriptionAutoRenew,
   updateEpisode,
@@ -191,7 +192,9 @@ export function createApiApp() {
 
   app.post('/api/auth/register', async (req, res, next) => {
     try {
-      const organizationId = req.body?.organizationId || 'org-takemaster-studio';
+      // Public registration always belongs to the single canonical RS Play TV organization.
+      // Never trust an organization id supplied by an anonymous client.
+      const organizationId = await resolveCanonicalOrganizationId();
       const result = await registerSaaSAccountWithSubscription(req.body || {}, organizationId);
       const session = await buildAuthSession(result.user.id, organizationId);
       res.status(201).json({
