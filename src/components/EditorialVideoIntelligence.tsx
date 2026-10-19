@@ -26,7 +26,9 @@ function duration(seconds: number | null) {
 export const EditorialVideoIntelligence: React.FC = () => {
   const [programs, setPrograms] = useState<CatalogProgram[]>([]);
   const [programId, setProgramId] = useState('');
-  const [url, setUrl] = useState('');\n  const [channelUrl, setChannelUrl] = useState('');\n  const [channelProgress, setChannelProgress] = useState('');
+  const [url, setUrl] = useState('');
+  const [channelUrl, setChannelUrl] = useState('');
+  const [channelProgress, setChannelProgress] = useState('');
   const [videos, setVideos] = useState<EditorialVideo[]>([]);
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
