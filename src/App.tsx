@@ -25,6 +25,7 @@ import { StudioSetupView } from './components/StudioSetupView';
 import { ScheduleView } from './components/ScheduleView';
 import { LibraryView } from './components/LibraryView';
 import { BillingView } from './components/BillingView';
+import { ProgramTeamView } from './components/ProgramTeamView';
 import { AdminPanelView } from './components/AdminPanelView';
 import { LoginModal } from './components/LoginModal';
 import { NewEpisodeModal } from './components/NewEpisodeModal';
@@ -172,20 +173,6 @@ export function App() {
     } catch (err: any) {
       setLoading(false);
       throw err;
-    }
-  };
-
-  const handleSwitchOrganization = async (organizationId: string) => {
-    try {
-      setLoading(true);
-      setActiveEpisodeId(null);
-      setSelectedShowId('ALL');
-      await api.switchOrganization(organizationId);
-      await loadWorkspaceState();
-    } catch (err: any) {
-      setSaveStatus('error');
-      setSaveErrorMessage(err?.message || 'Erro ao alternar organização');
-      setLoading(false);
     }
   };
 
@@ -505,6 +492,19 @@ export function App() {
     );
   }
 
+  const canManageProgramTeam = Boolean(session && (
+    ['owner','admin'].includes(session.role) ||
+    accessibleShows.some((show) => show.executiveUserId === session.user.id)
+  ));
+
+  useEffect(() => {
+    if (session && !['owner','admin'].includes(session.role) && accessibleShows.length === 1 && selectedShowId !== accessibleShows[0].id) {
+      setSelectedShowId(accessibleShows[0].id);
+    } else if (selectedShowId !== 'ALL' && !accessibleShows.some((show) => show.id === selectedShowId)) {
+      setSelectedShowId('ALL');
+    }
+  }, [session, accessibleShows, selectedShowId]);
+
   const activeStudioShow =
     accessibleShows.find((s) => s.id === selectedShowId) || accessibleShows[0] || null;
   const activeSelectedShowTitle =
@@ -526,8 +526,9 @@ export function App() {
         guestsCount={guests.length}
         scheduleCount={accessibleScheduleEvents.length}
         libraryCount={accessibleLibraryAssets.length}
-        organizationName={session?.activeOrganization.name}
+        organizationName="RS Play TV"
         session={session}
+        canManageProgramTeam={canManageProgramTeam}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
 
@@ -548,7 +549,6 @@ export function App() {
               : undefined
           }
           session={session}
-          onSwitchOrganization={handleSwitchOrganization}
           onResetWorkspaceSeed={handleResetWorkspaceSeed}
           onOpenLoginModal={() => setIsLoginModalOpen(true)}
           onOpenBilling={() => {
@@ -894,6 +894,15 @@ export function App() {
                   }}
                 />
               </ShowPermissionGuard>
+            )}
+
+            {activeSection === 'program_team' && (
+              <ProgramTeamView
+                session={session}
+                shows={accessibleShows}
+                selectedShowId={selectedShowId}
+                onWorkspaceMutated={loadWorkspaceState}
+              />
             )}
 
             {activeSection === 'billing' && (
