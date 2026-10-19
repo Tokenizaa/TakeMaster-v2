@@ -1,11 +1,42 @@
--- VenoPag PIX checkout: durable intents and idempotent activation.
--- This migration is intentionally additive. It does not rewrite existing billing rows.
+-- VenoPag PIX checkout and program-scoped commercial ownership.
+-- Additive migration; existing organizations, programs and subscriptions are preserved.
+
+ALTER TABLE public.programs
+  ADD COLUMN IF NOT EXISTS executive_user_id uuid;
+
+CREATE INDEX IF NOT EXISTS programs_executive_user_idx
+  ON public.programs (executive_user_id)
+  WHERE executive_user_id IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS public.program_subscriptions (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id uuid NOT NULL REFERENCES public.organizations(id) ON DELETE RESTRICT,
+  program_id uuid NOT NULL REFERENCES public.programs(id) ON DELETE RESTRICT,
+  plan_id uuid NOT NULL REFERENCES public.commercial_plans(id) ON DELETE RESTRICT,
+  status text NOT NULL DEFAULT 'pending'
+    CHECK (status IN ('pending','active','paused','cancelled','expired')),
+  starts_at timestamptz,
+  ends_at timestamptz,
+  external_reference text,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS program_subscriptions_one_active_per_program_idx
+  ON public.program_subscriptions (program_id)
+  WHERE status = 'active';
+CREATE INDEX IF NOT EXISTS program_subscriptions_org_program_idx
+  ON public.program_subscriptions (organization_id, program_id, created_at DESC);
+
+ALTER TABLE public.program_subscriptions ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.program_subscriptions FROM PUBLIC, anon, authenticated;
+GRANT SELECT, INSERT, UPDATE ON TABLE public.program_subscriptions TO service_role;
 
 CREATE TABLE IF NOT EXISTS public.program_payment_intents (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id uuid NOT NULL REFERENCES public.organizations(id) ON DELETE RESTRICT,
   program_id uuid NOT NULL REFERENCES public.programs(id) ON DELETE RESTRICT,
-  catalog_program_id uuid NOT NULL REFERENCES public.program_catalog(id) ON DELETE RESTRICT,
+  catalog_program_id uuid REFERENCES public.program_catalog(id) ON DELETE RESTRICT,
   plan_id uuid NOT NULL REFERENCES public.commercial_plans(id) ON DELETE RESTRICT,
   created_by uuid NOT NULL,
   idempotency_key text NOT NULL,
@@ -23,7 +54,7 @@ CREATE TABLE IF NOT EXISTS public.program_payment_intents (
   checkout_url text,
   expires_at timestamptz,
   confirmed_at timestamptz,
-  subscription_id uuid REFERENCES public.organization_subscriptions(id) ON DELETE RESTRICT,
+  subscription_id uuid REFERENCES public.program_subscriptions(id) ON DELETE RESTRICT,
   error_code text,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
@@ -37,9 +68,9 @@ CREATE INDEX IF NOT EXISTS program_payment_intents_program_status_idx
   ON public.program_payment_intents (program_id, status);
 
 -- One in-flight or completed initial checkout per program. Expired/failed attempts
--- may be retried with a new idempotency key; plan upgrades require a separate flow.
+-- may be retried; plan changes require a separate commercial flow.
 CREATE UNIQUE INDEX IF NOT EXISTS program_payment_intents_one_live_checkout_idx
-  ON public.program_payment_intents (organization_id, catalog_program_id)
+  ON public.program_payment_intents (organization_id, program_id)
   WHERE status IN ('creating','pending','confirmed','reconciliation_required');
 
 ALTER TABLE public.program_payment_intents ENABLE ROW LEVEL SECURITY;
@@ -104,33 +135,34 @@ BEGIN
         provider_transaction_id = coalesce(p_transaction_id, provider_transaction_id),
         updated_at = now()
     WHERE id = p_intent_id;
-
     RETURN jsonb_build_object('intent_id', p_intent_id, 'status', v_mapped_status);
   END IF;
 
-  -- Avoid duplicate subscription rows if the provider retries a webhook or two
-  -- notifications race. The intent row lock serializes finalization for this intent.
-  SELECT op.subscription_id INTO v_subscription_id
-  FROM public.organization_programs op
-  WHERE op.organization_id = v_intent.organization_id
-    AND op.catalog_program_id = v_intent.catalog_program_id
-    AND op.status = 'active'
-    AND op.subscription_id IS NOT NULL
+  SELECT ps.id INTO v_subscription_id
+  FROM public.program_subscriptions ps
+  WHERE ps.program_id = v_intent.program_id
+    AND ps.organization_id = v_intent.organization_id
+    AND ps.status = 'active'
   LIMIT 1
   FOR UPDATE;
 
   IF v_subscription_id IS NULL THEN
-    INSERT INTO public.organization_subscriptions (
-      organization_id, plan_id, status, starts_at, ends_at, external_reference, created_at, updated_at
+    INSERT INTO public.program_subscriptions (
+      organization_id, program_id, plan_id, status, starts_at, ends_at,
+      external_reference, created_at, updated_at
     ) VALUES (
-      v_intent.organization_id, v_intent.plan_id, 'active', now(), NULL,
+      v_intent.organization_id, v_intent.program_id, v_intent.plan_id, 'active', now(), NULL,
       'venopag:' || v_intent.id::text, now(), now()
     )
     RETURNING id INTO v_subscription_id;
+  END IF;
 
+  -- Catalog membership is optional for custom programs. When it exists, activate
+  -- the access mapping without reusing the legacy organization-level subscription FK.
+  IF v_intent.catalog_program_id IS NOT NULL THEN
     UPDATE public.organization_programs
-    SET subscription_id = v_subscription_id,
-        status = 'active',
+    SET status = 'active',
+        program_id = v_intent.program_id,
         starts_at = now(),
         ends_at = NULL,
         updated_at = now()
@@ -139,10 +171,10 @@ BEGIN
 
     IF NOT FOUND THEN
       INSERT INTO public.organization_programs (
-        organization_id, catalog_program_id, subscription_id, program_id, status, starts_at, created_at, updated_at
+        organization_id, catalog_program_id, program_id, status, starts_at, created_at, updated_at
       ) VALUES (
-        v_intent.organization_id, v_intent.catalog_program_id, v_subscription_id,
-        v_intent.program_id, 'active', now(), now(), now()
+        v_intent.organization_id, v_intent.catalog_program_id, v_intent.program_id,
+        'active', now(), now(), now()
       );
     END IF;
   END IF;
