@@ -273,8 +273,9 @@ export async function createVenoPagPixCheckout(input: {
     // A network timeout can happen after the provider creates the charge.
     // Preserve the row and block automatic retries to prevent duplicate charges.
     if (code !== 'VENOPAG_MISSING_REQUEST_NUMBER') {
+      const requiresReconciliation = ['VENOPAG_NETWORK_AMBIGUOUS','VENOPAG_INVALID_RESPONSE','PAYMENT_PERSISTENCE_AMBIGUOUS'].includes(code);
       await getDb().from('program_payment_intents').update({
-        status: 'reconciliation_required',
+        status: requiresReconciliation ? 'reconciliation_required' : 'failed',
         error_code: code,
         updated_at: new Date().toISOString(),
       }).eq('id', intent.id);
@@ -367,7 +368,7 @@ export async function handleVenoPagWebhook(payload: any) {
     .eq('provider_request_number', requestNumber).maybeSingle();
   if (found.error) throw new Error(found.error.message);
   if (!found.data) {
-    throw Object.assign(new Error('Cobrança não reconhecida.'), { statusCode: 404, code: 'UNKNOWN_PROVIDER_TRANSACTION' });
+    throw Object.assign(new Error('Cobrança ainda não reconhecida. O provedor pode reenviar a notificação.'), { statusCode: 503, code: 'UNKNOWN_PROVIDER_TRANSACTION' });
   }
   const intent = found.data as IntentRow;
 
