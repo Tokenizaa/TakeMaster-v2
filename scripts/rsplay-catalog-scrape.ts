@@ -91,6 +91,7 @@ async function main() {
     limits: { maxPages: MAX_PAGES, delayMs: DELAY_MS },
     stats: { pagesVisited: visited.size, htmlPages: pages.length, canonicalPages: canonicalPages.length, socialAccounts: socialAccounts.size, youtubeVideoIds: youtubeIds.size },
     socialAccounts: [...socialAccounts].sort(),
+    programCandidates: [...new Map(canonicalPages.filter((page) => page.programCandidate).map((page) => [page.programCandidate!.slug, { ...page.programCandidate!, sourceUrl: page.canonicalUrl, sourceTitle: page.title, description: page.description, collectedAt: page.fetchedAt, contentHash: page.hash }])).values()],
     pages: canonicalPages,
     youtubeVideoIds: [...youtubeIds].map((id) => ({ provider: 'youtube', externalVideoId: id, canonicalUrl: `https://www.youtube.com/watch?v=${id}` })),
   };
