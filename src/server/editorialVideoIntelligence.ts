@@ -88,13 +88,16 @@ export async function listEditorialVideos(catalogProgramId?: string) {
 export async function importYouTubeVideo(input: string, catalogProgramId?: string) {
   const videoId = parseYouTubeVideoId(input);
   const video = await fetchPublicVideo(videoId);
-  if (catalogProgramId) {
-    const { data: program, error: programError } = await db.from('program_catalog').select('id').eq('id', catalogProgramId).maybeSingle();
+  const { data: priorVideo, error: priorVideoError } = await db.from('program_videos').select('id,catalog_program_id').eq('provider', 'youtube').eq('external_video_id', videoId).maybeSingle();
+  if (priorVideoError) throw new Error(priorVideoError.message);
+  const effectiveProgramId = catalogProgramId || priorVideo?.catalog_program_id || null;
+  if (effectiveProgramId) {
+    const { data: program, error: programError } = await db.from('program_catalog').select('id').eq('id', effectiveProgramId).maybeSingle();
     if (programError) throw new Error(programError.message);
     if (!program) throw Object.assign(new Error('Programa não encontrado no catálogo canônico.'), { status: 404 });
   }
   const source = await db.from('program_catalog_sources').upsert({
-    catalog_program_id: catalogProgramId || null, source_type: 'youtube', source_url: video.canonicalUrl,
+    catalog_program_id: effectiveProgramId, source_type: 'youtube', source_url: video.canonicalUrl,
     canonical_url: video.canonicalUrl, platform_account_id: video.channelId, platform_handle: video.channelTitle,
     evidence: `Vídeo público: ${video.title}`, collected_at: new Date().toISOString(),
     source_published_at: video.publishedAt || null, content_hash: sha256(JSON.stringify(video.metadata)),
@@ -103,7 +106,7 @@ export async function importYouTubeVideo(input: string, catalogProgramId?: strin
   }, { onConflict: 'source_type,source_url' }).select('id').single();
   if (source.error) throw new Error(source.error.message);
   const saved = await db.from('program_videos').upsert({
-    catalog_program_id: catalogProgramId || null, source_id: source.data.id, provider: 'youtube',
+    catalog_program_id: effectiveProgramId, source_id: source.data.id, provider: 'youtube',
     external_video_id: videoId, canonical_url: video.canonicalUrl, channel_id: video.channelId,
     channel_title: video.channelTitle, title: video.title, description: video.description,
     published_at: video.publishedAt || null, duration_seconds: video.durationSeconds,
