@@ -341,6 +341,114 @@ export async function upsertProgramMembership(orgId:string,programId:string,user
   return r.data;
 }
 
+const TEAM_ROLES=['producer','editor','host','viewer'] as const;
+type ProgramTeamRole=typeof TEAM_ROLES[number];
+
+function permissionsForTeamRole(role:ProgramTeamRole,overrides?:Record<string,unknown>){
+  const base={
+    canView:true,
+    canEditEditorial:role==='producer'||role==='editor',
+    canEditScript:role==='producer'||role==='editor',
+    canOperateStudio:role==='producer',
+    canManageSchedule:role==='producer',
+    canManageAssets:role==='producer',
+    canExport:role==='producer'||role==='editor',
+  };
+  const result:any={...base};
+  for(const key of Object.keys(base) as (keyof typeof base)[]){
+    if(overrides?.[key]===false) result[key]=false;
+  }
+  return result;
+}
+
+async function assertProgramExecutiveOrAdmin(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole){
+  const program=await one('programs',programId);
+  if(!program||program.organization_id!==orgId) throw new AppError(404,'NOT_FOUND','Programa não encontrado nesta organização.');
+  if(!['owner','admin'].includes(actorRole)&&program.executive_user_id!==actorUserId){
+    throw new AppError(403,'FORBIDDEN_CONTEXT','Somente o diretor executivo responsável pode administrar a equipe deste programa.');
+  }
+  return program;
+}
+
+export async function listProgramTeam(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const memberships=await db.from('program_memberships').select('*').eq('organization_id',orgId).eq('program_id',program.id).eq('status','active').order('created_at');
+  fail(memberships);
+  const users=await authUsers((memberships.data||[]).map((m:any)=>m.user_id));
+  const byId=new Map(users.map((u:any)=>[u.id,u]));
+  const members=(memberships.data||[]).map((m:any)=>{
+    const user=byId.get(m.user_id) as any;
+    return {userId:m.user_id,name:user?.name||user?.email||'Usuário',email:user?.email||'',jobTitle:user?.jobTitle||'',role:m.role,permissions:m.permissions||{},createdAt:m.created_at,authorizedBy:m.authorized_by};
+  });
+  const allUsers=await listOrganizationUsersWithPermissions(orgId);
+  const memberIds=new Set(memberships.data?.map((m:any)=>m.user_id)||[]);
+  const candidates=allUsers.filter((u:any)=>!memberIds.has(u.id)).map((u:any)=>({userId:u.id,name:u.name,email:u.email,jobTitle:u.jobTitle||'',role:u.role||'editor'}));
+  return {program:{id:program.legacy_id||program.id,title:program.title||program.name,executiveUserId:program.executive_user_id||null},members,candidates};
+}
+
+export async function upsertProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,input:{userId:string;role?:string;permissions?:Record<string,unknown>}){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const role=(input.role||'editor') as ProgramTeamRole;
+  if(!TEAM_ROLES.includes(role)) throw new AppError(400,'VALIDATION_ERROR','Função de programa inválida.');
+  const orgMember=await db.from('organization_members').select('user_id').eq('organization_id',orgId).eq('user_id',input.userId).eq('active',true).maybeSingle();
+  fail(orgMember);
+  if(!orgMember.data) throw new AppError(404,'NOT_FOUND','O usuário não pertence à organização RS Play TV.');
+  if(program.executive_user_id===input.userId) throw new AppError(409,'CONFLICT','O diretor executivo responsável não pode ser rebaixado como membro da própria equipe.');
+  const permissions=permissionsForTeamRole(role,input.permissions);
+  await upsertProgramMembership(orgId,program.legacy_id||program.id,input.userId,permissions,role,actorUserId);
+  const roster=await authUsers([input.userId]);
+  const user=roster[0];
+  return {userId:input.userId,name:user?.name||user?.email||'Usuário',email:user?.email||'',jobTitle:user?.jobTitle||'',role,permissions};
+}
+
+export async function inviteProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,input:{email:string;name:string;jobTitle?:string;role?:string}){
+  await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const email=(input.email||'').trim().toLowerCase();
+  const name=(input.name||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||name.length<2) throw new AppError(400,'VALIDATION_ERROR','Informe nome e e-mail válidos para o convite.');
+  const role=(input.role||'editor') as ProgramTeamRole;
+  if(!TEAM_ROLES.includes(role)) throw new AppError(400,'VALIDATION_ERROR','Função de programa inválida.');
+
+  const roster=await listOrganizationUsersWithPermissions(orgId);
+  const existingMember=roster.find((u:any)=>u.email.toLowerCase()===email);
+  if(existingMember){
+    return {member:await upsertProgramTeamMember(orgId,programId,actorUserId,actorRole,{userId:existingMember.id,role}),invited:false};
+  }
+
+  const authList=await db.auth.admin.listUsers({page:1,perPage:1000});
+  if(authList.error) throw new Error(authList.error.message);
+  let authUser=(authList.data.users||[]).find((u:any)=>(u.email||'').toLowerCase()===email);
+  let wasInvited=false;
+  if(!authUser){
+    const invited=await db.auth.admin.inviteUserByEmail(email,{data:{name,jobTitle:input.jobTitle||''}});
+    if(invited.error) throw new AppError(409,'CONFLICT',invited.error.message||'Não foi possível enviar o convite por e-mail.');
+    authUser=invited.data.user;
+    wasInvited=true;
+  }
+  if(!authUser?.id) throw new AppError(500,'PERSISTENCE_ERROR','O provedor de autenticação não retornou o usuário convidado.');
+
+  const orgInsert=await db.from('organization_members').upsert({organization_id:orgId,user_id:authUser.id,role:'editor',active:true,updated_at:now()},{onConflict:'organization_id,user_id'});
+  fail(orgInsert);
+  try{
+    const member=await upsertProgramTeamMember(orgId,programId,actorUserId,actorRole,{userId:authUser.id,role});
+    return {member,invited:wasInvited};
+  }catch(error){
+    await db.from('organization_members').delete().eq('organization_id',orgId).eq('user_id',authUser.id);
+    if(wasInvited) await db.auth.admin.deleteUser(authUser.id);
+    throw error;
+  }
+}
+
+export async function revokeProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,targetUserId:string){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  if(program.executive_user_id===targetUserId) throw new AppError(409,'CONFLICT','Transfira a responsabilidade executiva antes de remover o diretor responsável.');
+  const result=await db.from('program_memberships').update({status:'revoked',revoked_at:now(),updated_at:now()})
+    .eq('organization_id',orgId).eq('program_id',program.id).eq('user_id',targetUserId).eq('status','active').select('user_id').maybeSingle();
+  fail(result);
+  if(!result.data) throw new AppError(404,'NOT_FOUND','Vínculo de equipe não encontrado.');
+  return {success:true,userId:targetUserId,programId:program.legacy_id||program.id};
+}
+
 export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users:any[]=await authUsers((r.data||[]).map((m:any)=>m.user_id).filter(Boolean));const byId=new Map(users.map((u:any)=>[u.id,u]));const members=(r.data||[]).filter((m:any)=>{if(byId.has(m.user_id))return true;logStructured('WARN','auth_user_unresolvable',{organizationId:orgId,userId:m.user_id});return false;});return Promise.all(members.map((m:any)=>mapUser(byId.get(m.user_id),orgId)));}
 export async function createOrganizationUserWithShowPermissions(orgId:string,input:any,userId?:string){const r=await db.auth.admin.createUser({email:input.email,password:input.loginCode||cryptoRandom(),email_confirm:true,user_metadata:{name:input.name,jobTitle:input.jobTitle}});if(r.error)throw new Error(r.error.message);await db.from('organization_members').insert({organization_id:orgId,user_id:r.data.user.id,role:input.role||'editor',active:true});return mapUser(r.data.user,orgId);}
 function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
