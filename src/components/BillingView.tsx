@@ -1,30 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import {
-  CreditCard,
-  RefreshCw,
-  CheckCircle2,
-  AlertTriangle,
-  ShieldCheck,
-  Receipt,
-  Webhook,
-  Sparkles,
-  Calendar,
-  Building2,
-  Tv,
-  ArrowUpRight,
-  Loader2,
-} from 'lucide-react';
-import {
-  AuthSession,
-  BillingInvoice,
-  PaymentGatewayEvent,
-  PaymentMethodType,
-  SaaSPlanDefinition,
-  SaaSSubscription,
-  Show,
-  SubscriptionPlanId,
-} from '../types';
-import { api } from '../services/api';
+import React, { useCallback, useEffect, useState } from 'react';
+import { CheckCircle2, Copy, Loader2, RefreshCw, ShieldCheck, TriangleAlert, Wallet } from 'lucide-react';
+import { AuthSession, SaaSPlanDefinition, Show, SubscriptionPlanId } from '../types';
+import { api, VenoPagPixIntent } from '../services/api';
 
 interface BillingViewProps {
   session: AuthSession | null;
@@ -33,650 +10,270 @@ interface BillingViewProps {
 }
 
 function formatBRL(cents: number): string {
-  return (cents / 100).toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  });
+  return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function formatDateBR(iso?: string): string {
-  if (!iso) return '—';
-  try {
-    return new Date(iso).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  } catch {
-    return iso.slice(0, 10);
-  }
+function formatDate(value?: string | null): string {
+  if (!value) return '—';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleString('pt-BR');
 }
 
-export const BillingView: React.FC<BillingViewProps> = ({
-  shows,
-  onSubscriptionUpdated,
-}) => {
+function statusLabel(status: VenoPagPixIntent['status']): string {
+  const labels: Record<VenoPagPixIntent['status'], string> = {
+    creating: 'Criando cobrança',
+    pending: 'Aguardando pagamento',
+    confirmed: 'Pagamento confirmado',
+    expired: 'Cobrança expirada',
+    canceled: 'Cobrança cancelada',
+    contested: 'Pagamento contestado',
+    chargedback: 'Pagamento contestado pelo banco',
+    refunded: 'Pagamento estornado',
+    failed: 'Falha na cobrança',
+    reconciliation_required: 'Conciliação necessária',
+  };
+  return labels[status] || status;
+}
+
+function qrImageSource(value?: string | null): string | null {
+  if (!value) return null;
+  if (value.startsWith('data:') || /^https?:\/\//i.test(value)) return value;
+  return `data:image/png;base64,${value}`;
+}
+
+export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubscriptionUpdated }) => {
   const [plans, setPlans] = useState<SaaSPlanDefinition[]>([]);
-  const [subscriptions, setSubscriptions] = useState<SaaSSubscription[]>([]);
-  const [invoices, setInvoices] = useState<BillingInvoice[]>([]);
-  const [gatewayEvents, setGatewayEvents] = useState<PaymentGatewayEvent[]>([]);
+  const [intents, setIntents] = useState<VenoPagPixIntent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(
-    null
-  );
+  const [busy, setBusy] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<SaaSPlanDefinition | null>(null);
+  const [selectedProgramId, setSelectedProgramId] = useState(shows[0]?.id || '');
+  const [activeIntent, setActiveIntent] = useState<VenoPagPixIntent | null>(null);
 
-  // Checkout Modal State
-  const [selectedPlanForCheckout, setSelectedPlanForCheckout] =
-    useState<SaaSPlanDefinition | null>(null);
-  const [checkoutMethod, setCheckoutMethod] = useState<PaymentMethodType>('credit_card');
-  const [checkoutCardLast4, setCheckoutCardLast4] = useState('4829');
-  const [checkoutCardBrand, setCheckoutCardBrand] = useState('Mastercard Black Corporativo');
-  const [checkoutShowId, setCheckoutShowId] = useState<string>('');
-  const [checkoutAutoRenew, setCheckoutAutoRenew] = useState(true);
-
-  const loadBilling = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await api.getBillingOverview();
-      setPlans(data.plans);
-      setSubscriptions(data.subscriptions);
-      setInvoices(data.invoices);
-      setGatewayEvents(data.gatewayEvents);
-    } catch (err: any) {
-      setFeedback({
-        type: 'error',
-        text: err?.message || 'Erro ao carregar dados de assinatura e gateway.',
-      });
+      const [overview, history] = await Promise.all([
+        api.getBillingOverview(),
+        api.listVenoPagPixCheckouts(),
+      ]);
+      setPlans(overview.plans);
+      setIntents(history.intents);
+    } catch (error: any) {
+      setFeedback({ type: 'error', text: error?.message || 'Não foi possível carregar os dados de contratação.' });
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    loadBilling();
   }, []);
 
-  const primarySubscription = subscriptions[0] || null;
+  useEffect(() => { void loadData(); }, [loadData]);
+  useEffect(() => {
+    if (!selectedProgramId && shows[0]?.id) setSelectedProgramId(shows[0].id);
+  }, [shows, selectedProgramId]);
 
-  const handleToggleAutoRenew = async (sub: SaaSSubscription) => {
-    setActionLoading(`autorenew-${sub.id}`);
+  const startCheckout = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!selectedPlan || !selectedProgramId) {
+      setFeedback({ type: 'error', text: 'Selecione o programa e o plano antes de continuar.' });
+      return;
+    }
+    setBusy(true);
     setFeedback(null);
     try {
-      await api.toggleAutoRenew(sub.id, !sub.autoRenew);
-      await loadBilling();
-      await onSubscriptionUpdated();
-      setFeedback({
-        type: 'success',
-        text: !sub.autoRenew
-          ? 'Renovação automática mensal ativada no gateway RSPlay Pay / Stripe.'
-          : 'Renovação automática mensal pausada para o próximo ciclo.',
+      const result = await api.createVenoPagPixCheckout({
+        programId: selectedProgramId,
+        planCode: selectedPlan.id as SubscriptionPlanId,
+        idempotencyKey: globalThis.crypto.randomUUID(),
+        customerName: session?.user?.name,
       });
-    } catch (err: any) {
+      setActiveIntent(result.intent);
+      setSelectedPlan(null);
+      await loadData();
       setFeedback({
-        type: 'error',
-        text: err?.message || 'Falha ao atualizar renovação automática.',
+        type: result.intent.status === 'pending' ? 'info' : 'success',
+        text: result.intent.status === 'pending'
+          ? 'Cobrança PIX criada. A contratação só será ativada após a confirmação do pagamento.'
+          : statusLabel(result.intent.status),
       });
+    } catch (error: any) {
+      setFeedback({ type: 'error', text: error?.message || 'Não foi possível criar a cobrança PIX.' });
     } finally {
-      setActionLoading(null);
+      setBusy(false);
     }
   };
 
-  const handleProcessRenewalNow = async (sub: SaaSSubscription, simulateFailure = false) => {
-    setActionLoading(simulateFailure ? `fail-${sub.id}` : `renew-${sub.id}`);
+  const verifyPayment = async (intent: VenoPagPixIntent) => {
+    setBusy(true);
     setFeedback(null);
     try {
-      const res = await api.renewSubscriptionNow(sub.id, simulateFailure);
-      await loadBilling();
-      await onSubscriptionUpdated();
-      setFeedback({
-        type: simulateFailure ? 'error' : 'success',
-        text: simulateFailure
-          ? `Webhook de falha processado (${res.invoice.invoiceNumber}): assinatura marcada como Pendente (past_due) e retentativa automática agendada.`
-          : `Renovação automática processada com sucesso via Gateway (${res.invoice.invoiceNumber})! Novo ciclo vigente até ${formatDateBR(res.subscription.currentPeriodEnd)}.`,
-      });
-    } catch (err: any) {
-      setFeedback({
-        type: 'error',
-        text: err?.message || 'Erro ao processar ciclo de renovação no gateway.',
-      });
+      const result = await api.verifyVenoPagPixCheckout(intent.id);
+      setActiveIntent(result.intent);
+      await loadData();
+      if (result.intent.status === 'confirmed') {
+        await onSubscriptionUpdated();
+        setFeedback({ type: 'success', text: 'Pagamento confirmado pelo VenoPag e assinatura vinculada ao programa.' });
+      } else {
+        setFeedback({ type: 'info', text: statusLabel(result.intent.status) });
+      }
+    } catch (error: any) {
+      setFeedback({ type: 'error', text: error?.message || 'Não foi possível conciliar o pagamento.' });
     } finally {
-      setActionLoading(null);
+      setBusy(false);
     }
   };
 
-  const handleConfirmSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedPlanForCheckout) return;
-    setActionLoading('checkout');
-    setFeedback(null);
+  const copyPix = async (code: string) => {
     try {
-      const res = await api.subscribePlan({
-        planId: selectedPlanForCheckout.id as SubscriptionPlanId,
-        showId: checkoutShowId || undefined,
-        paymentMethodType: checkoutMethod,
-        paymentMethodLast4:
-          checkoutMethod === 'pix_automatico'
-            ? 'PIX'
-            : checkoutMethod === 'boleto_corporativo'
-            ? 'BOL'
-            : checkoutCardLast4 || '4829',
-        paymentMethodBrand:
-          checkoutMethod === 'pix_automatico'
-            ? 'PIX Automático Banco Central'
-            : checkoutMethod === 'boleto_corporativo'
-            ? 'Boleto Corporativo Registrado'
-            : checkoutCardBrand || 'Mastercard Corporativo',
-        autoRenew: checkoutAutoRenew,
-      });
-      setSelectedPlanForCheckout(null);
-      await loadBilling();
-      await onSubscriptionUpdated();
-      setFeedback({
-        type: 'success',
-        text: `Plano "${res.subscription.planName}" contratado com sucesso! Fatura ${res.invoice.invoiceNumber} liquidada no gateway.`,
-      });
-    } catch (err: any) {
-      setFeedback({
-        type: 'error',
-        text: err?.message || 'Falha ao contratar plano mensal no gateway.',
-      });
-    } finally {
-      setActionLoading(null);
+      await navigator.clipboard.writeText(code);
+      setFeedback({ type: 'success', text: 'Código PIX copiado.' });
+    } catch {
+      setFeedback({ type: 'error', text: 'Não foi possível copiar automaticamente. Selecione e copie o código PIX.' });
     }
   };
 
   if (loading) {
-    return (
-      <div className="p-8 flex items-center justify-center gap-3 text-zinc-400">
-        <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
-        <span className="text-sm">Sincronizando planos e gateway RSPlay Pay...</span>
-      </div>
-    );
+    return <div className="flex items-center justify-center gap-3 p-12 text-zinc-400"><Loader2 className="h-5 w-5 animate-spin" />Carregando contratação e pagamentos...</div>;
   }
 
-  return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
-        <div>
-          <div className="text-xs text-amber-400 font-medium mb-1">
-            RSPlay TV SaaS · Faturamento Recorrente & Gateway de Pagamentos
-          </div>
-          <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">
-            Assinatura Mensal, Planos & Renovação Automática
-          </h1>
-          <p className="text-sm text-zinc-400 mt-1">
-            Gerencie o plano mensal de cada programa ou grade, método de pagamento, faturas e webhooks de renovação automática.
-          </p>
-        </div>
+  const activeProgram = shows.find((show) => show.id === (activeIntent?.programId || selectedProgramId));
+  const qrSrc = qrImageSource(activeIntent?.qrImage);
 
-        <div className="flex items-center gap-3">
-          <div className="px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-right">
-            <div className="text-[11px] text-zinc-400">Gateway Conectado</div>
-            <div className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>RSPlay Pay / Stripe Billing Ativo</span>
-            </div>
-          </div>
+  return (
+    <div className="mx-auto max-w-6xl space-y-8 p-6 lg:p-8">
+      <header className="flex flex-col justify-between gap-4 border-b border-zinc-800 pb-6 md:flex-row md:items-center">
+        <div>
+          <p className="mb-1 text-xs font-medium text-emerald-400">RS Play TV · VenoPag</p>
+          <h1 className="text-2xl font-bold text-zinc-100">Contratação de programas</h1>
+          <p className="mt-2 max-w-2xl text-sm text-zinc-400">Contrate o plano do programa e pague via PIX. A ativação ocorre somente após confirmação verificável do gateway.</p>
         </div>
-      </div>
+        <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-zinc-300">
+          <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          <span>PIX · Confirmação server-side</span>
+        </div>
+      </header>
 
       {feedback && (
-        <div
-          className={`p-4 rounded-xl border flex items-center justify-between gap-3 text-sm ${
-            feedback.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-200'
-              : 'bg-red-500/10 border-red-500/30 text-red-200'
-          }`}
-        >
-          <div className="flex items-center gap-2.5">
-            {feedback.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            ) : (
-              <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-            )}
-            <span>{feedback.text}</span>
-          </div>
-          <button
-            onClick={() => setFeedback(null)}
-            className="text-xs text-zinc-400 hover:text-zinc-200 cursor-pointer"
-          >
-            Fechar
+        <div className={`flex items-start gap-3 rounded-xl border p-4 text-sm ${feedback.type === 'success' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : feedback.type === 'error' ? 'border-red-500/30 bg-red-500/10 text-red-200' : 'border-sky-500/30 bg-sky-500/10 text-sky-100'}`}>
+          {feedback.type === 'error' ? <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" /> : <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />}
+          <span>{feedback.text}</span>
+        </div>
+      )}
+
+      {shows.length === 0 && (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100">
+          Nenhum programa disponível para contratação nesta conta. Conclua primeiro a seleção e configuração do programa.
+        </div>
+      )}
+
+      <section className="space-y-4">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-semibold text-zinc-100">Planos disponíveis</h2>
+          <button onClick={() => void loadData()} className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 px-3 py-2 text-xs text-zinc-300 hover:bg-zinc-900">
+            <RefreshCw className="h-3.5 w-3.5" />Atualizar
           </button>
         </div>
-      )}
-
-      {/* Active Subscription & Gateway Auto-Renewal Control Card */}
-      {primarySubscription && (
-        <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800 p-6 space-y-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2.5 text-xs text-zinc-400">
-                <span>Assinatura Vigente</span>
-                <span>·</span>
-                <span className="font-mono">{primarySubscription.gatewaySubscriptionId}</span>
-                <span>·</span>
-                <span
-                  className={
-                    primarySubscription.status === 'active'
-                      ? 'text-emerald-400 font-semibold'
-                      : 'text-amber-400 font-semibold'
-                  }
-                >
-                  {primarySubscription.status === 'active'
-                    ? 'Ativa & Em Dia'
-                    : 'Atenção: Pagamento Pendente (past_due)'}
-                </span>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {plans.map((plan) => (
+            <article key={plan.id} className="flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
+              <div className="flex-1 space-y-3">
+                <h3 className="font-semibold text-zinc-100">{plan.name}</h3>
+                <p className="text-sm text-zinc-400">{plan.tagline}</p>
+                <p className="text-2xl font-bold text-zinc-100">{formatBRL(plan.monthlyPriceCents)}<span className="ml-1 text-xs font-normal text-zinc-400">/ ciclo cadastrado</span></p>
+                <ul className="space-y-2 pt-2">
+                  {plan.features.map((feature, index) => <li key={index} className="flex gap-2 text-xs text-zinc-300"><CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />{feature}</li>)}
+                </ul>
               </div>
-              <h2 className="text-xl font-bold text-zinc-100">
-                {primarySubscription.planName}
-              </h2>
-              <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-2 pt-0.5">
-                <Building2 className="w-3.5 h-3.5 text-amber-400" />
-                <span>
-                  Escopo:{' '}
-                  {primarySubscription.showTitle
-                    ? `Programa Individual (${primarySubscription.showTitle})`
-                    : 'Grade Completa da Organização RSPlay TV'}
-                </span>
-                <span>·</span>
-                <Calendar className="w-3.5 h-3.5 text-zinc-500" />
-                <span className="font-mono tabular-nums">
-                  Ciclo atual: {formatDateBR(primarySubscription.currentPeriodStart)} até{' '}
-                  {formatDateBR(primarySubscription.currentPeriodEnd)}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="text-right">
-                <div className="text-xs text-zinc-400">Valor Mensal Recorrente</div>
-                <div className="text-2xl font-bold text-zinc-100 font-mono tabular-nums">
-                  {formatBRL(primarySubscription.amountCents)}
-                  <span className="text-xs font-normal text-zinc-400">/mês</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Payment Method */}
-            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800/90 space-y-1.5">
-              <div className="text-xs text-zinc-400 flex items-center gap-1.5">
-                <CreditCard className="w-3.5 h-3.5 text-amber-400" />
-                <span>Método Integrado no Gateway</span>
-              </div>
-              <div className="text-sm font-semibold text-zinc-100">
-                {primarySubscription.paymentMethodBrand}
-              </div>
-              <div className="text-xs text-zinc-400 font-mono">
-                {primarySubscription.paymentMethodType === 'credit_card'
-                  ? `Final •••• ${primarySubscription.paymentMethodLast4}`
-                  : primarySubscription.paymentMethodType === 'pix_automatico'
-                  ? 'Débito Automático via PIX Recorrente'
-                  : 'Faturamento Boleto Corporativo'}
-              </div>
-            </div>
-
-            {/* Automatic Renewal Toggle */}
-            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800/90 flex flex-col justify-between gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-zinc-400">Renovação Automática Mensal</span>
-                <span
-                  className={`text-xs font-semibold ${
-                    primarySubscription.autoRenew ? 'text-emerald-400' : 'text-zinc-500'
-                  }`}
-                >
-                  {primarySubscription.autoRenew ? 'Habilitada' : 'Desativada'}
-                </span>
-              </div>
-              <p className="text-xs text-zinc-500">
-                Cobrança recorrente automática no vencimento sem interrupção do estúdio.
-              </p>
               <button
                 type="button"
-                disabled={actionLoading === `autorenew-${primarySubscription.id}`}
-                onClick={() => handleToggleAutoRenew(primarySubscription)}
-                className="mt-1 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-medium text-zinc-200 transition-colors cursor-pointer whitespace-nowrap self-start"
+                disabled={shows.length === 0 || busy}
+                onClick={() => { setSelectedProgramId(shows[0]?.id || ''); setSelectedPlan(plan); }}
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-zinc-950 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {primarySubscription.autoRenew
-                  ? 'Pausar Renovação Automática'
-                  : 'Ativar Renovação Automática'}
+                <Wallet className="h-4 w-4" />Contratar via PIX
               </button>
-            </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-            {/* Gateway Webhook Actions */}
-            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800/90 flex flex-col justify-between gap-2">
-              <div className="text-xs text-zinc-400 flex items-center gap-1.5">
-                <Webhook className="w-3.5 h-3.5 text-amber-400" />
-                <span>Motor de Renovação do Gateway</span>
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold text-zinc-100">Cobranças recentes</h2>
+        {intents.length === 0 ? (
+          <div className="rounded-xl border border-zinc-800 p-5 text-sm text-zinc-400">Nenhuma cobrança VenoPag registrada nesta organização.</div>
+        ) : (
+          <div className="overflow-hidden rounded-xl border border-zinc-800">
+            {intents.map((intent) => (
+              <div key={intent.id} className="flex flex-col gap-3 border-b border-zinc-800 p-4 last:border-b-0 md:flex-row md:items-center md:justify-between">
+                <div className="min-w-0">
+                  <div className="font-medium text-zinc-100">{shows.find((show) => show.id === intent.programId)?.title || 'Programa contratado'}</div>
+                  <div className="mt-1 text-xs text-zinc-500">{formatDate(intent.createdAt)} · Referência: {intent.requestNumber || intent.id}</div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="font-semibold text-zinc-100">{formatBRL(intent.amountCents)}</div>
+                    <div className={`text-xs ${intent.status === 'confirmed' ? 'text-emerald-400' : intent.status === 'reconciliation_required' ? 'text-amber-300' : 'text-zinc-400'}`}>{statusLabel(intent.status)}</div>
+                  </div>
+                  {intent.status !== 'confirmed' && (
+                    <button disabled={busy || !intent.requestNumber} onClick={() => void verifyPayment(intent)} className="rounded-lg border border-zinc-700 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-800 disabled:opacity-40">Verificar</button>
+                  )}
+                  {(intent.pixCopyPaste || intent.qrUrl || intent.qrImage || intent.checkoutUrl) && intent.status === 'pending' && (
+                    <button onClick={() => setActiveIntent(intent)} className="rounded-lg border border-zinc-700 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-800">Abrir PIX</button>
+                  )}
+                </div>
               </div>
-              <p className="text-xs text-zinc-500">
-                Dispare o ciclo mensal automático para gerar fatura e estender a vigência em +30 dias.
-              </p>
-              <div className="flex items-center gap-2 pt-1">
-                <button
-                  type="button"
-                  disabled={Boolean(actionLoading)}
-                  onClick={() => handleProcessRenewalNow(primarySubscription, false)}
-                  className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-xs flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap"
-                >
-                  <RefreshCw
-                    className={`w-3.5 h-3.5 ${
-                      actionLoading === `renew-${primarySubscription.id}` ? 'animate-spin' : ''
-                    }`}
-                  />
-                  <span>Renovar Ciclo (+30d)</span>
-                </button>
-                <button
-                  type="button"
-                  disabled={Boolean(actionLoading)}
-                  onClick={() => handleProcessRenewalNow(primarySubscription, true)}
-                  className="px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-400 hover:text-red-300 transition-colors cursor-pointer whitespace-nowrap"
-                  title="Simular falha de cartão no gateway (past_due)"
-                >
-                  Simular Falha
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
+        )}
+      </section>
+
+      {selectedPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+          <form onSubmit={startCheckout} className="w-full max-w-lg space-y-5 rounded-2xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl">
+            <div>
+              <p className="text-xs font-medium text-emerald-400">Checkout VenoPag · PIX</p>
+              <h3 className="mt-1 text-xl font-bold text-zinc-100">{selectedPlan.name}</h3>
+              <p className="mt-1 text-sm text-zinc-400">{formatBRL(selectedPlan.monthlyPriceCents)} · pagamento PIX</p>
+            </div>
+            <label className="block space-y-2 text-sm text-zinc-300">
+              <span>Programa</span>
+              <select value={selectedProgramId} onChange={(event) => setSelectedProgramId(event.target.value)} required className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-3 text-zinc-100">
+                {shows.map((show) => <option key={show.id} value={show.id}>{show.title}</option>)}
+              </select>
+            </label>
+            <p className="text-xs leading-relaxed text-zinc-500">A cobrança será vinculada ao programa selecionado. A assinatura não será ativada até o VenoPag confirmar o pagamento. O PIX desta primeira integração é uma cobrança avulsa; renovação automática não está habilitada.</p>
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={() => setSelectedPlan(null)} className="rounded-lg border border-zinc-700 px-4 py-2.5 text-sm text-zinc-300">Cancelar</button>
+              <button type="submit" disabled={busy || !selectedProgramId} className="rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-zinc-950 disabled:opacity-50">{busy ? 'Criando cobrança…' : 'Gerar cobrança PIX'}</button>
+            </div>
+          </form>
         </div>
       )}
 
-      {/* Monthly Subscription Plans Grid */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-lg font-semibold text-zinc-100">
-            Planos Mensais de Assinatura RSPlay TV
-          </h2>
-          <p className="text-xs text-zinc-400">
-            Escolha o plano ideal para um programa individual com login próprio ou para toda a grade multiprograma da emissora.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {plans.map((plan) => {
-            const isCurrentPlan = primarySubscription?.planId === plan.id;
-            return (
-              <div
-                key={plan.id}
-                className={`rounded-2xl p-6 flex flex-col justify-between border transition-all ${
-                  plan.highlighted
-                    ? 'bg-zinc-900/90 border-amber-500/50'
-                    : 'bg-zinc-900/40 border-zinc-800'
-                }`}
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-base font-bold text-zinc-100">{plan.name}</h3>
-                    {plan.highlighted && (
-                      <span className="text-xs font-semibold text-amber-400">
-                        Mais Contratado
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="text-xs text-zinc-400 leading-relaxed">{plan.tagline}</p>
-
-                  <div className="pt-2 border-t border-zinc-800/80">
-                    <div className="text-3xl font-bold text-zinc-100 font-mono tabular-nums">
-                      {formatBRL(plan.monthlyPriceCents)}
-                      <span className="text-xs font-normal text-zinc-400"> / mês</span>
-                    </div>
-                    <div className="text-xs text-zinc-400 mt-1 font-mono tabular-nums">
-                      Limite: até {plan.maxShows === 999 ? 'Ilimitados' : plan.maxShows} programa(s) ·{' '}
-                      {plan.maxUsers === 999 ? 'Ilimitados' : plan.maxUsers} logins individuais
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2.5 pt-2">
-                    {plan.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs text-zinc-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-zinc-800/80">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedPlanForCheckout(plan);
-                      setCheckoutShowId(shows[0]?.id || '');
-                    }}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer whitespace-nowrap ${
-                      isCurrentPlan
-                        ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200'
-                        : 'bg-amber-500 hover:bg-amber-400 text-zinc-950'
-                    }`}
-                  >
-                    <span>
-                      {isCurrentPlan
-                        ? 'Atualizar Pagamento / Renovar Plano'
-                        : 'Contratar Plano Mensal'}
-                    </span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Invoices & Gateway Webhook Logs */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Billing Invoices */}
-        <div className="rounded-2xl bg-zinc-900/50 border border-zinc-800 p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Receipt className="w-4 h-4 text-amber-400" />
-              <h3 className="text-sm font-semibold text-zinc-100">
-                Histórico de Faturas & Renovações ({invoices.length})
-              </h3>
-            </div>
-            <span className="text-xs text-zinc-500 font-mono">BRL · Nota Fiscal SaaS</span>
-          </div>
-
-          <div className="divide-y divide-zinc-800/80">
-            {invoices.map((inv) => (
-              <div key={inv.id} className="py-3 flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2 text-xs font-medium text-zinc-200">
-                    <span className="font-mono text-amber-300">{inv.invoiceNumber}</span>
-                    <span>·</span>
-                    <span className="truncate">{inv.description}</span>
-                  </div>
-                  <div className="text-[11px] text-zinc-500 font-mono tabular-nums mt-0.5">
-                    {formatDateBR(inv.createdAt)} · Gateway TX: {inv.gatewayTransactionId} ·{' '}
-                    {inv.autoRenewalCycle ? 'Renovação Automática' : 'Contratação Direta'}
-                  </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <div className="text-xs font-bold text-zinc-100 font-mono tabular-nums">
-                    {formatBRL(inv.amountCents)}
-                  </div>
-                  <div
-                    className={`text-[11px] font-medium ${
-                      inv.status === 'paid' ? 'text-emerald-400' : 'text-red-400'
-                    }`}
-                  >
-                    {inv.status === 'paid' ? 'Liquidada' : 'Falha no Cartão'}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Gateway Webhooks Log */}
-        <div className="rounded-2xl bg-zinc-900/50 border border-zinc-800 p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Webhook className="w-4 h-4 text-emerald-400" />
-              <h3 className="text-sm font-semibold text-zinc-100">
-                Eventos do Gateway de Pagamentos (Webhooks)
-              </h3>
-            </div>
-            <span className="text-xs text-zinc-500 font-mono">RSPlay Pay / Stripe</span>
-          </div>
-
-          <div className="divide-y divide-zinc-800/80">
-            {gatewayEvents.map((ev) => (
-              <div key={ev.id} className="py-3 space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono font-semibold text-zinc-200">{ev.eventType}</span>
-                  <span className="font-mono text-[11px] text-zinc-500 tabular-nums">
-                    {formatDateBR(ev.createdAt)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-[11px] text-zinc-400">
-                  <span className="font-mono truncate max-w-md">
-                    {JSON.stringify(ev.payload)}
-                  </span>
-                  <span
-                    className={
-                      ev.status === 'processed' ? 'text-emerald-400' : 'text-amber-400'
-                    }
-                  >
-                    {ev.status}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Checkout Modal for Subscribing / Changing Monthly Plan */}
-      {selectedPlanForCheckout && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
+      {activeIntent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+          <div className="w-full max-w-lg space-y-5 rounded-2xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="text-xs text-amber-400 font-medium">
-                  Checkout Gateway RSPlay Pay
-                </div>
-                <h3 className="text-lg font-bold text-zinc-100">
-                  Contratar {selectedPlanForCheckout.name}
-                </h3>
+                <p className="text-xs font-medium text-emerald-400">VenoPag · Cobrança PIX</p>
+                <h3 className="mt-1 text-xl font-bold text-zinc-100">{activeProgram?.title || 'Pagamento do programa'}</h3>
+                <p className="mt-1 text-sm text-zinc-400">{formatBRL(activeIntent.amountCents)} · {statusLabel(activeIntent.status)}</p>
               </div>
-              <div className="text-right font-mono tabular-nums">
-                <div className="text-lg font-bold text-zinc-100">
-                  {formatBRL(selectedPlanForCheckout.monthlyPriceCents)}
-                </div>
-                <div className="text-[11px] text-zinc-400">Cobrança Mensal</div>
-              </div>
+              <button onClick={() => setActiveIntent(null)} className="text-sm text-zinc-400 hover:text-white">Fechar</button>
             </div>
-
-            <form onSubmit={handleConfirmSubscribe} className="space-y-4">
-              {selectedPlanForCheckout.id === 'rsplay_programa_individual' && shows.length > 0 && (
-                <div>
-                  <label className="block text-xs text-zinc-400 mb-1">
-                    Vincular Assinatura a qual Programa da Grade?
-                  </label>
-                  <select
-                    value={checkoutShowId}
-                    onChange={(e) => setCheckoutShowId(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                  >
-                    {shows.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.title} ({s.host})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              <div>
-                <label className="block text-xs text-zinc-400 mb-1">
-                  Método de Pagamento Recorrente
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { id: 'credit_card', label: 'Cartão de Crédito' },
-                    { id: 'pix_automatico', label: 'PIX Automático' },
-                    { id: 'boleto_corporativo', label: 'Boleto Corp.' },
-                  ].map((m) => (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => setCheckoutMethod(m.id as PaymentMethodType)}
-                      className={`py-2 px-3 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
-                        checkoutMethod === m.id
-                          ? 'bg-amber-500/15 border-amber-500 text-amber-300'
-                          : 'bg-zinc-900 border-zinc-800 text-zinc-400'
-                      }`}
-                    >
-                      {m.label}
-                    </button>
-                  ))}
-                </div>
+            {qrSrc && <div className="flex justify-center rounded-xl bg-white p-4"><img src={qrSrc} alt="QR Code PIX" className="max-h-64 max-w-full object-contain" /></div>}
+            {activeIntent.checkoutUrl && <a href={activeIntent.checkoutUrl} target="_blank" rel="noreferrer" className="block text-center text-sm text-emerald-300 underline">Abrir checkout do VenoPag</a>}
+            {activeIntent.pixCopyPaste && (
+              <div className="space-y-2">
+                <label className="text-xs text-zinc-400">PIX copia e cola</label>
+                <textarea readOnly value={activeIntent.pixCopyPaste} rows={4} className="w-full resize-y rounded-lg border border-zinc-700 bg-zinc-900 p-3 text-xs text-zinc-100" />
+                <button onClick={() => void copyPix(activeIntent.pixCopyPaste!)} className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-700 px-3 py-2.5 text-sm text-zinc-100 hover:bg-zinc-900"><Copy className="h-4 w-4" />Copiar código PIX</button>
               </div>
-
-              {checkoutMethod === 'credit_card' && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">
-                      Bandeira / Cartão Corporativo
-                    </label>
-                    <input
-                      type="text"
-                      value={checkoutCardBrand}
-                      onChange={(e) => setCheckoutCardBrand(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">
-                      Últimos 4 Dígitos
-                    </label>
-                    <input
-                      type="text"
-                      maxLength={4}
-                      value={checkoutCardLast4}
-                      onChange={(e) => setCheckoutCardLast4(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <label className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={checkoutAutoRenew}
-                  onChange={(e) => setCheckoutAutoRenew(e.target.checked)}
-                  className="rounded border-zinc-700 text-amber-500 focus:ring-amber-500"
-                />
-                <span className="text-xs text-zinc-300">
-                  Habilitar renovação automática mensal via gateway de pagamentos
-                </span>
-              </label>
-
-              <div className="flex items-center justify-end gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedPlanForCheckout(null)}
-                  className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-xs text-zinc-300 cursor-pointer"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  disabled={actionLoading === 'checkout'}
-                  className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-xs cursor-pointer"
-                >
-                  {actionLoading === 'checkout'
-                    ? 'Processando no Gateway...'
-                    : 'Confirmar Assinatura Mensal'}
-                </button>
-              </div>
-            </form>
+            )}
+            <button disabled={busy || !activeIntent.requestNumber} onClick={() => void verifyPayment(activeIntent)} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-3 text-sm font-semibold text-zinc-950 disabled:opacity-50">
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}Verificar pagamento
+            </button>
+            {activeIntent.status === 'reconciliation_required' && <p className="text-xs text-amber-300">Esta tentativa não será recriada automaticamente para evitar cobrança duplicada. É necessária conciliação administrativa.</p>}
           </div>
         </div>
       )}
