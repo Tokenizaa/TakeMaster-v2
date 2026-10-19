@@ -355,4 +355,49 @@ export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_au
 export async function processAutomaticRenewalCycle(_orgId:string,_id:string,_simulateFailure?:boolean,_userId?:string){throw new AppError(410,'RECURRING_BILLING_UNAVAILABLE','Renovação simulada foi desativada. A integração inicial VenoPag cobre cobranças PIX avulsas.');}
 export async function buildAdminReportSummary(orgId:string):Promise<AdminReportSummary>{const [subs,users,shows]=await Promise.all([listOrganizationSubscriptions(orgId),listOrganizationUsersWithPermissions(orgId),listShows(orgId)]);return {mrrCents:subs.reduce((a,x)=>a+x.amountCents,0),activeSubscriptionsCount:subs.filter(x=>x.status==='active').length,autoRenewEnabledCount:subs.filter(x=>x.autoRenew).length,paidInvoicesTotalCents:0,pendingInvoicesTotalCents:0,usersCount:users.length,showsReport:await Promise.all(shows.map(async s=>({showId:s.id,showTitle:s.title,format:s.format,host:s.host,episodesCount:(await listEpisodes(orgId,s.id)).length,publishedOrReadyCount:(await listEpisodes(orgId,s.id)).filter(e=>e.status==='published'||e.status==='ready').length,totalPlannedMinutes:0,scheduledSessionsCount:(await listScheduleEvents(orgId,s.id)).length,authorizedUsersCount:users.length})))};}
 export async function populateOrganizationWorkspace(){return true;}
-export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){const user=await createOrganizationUserWithShowPermissions(organizationId,{email:payload.email,name:payload.name,loginCode:payload.loginCode,jobTitle:payload.jobTitle,role:payload.role||'producer'});let show:Show|undefined;if(payload.showMode==='knowledge_base'&&payload.knowledgeBaseSlug){const catalog=await db.from('program_catalog').select('id,slug,name,description,host,format,active,contractable').eq('slug',payload.knowledgeBaseSlug).eq('active',true).single();fail(catalog);if(!catalog.data.contractable)throw new AppError(409,'PROGRAM_NOT_CONTRACTABLE','Este programa do catálogo não está disponível para contratação.');show=await createShow(organizationId,{title:catalog.data.name,description:catalog.data.description||'',host:catalog.data.host||'',format:catalog.data.format||'Outro',catalogProgramId:catalog.data.id},user.id);}else if(payload.showMode==='new'&&payload.newShowTitle?.trim()){show=await createShow(organizationId,{title:payload.newShowTitle.trim(),host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'},user.id);}else if(payload.showMode==='existing'&&payload.existingShowId){const existing=await one('programs',payload.existingShowId);if(!existing||existing.organization_id!==organizationId)throw new AppError(404,'PROGRAM_NOT_FOUND','Programa existente não encontrado nesta organização.');if(existing.executive_user_id&&existing.executive_user_id!==user.id)throw new AppError(403,'PROGRAM_EXECUTIVE_CONFLICT','Este programa já possui um diretor executivo responsável. Solicite autorização para integrar a equipe.');const updated=await db.from('programs').update({executive_user_id:user.id,updated_at:now()}).eq('id',existing.id).select('*').single();fail(updated);show=await mapShow(updated.data);}return {user,show,subscription:undefined,invoice:undefined,gatewayEvent:undefined};}
+export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){
+  let programSpec:any;
+  let existingProgram:any;
+
+  if(payload.showMode==='knowledge_base'&&payload.knowledgeBaseSlug){
+    const catalog=await db.from('program_catalog')
+      .select('id,slug,name,description,host,format,active,contractable')
+      .eq('slug',payload.knowledgeBaseSlug).eq('active',true).single();
+    fail(catalog);
+    if(!catalog.data.contractable) throw new AppError(409,'PROGRAM_NOT_CONTRACTABLE','Este programa do catálogo não está disponível para contratação.');
+    programSpec={title:catalog.data.name,description:catalog.data.description||'',host:catalog.data.host||'',format:catalog.data.format||'Outro',catalogProgramId:catalog.data.id};
+  }else if(payload.showMode==='new'&&payload.newShowTitle?.trim()){
+    programSpec={title:payload.newShowTitle.trim(),host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'};
+  }else if(payload.showMode==='existing'&&payload.existingShowId){
+    existingProgram=await one('programs',payload.existingShowId);
+    if(!existingProgram||existingProgram.organization_id!==organizationId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa existente não encontrado nesta organização.');
+    if(existingProgram.executive_user_id) throw new AppError(403,'PROGRAM_EXECUTIVE_CONFLICT','Este programa já possui um diretor executivo responsável. Solicite autorização para integrar a equipe.');
+  }else{
+    throw new AppError(400,'VALIDATION_ERROR','Selecione um programa do catálogo, um programa autoral ou um programa existente autorizado.');
+  }
+
+  const user=await createOrganizationUserWithShowPermissions(organizationId,{
+    email:payload.email,name:payload.name,loginCode:payload.loginCode,jobTitle:payload.jobTitle,role:payload.role||'producer'
+  });
+
+  try{
+    let show:Show|undefined;
+    if(existingProgram){
+      const updated=await db.from('programs').update({executive_user_id:user.id,updated_at:now()})
+        .eq('id',existingProgram.id).is('executive_user_id',null).select('*').single();
+      fail(updated);
+      await upsertProgramMembership(organizationId,updated.data.legacy_id||updated.data.id,user.id,{
+        canView:true,canEditEditorial:true,canEditScript:true,canOperateStudio:true,
+        canManageSchedule:true,canManageAssets:true,canExport:true
+      },'executive',user.id);
+      show=await mapShow(updated.data);
+    }else{
+      show=await createShow(organizationId,programSpec,user.id);
+    }
+    return {user,show,subscription:undefined,invoice:undefined,gatewayEvent:undefined};
+  }catch(error){
+    await db.from('organization_members').delete().eq('organization_id',organizationId).eq('user_id',user.id);
+    await db.auth.admin.deleteUser(user.id);
+    throw error;
+  }
+}
