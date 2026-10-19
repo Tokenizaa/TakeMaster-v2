@@ -268,6 +268,52 @@ export async function getVenoPagPixCheckout(id: string, organizationId: string) 
   return publicIntent(row);
 }
 
+export async function listVenoPagPixCheckouts(organizationId: string) {
+  const result = await db.from('program_payment_intents').select('*')
+    .eq('organization_id', organizationId).order('created_at', { ascending: false }).limit(20);
+  if (result.error) throw new Error(result.error.message);
+  return ((result.data || []) as IntentRow[]).map(publicIntent);
+}
+
+export async function verifyVenoPagPixCheckout(id: string, organizationId: string) {
+  const row = await readIntent(id, organizationId);
+  if (!row) throw Object.assign(new Error('Cobrança não encontrada.'), { statusCode: 404, code: 'PAYMENT_INTENT_NOT_FOUND' });
+  if (row.status === 'confirmed' && row.subscription_id) return publicIntent(row);
+  if (!row.provider_request_number) {
+    throw Object.assign(new Error('A cobrança ainda não tem identificador do gateway e exige conciliação manual.'), { statusCode: 409, code: 'PAYMENT_RECONCILIATION_REQUIRED' });
+  }
+
+  const remote = await providerRequest<ProviderResponse>(
+    `/api/consult-transaction?request_number=${encodeURIComponent(row.provider_request_number)}`
+  );
+  const remoteStatus = String(remote.status || '').toLowerCase();
+  if (remoteStatus === 'confirmed') {
+    if (remote.amount === undefined || Math.round(Number(remote.amount) * 100) !== row.amount_cents) {
+      throw Object.assign(new Error('Valor da transação não corresponde à cobrança TakeMaster.'), { statusCode: 409, code: 'VENOPAG_AMOUNT_MISMATCH' });
+    }
+    if (remote.request_number && remote.request_number !== row.provider_request_number) {
+      throw Object.assign(new Error('Identificador da transação não corresponde à cobrança original.'), { statusCode: 409, code: 'VENOPAG_TRANSACTION_MISMATCH' });
+    }
+  }
+
+  const finalized = await db.rpc('finalize_venopag_payment', {
+    p_intent_id: row.id,
+    p_provider_status: remoteStatus,
+    p_transaction_id: remote.transaction_id || row.provider_transaction_id,
+    p_provider_payload: {
+      provider: 'venopag',
+      request_number: row.provider_request_number,
+      status: remoteStatus,
+      transaction_id: remote.transaction_id || row.provider_transaction_id,
+      updated_at: remote.updated_at || null,
+    },
+  });
+  if (finalized.error) throw new Error(finalized.error.message);
+  const updated = await readIntent(id, organizationId);
+  if (!updated) throw new Error('Cobrança desapareceu após a conciliação.');
+  return publicIntent(updated);
+}
+
 export function verifyVenoPagWebhook(signature: string, rawBody: Buffer): boolean {
   let config: ReturnType<typeof getConfig>;
   try { config = getConfig(); } catch { return false; }
