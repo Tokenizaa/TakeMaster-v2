@@ -81,7 +81,7 @@ import {
   listAvailableKnowledgeBasePrograms,
   resolveProgramKnowledge,
 } from './src/server/programKnowledge';
-import { importYouTubeChannel, importYouTubeVideo, listEditorialCatalogPrograms, listEditorialVideos } from './src/server/editorialVideoIntelligence';
+import { discoverYouTubeChannelVideos, importYouTubeChannel, importYouTubeVideo, listEditorialCatalogPrograms, listEditorialVideos } from './src/server/editorialVideoIntelligence';
 import { analyzeVideoTranscript } from './src/server/videoEditorialAnalysis';
 import {
   getSystemMetrics,
@@ -134,6 +134,19 @@ export function createApiApp() {
         reviewStatus: analysis.review_status,
       });
       res.status(201).json({ analysis });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/channels/discover', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const channelUrl = String(req.body?.url || '').trim();
+      const continuation = typeof req.body?.continuation === 'string' ? req.body.continuation : undefined;
+      const discovery = await discoverYouTubeChannelVideos(channelUrl, 90, continuation);
+      res.status(200).json(discovery);
     } catch (err) {
       next(err);
     }
