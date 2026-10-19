@@ -139,6 +139,7 @@ async function readIntent(id: string, organizationId: string, createdBy?: string
 export async function createVenoPagPixCheckout(input: {
   organizationId: string;
   userId: string;
+  userRole: string;
   programId: string;
   planCode: string;
   idempotencyKey: string;
@@ -163,15 +164,15 @@ export async function createVenoPagPixCheckout(input: {
   }
 
   const programQuery = UUID_RE.test(input.programId)
-    ? await getDb().from('programs').select('id,organization_id,catalog_program_id,title,name').eq('id', input.programId).maybeSingle()
+    ? await getDb().from('programs').select('id,organization_id,catalog_program_id,executive_user_id,title,name').eq('id', input.programId).maybeSingle()
     : await getDb().from('programs').select('id,organization_id,catalog_program_id,title,name').eq('legacy_id', input.programId).maybeSingle();
   if (programQuery.error) throw new Error(programQuery.error.message);
   const program = programQuery.data;
   if (!program || program.organization_id !== input.organizationId) {
     throw Object.assign(new Error('Programa não encontrado nesta organização.'), { statusCode: 404, code: 'PROGRAM_NOT_FOUND' });
   }
-  if (!program.catalog_program_id) {
-    throw Object.assign(new Error('Este programa ainda não está vinculado ao catálogo comercial. A cobrança foi bloqueada para evitar uma assinatura sem vínculo de acesso.'), { statusCode: 409, code: 'PROGRAM_NOT_COMMERCIALLY_LINKED' });
+  if (input.userRole === 'producer' && program.executive_user_id !== input.userId) {
+    throw Object.assign(new Error('Somente o diretor executivo responsável pode contratar este programa.'), { statusCode: 403, code: 'PROGRAM_EXECUTIVE_REQUIRED' });
   }
 
   const planResult = await getDb().from('commercial_plans').select('id,code,name,price_cents,currency,active')
@@ -185,11 +186,10 @@ export async function createVenoPagPixCheckout(input: {
     throw Object.assign(new Error('O plano não possui um preço BRL válido para cobrança.'), { statusCode: 409, code: 'PLAN_PRICE_INVALID' });
   }
 
-  const existingProgramAccess = await getDb().from('organization_programs').select('status,subscription_id')
-    .eq('organization_id', input.organizationId).eq('catalog_program_id', program.catalog_program_id)
-    .in('status', ['active','pending']).maybeSingle();
-  if (existingProgramAccess.error) throw new Error(existingProgramAccess.error.message);
-  if (existingProgramAccess.data?.status === 'active' && existingProgramAccess.data?.subscription_id) {
+  const existingSubscription = await getDb().from('program_subscriptions').select('id')
+    .eq('organization_id', input.organizationId).eq('program_id', program.id).eq('status', 'active').maybeSingle();
+  if (existingSubscription.error) throw new Error(existingSubscription.error.message);
+  if (existingSubscription.data) {
     throw Object.assign(new Error('Este programa já possui uma assinatura ativa. Alterações de plano exigem o fluxo próprio de alteração comercial.'), { statusCode: 409, code: 'PROGRAM_ALREADY_SUBSCRIBED' });
   }
 
