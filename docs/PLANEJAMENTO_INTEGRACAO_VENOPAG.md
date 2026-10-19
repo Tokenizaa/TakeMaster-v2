@@ -124,6 +124,12 @@ A política comercial sobre renovação, recorrência, inadimplência, cancelame
 
 O repositório consultado é uma referência técnica útil, mas não substitui a confirmação do contrato comercial e operacional do provedor.
 
+## Bloqueio comercial identificado no banco atual
+
+Consulta somente de leitura ao projeto Supabase do TakeMaster em 19/10/2026 encontrou um único plano ativo: código `program-standard`, período `monthly`, com `price_cents = NULL`. Nenhum preço foi presumido ou inventado.
+
+Por segurança, o backend e a interface agora ocultam planos sem preço positivo configurado e rejeitam qualquer tentativa de cobrança com valor inválido. **A contratação real continuará indisponível até que o responsável comercial defina e cadastre o preço do plano.** Também é necessário confirmar as credenciais VenoPag e configurar a URL pública HTTPS do webhook. Não foram disparadas cobranças.
+
 ## 9. Sequência planejada
 
 1. **Mapear o estado atual do TakeMaster:** cadastro, onboarding, programas, responsáveis executivos, assinatura, cobrança e acesso condicionado a pagamento.
