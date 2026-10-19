@@ -120,6 +120,23 @@ export interface BillingOverviewResponse {
   gatewayEvents: PaymentGatewayEvent[];
 }
 
+export interface ProgramTeamMember {
+  userId: string;
+  name: string;
+  email: string;
+  jobTitle?: string;
+  role: 'executive' | 'producer' | 'editor' | 'host' | 'viewer';
+  permissions: Record<string, boolean>;
+  createdAt?: string;
+  authorizedBy?: string;
+}
+
+export interface ProgramTeamResponse {
+  program: { id: string; title: string; executiveUserId: string | null };
+  members: ProgramTeamMember[];
+  candidates: Array<{ userId: string; name: string; email: string; jobTitle?: string; role: string }>;
+}
+
 export interface VenoPagPixIntent {
   id: string;
   programId: string;
@@ -200,6 +217,27 @@ export const api = {
     }
     return res;
   },
+
+  // Program-scoped team authorization
+  getProgramTeam: (programId: string) =>
+    request<ProgramTeamResponse>(`/api/programs/${encodeURIComponent(programId)}/team`),
+
+  inviteProgramTeamMember: (programId: string, payload: { email: string; name: string; jobTitle?: string; role: 'producer' | 'editor' | 'host' | 'viewer' }) =>
+    request<{ member: ProgramTeamMember; invited: boolean }>(`/api/programs/${encodeURIComponent(programId)}/team`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  updateProgramTeamMember: (programId: string, userId: string, payload: { role: 'producer' | 'editor' | 'host' | 'viewer'; permissions?: Record<string, boolean> }) =>
+    request<{ member: ProgramTeamMember }>(`/api/programs/${encodeURIComponent(programId)}/team/${encodeURIComponent(userId)}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
+  revokeProgramTeamMember: (programId: string, userId: string) =>
+    request<{ success: boolean; userId: string; programId: string }>(`/api/programs/${encodeURIComponent(programId)}/team/${encodeURIComponent(userId)}`, {
+      method: 'DELETE',
+    }),
 
   // RSPlay TV SaaS Billing & Payment Gateway
   getBillingOverview: () => request<BillingOverviewResponse>('/api/billing/overview'),
