@@ -315,6 +315,11 @@ export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role
 export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string){
   const program=await one('programs',programId);
   if(!program||program.organization_id!==orgId) throw new AppError(404,'PROGRAM_NOT_FOUND','Programa não encontrado nesta organização.');
+  if(program.catalog_program_id){
+    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
+    fail(legacy);
+  }
   const r=await db.from('program_memberships').upsert({
     organization_id:orgId,program_id:program.id,user_id:userId,role,status:'active',
     permissions:permissions||{canView:true},authorized_by:actorUserId||userId,authorized_at:now(),revoked_at:null,updated_at:now()
