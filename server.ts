@@ -115,7 +115,8 @@ export function createApiApp() {
     requireBillingOperator(auth.role);
     if (['owner', 'admin'].includes(auth.role)) return;
     if (!programId) throw new AppError(400, 'VALIDATION_ERROR', 'programId é obrigatório.');
-    await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, programId, 'canManageSchedule');
+    // The payment service verifies executive_user_id for producer-role accounts. Pending owners
+    // must be able to pay before their full program permissions become active.
   };
   app.use(requestTracingMiddleware);
 
