@@ -55,3 +55,14 @@ A troca de programa é uma mudança de contexto de trabalho, não uma concessão
 Não criar contas duplicadas para profissionais compartilhados nem exigir uma organização por programa. Antes de qualquer alteração no banco, mapear os vínculos existentes e preservar IDs/dados; não excluir automaticamente organizações extras. A especificação funcional está em [docs/MODELO_ACESSO_MULTIPROGRAMA.md](MODELO_ACESSO_MULTIPROGRAMA.md).
 
 Esta decisão é documental nesta etapa: não implica implementação, migração de dados nem execução de testes.
+
+## ADR-011 — VenoPag como gateway planejado para contratação de programas
+**Status:** Aceita para planejamento; integração e operação real ainda não verificadas.
+
+O gateway escolhido para planejar a contratação de programas é o VenoPag, usando como referência técnica o SDK em https://github.com/Tokenizaa/venopag. A primeira fase de integração limita-se a criar cobrança PIX (Cash In), apresentar os dados de pagamento e confirmar o estado por webhook autenticado e/ou consulta da transação, com idempotência e reconciliação.
+
+A cobrança deve pertencer à contratação do programa e ao diretor executivo responsável, não ao vínculo pessoal de cada profissional da equipe. O acesso só pode ser liberado depois de confirmação confiável do pagamento, conforme as regras comerciais aprovadas. Criar cobrança ou retornar ao navegador não equivale a pagamento confirmado.
+
+Segredos permanecem no backend. Saques, transferências e outras operações financeiras ficam fora do escopo inicial. A documentação do SDK não comprova credenciais, sandbox, disponibilidade comercial, recorrência ou configuração operacional; esses pontos devem ser confirmados antes de implementar.
+
+A especificação está em [docs/PLANEJAMENTO_INTEGRACAO_VENOPAG.md](PLANEJAMENTO_INTEGRACAO_VENOPAG.md). Esta decisão não autoriza alterações no código de produto, banco, credenciais ou produção e não declara testes executados.
