@@ -30,6 +30,20 @@ bun run tsx scripts/rsplay-catalog-scrape.ts
 
 Configurações opcionais: `RSPLAY_SCRAPE_MAX_PAGES`, `RSPLAY_SCRAPE_DELAY_MS`, `RSPLAY_SCRAPE_OUT`. O resultado é um artefato JSON com URLs, metadados, hash, timestamps, links internos e IDs de vídeo encontrados. Ele não altera o banco.
 
+Depois da coleta, revisar o artefato em modo dry-run:
+
+```bash
+bun run tsx scripts/rsplay-catalog-import.ts
+```
+
+A importação real exige revisão explícita do relatório e execução local segura com as variáveis `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY`:
+
+```bash
+bun run tsx scripts/rsplay-catalog-import.ts --apply
+```
+
+Novos candidatos entram inativos e com `validation_status: needs_review`; registros existentes preservam valores manuais e só recebem campos que estejam vazios. Não executar `--apply` antes de aplicar e validar a migration no ambiente local/controlado.
+
 O crawler é uma etapa de descoberta, não uma declaração automática de cobertura completa. O relatório deve ser confrontado com sitemap, grade oficial, canais oficiais e catálogo atual. Identidades ambíguas precisam de revisão humana.
 
 ## Regras editoriais
