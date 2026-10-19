@@ -43,6 +43,7 @@ function qrImageSource(value?: string | null): string | null {
 
 export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubscriptionUpdated }) => {
   const [plans, setPlans] = useState<SaaSPlanDefinition[]>([]);
+  const [billablePrograms, setBillablePrograms] = useState<Array<{ id: string; title: string }>>([]);
   const [intents, setIntents] = useState<VenoPagPixIntent[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -54,11 +55,13 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [overview, history] = await Promise.all([
+      const [overview, history, eligible] = await Promise.all([
         api.getBillingOverview(),
         api.listVenoPagPixCheckouts(),
+        api.getBillablePrograms(),
       ]);
       setPlans(overview.plans);
+      setBillablePrograms(eligible.programs);
       setIntents(history.intents);
     } catch (error: any) {
       setFeedback({ type: 'error', text: error?.message || 'Não foi possível carregar os dados de contratação.' });
@@ -69,8 +72,8 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
 
   useEffect(() => { void loadData(); }, [loadData]);
   useEffect(() => {
-    if (!selectedProgramId && shows[0]?.id) setSelectedProgramId(shows[0].id);
-  }, [shows, selectedProgramId]);
+    if (!selectedProgramId && billablePrograms[0]?.id) setSelectedProgramId(billablePrograms[0].id);
+  }, [billablePrograms, selectedProgramId]);
 
   const startCheckout = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -136,7 +139,8 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
     return <div className="flex items-center justify-center gap-3 p-12 text-zinc-400"><Loader2 className="h-5 w-5 animate-spin" />Carregando contratação e pagamentos...</div>;
   }
 
-  const activeProgram = shows.find((show) => show.id === (activeIntent?.programId || selectedProgramId));
+  const activeProgramTitle = billablePrograms.find((program) => program.id === (activeIntent?.programId || selectedProgramId))?.title
+    || shows.find((show) => show.id === (activeIntent?.programId || selectedProgramId))?.title;
   const qrSrc = qrImageSource(activeIntent?.qrImage);
 
   return (
@@ -160,7 +164,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
         </div>
       )}
 
-      {shows.length === 0 && (
+      {billablePrograms.length === 0 && (
         <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100">
           Nenhum programa disponível para contratação nesta conta. Conclua primeiro a seleção e configuração do programa.
         </div>
@@ -191,8 +195,8 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
               </div>
               <button
                 type="button"
-                disabled={shows.length === 0 || busy}
-                onClick={() => { setSelectedProgramId(shows[0]?.id || ''); setSelectedPlan(plan); }}
+                disabled={billablePrograms.length === 0 || busy}
+                onClick={() => { setSelectedProgramId(billablePrograms[0]?.id || ''); setSelectedPlan(plan); }}
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-zinc-950 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Wallet className="h-4 w-4" />Contratar via PIX
@@ -243,7 +247,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
             <label className="block space-y-2 text-sm text-zinc-300">
               <span>Programa</span>
               <select value={selectedProgramId} onChange={(event) => setSelectedProgramId(event.target.value)} required className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-3 text-zinc-100">
-                {shows.map((show) => <option key={show.id} value={show.id}>{show.title}</option>)}
+                {billablePrograms.map((program) => <option key={program.id} value={program.id}>{program.title}</option>)}
               </select>
             </label>
             <p className="text-xs leading-relaxed text-zinc-500">A cobrança será vinculada ao programa selecionado. A assinatura não será ativada até o VenoPag confirmar o pagamento. O PIX desta primeira integração é uma cobrança avulsa; renovação automática não está habilitada.</p>
@@ -261,7 +265,7 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-medium text-emerald-400">VenoPag · Cobrança PIX</p>
-                <h3 className="mt-1 text-xl font-bold text-zinc-100">{activeProgram?.title || 'Pagamento do programa'}</h3>
+                <h3 className="mt-1 text-xl font-bold text-zinc-100">{activeProgramTitle || 'Pagamento do programa'}</h3>
                 <p className="mt-1 text-sm text-zinc-400">{formatBRL(activeIntent.amountCents)} · {statusLabel(activeIntent.status)}</p>
               </div>
               <button onClick={() => setActiveIntent(null)} className="text-sm text-zinc-400 hover:text-white">Fechar</button>
