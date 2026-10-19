@@ -79,7 +79,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [regForm, setRegForm] = useState<SaaSRegistrationPayload>({
     name: '',
     email: '',
-    loginCode: 'rsplay123',
+    loginCode: '',
     jobTitle: 'Produtor Executivo',
     role: 'producer',
     showMode: 'knowledge_base',
@@ -552,74 +552,18 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 )}
               </div>
 
-              {/* Step 3: Conexão com Pagante & Plano Mensal Recorrente */}
-              <div className="p-4 rounded-xl bg-zinc-900/70 border border-amber-500/30 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
-                  <CreditCard className="w-4 h-4" />
-                  <span>3. Conexão do Pagante & Plano Mensal Recorrente (Gateway RSPlay Pay)</span>
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                  3. Contratação e pagamento
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">Plano SaaS Mensal</label>
-                    <select
-                      value={regForm.planId}
-                      onChange={(e) =>
-                        setRegForm({
-                          ...regForm,
-                          planId: e.target.value as SubscriptionPlanId,
-                        })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                    >
-                      <option value="rsplay_programa_individual">
-                        Starter Programa Individual (R$ 490/mês)
-                      </option>
-                      <option value="rsplay_studio_pro">Pro Multi-Programa & IA (R$ 1.290/mês)</option>
-                      <option value="rsplay_broadcast_enterprise">
-                        Network Emissora Full (R$ 2.890/mês)
-                      </option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">Método do Pagante</label>
-                    <select
-                      value={regForm.paymentMethodType}
-                      onChange={(e) =>
-                        setRegForm({
-                          ...regForm,
-                          paymentMethodType: e.target.value as PaymentMethodType,
-                        })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                    >
-                      <option value="credit_card">Cartão de Crédito Recorrente</option>
-                      <option value="pix_automatico">PIX Automático Banco Central</option>
-                      <option value="boleto_corporativo">Boleto Faturado Corporativo</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">
-                      Final do Cartão / Identificador
-                    </label>
-                    <input
-                      type="text"
-                      maxLength={4}
-                      value={regForm.paymentMethodLast4 || '4829'}
-                      onChange={(e) =>
-                        setRegForm({ ...regForm, paymentMethodLast4: e.target.value })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
-                    />
-                  </div>
-                </div>
+                <p className="text-sm leading-relaxed text-zinc-300">
+                  Primeiro criaremos sua conta e prepararemos o programa. Depois, na área de Contratação, você escolhe o plano e gera uma cobrança PIX pelo VenoPag. A assinatura só será ativada após confirmação do pagamento. Esta etapa não solicita dados de cartão nem ativa uma assinatura fictícia.
+                </p>
               </div>
 
               <div className="flex items-center justify-between pt-2">
                 <span className="text-xs text-zinc-400">
-                  Cria a conta, libera o programa escolhido e emite a 1ª fatura paga no gateway.
+                  Cria a conta e prepara o programa; a contratação é concluída depois pelo PIX.
                 </span>
                 <button
                   type="submit"
@@ -630,7 +574,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   <span>
                     {submitting
                       ? 'Conectando Pagante e Criando Acesso...'
-                      : 'Concluir Cadastro & Ativar Assinatura'}
+                      : 'Criar conta e preparar programa'}
                   </span>
                 </button>
               </div>
