@@ -183,27 +183,20 @@ export async function listEditorialVideos(catalogProgramId?: string) {
 }
 
 function normalizeMatchText(value: string) {
-  return value.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim();
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
 async function inferCatalogProgram(videoTitle: string, description: string) {
   const { data: programs, error } = await db.from('program_catalog').select('id,name,slug').eq('active', true);
   if (error) throw new Error(error.message);
-  const title = ` ${normalizeMatchText(videoTitle)} `;
-  const body = ` ${normalizeMatchText(description.slice(0, 12000))} `;
+  const title = \` \${normalizeMatchText(videoTitle)} \`;
+  const body = \` \${normalizeMatchText(description.slice(0, 12000))} \`;
   const matches = (programs || []).filter((program: any) => {
     const name = normalizeMatchText(String(program.name || ''));
     const slug = normalizeMatchText(String(program.slug || '').replace(/-/g, ' '));
-    return (name.length >= 5 && title.includes(` ${name} `))
-      || (slug.length >= 6 && title.includes(` ${slug} `))
-      || (name.length >= 7 && body.includes(` ${name} `));
-  });
-  return matches.length === 1 ? matches[0].id as string : null;
-}
-
-export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
-    if (slug.length >= 6 && new RegExp('(^| )' + slug.replace(/[.*+?^${}()|[\]\\]/g, '\\export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
-    return name.length >= 7 && body.includes(name);
+    return (name.length >= 5 && title.includes(\` \${name} \`))
+      || (slug.length >= 6 && title.includes(\` \${slug} \`))
+      || (name.length >= 7 && body.includes(\` \${name} \`));
   });
   return matches.length === 1 ? matches[0].id as string : null;
 }
@@ -211,47 +204,128 @@ export async function importYouTubeVideo(input: string, catalogProgramId?: strin
 export async function importYouTubeVideo(input: string, catalogProgramId?: string) {
   const videoId = parseYouTubeVideoId(input);
   const video = await fetchPublicVideo(videoId);
-  const { data: priorVideo, error: priorVideoError } = await db.from('program_videos').select('id,catalog_program_id').eq('provider', 'youtube').eq('external_video_id', videoId).maybeSingle();
+  const { data: priorVideo, error: priorVideoError } = await db.from('program_videos')
+    .select('id,catalog_program_id')
+    .eq('provider', 'youtube')
+    .eq('external_video_id', videoId)
+    .maybeSingle();
   if (priorVideoError) throw new Error(priorVideoError.message);
-  const inferredProgramId = catalogProgramId || priorVideo?.catalog_program_id ? null : await inferCatalogProgram(video.title, video.description);\n  const effectiveProgramId = catalogProgramId || priorVideo?.catalog_program_id || inferredProgramId;
+
+  const inferredProgramId = (catalogProgramId || priorVideo?.catalog_program_id)
+    ? null
+    : await inferCatalogProgram(video.title, video.description);
+  const effectiveProgramId = catalogProgramId || priorVideo?.catalog_program_id || inferredProgramId;
   if (effectiveProgramId) {
-    const { data: program, error: programError } = await db.from('program_catalog').select('id').eq('id', effectiveProgramId).maybeSingle();
+    const { data: program, error: programError } = await db.from('program_catalog')
+      .select('id').eq('id', effectiveProgramId).maybeSingle();
     if (programError) throw new Error(programError.message);
     if (!program) throw Object.assign(new Error('Programa não encontrado no catálogo canônico.'), { status: 404 });
   }
+
   const source = await db.from('program_catalog_sources').upsert({
-    catalog_program_id: effectiveProgramId, source_type: 'youtube', source_url: video.canonicalUrl, canonical_url: video.canonicalUrl, platform_account_id: video.channelId, platform_handle: video.channelTitle,
-    evidence: `Vídeo público: ${video.title}`, collected_at: new Date().toISOString(), source_published_at: video.publishedAt || null, content_hash: sha256(JSON.stringify(video.metadata)), extraction_method: 'youtube-public-player-and-oembed', confidence: video.channelId ? 0.95 : 0.75, metadata: { title: video.title, channelTitle: video.channelTitle },
+    catalog_program_id: effectiveProgramId,
+    source_type: 'youtube',
+    source_url: video.canonicalUrl,
+    canonical_url: video.canonicalUrl,
+    platform_account_id: video.channelId,
+    platform_handle: video.channelTitle,
+    evidence: \`Vídeo público: \${video.title}\`,
+    collected_at: new Date().toISOString(),
+    source_published_at: video.publishedAt || null,
+    content_hash: sha256(JSON.stringify(video.metadata)),
+    extraction_method: 'youtube-public-player-and-oembed',
+    confidence: video.channelId ? 0.95 : 0.75,
+    metadata: { title: video.title, channelTitle: video.channelTitle },
   }, { onConflict: 'source_type,source_url' }).select('id').single();
   if (source.error) throw new Error(source.error.message);
+
   const saved = await db.from('program_videos').upsert({
-    catalog_program_id: effectiveProgramId, source_id: source.data.id, provider: 'youtube', external_video_id: videoId, canonical_url: video.canonicalUrl, channel_id: video.channelId, channel_title: video.channelTitle, title: video.title, description: video.description, published_at: video.publishedAt || null, duration_seconds: video.durationSeconds, thumbnail_url: video.thumbnailUrl, language: video.language, transcript_status: video.tracks.length ? 'available' : 'unavailable', metadata: { ...video.metadata, captionTracks: video.tracks.map(({ language, name, kind }) => ({ language, name, kind })) }, last_seen_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+    catalog_program_id: effectiveProgramId,
+    source_id: source.data.id,
+    provider: 'youtube',
+    external_video_id: videoId,
+    canonical_url: video.canonicalUrl,
+    channel_id: video.channelId,
+    channel_title: video.channelTitle,
+    title: video.title,
+    description: video.description,
+    published_at: video.publishedAt || null,
+    duration_seconds: video.durationSeconds,
+    thumbnail_url: video.thumbnailUrl,
+    language: video.language,
+    transcript_status: video.tracks.length ? 'pending' : 'unavailable',
+    metadata: {
+      ...video.metadata,
+      captionTracks: video.tracks.map(({ language, name, kind }) => ({ language, name, kind })),
+    },
+    last_seen_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   }, { onConflict: 'provider,external_video_id' }).select('*').single();
   if (saved.error) throw new Error(saved.error.message);
+
   let transcriptSaved: any = null;
-  let transcriptError: string | null = null;
+  const transcriptErrors: string[] = [];
   for (const track of video.tracks) {
     try {
       const transcript = await readTranscriptTrack(track);
       if (!transcript) continue;
       const contentHash = sha256(transcript.fullText);
-      const latest = await db.from('video_transcripts').select('version').eq('video_id', saved.data.id).eq('language', transcript.language).order('version', { ascending: false }).limit(1);
+      const latest = await db.from('video_transcripts').select('version')
+        .eq('video_id', saved.data.id).eq('language', transcript.language)
+        .order('version', { ascending: false }).limit(1);
       if (latest.error) throw new Error(latest.error.message);
-      const existing = await db.from('video_transcripts').select('*').eq('video_id', saved.data.id).eq('language', transcript.language).eq('content_hash', contentHash).maybeSingle();
+
+      const existing = await db.from('video_transcripts').select('*')
+        .eq('video_id', saved.data.id).eq('language', transcript.language)
+        .eq('content_hash', contentHash).maybeSingle();
       if (existing.error) throw new Error(existing.error.message);
-      if (existing.data) { transcriptSaved = existing.data; break; }
+      if (existing.data) {
+        transcriptSaved = existing.data;
+        break;
+      }
+
       const version = (latest.data?.[0]?.version || 0) + 1;
-      const clearCurrent = await db.from('video_transcripts').update({ is_current: false, status: 'superseded' }).eq('video_id', saved.data.id).eq('language', transcript.language).eq('is_current', true);
+      const clearCurrent = await db.from('video_transcripts').update({
+        is_current: false,
+        status: 'superseded',
+      }).eq('video_id', saved.data.id).eq('language', transcript.language).eq('is_current', true);
       if (clearCurrent.error) throw new Error(clearCurrent.error.message);
-      const inserted = await db.from('video_transcripts').insert({ video_id: saved.data.id, version, language: transcript.language, transcript_type: transcript.transcriptType, full_text: transcript.fullText, segments: transcript.segments, source_url: video.canonicalUrl, content_hash: contentHash, fetched_at: new Date().toISOString(), is_current: true, status: 'ready', metadata: { captionTrackName: track.name } }).select('*').single();
+
+      const inserted = await db.from('video_transcripts').insert({
+        video_id: saved.data.id,
+        version,
+        language: transcript.language,
+        transcript_type: transcript.transcriptType,
+        full_text: transcript.fullText,
+        segments: transcript.segments,
+        source_url: video.canonicalUrl,
+        content_hash: contentHash,
+        fetched_at: new Date().toISOString(),
+        is_current: true,
+        status: 'ready',
+        metadata: { captionTrackName: track.name, captionSource: 'public-youtube-caption-track' },
+      }).select('*').single();
       if (inserted.error) throw new Error(inserted.error.message);
-      transcriptSaved = inserted.data; break;
-    } catch (error: any) { transcriptError = error?.message || 'Erro ao importar legenda.'; }
+      transcriptSaved = inserted.data;
+      break;
+    } catch (error: any) {
+      transcriptErrors.push(error?.message || 'Erro ao importar legenda.');
+    }
   }
+
   const status = transcriptSaved ? 'available' : video.tracks.length ? 'error' : 'unavailable';
-  const statusUpdate = await db.from('program_videos').update({ transcript_status: status, language: transcriptSaved?.language || video.language, updated_at: new Date().toISOString() }).eq('id', saved.data.id);
+  const statusUpdate = await db.from('program_videos').update({
+    transcript_status: status,
+    language: transcriptSaved?.language || video.language,
+    updated_at: new Date().toISOString(),
+  }).eq('id', saved.data.id);
   if (statusUpdate.error) throw new Error(statusUpdate.error.message);
-  return { video: { ...saved.data, transcript_status: status }, transcript: transcriptSaved, transcriptError, captionsAvailable: video.tracks.length > 0 };
+  return {
+    video: { ...saved.data, transcript_status: status },
+    transcript: transcriptSaved,
+    transcriptError: transcriptErrors.length ? transcriptErrors.join('; ') : null,
+    captionsAvailable: video.tracks.length > 0,
+  };
 }
 
 export async function importYouTubeChannel(input: string, catalogProgramId?: string, maxVideos = 5000) {
@@ -267,11 +341,17 @@ export async function importYouTubeChannel(input: string, catalogProgramId?: str
     await sleep(250);
   }
   return {
-    channelUrl: discovery.channelUrl, channelTitle: discovery.channelTitle, pagesDiscovered: discovery.pages,
-    discovered: discovery.videos.length, imported: results.filter((item) => item.status === 'imported').length,
+    channelUrl: discovery.channelUrl,
+    channelTitle: discovery.channelTitle,
+    pagesDiscovered: discovery.pages,
+    discovered: discovery.videos.length,
+    imported: results.filter((item) => item.status === 'imported').length,
     withTranscript: results.filter((item) => item.transcript).length,
     withoutTranscript: results.filter((item) => item.status === 'imported' && !item.transcript).length,
     failed: results.filter((item) => item.status === 'failed').length,
-    reachedEnd: discovery.reachedEnd, truncated: discovery.truncated, discoveryErrors: discovery.errors, results,
+    reachedEnd: discovery.reachedEnd,
+    truncated: discovery.truncated,
+    discoveryErrors: discovery.errors,
+    results,
   };
 }
