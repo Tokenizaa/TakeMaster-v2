@@ -28,6 +28,7 @@ interface HeaderProps {
   onResetWorkspaceSeed?: () => void;
   onOpenLoginModal?: () => void;
   onOpenBilling?: () => void;
+  canManageProgramTeam?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -44,6 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   onResetWorkspaceSeed,
   onOpenLoginModal,
   onOpenBilling,
+  canManageProgramTeam = false,
 }) => {
   const isRestrictedProfile = session && !session.isFullAccessAdmin;
 
@@ -125,15 +127,15 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Active Subscription Quick Button */}
-        {session?.activeSubscription && onOpenBilling && !activeEpisodeTitle && (
+        {session?.activeSubscription && onOpenBilling && !activeEpisodeTitle && (canManageProgramTeam || ['owner','admin'].includes(session.role)) && (
           <button
             type="button"
             onClick={onOpenBilling}
             className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 transition-colors cursor-pointer whitespace-nowrap"
-            title="Gerenciar Plano Mensal e Renovação Automática no Gateway"
+            title="Gerenciar contratação e pagamentos do programa"
           >
             <CreditCard className="w-3.5 h-3.5 text-amber-400" />
-            <span>{session.activeSubscription.planName}</span>
+            <span>Contratação & PIX</span>
           </button>
         )}
 
