@@ -71,6 +71,12 @@ async function readTranscriptTrack(track: { baseUrl: string; language: string; k
   return { fullText: segments.map((s) => s.text).join(' '), segments, language: track.language, transcriptType: track.kind as 'manual' | 'automatic', sourceUrl: track.baseUrl };
 }
 
+export async function listEditorialCatalogPrograms() {
+  const { data, error } = await db.from('program_catalog').select('id,slug,name,description,host,active,metadata').order('name');
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
 export async function listEditorialVideos(catalogProgramId?: string) {
   let query = db.from('program_videos').select('*, program_catalog_sources(source_url,source_type), video_transcripts(id,language,version,status,is_current,created_at), video_editorial_analyses(id,summary,topics,guests,review_status,created_at)').order('published_at', { ascending: false, nullsFirst: false }).limit(200);
   if (catalogProgramId) query = query.eq('catalog_program_id', catalogProgramId);
