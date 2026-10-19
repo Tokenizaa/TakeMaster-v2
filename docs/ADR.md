@@ -44,3 +44,14 @@ Falha de persistência, autenticação ou IA deve ser explícita. O sistema não
 **Status:** Aceita.
 
 Toda leitura/escrita deve considerar organização, programa e usuário autenticado. RLS e autorização server-side fazem parte do contrato operacional.
+
+## ADR-010 — Identidade única e acesso autorizado a múltiplos programas
+**Status:** Aceita como contrato de produto; implementação pendente de mapeamento e validação.
+
+RS Play TV é a organização comum da plataforma. Cada programa tem contratação, diretor executivo responsável, equipe e permissões próprios. Uma pessoa mantém uma identidade e uma sessão únicas e pode trabalhar em vários programas quando cada responsável autorizar explicitamente seu vínculo.
+
+A troca de programa é uma mudança de contexto de trabalho, não uma concessão de acesso. Toda operação protegida deve verificar no backend o vínculo e as permissões do usuário para o programa-alvo. A revogação em um programa não remove os vínculos válidos em outros.
+
+Não criar contas duplicadas para profissionais compartilhados nem exigir uma organização por programa. Antes de qualquer alteração no banco, mapear os vínculos existentes e preservar IDs/dados; não excluir automaticamente organizações extras. A especificação funcional está em [docs/MODELO_ACESSO_MULTIPROGRAMA.md](MODELO_ACESSO_MULTIPROGRAMA.md).
+
+Esta decisão é documental nesta etapa: não implica implementação, migração de dados nem execução de testes.
