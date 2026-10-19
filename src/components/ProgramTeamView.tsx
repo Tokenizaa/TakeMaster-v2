@@ -30,6 +30,7 @@ export const ProgramTeamView: React.FC<ProgramTeamViewProps> = ({
   );
   const [programId, setProgramId] = useState('');
   const [team, setTeam] = useState<ProgramTeamResponse | null>(null);
+  const [subscriptionInactive, setSubscriptionInactive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -47,11 +48,14 @@ export const ProgramTeamView: React.FC<ProgramTeamViewProps> = ({
   }, [selectedShowId, manageableShows, programId]);
 
   const loadTeam = useCallback(async () => {
-    if (!programId) { setTeam(null); return; }
+    if (!programId) { setTeam(null); setSubscriptionInactive(false); return; }
     setLoading(true);
     try {
+      setSubscriptionInactive(false);
       setTeam(await api.getProgramTeam(programId));
     } catch (error: any) {
+      setSubscriptionInactive(error?.statusCode === 402 || error?.code === 'SUBSCRIPTION_INACTIVE');
+      setTeam(null);
       setFeedback({ type: 'error', text: error?.message || 'Não foi possível carregar a equipe deste programa.' });
     } finally {
       setLoading(false);
@@ -146,6 +150,12 @@ export const ProgramTeamView: React.FC<ProgramTeamViewProps> = ({
         </select>
       </label>
 
+      {subscriptionInactive ? (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-5 text-sm text-amber-100">
+          Conclua o pagamento deste programa na área Contratação & PIX. A gestão da equipe será liberada depois da confirmação do VenoPag.
+        </div>
+      ) : (
+      <>
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-3">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-100"><Users className="h-5 w-5 text-zinc-400" />Equipe autorizada ({team?.members.length || 0})</h2>
@@ -184,6 +194,8 @@ export const ProgramTeamView: React.FC<ProgramTeamViewProps> = ({
           <div className="flex justify-end md:col-span-2"><button type="submit" disabled={saving || !programId} className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-zinc-950 disabled:opacity-50">{saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <MailPlus className="h-4 w-4" />}Autorizar acesso</button></div>
         </form>
       </section>
+      </>
+      )}
     </div>
   );
 };
