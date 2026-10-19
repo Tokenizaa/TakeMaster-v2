@@ -183,18 +183,25 @@ export async function listEditorialVideos(catalogProgramId?: string) {
 }
 
 function normalizeMatchText(value: string) {
-  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim();
+  return value.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLocaleLowerCase('pt-BR').replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
 async function inferCatalogProgram(videoTitle: string, description: string) {
   const { data: programs, error } = await db.from('program_catalog').select('id,name,slug').eq('active', true);
   if (error) throw new Error(error.message);
-  const title = normalizeMatchText(videoTitle);
-  const body = normalizeMatchText(description.slice(0, 12000));
+  const title = ` ${normalizeMatchText(videoTitle)} `;
+  const body = ` ${normalizeMatchText(description.slice(0, 12000))} `;
   const matches = (programs || []).filter((program: any) => {
     const name = normalizeMatchText(String(program.name || ''));
     const slug = normalizeMatchText(String(program.slug || '').replace(/-/g, ' '));
-    if (name.length >= 5 && new RegExp('(^| )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
+    return (name.length >= 5 && title.includes(` ${name} `))
+      || (slug.length >= 6 && title.includes(` ${slug} `))
+      || (name.length >= 7 && body.includes(` ${name} `));
+  });
+  return matches.length === 1 ? matches[0].id as string : null;
+}
+
+export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
     if (slug.length >= 6 && new RegExp('(^| )' + slug.replace(/[.*+?^${}()|[\]\\]/g, '\\export async function importYouTubeVideo(input: string, catalogProgramId?: string) {') + '( |$)').test(title)) return true;
     return name.length >= 7 && body.includes(name);
   });
