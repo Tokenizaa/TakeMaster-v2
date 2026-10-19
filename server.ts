@@ -98,6 +98,19 @@ export function createApiApp() {
       throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
     }
   };
+
+  const requireBillingOperator = (role: string) => {
+    if (!['owner', 'admin', 'producer'].includes(role)) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Somente a direção executiva ou administração pode gerenciar contratação.');
+    }
+  };
+
+  const requireProgramBillingAccess = async (auth: { organizationId: string; userId: string; role: string }, programId: string) => {
+    requireBillingOperator(auth.role);
+    if (['owner', 'admin'].includes(auth.role)) return;
+    if (!programId) throw new AppError(400, 'VALIDATION_ERROR', 'programId é obrigatório.');
+    await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, programId, 'canManageSchedule');
+  };
   app.use(requestTracingMiddleware);
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
@@ -239,8 +252,8 @@ export function createApiApp() {
   app.post('/api/billing/pix-checkout', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
       const { programId, planCode, idempotencyKey, customerName } = req.body || {};
+      await requireProgramBillingAccess(auth, String(programId || ''));
       const intent = await createVenoPagPixCheckout({
         organizationId: auth.organizationId,
         userId: auth.userId,
@@ -262,8 +275,8 @@ export function createApiApp() {
   app.get('/api/billing/pix-checkouts', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
-      const intents = await listVenoPagPixCheckouts(auth.organizationId);
+      requireBillingOperator(auth.role);
+      const intents = await listVenoPagPixCheckouts(auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
       res.json({ intents });
     } catch (err: any) {
       if (err?.statusCode) {
@@ -277,8 +290,8 @@ export function createApiApp() {
   app.get('/api/billing/pix-checkout/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
-      const intent = await getVenoPagPixCheckout(req.params.id, auth.organizationId);
+      requireBillingOperator(auth.role);
+      const intent = await getVenoPagPixCheckout(req.params.id, auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
       res.json({ intent });
     } catch (err: any) {
       if (err?.statusCode) {
@@ -292,8 +305,8 @@ export function createApiApp() {
   app.post('/api/billing/pix-checkout/:id/verify', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
-      const intent = await verifyVenoPagPixCheckout(req.params.id, auth.organizationId);
+      requireBillingOperator(auth.role);
+      const intent = await verifyVenoPagPixCheckout(req.params.id, auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
       res.json({ intent });
     } catch (err: any) {
       if (err?.statusCode) {
