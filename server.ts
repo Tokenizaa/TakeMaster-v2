@@ -22,6 +22,7 @@ import {
   getShowById,
   listAuditLogs,
   listBillingInvoices,
+  listBillablePrograms,
   listEpisodes,
   listLibraryAssets,
   listOrganizationsByIds,
@@ -344,6 +345,23 @@ export function createApiApp() {
   });
 
   // --- RSPLAY TV SAAS BILLING & PAYMENT GATEWAY ENDPOINTS ---
+  // Billing-only program list: pending executives may see their own program for checkout,
+  // without adding it to operational workspace results or granting program permissions.
+  app.get('/api/billing/eligible-programs', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireBillingOperator(auth.role);
+      const programs = await listBillablePrograms(
+        auth.organizationId,
+        auth.userId,
+        ['owner', 'admin'].includes(auth.role)
+      );
+      res.json({ programs });
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
