@@ -26,7 +26,7 @@ function duration(seconds: number | null) {
 export const EditorialVideoIntelligence: React.FC = () => {
   const [programs, setPrograms] = useState<CatalogProgram[]>([]);
   const [programId, setProgramId] = useState('');
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState('');\n  const [channelUrl, setChannelUrl] = useState('');\n  const [channelProgress, setChannelProgress] = useState('');
   const [videos, setVideos] = useState<EditorialVideo[]>([]);
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -83,6 +83,55 @@ export const EditorialVideoIntelligence: React.FC = () => {
     } finally { setBusy(false); }
   };
 
+  const importChannel = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!channelUrl.trim()) return;
+    setBusy(true); setError(''); setNotice(''); setChannelProgress('Abrindo o canal público…');
+    let continuation: string | undefined;
+    let discovered = 0, imported = 0, withTranscript = 0, withoutTranscript = 0, failed = 0;
+    const seenVideos = new Set<string>();
+    const seenCursors = new Set<string>();
+    let channelTitle = '';
+    let reachedEnd = false;
+    try {
+      while (!reachedEnd) {
+        const page = await api.discoverEditorialChannel(channelUrl.trim(), continuation);
+        channelTitle = page.channelTitle || channelTitle;
+        if (page.errors?.length) throw new Error(page.errors.join(' '));
+        for (const video of page.videos) {
+          if (seenVideos.has(video.videoId)) continue;
+          seenVideos.add(video.videoId);
+          discovered++;
+          setChannelProgress(`Canal ${channelTitle || ''}: ${discovered} vídeos encontrados · ${imported} importados · ${withTranscript} com legenda · ${failed} falhas. Processando ${video.title}…`);
+          try {
+            const result = await api.importEditorialVideo(video.videoId, programId || undefined);
+            imported++;
+            if (result.transcript) withTranscript++;
+            else withoutTranscript++;
+          } catch {
+            failed++;
+          }
+        }
+        reachedEnd = page.reachedEnd;
+        const next = page.nextContinuation || undefined;
+        if (!reachedEnd && (!next || seenCursors.has(next))) {
+          throw new Error('A paginação do canal parou antes do fim. O lote importado foi preservado; execute novamente para continuar após corrigir a fonte pública.');
+        }
+        if (next) seenCursors.add(next);
+        continuation = next;
+      }
+      setChannelUrl('');
+      await loadVideos(programId);
+      setNotice(`Coleta encerrada para ${channelTitle || 'o canal'}: ${discovered} vídeos descobertos, ${imported} importados, ${withTranscript} com transcrição, ${withoutTranscript} sem transcrição e ${failed} falhas. ${reachedEnd ? 'Fim da listagem pública alcançado.' : 'A listagem pode estar incompleta.'}`);
+    } catch (e: any) {
+      setError(e?.message || 'Falha durante a descoberta/importação do canal.');
+      try { await loadVideos(programId); } catch { /* preserve the primary error */ }
+    } finally {
+      setChannelProgress('');
+      setBusy(false);
+    }
+  };
+
   const analyzeTranscript = async (transcriptId: string) => {
     setAnalyzingId(transcriptId); setError(''); setNotice('');
     try {
@@ -115,6 +164,20 @@ export const EditorialVideoIntelligence: React.FC = () => {
           <RefreshCw className={`h-3.5 w-3.5 ${busy ? 'animate-spin' : ''}`} /> Atualizar
         </button>
       </div>
+
+      <form onSubmit={importChannel} className="space-y-2 rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
+        <div>
+          <label className="block text-xs font-medium text-zinc-300">Coleta em lote do canal oficial</label>
+          <p className="mt-1 text-xs text-zinc-500">Percorre as páginas públicas do canal e importa títulos, descrições, datas, metadados e legendas acessíveis. Não exige chave da YouTube Data API.</p>
+        </div>
+        <div className="grid gap-2 md:grid-cols-[minmax(260px,1fr)_auto]">
+          <input value={channelUrl} onChange={(e) => setChannelUrl(e.target.value)} type="url" required placeholder="https://www.youtube.com/@canal/videos" className="min-w-0 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500" disabled={busy || loading} />
+          <button type="submit" disabled={busy || loading || !channelUrl.trim()} className="rounded-lg border border-amber-700 px-4 py-2.5 text-sm font-semibold text-amber-300 disabled:opacity-50">
+            {busy ? 'Coletando canal…' : 'Coletar canal inteiro'}
+          </button>
+        </div>
+        {channelProgress && <p role="status" className="text-xs text-zinc-300">{channelProgress}</p>}
+      </form>
 
       <form onSubmit={importVideo} className="grid gap-3 md:grid-cols-[minmax(220px,0.8fr)_minmax(260px,1.5fr)_auto]">
         <select value={programId} onChange={(e) => setProgramId(e.target.value)} className="min-w-0 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-sm text-zinc-100" disabled={loading || busy}>
