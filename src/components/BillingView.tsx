@@ -173,6 +173,11 @@ export const BillingView: React.FC<BillingViewProps> = ({ session, shows, onSubs
             <RefreshCw className="h-3.5 w-3.5" />Atualizar
           </button>
         </div>
+        {plans.length === 0 && (
+          <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100">
+            A contratação está temporariamente indisponível porque não há plano ativo com preço positivo configurado. Defina o preço comercial antes de habilitar cobranças reais.
+          </div>
+        )}
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {plans.map((plan) => (
             <article key={plan.id} className="flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
