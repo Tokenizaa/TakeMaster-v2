@@ -274,11 +274,18 @@ export async function getUserMemberships(userId:string){const r=await db.from('o
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
 export async function verifyUserOrganizationAccess(userId:string,orgId:string){const [o,m]=await Promise.all([getOrganizationById(orgId),db.from('organization_members').select('*').eq('organization_id',orgId).eq('user_id',userId).eq('active',true).single()]);if(!o||m.error)throw new AppError(403,'FORBIDDEN_CONTEXT','Usuário não pertence à organização.');return {organization:o,role:m.data.role as OrganizationRole};}
 export async function getUserShowPermissions(orgId:string,userId:string){
+  const subscriptionResult=await db.from('program_subscriptions').select('program_id,ends_at').eq('organization_id',orgId).eq('status','active');
+  fail(subscriptionResult);
+  const nowMs=Date.now();
+  const subscribedProgramIds=new Set((subscriptionResult.data||[])
+    .filter((item:any)=>!item.ends_at||new Date(item.ends_at).getTime()>nowMs)
+    .map((item:any)=>item.program_id as string));
   const membershipResult=await db.from('program_memberships').select('program_id,role,status,permissions,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
   fail(membershipResult);
   const out:UserShowPermission[]=[];
   const seen=new Set<string>();
   for(const x of (membershipResult.data||[]) as any[]){
+    if(!subscribedProgramIds.has(x.program_id)) continue;
     const p=await db.from('programs').select('legacy_id,title').eq('id',x.program_id).eq('organization_id',orgId).maybeSingle();
     if(p.error) throw new Error(p.error.message);
     if(!p.data) continue;
@@ -389,9 +396,12 @@ async function assertProgramExecutiveOrAdmin(orgId:string,programId:string,actor
     throw new AppError(403,'FORBIDDEN_CONTEXT','Somente o diretor executivo responsável pode administrar a equipe deste programa.');
   }
   if(!['owner','admin'].includes(actorRole)){
-    const subscription=await db.from('program_subscriptions').select('id').eq('organization_id',orgId).eq('program_id',program.id).eq('status','active').maybeSingle();
+    const subscription=await db.from('program_subscriptions').select('id,ends_at').eq('organization_id',orgId).eq('program_id',program.id).eq('status','active').maybeSingle();
     fail(subscription);
-    if(!subscription.data) throw new AppError(402,'SUBSCRIPTION_INACTIVE','Conclua o pagamento do programa antes de administrar a equipe.');
+    if(!subscription.data||(subscription.data.ends_at&&new Date(subscription.data.ends_at).getTime()<=Date.now())) {
+      if(subscription.data) await db.from('program_subscriptions').update({status:'expired',updated_at:now()}).eq('id',subscription.data.id);
+      throw new AppError(402,'SUBSCRIPTION_INACTIVE','Conclua ou renove o pagamento do programa antes de administrar a equipe.');
+    }
   }
   return program;
 }
@@ -535,7 +545,7 @@ export async function updateUserShowPermissions(orgId:string,userId:string,permi
   const users:any[]=await authUsers(); return mapUser(users.find((u:any)=>u.id===userId)||{},orgId);
 }
 export async function updateOrganizationUserStatusOrRole(orgId:string,userId:string,input:any,actorUserId?:string){const r=await db.from('organization_members').update({role:input.role,active:input.status!=='suspended',updated_at:now()}).eq('organization_id',orgId).eq('user_id',userId).select('*').single();fail(r);return r.data;}
-export async function listSaaSPlans(){const r=await db.from('commercial_plans').select('*').eq('active',true).order('price_cents');fail(r);return (r.data||[]).map((x:any):SaaSPlanDefinition=>({id:x.code,name:x.name,tagline:x.description,maxShows:999,maxUsers:999,monthlyPriceCents:x.price_cents||0,features:[]}));}
+export async function listSaaSPlans(){const r=await db.from('commercial_plans').select('*').eq('active',true).gt('price_cents',0).in('billing_period',['monthly','annual']).order('price_cents');fail(r);return (r.data||[]).map((x:any):SaaSPlanDefinition=>({id:x.code,name:x.name,tagline:x.description,maxShows:999,maxUsers:999,monthlyPriceCents:x.price_cents,features:[]}));}
 export async function listOrganizationSubscriptions(orgId:string){const r=await db.from('organization_subscriptions').select('*,commercial_plans(*)').eq('organization_id',orgId).order('created_at',{ascending:false});fail(r);return (r.data||[]).map((x:any):SaaSSubscription=>({id:x.id,organizationId:orgId,planId:x.commercial_plans?.code||'rsplay_programa_individual',planName:x.commercial_plans?.name||'',billingCycle:x.commercial_plans?.billing_period==='annual'?'annual':'monthly',amountCents:x.commercial_plans?.price_cents||0,currency:x.commercial_plans?.currency||'BRL',status:x.status==='active'?'active':x.status==='trial'?'trialing':'suspended',autoRenew:true,paymentGateway:'',paymentMethodType:'credit_card',paymentMethodLast4:'',paymentMethodBrand:'',gatewayCustomerId:'',gatewaySubscriptionId:'',currentPeriodStart:x.starts_at,currentPeriodEnd:x.ends_at||x.starts_at,lastRenewalAt:undefined,canceledAt:undefined,createdAt:x.created_at,updatedAt:x.updated_at}));}
 export async function listBillingInvoices(_orgId?:string){return [] as BillingInvoice[];}
 export async function listPaymentGatewayEvents(_orgId?:string){return [] as PaymentGatewayEvent[];}
