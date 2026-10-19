@@ -82,6 +82,7 @@ import {
   resolveProgramKnowledge,
 } from './src/server/programKnowledge';
 import { importYouTubeVideo, listEditorialCatalogPrograms, listEditorialVideos } from './src/server/editorialVideoIntelligence';
+import { analyzeVideoTranscript } from './src/server/videoEditorialAnalysis';
 import {
   getSystemMetrics,
   incrementMetric,
@@ -117,6 +118,22 @@ export function createApiApp() {
       requireOrganizationAdmin(auth.role);
       const catalogProgramId = typeof req.query.catalogProgramId === 'string' ? req.query.catalogProgramId : undefined;
       res.json({ videos: await listEditorialVideos(catalogProgramId) });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/editorial/transcripts/:transcriptId/analyze', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const transcriptId = String(req.params.transcriptId || '');
+      const analysis = await analyzeVideoTranscript(transcriptId);
+      await recordAuditLog(auth.organizationId, auth.userId, 'editorial_transcript', transcriptId, 'analyzed', {
+        analysisId: analysis.id,
+        reviewStatus: analysis.review_status,
+      });
+      res.status(201).json({ analysis });
     } catch (err) {
       next(err);
     }
