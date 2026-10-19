@@ -87,7 +87,7 @@ import {
   logStructured,
   requestTracingMiddleware,
 } from './src/server/logger';
-import { createVenoPagPixCheckout, getVenoPagPixCheckout, handleVenoPagWebhook, verifyVenoPagWebhook } from './src/server/venopag';
+import { createVenoPagPixCheckout, getVenoPagPixCheckout, handleVenoPagWebhook, listVenoPagPixCheckouts, verifyVenoPagPixCheckout, verifyVenoPagWebhook } from './src/server/venopag';
 
 export function createApiApp() {
   const app = express();
@@ -259,11 +259,41 @@ export function createApiApp() {
     }
   });
 
+  app.get('/api/billing/pix-checkouts', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const intents = await listVenoPagPixCheckouts(auth.organizationId);
+      res.json({ intents });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
   app.get('/api/billing/pix-checkout/:id', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
       requireOrganizationAdmin(auth.role);
       const intent = await getVenoPagPixCheckout(req.params.id, auth.organizationId);
+      res.json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.post('/api/billing/pix-checkout/:id/verify', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth.role);
+      const intent = await verifyVenoPagPixCheckout(req.params.id, auth.organizationId);
       res.json({ intent });
     } catch (err: any) {
       if (err?.statusCode) {
