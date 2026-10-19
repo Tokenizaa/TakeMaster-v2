@@ -106,7 +106,7 @@ export const EditorialVideoIntelligence: React.FC = () => {
           discovered++;
           setChannelProgress(`Canal ${channelTitle || ''}: ${discovered} vídeos encontrados · ${imported} importados · ${withTranscript} com legenda · ${failed} falhas. Processando ${video.title}…`);
           try {
-            const result = await api.importEditorialVideo(video.videoId, programId || undefined);
+            const result = await api.importEditorialVideo(video.videoId);
             imported++;
             if (result.transcript) withTranscript++;
             else withoutTranscript++;
