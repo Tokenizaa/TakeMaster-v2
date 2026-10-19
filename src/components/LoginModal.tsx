@@ -135,8 +135,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!regForm.name.trim() || !regForm.email.trim()) {
-      setError('Informe seu nome completo e e-mail corporativo.');
+    if (!regForm.name.trim() || !regForm.email.trim() || !regForm.loginCode.trim()) {
+      setError('Informe nome, e-mail e uma senha de acesso.');
       return;
     }
     setError(null);
@@ -432,9 +432,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                       Código / Senha de Acesso
                     </label>
                     <input
-                      type="text"
+                      type="password"
+                      required
+                      minLength={8}
+                      autoComplete="new-password"
                       value={regForm.loginCode}
                       onChange={(e) => setRegForm({ ...regForm, loginCode: e.target.value })}
+                      placeholder="Mínimo de 8 caracteres"
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
                     />
                   </div>
