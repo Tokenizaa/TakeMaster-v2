@@ -1,9 +1,9 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-let db: ReturnType<typeof createClient> | undefined;
+let db: SupabaseClient | undefined;
 function getDb() {
   if (!supabaseUrl || !serviceRoleKey) {
     throw Object.assign(new Error('Supabase não está configurado no backend.'), { statusCode: 503, code: 'DATABASE_NOT_CONFIGURED' });
