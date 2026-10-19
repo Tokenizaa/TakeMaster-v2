@@ -167,7 +167,7 @@ export function App() {
     try {
       await api.registerAccount({
         ...payload,
-        organizationId: session?.activeOrganization.id || 'org-takemaster-studio',
+        organizationId: session?.activeOrganization.id,
       });
       await loadWorkspaceState();
     } catch (err: any) {
