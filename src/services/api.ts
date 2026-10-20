@@ -84,18 +84,19 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     let errMessage = `Erro HTTP ${res.status}`;
+    let parsedError: any;
     try {
-      const parsed = await res.json();
-      if (parsed && parsed.message) {
-        errMessage = parsed.message;
-      } else if (parsed && parsed.error) {
-        errMessage = parsed.error;
-      }
+      parsedError = await res.json();
+      if (parsedError && parsedError.message) errMessage = parsedError.message;
+      else if (parsedError && parsedError.error) errMessage = parsedError.error;
     } catch {
       const text = await res.text().catch(() => '');
       if (text) errMessage = text;
     }
-    throw new Error(errMessage);
+    const error = new Error(errMessage) as Error & { statusCode?: number; code?: string };
+    error.statusCode = res.status;
+    error.code = typeof parsedError?.code === 'string' ? parsedError.code : undefined;
+    throw error;
   }
 
   return res.json();
@@ -118,6 +119,46 @@ export interface BillingOverviewResponse {
   subscriptions: SaaSSubscription[];
   invoices: BillingInvoice[];
   gatewayEvents: PaymentGatewayEvent[];
+}
+
+export interface BillableProgram {
+  id: string;
+  title: string;
+}
+
+export interface ProgramTeamMember {
+  userId: string;
+  name: string;
+  email: string;
+  jobTitle?: string;
+  role: 'executive' | 'producer' | 'editor' | 'host' | 'viewer';
+  permissions: Record<string, boolean>;
+  createdAt?: string;
+  authorizedBy?: string;
+}
+
+export interface ProgramTeamResponse {
+  program: { id: string; title: string; executiveUserId: string | null };
+  members: ProgramTeamMember[];
+  candidates: Array<{ userId: string; name: string; email: string; jobTitle?: string; role: string }>;
+}
+
+export interface VenoPagPixIntent {
+  id: string;
+  programId: string;
+  planId: string;
+  amountCents: number;
+  currency: string;
+  status: 'creating' | 'pending' | 'confirmed' | 'expired' | 'canceled' | 'contested' | 'chargedback' | 'refunded' | 'failed' | 'reconciliation_required';
+  requestNumber: string | null;
+  transactionId: string | null;
+  pixCopyPaste: string | null;
+  qrUrl: string | null;
+  qrImage: string | null;
+  checkoutUrl: string | null;
+  expiresAt: string | null;
+  subscriptionId: string | null;
+  createdAt: string;
 }
 
 export interface AdminOverviewResponse {
@@ -154,9 +195,9 @@ export const api = {
       session: AuthSession;
       user: User;
       show: Show;
-      subscription: SaaSSubscription;
-      invoice: BillingInvoice;
-      gatewayEvent: PaymentGatewayEvent;
+      subscription?: SaaSSubscription;
+      invoice?: BillingInvoice;
+      gatewayEvent?: PaymentGatewayEvent;
     }>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -183,8 +224,55 @@ export const api = {
     return res;
   },
 
+  // Program-scoped team authorization
+  getProgramTeam: (programId: string) =>
+    request<ProgramTeamResponse>(`/api/programs/${encodeURIComponent(programId)}/team`),
+
+  inviteProgramTeamMember: (programId: string, payload: { email: string; name: string; jobTitle?: string; role: 'producer' | 'editor' | 'host' | 'viewer' }) =>
+    request<{ member: ProgramTeamMember; invited: boolean }>(`/api/programs/${encodeURIComponent(programId)}/team`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  updateProgramTeamMember: (programId: string, userId: string, payload: { role: 'producer' | 'editor' | 'host' | 'viewer'; permissions?: Record<string, boolean> }) =>
+    request<{ member: ProgramTeamMember }>(`/api/programs/${encodeURIComponent(programId)}/team/${encodeURIComponent(userId)}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
+  revokeProgramTeamMember: (programId: string, userId: string) =>
+    request<{ success: boolean; userId: string; programId: string }>(`/api/programs/${encodeURIComponent(programId)}/team/${encodeURIComponent(userId)}`, {
+      method: 'DELETE',
+    }),
+
   // RSPlay TV SaaS Billing & Payment Gateway
   getBillingOverview: () => request<BillingOverviewResponse>('/api/billing/overview'),
+
+  getBillablePrograms: () =>
+    request<{ programs: BillableProgram[] }>('/api/billing/eligible-programs'),
+
+  createVenoPagPixCheckout: (payload: {
+    programId: string;
+    planCode: SubscriptionPlanId;
+    idempotencyKey: string;
+    customerName?: string;
+  }) =>
+    request<{ intent: VenoPagPixIntent }>('/api/billing/pix-checkout', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  listVenoPagPixCheckouts: () =>
+    request<{ intents: VenoPagPixIntent[] }>('/api/billing/pix-checkouts'),
+
+  getVenoPagPixCheckout: (id: string) =>
+    request<{ intent: VenoPagPixIntent }>(`/api/billing/pix-checkout/${encodeURIComponent(id)}`),
+
+  verifyVenoPagPixCheckout: (id: string) =>
+    request<{ intent: VenoPagPixIntent }>(`/api/billing/pix-checkout/${encodeURIComponent(id)}/verify`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }),
 
   subscribePlan: (payload: {
     planId: SubscriptionPlanId;

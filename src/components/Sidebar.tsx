@@ -24,6 +24,7 @@ export type NavSection =
   | 'library'
   | 'studio'
   | 'billing'
+  | 'program_team'
   | 'admin';
 
 interface SidebarProps {
@@ -37,6 +38,7 @@ interface SidebarProps {
   libraryCount?: number;
   organizationName?: string;
   session?: AuthSession | null;
+  canManageProgramTeam?: boolean;
   onOpenLoginModal?: () => void;
 }
 
@@ -51,6 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   libraryCount = 0,
   organizationName = 'RSPlay TV — Rede Broadcast',
   session,
+  canManageProgramTeam = false,
   onOpenLoginModal,
 }) => {
   const editorialItems: {
@@ -81,8 +84,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     label: string;
     icon: React.FC<{ className?: string }>;
   }[] = [
-    { id: 'billing', label: 'Assinatura & Gateway', icon: CreditCard },
-    { id: 'admin', label: 'Painel Administrativo', icon: ShieldCheck },
+    ...(canManageProgramTeam || ['owner','admin'].includes(session?.role || '') ? [{ id: 'billing' as NavSection, label: 'Contratação & PIX', icon: CreditCard }] : []),
+    ...(canManageProgramTeam ? [{ id: 'program_team' as NavSection, label: 'Equipe do Programa', icon: Users }] : []),
+    ...(['owner','admin'].includes(session?.role || '') ? [{ id: 'admin' as NavSection, label: 'Painel Administrativo', icon: ShieldCheck }] : []),
   ];
 
   const renderNavItem = (item: {
@@ -166,12 +170,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {operationalItems.map(renderNavItem)}
         </div>
 
-        <div className="space-y-1">
-          <div className="px-3 py-1 text-xs font-medium text-zinc-500">
-            SaaS, Planos & Admin
+        {(saasAdminItems.length > 0) && (
+          <div className="space-y-1">
+            <div className="px-3 py-1 text-xs font-medium text-zinc-500">
+              Programa & Acesso
+            </div>
+            {saasAdminItems.map(renderNavItem)}
           </div>
-          {saasAdminItems.map(renderNavItem)}
-        </div>
+        )}
       </nav>
 
       {/* Active Profile & Program Isolation Footer */}
@@ -181,14 +187,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="flex items-center gap-1.5 text-amber-400 text-xs font-semibold truncate">
               <Lock className="w-3.5 h-3.5 shrink-0" />
               <span className="truncate">
-                {isRestrictedProfile ? 'Login Isolado por Programa' : 'Acesso Master Admin'}
+                {isRestrictedProfile ? 'Acesso por Programa' : 'Administração Global'}
               </span>
             </div>
           </div>
           <p className="text-[11px] text-zinc-400 leading-relaxed">
             {isRestrictedProfile
-              ? `Visualizando apenas ${showsCount} programa(s) liberado(s) para ${session?.user.name.split(' ')[0]}.`
-              : `Todos os ${showsCount} programas e relatórios liberados.`}
+              ? `Acesso autorizado a ${showsCount} programa(s) para ${session?.user.name.split(' ')[0]}.`
+              : `Acesso administrativo aos ${showsCount} programas.`}
           </p>
           {onOpenLoginModal && (
             <button
@@ -196,7 +202,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={onOpenLoginModal}
               className="w-full py-1.5 px-2.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-medium text-zinc-200 transition-colors cursor-pointer"
             >
-              Alternar Login de Programa
+              Trocar conta
             </button>
           )}
         </div>

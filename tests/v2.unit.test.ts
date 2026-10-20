@@ -1,3 +1,4 @@
+import { createHmac } from 'node:crypto';
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -8,6 +9,7 @@ import {
 } from '../src/domain/validation';
 import { NimProviderError, withNimCredentialFailover } from '../src/server/nimCredentials';
 import { getServerConfig } from '../src/server/config';
+import { verifyVenoPagWebhook } from '../src/server/venopag';
 
 describe('TakeMaster V2 — API contract validation', () => {
   it('rejects invalid show, episode, and production payloads', () => {
@@ -67,5 +69,53 @@ describe('NVIDIA NIM credential failover', () => {
       (error: unknown) => error instanceof NimProviderError && error.status === 429
     );
     assert.deepEqual(attempts, ['primary']);
+  });
+});
+
+
+describe('VenoPag webhook signature verification', () => {
+  const envNames = ['VENOPAG_CLIENT_ID', 'VENOPAG_CLIENT_SECRET', 'VENOPAG_WEBHOOK_SECRET', 'VENOPAG_WEBHOOK_URL'] as const;
+  const previous = Object.fromEntries(envNames.map((name) => [name, process.env[name]]));
+
+  function signatureFor(body: Buffer, secret: string, timestamp: number) {
+    const digest = createHmac('sha256', secret).update(`${timestamp}.`).update(body).digest('hex');
+    return `t=${timestamp},v1=${digest}`;
+  }
+
+  it('accepts a valid signature for the exact raw request body', () => {
+    process.env.VENOPAG_CLIENT_ID = 'test-client';
+    process.env.VENOPAG_CLIENT_SECRET = 'test-secret';
+    process.env.VENOPAG_WEBHOOK_SECRET = 'webhook-test-secret';
+    process.env.VENOPAG_WEBHOOK_URL = 'https://example.test/api/webhooks/venopag';
+    const body = Buffer.from('{"type":"cashin","status":"confirmed","request_number":"req-1"}');
+    const timestamp = Math.floor(Date.now() / 1000);
+    try {
+      assert.equal(verifyVenoPagWebhook(signatureFor(body, process.env.VENOPAG_WEBHOOK_SECRET!, timestamp), body), true);
+      assert.equal(verifyVenoPagWebhook(signatureFor(body, process.env.VENOPAG_WEBHOOK_SECRET!, timestamp), Buffer.from(body.toString() + ' ')), false);
+    } finally {
+      for (const name of envNames) {
+        const value = previous[name];
+        if (value === undefined) delete process.env[name];
+        else process.env[name] = value;
+      }
+    }
+  });
+
+  it('rejects stale webhook timestamps', () => {
+    process.env.VENOPAG_CLIENT_ID = 'test-client';
+    process.env.VENOPAG_CLIENT_SECRET = 'test-secret';
+    process.env.VENOPAG_WEBHOOK_SECRET = 'webhook-test-secret';
+    process.env.VENOPAG_WEBHOOK_URL = 'https://example.test/api/webhooks/venopag';
+    const body = Buffer.from('{"type":"cashin","status":"confirmed","request_number":"req-2"}');
+    const staleTimestamp = Math.floor(Date.now() / 1000) - 600;
+    try {
+      assert.equal(verifyVenoPagWebhook(signatureFor(body, process.env.VENOPAG_WEBHOOK_SECRET!, staleTimestamp), body), false);
+    } finally {
+      for (const name of envNames) {
+        const value = previous[name];
+        if (value === undefined) delete process.env[name];
+        else process.env[name] = value;
+      }
+    }
   });
 });

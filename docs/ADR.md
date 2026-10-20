@@ -57,7 +57,7 @@ Não criar contas duplicadas para profissionais compartilhados nem exigir uma or
 Esta decisão é documental nesta etapa: não implica implementação, migração de dados nem execução de testes.
 
 ## ADR-011 — VenoPag como gateway planejado para contratação de programas
-**Status:** Aceita para planejamento; integração e operação real ainda não verificadas.
+**Status:** Implementação em revisão na PR #11; operação real e migração ainda não verificadas.
 
 O gateway escolhido para planejar a contratação de programas é o VenoPag, usando como referência técnica o SDK em https://github.com/Tokenizaa/venopag. A primeira fase de integração limita-se a criar cobrança PIX (Cash In), apresentar os dados de pagamento e confirmar o estado por webhook autenticado e/ou consulta da transação, com idempotência e reconciliação.
 

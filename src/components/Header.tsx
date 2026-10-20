@@ -25,10 +25,10 @@ interface HeaderProps {
   activeEpisodeTitle?: string;
   onOpenStudioMode?: () => void;
   session?: AuthSession | null;
-  onSwitchOrganization?: (orgId: string) => void;
   onResetWorkspaceSeed?: () => void;
   onOpenLoginModal?: () => void;
   onOpenBilling?: () => void;
+  canManageProgramTeam?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -42,10 +42,10 @@ export const Header: React.FC<HeaderProps> = ({
   activeEpisodeTitle,
   onOpenStudioMode,
   session,
-  onSwitchOrganization,
   onResetWorkspaceSeed,
   onOpenLoginModal,
   onOpenBilling,
+  canManageProgramTeam = false,
 }) => {
   const isRestrictedProfile = session && !session.isFullAccessAdmin;
 
@@ -53,26 +53,11 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="h-16 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 px-6 flex items-center justify-between shrink-0 z-20 gap-4">
       {/* Left: Context Hierarchy (Organization -> Show) & Search */}
       <div className="flex items-center gap-3 flex-1 max-w-3xl min-w-0">
-        {/* Multi-Tenant Organization Selector */}
-        {session && session.memberships && session.memberships.length > 0 && (
-          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5 shrink-0">
-            <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <select
-              value={session.activeOrganization.id}
-              onChange={(e) => onSwitchOrganization && onSwitchOrganization(e.target.value)}
-              className="bg-transparent text-xs font-semibold text-zinc-200 focus:outline-none cursor-pointer pr-1"
-              title="Alternar Organização (Isolamento Multi-Tenant)"
-            >
-              {session.memberships.map((m) => (
-                <option
-                  key={m.organizationId}
-                  value={m.organizationId}
-                  className="bg-zinc-900 text-zinc-200"
-                >
-                  {m.organizationName}
-                </option>
-              ))}
-            </select>
+        {/* RS Play TV is the single organization; programs are the workspace context. */}
+        {session && (
+          <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-3 py-1.5 shrink-0">
+            <Building2 className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
+            <span className="text-xs font-semibold text-zinc-200">RS Play TV</span>
           </div>
         )}
 
@@ -142,15 +127,15 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Active Subscription Quick Button */}
-        {session?.activeSubscription && onOpenBilling && !activeEpisodeTitle && (
+        {session?.activeSubscription && onOpenBilling && !activeEpisodeTitle && (canManageProgramTeam || ['owner','admin'].includes(session.role)) && (
           <button
             type="button"
             onClick={onOpenBilling}
             className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 transition-colors cursor-pointer whitespace-nowrap"
-            title="Gerenciar Plano Mensal e Renovação Automática no Gateway"
+            title="Gerenciar contratação e pagamentos do programa"
           >
             <CreditCard className="w-3.5 h-3.5 text-amber-400" />
-            <span>{session.activeSubscription.planName}</span>
+            <span>Contratação & PIX</span>
           </button>
         )}
 
@@ -160,7 +145,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={onOpenLoginModal}
             className="flex items-center gap-2 text-xs bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-xl transition-colors cursor-pointer whitespace-nowrap"
-            title="Clique para trocar o Login Individual de Programa e testar as permissões de acesso"
+            title="Gerenciar a sessão da conta; para alternar programas, use o seletor de programa"
           >
             {isRestrictedProfile ? (
               <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -170,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="font-medium text-zinc-200 max-w-[160px] truncate">
               {session.user.name}
             </span>
-            <span className="text-[11px] text-amber-400 font-medium">· Trocar Login</span>
+            <span className="text-[11px] text-amber-400 font-medium">· Trocar conta</span>
           </button>
         )}
 

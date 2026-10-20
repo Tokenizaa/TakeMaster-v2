@@ -38,7 +38,7 @@ async function camerasFor(programId: string) {
 async function mapShow(r:any): Promise<Show> {
   const cams = await camerasFor(r.id);
   return {
-    id: legacyId(r), organizationId:r.organization_id || undefined, title:r.title || r.name || '',
+    id: legacyId(r), organizationId:r.organization_id || undefined, executiveUserId:r.executive_user_id || undefined, title:r.title || r.name || '',
     description:r.description||'', host:r.host||'', format:r.format||'Outro',
     defaultDurationMin:r.default_duration_min ?? r.default_episode_duration_minutes ?? 0,
     editorialStyle:r.editorial_style||'', scenario:r.scenario||'', cameras:cams.map(mapCamera),
@@ -119,7 +119,7 @@ export async function listShows(org:string, allowed?:string[]) {
   return Promise.all(filtered.map(mapShow));
 }
 export async function getShowById(org:string,id:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return undefined; return mapShow(p); }
-export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); return mapShow(r.data); }
+export async function createShow(org:string,input:any,userId?:string){ const id=input.id||`prog-${Date.now()}`; const payload={legacy_id:id,organization_id:org,catalog_program_id:input.catalogProgramId||null,executive_user_id:userId||null,name:input.title,title:input.title,description:input.description||'',host:input.host||'',format:input.format||'Outro',default_duration_min:input.defaultDurationMin||0,editorial_style:input.editorialStyle||'',scenario:input.scenario||'',standard_structure:input.standardStructure||[],default_opening:input.defaultOpening||'',default_closing:input.defaultClosing||''}; const r=await db.from('programs').insert(payload).select('*').single(); fail(r); if(userId){try{await upsertProgramMembership(org,r.data.legacy_id||r.data.id,userId,{canView:true,canEditEditorial:false,canEditScript:false,canOperateStudio:false,canManageSchedule:false,canManageAssets:false,canExport:false},'executive',userId,'pending');}catch(error){await db.from('programs').delete().eq('id',r.data.id);throw error;}} return mapShow(r.data); }
 export async function updateShow(org:string,id:string,input:any,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)throw new AppError(404,'NOT_FOUND','Programa não encontrado.'); const row:any={updated_at:now()}; const map:any={title:'title',description:'description',host:'host',format:'format',defaultDurationMin:'default_duration_min',editorialStyle:'editorial_style',scenario:'scenario',standardStructure:'standard_structure',defaultOpening:'default_opening',defaultClosing:'default_closing'}; for(const [k,v] of Object.entries(map) as [string,string][]){if(k in input)row[v]=input[k];} if('title' in input)row.name=input.title; const r=await db.from('programs').update(row).eq('id',p.id).select('*').single(); fail(r); return mapShow(r.data); }
 export async function deleteShow(org:string,id:string,userId?:string){ const p=await one('programs',id); if(!p||p.organization_id!==org)return false; const r=await db.from('programs').delete().eq('id',p.id); fail(r); return true; }
 
@@ -262,51 +262,360 @@ async function authUsers(userIds?: string[]): Promise<User[]> {
 }
 async function mapUser(u:any,orgId?:string):Promise<User>{const m=orgId?await db.from('organization_members').select('*').eq('user_id',u.id).eq('organization_id',orgId).eq('active',true).limit(1):await db.from('organization_members').select('*').eq('user_id',u.id).eq('active',true).limit(1);const member=m.data?.[0];return {id:u.id,email:u.email||'',name:u.user_metadata?.name||u.user_metadata?.full_name||u.email||'',jobTitle:u.user_metadata?.jobTitle,status:u.banned_until?'suspended':'active',loginCode:undefined,avatarUrl:u.user_metadata?.avatarUrl,role:member?.role,showPermissions:orgId ? await getUserShowPermissions(orgId,u.id) : [],createdAt:u.created_at,updatedAt:u.updated_at||u.created_at};}
 export async function listUsersAndOrganizations(){const [users,orgs]=await Promise.all([authUsers(),db.from('organizations').select('*').order('created_at')]);fail(orgs);return {users:await Promise.all(users.map(u=>mapUser(u))),organizations:(orgs.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}))};}
+export async function resolveCanonicalOrganizationId(){
+  const result=await db.from('organizations').select('id,name,slug,status').eq('slug','rs-play-tv').eq('status','active').maybeSingle();
+  fail(result);
+  if(!result.data) throw new AppError(500,'CONFIGURATION_ERROR','A organização canônica RS Play TV não foi encontrada ou está inativa.');
+  return result.data.id as string;
+}
+
 export async function listOrganizationsByIds(organizationIds:string[]):Promise<Organization[]>{if(!organizationIds.length)return [];const r=await db.from('organizations').select('*').in('id',organizationIds).order('created_at');fail(r);return (r.data||[]).map((o:any):Organization=>({id:o.id,name:o.name,slug:o.slug,plan:'rsplay_programa_individual',createdAt:o.created_at,updatedAt:o.updated_at}));}
 export async function getUserMemberships(userId:string){const r=await db.from('organization_members').select('organization_id,role,organizations(name,slug)').eq('user_id',userId).eq('active',true);fail(r);return (r.data||[]).map((x:any):OrganizationMembership=>({organizationId:x.organization_id,organizationName:x.organizations?.name||'',organizationSlug:x.organizations?.slug||'',role:x.role}));}
 export async function getOrganizationById(id:string){const r=await db.from('organizations').select('*').eq('id',id).single();if(r.error)return undefined;return {id:r.data.id,name:r.data.name,slug:r.data.slug,plan:'rsplay_programa_individual',createdAt:r.data.created_at,updatedAt:r.data.updated_at} as Organization;}
 export async function verifyUserOrganizationAccess(userId:string,orgId:string){const [o,m]=await Promise.all([getOrganizationById(orgId),db.from('organization_members').select('*').eq('organization_id',orgId).eq('user_id',userId).eq('active',true).single()]);if(!o||m.error)throw new AppError(403,'FORBIDDEN_CONTEXT','Usuário não pertence à organização.');return {organization:o,role:m.data.role as OrganizationRole};}
 export async function getUserShowPermissions(orgId:string,userId:string){
-  const r=await db.from('program_user_access').select('catalog_program_id,role,status,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
-  fail(r);
-  const rows:any[] = r.data || [];
+  const subscriptionResult=await db.from('program_subscriptions').select('program_id,ends_at').eq('organization_id',orgId).eq('status','active');
+  fail(subscriptionResult);
+  const nowMs=Date.now();
+  const subscribedProgramIds=new Set((subscriptionResult.data||[])
+    .filter((item:any)=>!item.ends_at||new Date(item.ends_at).getTime()>nowMs)
+    .map((item:any)=>item.program_id as string));
+  const membershipResult=await db.from('program_memberships').select('program_id,role,status,permissions,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(membershipResult);
   const out:UserShowPermission[]=[];
-  for(const x of rows){
-    const p=await db.from('programs').select('legacy_id,title').eq('organization_id',orgId).eq('catalog_program_id',x.catalog_program_id).limit(1);
-    const program=p.data?.[0];
-    if(!program) continue;
-    const full=['admin','producer'].includes(x.role);
-    out.push({id:`${userId}:${program.legacy_id}`,organizationId:orgId,userId,showId:program.legacy_id,showTitle:program.title,
-      canView:true,canEditEditorial:full,canEditScript:full,canOperateStudio:full,canManageSchedule:full,canManageAssets:full,canExport:true,
+  const seen=new Set<string>();
+  for(const x of (membershipResult.data||[]) as any[]){
+    if(!subscribedProgramIds.has(x.program_id)) continue;
+    const p=await db.from('programs').select('legacy_id,title').eq('id',x.program_id).eq('organization_id',orgId).maybeSingle();
+    if(p.error) throw new Error(p.error.message);
+    if(!p.data) continue;
+    const id=p.data.legacy_id||x.program_id;
+    const perms=x.permissions||{};
+    seen.add(id);
+    out.push({id:`${userId}:${id}`,organizationId:orgId,userId,showId:id,showTitle:p.data.title||'',
+      canView:perms.canView!==false,canEditEditorial:perms.canEditEditorial===true,canEditScript:perms.canEditScript===true,
+      canOperateStudio:perms.canOperateStudio===true,canManageSchedule:perms.canManageSchedule===true,
+      canManageAssets:perms.canManageAssets===true,canExport:perms.canExport===true,
       createdAt:x.created_at,updatedAt:x.updated_at});
+  }
+
+  // The responsible executive can see the program shell before payment, but receives
+  // read-only permissions until the payment RPC activates the program subscription.
+  const ownedPrograms=await db.from('programs').select('id,legacy_id,title,created_at,updated_at')
+    .eq('organization_id',orgId).eq('executive_user_id',userId);
+  fail(ownedPrograms);
+  for(const p of (ownedPrograms.data||[]) as any[]){
+    const id=p.legacy_id||p.id;
+    if(seen.has(id)) continue;
+    seen.add(id);
+    out.push({id:`${userId}:${id}`,organizationId:orgId,userId,showId:id,showTitle:p.title||'',
+      canView:true,canEditEditorial:false,canEditScript:false,canOperateStudio:false,
+      canManageSchedule:false,canManageAssets:false,canExport:false,createdAt:p.created_at,updatedAt:p.updated_at});
+  }
+
+  // Preserve access granted by the previous catalog-based model while memberships
+  // are migrated to program instances.
+  const legacy=await db.from('program_user_access').select('catalog_program_id,role,status,created_at,updated_at').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(legacy);
+  for(const x of (legacy.data||[]) as any[]){
+    const programs=await db.from('programs').select('legacy_id,title').eq('organization_id',orgId).eq('catalog_program_id',x.catalog_program_id);
+    fail(programs);
+    for(const p of (programs.data||[]) as any[]){
+      const id=p.legacy_id||'';
+      if(!id||seen.has(id)) continue;
+      const full=['admin','producer'].includes(x.role);
+      out.push({id:`${userId}:${id}`,organizationId:orgId,userId,showId:id,showTitle:p.title||'',
+        canView:true,canEditEditorial:full,canEditScript:full,canOperateStudio:full,canManageSchedule:full,canManageAssets:full,canExport:true,
+        createdAt:x.created_at,updatedAt:x.updated_at});
+      seen.add(id);
+    }
   }
   return out;
 }
-export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){if(['owner','admin','producer'].includes(role))return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:await getUserShowPermissions(orgId,userId)};const permissions=await getUserShowPermissions(orgId,userId); const catalogIds=permissions.map(x=>x.showId); if(!catalogIds.length)return {isFullAccessAdmin:false,allowedShowIds:[] as string[],permissions};return {isFullAccessAdmin:false,allowedShowIds:catalogIds,permissions};}
-export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='view'){const u=await getEffectiveAllowedShowIds(orgId,userId,role);if(u.isFullAccessAdmin)return true;if(u.allowedShowIds.includes(showId))return true;throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');}
+
+export async function getEffectiveAllowedShowIds(orgId:string,userId:string,role:OrganizationRole){
+  if(['owner','admin'].includes(role)) return {isFullAccessAdmin:true,allowedShowIds:[] as string[],permissions:await getUserShowPermissions(orgId,userId)};
+  const permissions=await getUserShowPermissions(orgId,userId);
+  const allowedShowIds=permissions.filter(x=>x.canView).map(x=>x.showId);
+  return {isFullAccessAdmin:false,allowedShowIds,permissions};
+}
+
+export async function assertUserCanAccessShow(orgId:string,userId:string,role:OrganizationRole,showId:string,mode:string='canView'){
+  const access=await getEffectiveAllowedShowIds(orgId,userId,role);
+  if(access.isFullAccessAdmin) return true;
+  const permission=access.permissions.find((item)=>item.showId===showId);
+  if(!permission||permission.canView!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Você não tem acesso a este programa.');
+  const modeKey=mode==='view'?'canView':mode;
+  if(!['canView','canEditEditorial','canEditScript','canOperateStudio','canManageSchedule','canManageAssets','canExport'].includes(modeKey)) {
+    throw new AppError(400,'VALIDATION_ERROR','Permissão solicitada inválida.');
+  }
+  if((permission as any)[modeKey]!==true) throw new AppError(403,'FORBIDDEN_CONTEXT','Sua função não permite esta operação neste programa.');
+  return true;
+}
+
+export async function upsertProgramMembership(orgId:string,programId:string,userId:string,permissions:any,role:string='editor',actorUserId?:string,status:'pending'|'active'|'revoked'='active'){
+  const program=await one('programs',programId);
+  if(!program||program.organization_id!==orgId) throw new AppError(404,'NOT_FOUND','Programa não encontrado nesta organização.');
+  const r=await db.from('program_memberships').upsert({
+    organization_id:orgId,program_id:program.id,user_id:userId,role,status,
+    permissions:permissions||{canView:true},authorized_by:actorUserId||userId,authorized_at:status==='active'?now():null,revoked_at:status==='revoked'?now():null,updated_at:now()
+  },{onConflict:'program_id,user_id'}).select('*').single();
+  fail(r);
+  if(program.catalog_program_id){
+    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
+    fail(legacy);
+  }
+  return r.data;
+}
+
+const TEAM_ROLES=['producer','editor','host','viewer'] as const;
+type ProgramTeamRole=typeof TEAM_ROLES[number];
+
+function permissionsForTeamRole(role:ProgramTeamRole,overrides?:Record<string,unknown>){
+  const base={
+    canView:true,
+    canEditEditorial:role==='producer'||role==='editor',
+    canEditScript:role==='producer'||role==='editor',
+    canOperateStudio:role==='producer',
+    canManageSchedule:role==='producer',
+    canManageAssets:role==='producer',
+    canExport:role==='producer'||role==='editor',
+  };
+  const result:any={...base};
+  for(const key of Object.keys(base) as (keyof typeof base)[]){
+    if(overrides?.[key]===false) result[key]=false;
+  }
+  return result;
+}
+
+async function assertProgramExecutiveOrAdmin(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole){
+  const program=await one('programs',programId);
+  if(!program||program.organization_id!==orgId) throw new AppError(404,'NOT_FOUND','Programa não encontrado nesta organização.');
+  if(!['owner','admin'].includes(actorRole)&&program.executive_user_id!==actorUserId){
+    throw new AppError(403,'FORBIDDEN_CONTEXT','Somente o diretor executivo responsável pode administrar a equipe deste programa.');
+  }
+  if(!['owner','admin'].includes(actorRole)){
+    const subscription=await db.from('program_subscriptions').select('id,ends_at').eq('organization_id',orgId).eq('program_id',program.id).eq('status','active').maybeSingle();
+    fail(subscription);
+    if(!subscription.data||(subscription.data.ends_at&&new Date(subscription.data.ends_at).getTime()<=Date.now())) {
+      if(subscription.data) await db.from('program_subscriptions').update({status:'expired',updated_at:now()}).eq('id',subscription.data.id);
+      throw new AppError(402,'SUBSCRIPTION_INACTIVE','Conclua ou renove o pagamento do programa antes de administrar a equipe.');
+    }
+  }
+  return program;
+}
+
+export async function listProgramTeam(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const memberships=await db.from('program_memberships').select('*').eq('organization_id',orgId).eq('program_id',program.id).eq('status','active').order('created_at');
+  fail(memberships);
+  const users=await authUsers((memberships.data||[]).map((m:any)=>m.user_id));
+  const byId=new Map(users.map((u:any)=>[u.id,u]));
+  const members=(memberships.data||[]).map((m:any)=>{
+    const user=byId.get(m.user_id) as any;
+    return {userId:m.user_id,name:user?.name||user?.email||'Usuário',email:user?.email||'',jobTitle:user?.jobTitle||'',role:m.role,permissions:m.permissions||{},createdAt:m.created_at,authorizedBy:m.authorized_by};
+  });
+  const allUsers=await listOrganizationUsersWithPermissions(orgId);
+  const memberIds=new Set(memberships.data?.map((m:any)=>m.user_id)||[]);
+  const candidates=allUsers.filter((u:any)=>!memberIds.has(u.id)).map((u:any)=>({userId:u.id,name:u.name,email:u.email,jobTitle:u.jobTitle||'',role:u.role||'editor'}));
+  return {program:{id:program.legacy_id||program.id,title:program.title||program.name,executiveUserId:program.executive_user_id||null},members,candidates};
+}
+
+export async function upsertProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,input:{userId:string;role?:string;permissions?:Record<string,unknown>}){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const role=(input.role||'editor') as ProgramTeamRole;
+  if(!TEAM_ROLES.includes(role)) throw new AppError(400,'VALIDATION_ERROR','Função de programa inválida.');
+  const orgMember=await db.from('organization_members').select('user_id').eq('organization_id',orgId).eq('user_id',input.userId).eq('active',true).maybeSingle();
+  fail(orgMember);
+  if(!orgMember.data) throw new AppError(404,'NOT_FOUND','O usuário não pertence à organização RS Play TV.');
+  if(program.executive_user_id===input.userId) throw new AppError(409,'CONFLICT','O diretor executivo responsável não pode ser rebaixado como membro da própria equipe.');
+  const permissions=permissionsForTeamRole(role,input.permissions);
+  await upsertProgramMembership(orgId,program.legacy_id||program.id,input.userId,permissions,role,actorUserId);
+  const roster=await authUsers([input.userId]);
+  const user=roster[0];
+  return {userId:input.userId,name:user?.name||user?.email||'Usuário',email:user?.email||'',jobTitle:user?.jobTitle||'',role,permissions};
+}
+
+export async function inviteProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,input:{email:string;name:string;jobTitle?:string;role?:string}){
+  await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  const email=(input.email||'').trim().toLowerCase();
+  const name=(input.name||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||name.length<2) throw new AppError(400,'VALIDATION_ERROR','Informe nome e e-mail válidos para o convite.');
+  const role=(input.role||'editor') as ProgramTeamRole;
+  if(!TEAM_ROLES.includes(role)) throw new AppError(400,'VALIDATION_ERROR','Função de programa inválida.');
+
+  const roster=await listOrganizationUsersWithPermissions(orgId);
+  const existingMember=roster.find((u:any)=>u.email.toLowerCase()===email);
+  if(existingMember){
+    return {member:await upsertProgramTeamMember(orgId,programId,actorUserId,actorRole,{userId:existingMember.id,role}),invited:false};
+  }
+
+  const authList=await db.auth.admin.listUsers({page:1,perPage:1000});
+  if(authList.error) throw new Error(authList.error.message);
+  let authUser=(authList.data.users||[]).find((u:any)=>(u.email||'').toLowerCase()===email);
+  let wasInvited=false;
+  if(!authUser){
+    const invited=await db.auth.admin.inviteUserByEmail(email,{data:{name,jobTitle:input.jobTitle||''}});
+    if(invited.error) throw new AppError(409,'CONFLICT',invited.error.message||'Não foi possível enviar o convite por e-mail.');
+    authUser=invited.data.user;
+    wasInvited=true;
+  }
+  if(!authUser?.id) throw new AppError(500,'PERSISTENCE_ERROR','O provedor de autenticação não retornou o usuário convidado.');
+
+  const existingOrgMembership=await db.from('organization_members').select('active').eq('organization_id',orgId).eq('user_id',authUser.id).maybeSingle();
+  fail(existingOrgMembership);
+  if(existingOrgMembership.data&&!existingOrgMembership.data.active){
+    if(wasInvited) await db.auth.admin.deleteUser(authUser.id);
+    throw new AppError(403,'FORBIDDEN_CONTEXT','Esta conta está suspensa na organização e não pode receber novo acesso.');
+  }
+  const orgInsert=existingOrgMembership.data
+    ? {error:null}
+    : await db.from('organization_members').insert({organization_id:orgId,user_id:authUser.id,role:'editor',active:true});
+  fail(orgInsert as any);
+  try{
+    const member=await upsertProgramTeamMember(orgId,programId,actorUserId,actorRole,{userId:authUser.id,role});
+    return {member,invited:wasInvited};
+  }catch(error){
+    if(!existingOrgMembership.data) await db.from('organization_members').delete().eq('organization_id',orgId).eq('user_id',authUser.id);
+    if(wasInvited) await db.auth.admin.deleteUser(authUser.id);
+    throw error;
+  }
+}
+
+export async function revokeProgramTeamMember(orgId:string,programId:string,actorUserId:string,actorRole:OrganizationRole,targetUserId:string){
+  const program=await assertProgramExecutiveOrAdmin(orgId,programId,actorUserId,actorRole);
+  if(program.executive_user_id===targetUserId) throw new AppError(409,'CONFLICT','Transfira a responsabilidade executiva antes de remover o diretor responsável.');
+  const result=await db.from('program_memberships').update({status:'revoked',revoked_at:now(),updated_at:now()})
+    .eq('organization_id',orgId).eq('program_id',program.id).eq('user_id',targetUserId).eq('status','active').select('user_id').maybeSingle();
+  fail(result);
+  if(!result.data) throw new AppError(404,'NOT_FOUND','Vínculo de equipe não encontrado.');
+  if(program.catalog_program_id){
+    const legacy=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',targetUserId).eq('catalog_program_id',program.catalog_program_id).eq('status','active');
+    fail(legacy);
+  }
+  return {success:true,userId:targetUserId,programId:program.legacy_id||program.id};
+}
+
 export async function listOrganizationUsersWithPermissions(orgId:string){const r=await db.from('organization_members').select('*').eq('organization_id',orgId).eq('active',true);fail(r);const users:any[]=await authUsers((r.data||[]).map((m:any)=>m.user_id).filter(Boolean));const byId=new Map(users.map((u:any)=>[u.id,u]));const members=(r.data||[]).filter((m:any)=>{if(byId.has(m.user_id))return true;logStructured('WARN','auth_user_unresolvable',{organizationId:orgId,userId:m.user_id});return false;});return Promise.all(members.map((m:any)=>mapUser(byId.get(m.user_id),orgId)));}
 export async function createOrganizationUserWithShowPermissions(orgId:string,input:any,userId?:string){const r=await db.auth.admin.createUser({email:input.email,password:input.loginCode||cryptoRandom(),email_confirm:true,user_metadata:{name:input.name,jobTitle:input.jobTitle}});if(r.error)throw new Error(r.error.message);await db.from('organization_members').insert({organization_id:orgId,user_id:r.data.user.id,role:input.role||'editor',active:true});return mapUser(r.data.user,orgId);}
 function cryptoRandom(){return `tm-${randomBytes(32).toString('base64url')}`;}
 
 export async function updateUserShowPermissions(orgId:string,userId:string,permissions:any[],actorUserId?:string){
+  const desired=new Set<string>();
+  for(const permission of permissions||[]){
+    if(!permission?.showId) continue;
+    const program=await one('programs',permission.showId);
+    if(program&&program.organization_id===orgId) desired.add(program.id);
+  }
+
+  const current=await db.from('program_memberships').select('program_id,role').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(current);
+  for(const membership of (current.data||[]) as any[]){
+    // The executive owner cannot lose their foundational membership through a generic RBAC edit.
+    if(membership.role==='executive'||desired.has(membership.program_id)) continue;
+    const revoked=await db.from('program_memberships').update({status:'revoked',revoked_at:now(),updated_at:now()})
+      .eq('organization_id',orgId).eq('program_id',membership.program_id).eq('user_id',userId).eq('status','active');
+    fail(revoked);
+  }
+
+  const legacy=await db.from('program_user_access').select('catalog_program_id').eq('organization_id',orgId).eq('user_id',userId).eq('status','active');
+  fail(legacy);
+  for(const grant of (legacy.data||[]) as any[]){
+    const linked=await db.from('programs').select('id').eq('organization_id',orgId).eq('catalog_program_id',grant.catalog_program_id);
+    fail(linked);
+    const ids=(linked.data||[]).map((p:any)=>p.id);
+    if(ids.some((id:string)=>desired.has(id))) continue;
+    const revoked=await db.from('program_user_access').update({status:'revoked',updated_at:now()})
+      .eq('organization_id',orgId).eq('user_id',userId).eq('catalog_program_id',grant.catalog_program_id).eq('status','active');
+    fail(revoked);
+  }
+
   for(const permission of permissions || []) {
     if (!permission?.showId) continue;
-    const program = await one('programs', permission.showId);
-    if (!program || program.organization_id !== orgId) continue;
-    const catalogId = program.catalog_program_id;
-    if (!catalogId) continue;
-    await db.from('program_user_access').upsert({organization_id:orgId,user_id:userId,catalog_program_id:catalogId,role:permission.canEditEditorial?'producer':'editor',status:'active',updated_at:now()},{onConflict:'organization_id,user_id,catalog_program_id'});
+    const role=permission.role==='executive'?'executive':permission.canEditEditorial?'producer':'editor';
+    await upsertProgramMembership(orgId,permission.showId,userId,{
+      canView:permission.canView!==false,canEditEditorial:permission.canEditEditorial===true,
+      canEditScript:permission.canEditScript===true,canOperateStudio:permission.canOperateStudio===true,
+      canManageSchedule:permission.canManageSchedule===true,canManageAssets:permission.canManageAssets===true,
+      canExport:permission.canExport===true
+    },role,actorUserId);
   }
   const users:any[]=await authUsers(); return mapUser(users.find((u:any)=>u.id===userId)||{},orgId);
 }
 export async function updateOrganizationUserStatusOrRole(orgId:string,userId:string,input:any,actorUserId?:string){const r=await db.from('organization_members').update({role:input.role,active:input.status!=='suspended',updated_at:now()}).eq('organization_id',orgId).eq('user_id',userId).select('*').single();fail(r);return r.data;}
-export async function listSaaSPlans(){const r=await db.from('commercial_plans').select('*').eq('active',true).order('price_cents');fail(r);return (r.data||[]).map((x:any):SaaSPlanDefinition=>({id:x.code,name:x.name,tagline:x.description,maxShows:999,maxUsers:999,monthlyPriceCents:x.price_cents||0,features:[]}));}
+export async function listSaaSPlans(){const r=await db.from('commercial_plans').select('*').eq('active',true).gt('price_cents',0).in('billing_period',['monthly','annual']).order('price_cents');fail(r);return (r.data||[]).map((x:any):SaaSPlanDefinition=>({id:x.code,name:x.name,tagline:x.description,maxShows:999,maxUsers:999,monthlyPriceCents:x.price_cents,features:[]}));}
 export async function listOrganizationSubscriptions(orgId:string){const r=await db.from('organization_subscriptions').select('*,commercial_plans(*)').eq('organization_id',orgId).order('created_at',{ascending:false});fail(r);return (r.data||[]).map((x:any):SaaSSubscription=>({id:x.id,organizationId:orgId,planId:x.commercial_plans?.code||'rsplay_programa_individual',planName:x.commercial_plans?.name||'',billingCycle:x.commercial_plans?.billing_period==='annual'?'annual':'monthly',amountCents:x.commercial_plans?.price_cents||0,currency:x.commercial_plans?.currency||'BRL',status:x.status==='active'?'active':x.status==='trial'?'trialing':'suspended',autoRenew:true,paymentGateway:'',paymentMethodType:'credit_card',paymentMethodLast4:'',paymentMethodBrand:'',gatewayCustomerId:'',gatewaySubscriptionId:'',currentPeriodStart:x.starts_at,currentPeriodEnd:x.ends_at||x.starts_at,lastRenewalAt:undefined,canceledAt:undefined,createdAt:x.created_at,updatedAt:x.updated_at}));}
 export async function listBillingInvoices(_orgId?:string){return [] as BillingInvoice[];}
 export async function listPaymentGatewayEvents(_orgId?:string){return [] as PaymentGatewayEvent[];}
-export async function subscribeOrUpdatePlan(orgId:string,input:any,userId:string){const plan=await db.from('commercial_plans').select('*').eq('code',input.planId).single();fail(plan);const old=await db.from('organization_subscriptions').select('id').eq('organization_id',orgId).eq('status','active').limit(1);if(old.data?.[0])await db.from('organization_subscriptions').update({status:'cancelled',ends_at:now(),updated_at:now()}).eq('id',old.data[0].id);const r=await db.from('organization_subscriptions').insert({organization_id:orgId,plan_id:plan.data.id,status:'active'}).select('*').single();fail(r);return (await listOrganizationSubscriptions(orgId))[0];}
-export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_autoRenew?:boolean,_userId?:string){return true;}
-export async function processAutomaticRenewalCycle(orgId:string,id:string,_simulateFailure?:boolean,_userId?:string){const subs=await listOrganizationSubscriptions(orgId);const s=subs.find(x=>x.id===id);if(!s)throw new AppError(404,'NOT_FOUND','Assinatura não encontrada.');return s;}
+export async function subscribeOrUpdatePlan(_orgId:string,_input:any,_userId:string){throw new AppError(410,'CONFLICT','A contratação simulada foi desativada. Use o checkout PIX do VenoPag; a assinatura só é criada após confirmação do pagamento.');}
+export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_autoRenew?:boolean,_userId?:string){throw new AppError(410,'CONFLICT','Renovação automática não está disponível na integração inicial VenoPag PIX.');}
+export async function processAutomaticRenewalCycle(_orgId:string,_id:string,_simulateFailure?:boolean,_userId?:string){throw new AppError(410,'CONFLICT','Renovação simulada foi desativada. A integração inicial VenoPag cobre cobranças PIX avulsas.');}
 export async function buildAdminReportSummary(orgId:string):Promise<AdminReportSummary>{const [subs,users,shows]=await Promise.all([listOrganizationSubscriptions(orgId),listOrganizationUsersWithPermissions(orgId),listShows(orgId)]);return {mrrCents:subs.reduce((a,x)=>a+x.amountCents,0),activeSubscriptionsCount:subs.filter(x=>x.status==='active').length,autoRenewEnabledCount:subs.filter(x=>x.autoRenew).length,paidInvoicesTotalCents:0,pendingInvoicesTotalCents:0,usersCount:users.length,showsReport:await Promise.all(shows.map(async s=>({showId:s.id,showTitle:s.title,format:s.format,host:s.host,episodesCount:(await listEpisodes(orgId,s.id)).length,publishedOrReadyCount:(await listEpisodes(orgId,s.id)).filter(e=>e.status==='published'||e.status==='ready').length,totalPlannedMinutes:0,scheduledSessionsCount:(await listScheduleEvents(orgId,s.id)).length,authorizedUsersCount:users.length})))};}
 export async function populateOrganizationWorkspace(){return true;}
-export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){const user=await createOrganizationUserWithShowPermissions(organizationId,{email:payload.email,name:payload.name,loginCode:payload.loginCode,jobTitle:payload.jobTitle,role:payload.role||'editor'});let show:Show|undefined;if(payload.newShowTitle){show=await createShow(organizationId,{title:payload.newShowTitle,host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'});}const subscription=await subscribeOrUpdatePlan(organizationId,{planId:payload.planId},user.id);return {user,show,subscription,invoice:undefined,gatewayEvent:undefined};}
+
+/**
+ * Programs eligible for checkout are intentionally separate from operationally authorized programs.
+ * Pending executive memberships may see their own program name for billing, but do not gain workspace access.
+ */
+export async function listBillablePrograms(organizationId: string, userId: string, includeAll: boolean) {
+  let query = db.from('programs')
+    .select('id,legacy_id,title,name')
+    .eq('organization_id', organizationId)
+    .order('created_at', { ascending: true });
+  if (!includeAll) query = query.eq('executive_user_id', userId);
+  const result = await query;
+  fail(result);
+  return (result.data || []).map((program: any) => ({
+    id: legacyId(program),
+    title: program.title || program.name || 'Programa sem título',
+  }));
+}
+
+export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){
+  let programSpec:any;
+  let existingProgram:any;
+
+  if(payload.showMode==='knowledge_base'&&payload.knowledgeBaseSlug){
+    const catalog=await db.from('program_catalog')
+      .select('id,slug,name,description,host,format,active,contractable')
+      .eq('slug',payload.knowledgeBaseSlug).eq('active',true).single();
+    fail(catalog);
+    if(!catalog.data.contractable) throw new AppError(409,'CONFLICT','Este programa do catálogo não está disponível para contratação.');
+    programSpec={title:catalog.data.name,description:catalog.data.description||'',host:catalog.data.host||'',format:catalog.data.format||'Outro',catalogProgramId:catalog.data.id};
+  }else if(payload.showMode==='new'&&payload.newShowTitle?.trim()){
+    programSpec={title:payload.newShowTitle.trim(),host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'};
+  }else if(payload.showMode==='existing'&&payload.existingShowId){
+    existingProgram=await one('programs',payload.existingShowId);
+    if(!existingProgram||existingProgram.organization_id!==organizationId) throw new AppError(404,'NOT_FOUND','Programa existente não encontrado nesta organização.');
+    if(existingProgram.executive_user_id) throw new AppError(403,'CONFLICT','Este programa já possui um diretor executivo responsável. Solicite autorização para integrar a equipe.');
+  }else{
+    throw new AppError(400,'VALIDATION_ERROR','Selecione um programa do catálogo, um programa autoral ou um programa existente autorizado.');
+  }
+
+  const user=await createOrganizationUserWithShowPermissions(organizationId,{
+    email:payload.email,name:payload.name,loginCode:payload.loginCode,jobTitle:payload.jobTitle,role:payload.role||'producer'
+  });
+
+  try{
+    let show:Show|undefined;
+    if(existingProgram){
+      const updated=await db.from('programs').update({executive_user_id:user.id,updated_at:now()})
+        .eq('id',existingProgram.id).is('executive_user_id',null).select('*').single();
+      fail(updated);
+      await upsertProgramMembership(organizationId,updated.data.legacy_id||updated.data.id,user.id,{
+        canView:true,canEditEditorial:false,canEditScript:false,canOperateStudio:false,
+        canManageSchedule:false,canManageAssets:false,canExport:false
+      },'executive',user.id,'pending');
+      show=await mapShow(updated.data);
+    }else{
+      show=await createShow(organizationId,programSpec,user.id);
+    }
+    return {user,show,subscription:undefined,invoice:undefined,gatewayEvent:undefined};
+  }catch(error){
+    await db.from('organization_members').delete().eq('organization_id',organizationId).eq('user_id',user.id);
+    await db.auth.admin.deleteUser(user.id);
+    throw error;
+  }
+}

@@ -84,7 +84,7 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newJobTitle, setNewJobTitle] = useState('Apresentador & Produtor do Programa');
-  const [newLoginCode, setNewLoginCode] = useState('programa123');
+  const [newLoginCode, setNewLoginCode] = useState('');
   const [newRole, setNewRole] = useState<OrganizationRole>('producer');
   const [newAllowedShowIds, setNewAllowedShowIds] = useState<string[]>([]);
 
@@ -121,7 +121,7 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newName.trim() || !newEmail.trim()) return;
+    if (!newName.trim() || !newEmail.trim() || newLoginCode.trim().length < 8) { setFeedback({ type: 'error', text: 'Informe nome, e-mail e senha com pelo menos 8 caracteres.' }); return; }
     setSavingId('create-user');
     setFeedback(null);
     try {
@@ -140,7 +140,7 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
         name: newName.trim(),
         email: newEmail.trim(),
         jobTitle: newJobTitle.trim(),
-        loginCode: newLoginCode.trim() || 'rsplay123',
+        loginCode: newLoginCode.trim(),
         role: newRole,
         showPermissions,
       });
@@ -478,7 +478,7 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
                     required
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
-                    placeholder="ex: Lucas Andrade (Login Esporte)"
+                    placeholder="Nome do profissional"
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
                   />
                 </div>
@@ -500,8 +500,10 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
                     Senha / Código de Acesso
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     required
+                    minLength={8}
+                    autoComplete="new-password"
                     value={newLoginCode}
                     onChange={(e) => setNewLoginCode(e.target.value)}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
@@ -593,9 +595,6 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
                       <div className="flex flex-wrap items-center gap-2.5">
                         <span className="text-base font-bold text-zinc-100">{u.name}</span>
                         <span className="text-xs font-mono text-zinc-400">· {u.email}</span>
-                        <span className="text-xs font-mono text-amber-400">
-                          · Código: {u.loginCode || 'rsplay123'}
-                        </span>
                         {isCurrentSession && (
                           <span className="text-xs font-semibold text-emerald-400">
                             · Conectado Agora

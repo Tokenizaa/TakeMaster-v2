@@ -235,6 +235,7 @@ export interface CameraConfig {
 export interface Show {
   id: string;
   organizationId?: string;
+  executiveUserId?: string;
   title: string;
   description: string;
   host: string;

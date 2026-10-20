@@ -22,11 +22,16 @@ import {
   getShowById,
   listAuditLogs,
   listBillingInvoices,
+  listBillablePrograms,
   listEpisodes,
   listLibraryAssets,
   listOrganizationsByIds,
   listOrganizationSubscriptions,
   listOrganizationUsersWithPermissions,
+  listProgramTeam,
+  inviteProgramTeamMember,
+  upsertProgramTeamMember,
+  revokeProgramTeamMember,
   listParticipants,
   listPaymentGatewayEvents,
   listProductions,
@@ -37,6 +42,7 @@ import {
   recordAiGeneration,
   recordAuditLog,
   registerSaaSAccountWithSubscription,
+  resolveCanonicalOrganizationId,
   subscribeOrUpdatePlan,
   toggleSubscriptionAutoRenew,
   updateEpisode,
@@ -87,15 +93,31 @@ import {
   logStructured,
   requestTracingMiddleware,
 } from './src/server/logger';
+import { createVenoPagPixCheckout, getVenoPagPixCheckout, handleVenoPagWebhook, listVenoPagPixCheckouts, verifyVenoPagPixCheckout, verifyVenoPagWebhook } from './src/server/venopag';
+import { OrganizationRole } from './src/domain/contracts';
 
 export function createApiApp() {
   const app = express();
-  app.use(express.json({ limit: '10mb' }));
+  app.use(express.json({ limit: '10mb', verify: (req, _res, buffer) => { (req as Request & { rawBody?: Buffer }).rawBody = Buffer.from(buffer); } }));
 
   const requireOrganizationAdmin = (role: string) => {
     if (!['owner', 'admin'].includes(role)) {
       throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
     }
+  };
+
+  const requireBillingOperator = (role: string) => {
+    if (!['owner', 'admin', 'producer'].includes(role)) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Somente a direção executiva ou administração pode gerenciar contratação.');
+    }
+  };
+
+  const requireProgramBillingAccess = async (auth: { organizationId: string; userId: string; role: OrganizationRole }, programId: string) => {
+    requireBillingOperator(auth.role);
+    if (['owner', 'admin'].includes(auth.role)) return;
+    if (!programId) throw new AppError(400, 'VALIDATION_ERROR', 'programId é obrigatório.');
+    // The payment service verifies executive_user_id for producer-role accounts. Pending owners
+    // must be able to pay before their full program permissions become active.
   };
   app.use(requestTracingMiddleware);
 
@@ -172,7 +194,9 @@ export function createApiApp() {
 
   app.post('/api/auth/register', async (req, res, next) => {
     try {
-      const organizationId = req.body?.organizationId || 'org-takemaster-studio';
+      // Public registration always belongs to the single canonical RS Play TV organization.
+      // Never trust an organization id supplied by an anonymous client.
+      const organizationId = await resolveCanonicalOrganizationId();
       const result = await registerSaaSAccountWithSubscription(req.body || {}, organizationId);
       const session = await buildAuthSession(result.user.id, organizationId);
       res.status(201).json({
@@ -234,7 +258,110 @@ export function createApiApp() {
     }
   });
 
+  // --- VenoPag PIX checkout and signed webhook ---
+  app.post('/api/billing/pix-checkout', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const { programId, planCode, idempotencyKey, customerName } = req.body || {};
+      await requireProgramBillingAccess(auth, String(programId || ''));
+      const intent = await createVenoPagPixCheckout({
+        organizationId: auth.organizationId,
+        userId: auth.userId,
+        userRole: auth.role,
+        programId: String(programId || ''),
+        planCode: String(planCode || ''),
+        idempotencyKey: String(idempotencyKey || ''),
+        customerName: typeof customerName === 'string' ? customerName.slice(0, 120) : undefined,
+      });
+      res.status(201).json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.get('/api/billing/pix-checkouts', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireBillingOperator(auth.role);
+      const intents = await listVenoPagPixCheckouts(auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
+      res.json({ intents });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.get('/api/billing/pix-checkout/:id', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireBillingOperator(auth.role);
+      const intent = await getVenoPagPixCheckout(req.params.id, auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
+      res.json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.post('/api/billing/pix-checkout/:id/verify', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireBillingOperator(auth.role);
+      const intent = await verifyVenoPagPixCheckout(req.params.id, auth.organizationId, ['owner', 'admin'].includes(auth.role) ? undefined : auth.userId);
+      res.json({ intent });
+    } catch (err: any) {
+      if (err?.statusCode) {
+        res.status(err.statusCode).json({ code: err.code || 'VENOPAG_ERROR', message: err.message });
+      } else {
+        next(err);
+      }
+    }
+  });
+
+  app.post('/api/webhooks/venopag', async (req, res) => {
+    const rawBody = (req as Request & { rawBody?: Buffer }).rawBody;
+    const signature = String(req.header('X-Veno-Signature') || '');
+    if (!rawBody || !verifyVenoPagWebhook(signature, rawBody)) {
+      res.status(401).json({ code: 'INVALID_WEBHOOK_SIGNATURE', message: 'Assinatura do webhook inválida ou expirada.' });
+      return;
+    }
+    try {
+      const result = await handleVenoPagWebhook(req.body);
+      res.status(200).json({ received: true, result });
+    } catch (err: any) {
+      const status = Number.isInteger(err?.statusCode) ? err.statusCode : 500;
+      res.status(status).json({ code: err?.code || 'VENOPAG_WEBHOOK_FAILED', message: err?.message || 'Falha ao processar webhook.' });
+    }
+  });
+
   // --- RSPLAY TV SAAS BILLING & PAYMENT GATEWAY ENDPOINTS ---
+  // Billing-only program list: pending executives may see their own program for checkout,
+  // without adding it to operational workspace results or granting program permissions.
+  app.get('/api/billing/eligible-programs', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireBillingOperator(auth.role);
+      const programs = await listBillablePrograms(
+        auth.organizationId,
+        auth.userId,
+        ['owner', 'admin'].includes(auth.role)
+      );
+      res.json({ programs });
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
@@ -387,6 +514,43 @@ export function createApiApp() {
     } catch (err) {
       next(err);
     }
+  });
+
+  // --- PROGRAM-SCOPED TEAM MANAGEMENT ---
+  app.get('/api/programs/:programId/team', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      res.json(await listProgramTeam(auth.organizationId, req.params.programId, auth.userId, auth.role));
+    } catch (err) { next(err); }
+  });
+
+  app.post('/api/programs/:programId/team', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const { email, name, jobTitle, role } = req.body || {};
+      const result = await inviteProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, {
+        email: String(email || ''), name: String(name || ''), jobTitle: typeof jobTitle === 'string' ? jobTitle : '', role: String(role || 'editor')
+      });
+      res.status(result.invited ? 201 : 200).json(result);
+    } catch (err) { next(err); }
+  });
+
+  app.put('/api/programs/:programId/team/:userId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const { role, permissions } = req.body || {};
+      const member = await upsertProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, {
+        userId: req.params.userId, role: String(role || 'editor'), permissions: permissions && typeof permissions === 'object' ? permissions : undefined
+      });
+      res.json({ member });
+    } catch (err) { next(err); }
+  });
+
+  app.delete('/api/programs/:programId/team/:userId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      res.json(await revokeProgramTeamMember(auth.organizationId, req.params.programId, auth.userId, auth.role, req.params.userId));
+    } catch (err) { next(err); }
   });
 
   // --- SHOWS & CATALOG (Filtered by Program-Level RBAC) ---

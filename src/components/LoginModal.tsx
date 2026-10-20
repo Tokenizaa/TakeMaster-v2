@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   AuthSession,
   Organization,
-  PaymentMethodType,
   SaaSRegistrationPayload,
   ShowFormat,
   SubscriptionPlanId,
@@ -20,7 +19,6 @@ import {
   KeyRound,
   Lock,
   UserPlus,
-  CreditCard,
   Sparkles,
 } from 'lucide-react';
 
@@ -59,9 +57,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [emailInput, setEmailInput] = useState('');
   const [codeInput, setCodeInput] = useState('');
-  const [selectedOrgId] = useState(
-    currentSession?.activeOrganization.id || 'org-takemaster-studio'
-  );
+  // Use the authenticated organization only; public registration resolves the canonical org server-side.
+  const selectedOrgId = currentSession?.activeOrganization.id;
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -79,7 +76,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [regForm, setRegForm] = useState<SaaSRegistrationPayload>({
     name: '',
     email: '',
-    loginCode: 'rsplay123',
+    loginCode: '',
     jobTitle: 'Produtor Executivo',
     role: 'producer',
     showMode: 'knowledge_base',
@@ -88,10 +85,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     newShowHost: '',
     newShowFormat: 'Entrevista',
     planId: 'rsplay_studio_pro',
-    paymentMethodType: 'credit_card',
-    paymentMethodBrand: 'Visa Corporate',
-    paymentMethodLast4: '4829',
-    autoRenew: true,
+    paymentMethodType: 'pix_automatico',
+    paymentMethodBrand: '',
+    paymentMethodLast4: '',
+    autoRenew: false,
   });
 
   useEffect(() => {
@@ -109,7 +106,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     setError(null);
     setSubmitting(true);
     try {
-      await onLogin(user.email, selectedOrgId, user.loginCode || 'rsplay123');
+      if (!user.loginCode) {
+        setError('Por segurança, use o formulário de login com sua própria senha.');
+        return;
+      }
+      await onLogin(user.email, selectedOrgId, user.loginCode);
       onClose();
     } catch (err: any) {
       setError(err.message || 'Falha ao autenticar perfil do programa.');
@@ -137,8 +138,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!regForm.name.trim() || !regForm.email.trim()) {
-      setError('Informe seu nome completo e e-mail corporativo.');
+    if (!regForm.name.trim() || !regForm.email.trim() || !regForm.loginCode.trim()) {
+      setError('Informe nome, e-mail e uma senha de acesso.');
       return;
     }
     setError(null);
@@ -155,7 +156,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       }
       onClose();
     } catch (err: any) {
-      setError(err.message || 'Falha ao concluir o primeiro cadastro e conexão com o gateway.');
+      setError(err.message || 'Falha ao concluir o cadastro e configurar o programa.');
     } finally {
       setSubmitting(false);
     }
@@ -311,12 +312,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                         </div>
 
                         <div className="flex items-center justify-between pt-2 border-t border-zinc-800/60">
-                          <span className="text-[11px] text-zinc-500 font-mono">
-                            Código: {u.loginCode || 'rsplay123'}
+                          <span className="text-[11px] text-zinc-500">
+                            {u.loginCode ? 'Acesso rápido disponível' : 'Entre com sua própria senha'}
                           </span>
                           <button
                             type="button"
-                            disabled={submitting || isCurrent}
+                            disabled={submitting || isCurrent || !u.loginCode}
                             onClick={() => handleQuickProfileLogin(u)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${
                               isCurrent
@@ -434,9 +435,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                       Código / Senha de Acesso
                     </label>
                     <input
-                      type="text"
+                      type="password"
+                      required
+                      minLength={8}
+                      autoComplete="new-password"
                       value={regForm.loginCode}
                       onChange={(e) => setRegForm({ ...regForm, loginCode: e.target.value })}
+                      placeholder="Mínimo de 8 caracteres"
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
                     />
                   </div>
@@ -552,74 +557,18 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 )}
               </div>
 
-              {/* Step 3: Conexão com Pagante & Plano Mensal Recorrente */}
-              <div className="p-4 rounded-xl bg-zinc-900/70 border border-amber-500/30 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
-                  <CreditCard className="w-4 h-4" />
-                  <span>3. Conexão do Pagante & Plano Mensal Recorrente (Gateway RSPlay Pay)</span>
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                  3. Contratação e pagamento
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">Plano SaaS Mensal</label>
-                    <select
-                      value={regForm.planId}
-                      onChange={(e) =>
-                        setRegForm({
-                          ...regForm,
-                          planId: e.target.value as SubscriptionPlanId,
-                        })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                    >
-                      <option value="rsplay_programa_individual">
-                        Starter Programa Individual (R$ 490/mês)
-                      </option>
-                      <option value="rsplay_studio_pro">Pro Multi-Programa & IA (R$ 1.290/mês)</option>
-                      <option value="rsplay_broadcast_enterprise">
-                        Network Emissora Full (R$ 2.890/mês)
-                      </option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">Método do Pagante</label>
-                    <select
-                      value={regForm.paymentMethodType}
-                      onChange={(e) =>
-                        setRegForm({
-                          ...regForm,
-                          paymentMethodType: e.target.value as PaymentMethodType,
-                        })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
-                    >
-                      <option value="credit_card">Cartão de Crédito Recorrente</option>
-                      <option value="pix_automatico">PIX Automático Banco Central</option>
-                      <option value="boleto_corporativo">Boleto Faturado Corporativo</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs text-zinc-400 mb-1">
-                      Final do Cartão / Identificador
-                    </label>
-                    <input
-                      type="text"
-                      maxLength={4}
-                      value={regForm.paymentMethodLast4 || '4829'}
-                      onChange={(e) =>
-                        setRegForm({ ...regForm, paymentMethodLast4: e.target.value })
-                      }
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100 font-mono"
-                    />
-                  </div>
-                </div>
+                <p className="text-sm leading-relaxed text-zinc-300">
+                  Primeiro criaremos sua conta e prepararemos o programa. Depois, na área de Contratação, você escolhe o plano e gera uma cobrança PIX pelo VenoPag. A assinatura só será ativada após confirmação do pagamento. Esta etapa não solicita dados de cartão nem ativa uma assinatura fictícia.
+                </p>
               </div>
 
               <div className="flex items-center justify-between pt-2">
                 <span className="text-xs text-zinc-400">
-                  Cria a conta, libera o programa escolhido e emite a 1ª fatura paga no gateway.
+                  Cria a conta e prepara o programa; a contratação é concluída depois pelo PIX.
                 </span>
                 <button
                   type="submit"
@@ -630,7 +579,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   <span>
                     {submitting
                       ? 'Conectando Pagante e Criando Acesso...'
-                      : 'Concluir Cadastro & Ativar Assinatura'}
+                      : 'Criar conta e preparar programa'}
                   </span>
                 </button>
               </div>
