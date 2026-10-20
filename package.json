@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "governance:check": "node scripts/governance-check.js"
+    "governance:check": "node scripts/governance-check.js",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:install": "playwright install chromium",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
