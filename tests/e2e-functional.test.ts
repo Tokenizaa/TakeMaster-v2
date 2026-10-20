@@ -59,8 +59,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(state.session.user.id).toBe(session.user.id);
   });
 
-  test('CATALOG-001 ciclo de criação/leitura/edição/exclusão de programa', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('CATALOG-001 ciclo de criação/leitura/edição/exclusão de programa', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
@@ -88,8 +88,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
-  test('CATALOG-002 valida payload inválido sem criar programa', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('CATALOG-002 valida payload inválido sem criar programa', async ({ request }) => {
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
@@ -101,8 +100,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect((await response.json()).code).toBe('VALIDATION_ERROR');
   });
 
-  test('PRODUCTION-001 ciclo de temporada: criação/leitura/edição/exclusão', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('PRODUCTION-001 ciclo de temporada: criação/leitura/edição/exclusão', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
@@ -132,15 +131,15 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
-  test('EPISODE-001 ciclo de episódio: criação/leitura/edição/exclusão', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('EPISODE-001 ciclo de episódio: criação/leitura/edição/exclusão', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
     const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
     const showsResponse = await request.get('/api/shows', { headers });
     expect(showsResponse.status(), await showsResponse.text()).toBe(200);
-    const shows = (await showsResponse.json()).shows;
+    const shows = (await showsResponse.json());
     test.skip(!shows.length, 'A identidade E2E precisa de ao menos um programa para criar episódio.');
     let id: string | undefined;
     try {
@@ -162,8 +161,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
-  test('GUEST-001 ciclo de participante: criação/leitura/edição/exclusão', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('GUEST-001 ciclo de participante: criação/leitura/edição/exclusão', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
@@ -188,8 +187,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
-  test('SCHEDULE-001 ciclo de agenda: criação/leitura/edição/exclusão', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('SCHEDULE-001 ciclo de agenda: criação/leitura/edição/exclusão', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
@@ -219,8 +218,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
-  test('LIBRARY-001 ciclo de asset: criação/leitura/edição/exclusão', async ({
-    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.'); request }) => {
+  test('LIBRARY-001 ciclo de asset: criação/leitura/edição/exclusão', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
