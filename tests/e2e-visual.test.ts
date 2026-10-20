@@ -1,152 +1,171 @@
 import { expect, test } from '@playwright/test';
 
-/**
- * TakeMaster V2 — first replacement E2E certification layer.
- *
- * Safety contract:
- * - Targets only E2E_BASE_URL supplied by the environment.
- * - No localhost fallback and no local server auto-start.
- * - No persistent writes, registrations, subscription changes, or payment attempts.
- * - API cases are read-only or intentionally unauthenticated negative checks.
- *
- * Stable IDs are included in test titles so CI output and evidence can be traced.
- */
 const baseURL = process.env.E2E_BASE_URL?.trim();
 
 test.beforeEach(async ({}, testInfo) => {
-  test.skip(!baseURL, 'E2E_BASE_URL must point to the explicitly configured test target.');
-  testInfo.annotations.push({ type: 'suite', description: 'TakeMaster V2 replacement E2E' });
+  testInfo.annotations.push({ type: 'suite', description: 'TakeMaster V2 E2E replacement suite' });
+  testInfo.annotations.push({ type: 'target', description: baseURL ? new URL(baseURL).origin : 'E2E_BASE_URL ausente' });
 });
 
-test.describe('PLATFORM-HEALTH — availability and public boundary', () => {
-  test('PLATFORM-001 health endpoint returns a healthy response', async ({ request }) => {
-    const response = await request.get('/health');
-    expect(response.status()).toBe(200);
+test.describe('PLATFORM — saúde e interface pública', () => {
+  test('PLATFORM-001 endpoint de saúde responde sem fallback local', async ({ request }) => {
+    const response = await request.get('/api/health');
+    expect(response.status(), await response.text()).toBe(200);
     const body = await response.json();
-    expect(body.status).toBe('ok');
+    expect(['ok', 'degraded']).toContain(body.status);
+    expect(body.service).toBe('rsplay-tv-takemaster-v2');
     expect(typeof body.timestamp).toBe('string');
   });
 
-  test('PLATFORM-002 health endpoint returns JSON', async ({ request }) => {
-    const response = await request.get('/health');
-    expect(response.headers()['content-type']).toContain('application/json');
-  });
-});
-
-test.describe('AUTH — unauthenticated access and invalid credentials', () => {
-  test('AUTH-001 session endpoint rejects a missing bearer token', async ({ request }) => {
-    const response = await request.post('/api/auth/session', { data: {} });
-    expect(response.status()).toBe(401);
-    expect(await response.json()).toMatchObject({ code: 'UNAUTHORIZED' });
-  });
-
-  test('AUTH-002 organization switching rejects a missing bearer token', async ({ request }) => {
-    const response = await request.post('/api/auth/switch-org', { data: { organizationId: 'org-invalid-test' } });
-    expect(response.status()).toBe(401);
-    expect(await response.json()).toMatchObject({ code: 'UNAUTHORIZED' });
-  });
-
-  test('AUTH-003 organization switching rejects a missing organization ID', async ({ request }) => {
-    const response = await request.post('/api/auth/switch-org', {
-      headers: { authorization: 'Bearer invalid-test-token' },
-      data: {},
-    });
-    expect([400, 401]).toContain(response.status());
-  });
-
-  test('AUTH-004 login rejects an empty credential payload without exposing internals', async ({ request }) => {
-    const response = await request.post('/api/auth/login', { data: {} });
-    expect(response.status()).toBeGreaterThanOrEqual(400);
-    expect(response.status()).toBeLessThan(500);
+  test('PLATFORM-002 endpoint de saúde expõe estado operacional estruturado', async ({ request }) => {
+    const response = await request.get('/api/health');
+    expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body).toHaveProperty('code');
-    expect(JSON.stringify(body)).not.toMatch(/stack|secret|service.role.key/i);
-  });
-});
-
-test.describe('AUTHZ — protected domain endpoints reject anonymous access', () => {
-  const protectedReadEndpoints = [
-    ['/api/shows', 'shows'],
-    ['/api/episodes', 'episodes'],
-    ['/api/productions', 'productions'],
-    ['/api/guests', 'guests'],
-    ['/api/schedule', 'schedule'],
-    ['/api/library', 'library'],
-    ['/api/billing/overview', 'billing'],
-    ['/api/admin/overview', 'admin'],
-    ['/api/knowledge-base/shows/e2e-no-show/knowledge', 'knowledge-base'],
-  ] as const;
-
-  for (const [path, id] of protectedReadEndpoints) {
-    test(`AUTHZ-${id.toUpperCase()}-001 ${path} rejects anonymous access`, async ({ request }) => {
-      const response = await request.get(path);
-      expect([401, 403]).toContain(response.status());
-    });
-  }
-});
-
-test.describe('BILLING / VenoPag — safety boundaries', () => {
-  test('VENOPAG-001 billing overview rejects anonymous access', async ({ request }) => {
-    const response = await request.get('/api/billing/overview');
-    expect([401, 403]).toContain(response.status());
+    expect(body).toHaveProperty('database');
+    expect(body).toHaveProperty('ai');
+    expect(body).toHaveProperty('metrics');
   });
 
-  test('VENOPAG-002 subscription mutation rejects anonymous access without creating a subscription', async ({ request }) => {
-    const response = await request.post('/api/billing/subscribe', {
-      data: { planId: 'e2e-no-write', paymentMethodType: 'mock' },
-    });
-    expect([401, 403]).toContain(response.status());
-  });
-
-  test('VENOPAG-003 auto-renew mutation rejects anonymous access', async ({ request }) => {
-    const response = await request.post('/api/billing/subscriptions/e2e-no-write/auto-renew', {
-      data: { autoRenew: false },
-    });
-    expect([401, 403]).toContain(response.status());
-  });
-
-  test('VENOPAG-004 renewal mutation rejects anonymous access', async ({ request }) => {
-    const response = await request.post('/api/billing/subscriptions/e2e-no-write/renew-now', {
-      data: { simulateFailure: true },
-    });
-    expect([401, 403]).toContain(response.status());
-  });
-});
-
-test.describe('ADMIN — authorization boundary', () => {
-  test('ADMIN-GLOBAL-001 admin overview rejects anonymous access', async ({ request }) => {
-    const response = await request.get('/api/admin/overview');
-    expect([401, 403]).toContain(response.status());
-  });
-
-  test('ADMIN-GLOBAL-002 user creation rejects anonymous access', async ({ request }) => {
-    const response = await request.post('/api/admin/users', {
-      data: { name: 'E2E Must Not Persist', email: 'e2e-no-write@example.invalid', role: 'viewer' },
-    });
-    expect([401, 403]).toContain(response.status());
-  });
-});
-
-test.describe('AI — authorization and request validation boundary', () => {
-  test('AI-001 AI endpoints do not allow anonymous generation', async ({ request }) => {
-    const response = await request.post('/api/ai/diagnosis', { data: {} });
-    expect([400, 401, 403, 404, 405]).toContain(response.status());
-  });
-});
-
-test.describe('UI — configured deployment smoke', () => {
-  test('UI-001 application entrypoint responds successfully', async ({ page }) => {
+  test('PLATFORM-003 a entrada da aplicação carrega HTML', async ({ page }) => {
     const response = await page.goto('/');
-    expect(response, 'The configured E2E target must serve the application entrypoint').not.toBeNull();
+    expect(response).not.toBeNull();
     expect(response!.status()).toBeLessThan(400);
     await expect(page.locator('body')).not.toBeEmpty();
   });
 
-  test('UI-002 app shell renders without a browser page error', async ({ page }) => {
-    const pageErrors: string[] = [];
-    page.on('pageerror', error => pageErrors.push(error.message));
+  test('PLATFORM-004 shell inicial não lança erro JavaScript de página', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
-    expect(pageErrors).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+});
+
+test.describe('AUTH — sessão, login e troca de organização sem credenciais válidas', () => {
+  test('AUTH-001 sessão não aceita ausência de bearer token', async ({ request }) => {
+    const response = await request.get('/api/auth/session');
+    expect(response.status()).toBe(401);
+    expect((await response.json()).code).toBe('UNAUTHORIZED');
+  });
+
+  test('AUTH-002 sessão rejeita token adulterado', async ({ request }) => {
+    const response = await request.get('/api/auth/session', {
+      headers: { authorization: 'Bearer tmv2.invalid.invalid' },
+    });
+    expect(response.status()).toBe(401);
+  });
+
+  test('AUTH-003 login vazio falha com erro de credenciais e sem stack trace', async ({ request }) => {
+    const response = await request.post('/api/auth/login', { data: {} });
+    expect(response.status()).toBe(401);
+    const body = await response.json();
+    expect(body.code).toBe('UNAUTHORIZED');
+    expect(JSON.stringify(body)).not.toMatch(/stack|service.role.key|SUPABASE_SERVICE_ROLE_KEY/i);
+  });
+
+  test('AUTH-004 login com senha ausente não cria sessão', async ({ request }) => {
+    const response = await request.post('/api/auth/login', { data: { emailOrUserId: 'e2e-invalid@example.invalid' } });
+    expect(response.status()).toBe(401);
+    expect((await response.json()).code).toBe('UNAUTHORIZED');
+  });
+
+  test('AUTH-005 troca de organização sem autenticação é bloqueada', async ({ request }) => {
+    const response = await request.post('/api/auth/switch-org', { data: { organizationId: 'org-e2e-invalid' } });
+    expect(response.status()).toBe(401);
+  });
+
+  test('AUTH-006 troca de organização rejeita token inválido', async ({ request }) => {
+    const response = await request.post('/api/auth/switch-org', {
+      headers: { authorization: 'Bearer invalid-token' },
+      data: { organizationId: 'org-e2e-invalid' },
+    });
+    expect(response.status()).toBe(401);
+  });
+});
+
+test.describe('AUTHZ — limites anônimos para rotas protegidas', () => {
+  const protectedReads = [
+    ['AUTHZ-STATE-001', '/api/state'],
+    ['AUTHZ-METRICS-001', '/api/metrics'],
+    ['AUTHZ-SHOWS-001', '/api/shows'],
+    ['AUTHZ-EPISODES-001', '/api/episodes'],
+    ['AUTHZ-PRODUCTIONS-001', '/api/productions'],
+    ['AUTHZ-GUESTS-001', '/api/guests'],
+    ['AUTHZ-SCHEDULE-001', '/api/schedule'],
+    ['AUTHZ-LIBRARY-001', '/api/library'],
+    ['AUTHZ-BILLING-001', '/api/billing/overview'],
+    ['AUTHZ-ADMIN-001', '/api/admin/overview'],
+    ['AUTHZ-KNOWLEDGE-001', '/api/knowledge-base/shows/e2e-no-show/knowledge'],
+  ] as const;
+
+  for (const [id, path] of protectedReads) {
+    test(`${id} ${path} rejeita acesso anônimo`, async ({ request }) => {
+      const response = await request.get(path);
+      expect(response.status(), `Rota protegida ${path} não deve permitir acesso anônimo`).toBe(401);
+      const body = await response.json();
+      expect(body.code).toBe('UNAUTHORIZED');
+    });
+  }
+
+  const protectedMutations = [
+    ['AUTHZ-SHOWS-WRITE-001', 'post', '/api/shows', { title: 'Não persistir', format: 'Entrevista' }],
+    ['AUTHZ-EPISODES-WRITE-001', 'post', '/api/episodes', { title: 'Não persistir', showId: 'invalid' }],
+    ['AUTHZ-PRODUCTIONS-WRITE-001', 'post', '/api/productions', { title: 'Não persistir', showId: 'invalid' }],
+    ['AUTHZ-GUESTS-WRITE-001', 'post', '/api/guests', { name: 'Não persistir' }],
+    ['AUTHZ-SCHEDULE-WRITE-001', 'post', '/api/schedule', { title: 'Não persistir', showId: 'invalid' }],
+    ['AUTHZ-LIBRARY-WRITE-001', 'post', '/api/library', { title: 'Não persistir' }],
+    ['AUTHZ-ADMIN-WRITE-001', 'post', '/api/admin/users', { name: 'Não persistir', email: 'e2e-no-write@example.invalid' }],
+    ['AUTHZ-BILLING-WRITE-001', 'post', '/api/billing/subscribe', { planId: 'e2e-no-write', paymentMethodType: 'mock' }],
+    ['AUTHZ-SEED-WRITE-001', 'post', '/api/seed/reset', {}],
+  ] as const;
+
+  for (const [id, method, path, data] of protectedMutations) {
+    test(`${id} ${method.toUpperCase()} ${path} bloqueia antes de mutar dados`, async ({ request }) => {
+      const response = await request[method](path, { data });
+      expect(response.status(), `A mutação ${path} deve ser bloqueada sem autenticação`).toBe(401);
+      expect((await response.json()).code).toBe('UNAUTHORIZED');
+    });
+  }
+});
+
+test.describe('VENOPAG — bloqueios sem autenticação; nenhuma cobrança real', () => {
+  test('VENOPAG-001 assinatura bloqueia chamada anônima', async ({ request }) => {
+    const response = await request.post('/api/billing/subscribe', {
+      data: { planId: 'e2e-no-write', paymentMethodType: 'pix_automatico' },
+    });
+    expect(response.status()).toBe(401);
+  });
+
+  test('VENOPAG-002 alteração de renovação bloqueia chamada anônima', async ({ request }) => {
+    const response = await request.post('/api/billing/subscriptions/e2e-no-write/auto-renew', { data: { autoRenew: false } });
+    expect(response.status()).toBe(401);
+  });
+
+  test('VENOPAG-003 renovação manual bloqueia chamada anônima', async ({ request }) => {
+    const response = await request.post('/api/billing/subscriptions/e2e-no-write/renew-now', { data: { simulateFailure: true } });
+    expect(response.status()).toBe(401);
+  });
+});
+
+test.describe('AI — fronteira de autenticação', () => {
+  for (const action of ['diagnosis', 'research', 'outline', 'script', 'repiques', 'shorts', 'editor-script', 'assist']) {
+    test(`AI-${action.toUpperCase()}-001 /api/ai/${action} exige sessão`, async ({ request }) => {
+      const response = await request.post(`/api/ai/${action}`, { data: {} });
+      expect(response.status()).toBe(401);
+      expect((await response.json()).code).toBe('UNAUTHORIZED');
+    });
+  }
+});
+
+test.describe('ADMIN — bloqueios anônimos de gestão', () => {
+  test('ADMIN-001 alteração de permissões exige sessão', async ({ request }) => {
+    const response = await request.put('/api/admin/users/e2e-invalid/permissions', { data: { permissions: [] } });
+    expect(response.status()).toBe(401);
+  });
+
+  test('ADMIN-002 alteração de função/estado exige sessão', async ({ request }) => {
+    const response = await request.put('/api/admin/users/e2e-invalid/status', { data: { status: 'suspended' } });
+    expect(response.status()).toBe(401);
   });
 });
