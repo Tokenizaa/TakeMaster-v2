@@ -279,6 +279,30 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(Array.isArray(body.invoices)).toBe(true);
     expect(Array.isArray(body.gatewayEvents)).toBe(true);
   });
+  test('AUTH-012 troca para organização sem vínculo é recusada', async ({ request }) => {
+    const login = await request.post('/api/auth/login', {
+      data: { emailOrUserId: email, organizationId, loginCode },
+    });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const response = await request.post('/api/auth/switch-org', {
+      headers: { authorization: `Bearer ${session.token}` },
+      data: { organizationId: 'org-e2e-not-a-member' },
+    });
+    expect([401, 403]).toContain(response.status());
+  });
+
+  test('KNOWLEDGE-001 catálogo público de conhecimento retorna coleção estruturada', async ({ request }) => {
+    const response = await request.get('/api/knowledge-base/programs');
+    expect(response.status(), await response.text()).toBe(200);
+    const programs = await response.json();
+    expect(Array.isArray(programs)).toBe(true);
+    if (programs.length) {
+      expect(programs[0]).toHaveProperty('slug');
+      expect(programs[0]).toHaveProperty('nome');
+    }
+  });
+
   test('UI-010 sessão autenticada permite navegar pelos módulos operacionais', async ({ request, page }) => {
     const login = await request.post('/api/auth/login', {
       data: { emailOrUserId: email, organizationId, loginCode },
