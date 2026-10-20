@@ -15,7 +15,9 @@
     "test": "tsx --test tests/v2.unit.test.ts",
     "test:integration": "bun --env-file=.env.test run test:integration:runner",
     "test:integration:runner": "tsx --test tests/v2.integration.test.ts",
-    "governance:check": "node scripts/governance-check.js"
+    "governance:check": "node scripts/governance-check.js",
+    "test:e2e": "playwright test tests/e2e-visual.test.ts",
+    "test:e2e:diagnose": "playwright test tests/e2e-visual.test.ts --workers=1 --reporter=line --max-failures=1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
@@ -38,6 +40,7 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
-    "wrangler": "4.131.1"
+    "wrangler": "4.131.1",
+    "@playwright/test": "1.56.1"
   }
 }
