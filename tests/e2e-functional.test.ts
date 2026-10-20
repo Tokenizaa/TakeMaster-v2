@@ -362,7 +362,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
       localStorage.setItem('tmv2_active_org_id', orgId);
     }, { token: session.token, orgId: session.activeOrganization.id });
     await page.goto('/');
-    await page.getByRole('button', { name: /trocar o Login Individual de Programa/i }).click();
+    await page.locator('button[title*="trocar o Login Individual de Programa"]').click();
     await expect(page.getByText(/recuperar acesso|esqueci minha senha|redefinir senha/i)).toBeVisible();
   });
 
