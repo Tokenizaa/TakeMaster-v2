@@ -201,8 +201,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     try {
       const created = await request.post('/api/schedule', { headers, data: {
         title: `E2E Agenda ${Date.now()}`, showId: shows[0].id, type: 'briefing',
-        status: 'scheduled', startAt: new Date(Date.now() + 86400000).toISOString(),
-        endAt: new Date(Date.now() + 90000000).toISOString(), notes: 'Registro E2E temporário',
+        status: 'scheduled', scheduledStart: new Date(Date.now() + 86400000).toISOString(),
+        scheduledEnd: new Date(Date.now() + 90000000).toISOString(), notes: 'Registro E2E temporário',
       }});
       expect(created.status(), await created.text()).toBe(201);
       id = (await created.json()).id;
