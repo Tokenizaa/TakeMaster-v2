@@ -366,4 +366,22 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     await expect(page.getByText(/recuperar acesso|esqueci minha senha|redefinir senha/i)).toBeVisible();
   });
 
+  test('ONBOARDING-001 primeiro cadastro apresenta campos obrigatórios sem enviar dados', async ({ request, page }) => {
+    const login = await request.post('/api/auth/login', {
+      data: { emailOrUserId: email, organizationId, loginCode },
+    });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    await page.addInitScript(({ token, orgId }) => {
+      localStorage.setItem('tmv2_auth_token', token);
+      localStorage.setItem('tmv2_active_org_id', orgId);
+    }, { token: session.token, orgId: session.activeOrganization.id });
+    await page.goto('/');
+    await page.locator('button[title*="trocar o Login Individual de Programa"]').click();
+    await page.getByRole('button', { name: /Primeiro Cadastro \+ Pagante/ }).click();
+    await expect(page.getByText('Nome Completo *')).toBeVisible();
+    await expect(page.getByText('E-mail Corporativo *')).toBeVisible();
+    await expect(page.getByText(/Programa Vinculado no Primeiro Cadastro/)).toBeVisible();
+  });
+
 });
