@@ -1,51 +1,46 @@
-# Contrato canônico da nova suíte de testes — TakeMaster V2
+# Contrato canônico da suíte E2E — TakeMaster V2
 
-> **Estado atual:** suíte legada removida na Fase 1. Este documento é o contrato para a reconstrução, não uma declaração de cobertura já implementada.
-
-O inventário da limpeza está em [PHASE-1-INVENTORY-AND-CLEANUP.md](./PHASE-1-INVENTORY-AND-CLEANUP.md).
+**Estado:** Fase 1 (remoção dos E2E legados) concluída; Fase 2 (reconstrução da suíte) implementada em `main`; execução integral pendente da Fase 3.
 
 ## Regras obrigatórias
 
-1. Toda funcionalidade existente deve ser mapeada a testes identificáveis por domínio, fluxo e sequência.
-2. Cada caso deve declarar pré-condições, dados usados, ação, resultado esperado e evidência verificável.
-3. Testes E2E devem cobrir jornadas completas na interface, API e persistência, conforme o objetivo do caso.
-4. Casos devem validar sucesso, entradas inválidas, falhas, permissões e limites relevantes.
-5. Testes não podem depender de dados compartilhados ou apagar dados preexistentes.
-6. Testes de integração remota exigem ambiente e organização de teste explicitamente isolados.
-7. Pagamentos VenoPag devem usar simulações controladas para toda a certificação automatizada. Nenhuma suíte automatizada pode iniciar cobrança real.
-8. O único PIX real de R$ 2,00 é uma etapa manual final, executada pelo usuário após aprovação das demais fases.
-9. Falha exige diagnóstico e, se o teste estiver inadequado, reescrita do teste; não remendo incremental de testes legados.
-10. A CI só poderá declarar testes aprovados quando executar a suíte substituta real, sem pular casos críticos silenciosamente.
+1. Todo teste tem identificador estável por domínio e cenário.
+2. Testes precisam refletir rotas e comportamentos confirmados no código; não inventar endpoint de integração inexistente.
+3. Cobertura autenticada exige identidade e organização de teste dedicadas, configuradas por ambiente.
+4. Cenários com escrita exigem simultaneamente `E2E_TARGET_KIND=test|staging` e `E2E_ALLOW_PERSISTENT_WRITES=true`; devem limpar apenas recursos criados pelo próprio teste.
+5. A URL alvo é `E2E_BASE_URL` explícita. Não usar localhost, fallback ou inicialização automática de servidor.
+6. A bateria completa é executada após terminar a autoria dos testes, não durante sua construção.
+7. Não realizar cobrança real, PIX, reset de seed ou chamadas pagas de IA como parte da bateria automatizada.
+8. Falha de teste de comportamento esperado deve ser investigada como possível defeito do produto; não enfraquecer a asserção apenas para obter verde.
+9. Evidências devem incluir resultado por identificador, motivo da falha, screenshots/traces quando aplicáveis e correção/reexecução.
+10. Testes pulados por ausência de credenciais/configuração devem aparecer como bloqueados/skipped, nunca como aprovados.
 
-## Domínios mínimos de cobertura
+## Mapa atual da suíte
 
-- Cadastro, autenticação, sessão, logout e recuperação de acesso.
-- Onboarding e primeiro acesso.
-- Administrador geral e administradores de organização.
-- Usuários, organizações, papéis, permissões e isolamento entre organizações.
-- Programas, temporadas, episódios, participantes/convidados e relações entre entidades.
-- Produções, agenda, biblioteca, modo estúdio e rotinas operacionais existentes.
-- IA, credenciais, fallback, erros, limites e validação de respostas.
-- Base de conhecimento e persistência.
-- Assinaturas, checkout, PIX, notificações, idempotência, cancelamento e concessão/revogação de acesso.
-- Segurança, validação de entradas, autorização, consistência, falhas de serviços e recuperação.
-- Build, tipagem, configuração, migrations e pipeline de CI/CD.
+| Família | IDs / cobertura |
+|---|---|
+| Plataforma | `PLATFORM-001..004`: health e shell web |
+| Autenticação | `AUTH-001..006`: fronteiras anônimas e token inválido; `AUTH-010..014`: login/sessão, troca de organização, logout e recuperação |
+| Autorização | `AUTHZ-*`: leitura e mutação anônimas em rotas protegidas |
+| Catálogo | `CATALOG-001..002`: CRUD de programa e validação |
+| Produção | `PRODUCTION-001`: ciclo de temporada |
+| Episódios | `EPISODE-001`: ciclo CRUD |
+| Participantes | `GUEST-001`: ciclo CRUD |
+| Agenda | `SCHEDULE-001`: ciclo CRUD |
+| Biblioteca | `LIBRARY-001`: ciclo CRUD |
+| Workspace/UI | `WORKSPACE-001`, `UI-001..010`: estado agregado e navegação |
+| Conhecimento | `KNOWLEDGE-001` e limite de acesso à identidade de programa |
+| IA | `AI-*`: bloqueios anônimos para rotas de geração |
+| Billing/admin | `BILLING-001`, `ADMIN-*`, `VENOPAG-*`: overview e limites de autorização sem iniciar cobranças |
 
-A lista final de módulos será confirmada contra o código e os fluxos realmente implementados. Documentação de funcionalidade não substitui evidência de teste executado.
+## Limites conhecidos no produto atual
 
-## Critérios para cada teste
+A inspeção do servidor não encontrou endpoints de logout, recuperação de senha nem webhook de gateway. Os testes de aceite de logout/recuperação são intencionalmente explícitos e não devem ser convertidos em aprovação enquanto esses fluxos estiverem ausentes. A integração de webhook/idempotência precisa de contrato real antes de se escrever um teste de sucesso; a suíte não deve inventar uma rota fictícia. Chamadas autenticadas de geração de IA ficam fora da execução contra provedores reais para evitar custos e efeitos externos.
 
-Cada teste deverá ter identificador estável (por exemplo, `AUTH-001`, `ADMIN-GLOBAL-001`, `PROGRAM-001`, `VENOPAG-001`) e registrar:
-- resultado: aprovado, reprovado ou bloqueado;
-- evidência e motivo da falha;
-- correção realizada na aplicação ou reescrita do teste;
-- reexecução após a alteração;
-- impacto sobre dados, integrações e permissões.
+## Configuração e evidência
 
-## Estado de implementação após a Fase 1
-
-- Testes legados: removidos.
-- Testes substitutos: ainda não implementados.
-- Execução de testes na CI: temporariamente desativada, até a suíte substituta ser criada na Fase 2.
-- Build, TypeScript e lockfile: não certificados nesta fase.
-- PIX real: proibido até a etapa manual final.
+- `E2E_BASE_URL`: URL remota aprovada.
+- `E2E_LOGIN_EMAIL`, `E2E_LOGIN_CODE`, `E2E_ORGANIZATION_ID`: identidade de teste.
+- `E2E_TARGET_KIND=test|staging` + `E2E_ALLOW_PERSISTENT_WRITES=true`: habilita CRUD com limpeza.
+- `playwright.config.ts` exige URL HTTP(S), recusa localhost e produz relatório HTML/JSON, traces, screenshots e vídeos em falhas.
+- O primeiro disparo integral é da Fase 3; nenhum teste foi executado durante a Fase 2.
