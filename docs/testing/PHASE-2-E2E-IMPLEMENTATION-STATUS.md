@@ -1,58 +1,53 @@
-# Fase 2 — Registro de implementação da suíte E2E
+# Fase 2 — Reconstrução da suíte E2E
 
-**Status:** implementação inicial registrada; fase ainda não concluída nem certificada por execução.
+**Status da fase:** implementação da suíte concluída; execução integral reservada à Fase 3, conforme o plano de trabalho.  
+**Branch:** `main`  
+**Regra de destino:** `E2E_BASE_URL` explícita; sem fallback ou servidor local automático.
 
-## Commits desta entrega
+## Implementação registrada
 
-- `57223d9` — primeira suíte de certificação substituta.
-- `4a6f318` — comandos Playwright no `package.json`.
-- `741a029` — configuração exige `E2E_BASE_URL`; remove fallback para localhost e inicialização automática de servidor.
-- `0078f93` — endpoints dos testes alinhados às rotas existentes.
+- `tests/e2e-visual.test.ts`: smoke da interface, saúde, autenticação negativa, autorização anônima, barreiras administrativas, IA e billing.
+- `tests/e2e-functional.test.ts`: login autenticado, sessão, estado do workspace, navegação autenticada, catálogo de conhecimento, isolamento entre organizações, rotinas CRUD de programa/temporada/episódio/participante/agenda/biblioteca, billing sem cobrança e visão administrativa.
+- `playwright.config.ts`: carrega `.env`, exige URL absoluta HTTP(S), recusa localhost, não inicializa servidor local e coleta relatório HTML/JSON, screenshot, trace e vídeo em falhas.
+- `package.json`: comandos `test:e2e`, `test:e2e:report`, `test:e2e:install` e `test:e2e:debug` disponíveis.
+- Identificadores estáveis por domínio/cenário para permitir localizar e corrigir um caso sem alterar os demais.
 
-## Segurança de execução
+## Condições de execução
 
-- A suíte não define URL local por padrão.
-- A configuração exige que `E2E_BASE_URL` seja fornecida pelo ambiente.
-- Os testes atuais não fazem cadastro, criação de usuários, alterações de assinatura nem cobranças.
-- As verificações de mutação enviam requisições sem autenticação e validam a barreira de autorização.
-- O PIX real de R$ 2,00 continua fora da automação e depende de autorização manual do usuário.
-- Não foi executada nenhuma bateria nesta entrega.
+Variáveis lidas pelo harness:
 
-## Casos implementados
+- `E2E_BASE_URL`: URL remota explicitamente aprovada.
+- `E2E_LOGIN_EMAIL`, `E2E_LOGIN_CODE`, `E2E_ORGANIZATION_ID`: identidade e organização de teste.
+- `E2E_TARGET_KIND=test` ou `staging` e `E2E_ALLOW_PERSISTENT_WRITES=true`: habilitam apenas cenários de escrita com limpeza por identificador criado pelo próprio cenário.
 
-| Identificador | Cobertura |
+Sem credenciais, os casos autenticados ficam bloqueados/skipped explicitamente; não são reportados como aprovados. Sem a dupla proteção de ambiente de teste e permissão de escrita, os cenários CRUD não são executados. Nenhum teste inicia cobrança, altera assinatura, reseta seed ou realiza PIX real.
+
+## Cobertura criada
+
+| Domínio | Casos cobertos |
 |---|---|
-| PLATFORM-001..002 | Health endpoint e tipo de conteúdo |
-| AUTH-001..004 | Sessão sem token, troca de organização sem token, validação de troca e login inválido |
-| AUTHZ-SHOWS-001 | Leitura de programas sem autenticação |
-| AUTHZ-EPISODES-001 | Leitura de episódios sem autenticação |
-| AUTHZ-PRODUCTIONS-001 | Leitura de produções sem autenticação |
-| AUTHZ-GUESTS-001 | Leitura de convidados sem autenticação |
-| AUTHZ-SCHEDULE-001 | Leitura de agenda sem autenticação |
-| AUTHZ-LIBRARY-001 | Leitura de biblioteca sem autenticação |
-| AUTHZ-BILLING-001 | Leitura de assinatura sem autenticação |
-| AUTHZ-ADMIN-001 | Leitura administrativa sem autenticação |
-| AUTHZ-KNOWLEDGE-BASE-001 | Acesso à base de conhecimento sem autenticação |
-| VENOPAG-001..004 | Limites de acesso anônimo para leitura, assinatura, renovação automática e renovação manual |
-| ADMIN-GLOBAL-001..002 | Limites de acesso anônimo para visão administrativa e criação de usuário |
-| AI-001 | Geração de diagnóstico sem autenticação |
-| UI-001..002 | Entrada da aplicação e ausência de erros de página no navegador |
+| Plataforma | Health operacional, estrutura do health, carregamento da aplicação e erros de página |
+| Autenticação | Token ausente/adulterado, login inválido, sessão válida, troca de organização e tentativa de organização sem vínculo |
+| Autorização | Leitura e mutação anônimas bloqueadas em workspace, métricas, catálogo, episódios, temporadas, convidados, agenda, biblioteca, administração, billing, IA e conhecimento por programa |
+| Catálogo | Criar, ler, editar e excluir programa; payload inválido |
+| Operação | CRUD de temporada, episódio, participante, agenda e asset, com limpeza do recurso criado |
+| Workspace/UI | Estado agregado autenticado e navegação entre módulos operacionais |
+| Administração | Visão administrativa e comportamento conforme papel |
+| Billing | Leitura de planos/assinaturas/faturas/eventos sem iniciar cobrança; mutações anônimas bloqueadas |
+| Conhecimento e IA | Catálogo público e barreiras de autenticação nas rotas de geração |
+| Critérios de aceite | Casos explícitos para logout e recuperação de credenciais, que devem falhar enquanto a interface não oferecer esses fluxos |
 
-## Cobertura que ainda precisa ser implementada antes da execução integral
+## Lacunas de produto identificadas no código
 
-A camada atual é principalmente de limites de autorização anônima e smoke test; **não representa a cobertura funcional completa exigida**. Ainda faltam jornadas autenticadas com identidades de teste isoladas, incluindo:
+- Não foi encontrada implementação de logout na interface.
+- Não foi encontrada recuperação/redefinição de credenciais.
+- O servidor atual não expõe rota de webhook de gateway nem contrato de idempotência de webhook. Não foi inventado um endpoint fictício para simular uma integração inexistente.
+- As jornadas de geração de IA autenticada não são disparadas contra provedores reais nesta fase, para evitar chamadas externas/custos durante a construção.
 
-- cadastro, autenticação bem-sucedida, logout, persistência/expiração de sessão e recuperação de acesso;
-- onboarding completo e primeiro acesso;
-- rotinas do administrador geral e administradores de organização;
-- gestão de organizações, membros, papéis, permissões, limites e isolamento entre organizações;
-- criação, leitura, atualização e relacionamentos de programas, temporadas, episódios e participantes;
-- produção, agenda, biblioteca, estúdio e fluxos operacionais da interface;
-- contratos de IA, credenciais/fallback, limites e respostas inválidas;
-- persistência da base de conhecimento;
-- assinatura e ciclo de pagamento com gateway estritamente simulado, webhooks, idempotência, cancelamento e revogação/concessão de acesso;
-- recuperação de falhas e evidências detalhadas por cenário.
+Essas lacunas ficam registradas para tratamento na Fase 3/4 e não devem ser confundidas com testes aprovados. Um teste que identifique ausência de funcionalidade é uma falha de produto a corrigir, não motivo para enfraquecer a asserção.
 
-## Critério de conclusão
+## Execução e evidências
 
-A Fase 2 só estará concluída quando todos os fluxos aplicáveis acima estiverem implementados, revisados em conjunto, executados na bateria completa e acompanhados de evidências reais. Não declarar aprovação com base apenas em compilação, existência dos arquivos ou testes não executados.
+A bateria E2E **não foi executada durante a construção**. O primeiro disparo integral ocorre na Fase 3, depois que a suíte está escrita. A configuração gera evidências por teste em `test-results/e2e`, JSON em `test-results/playwright-results.json` e relatório HTML em `playwright-report`.
+
+A Fase 2 encerra a autoria/configuração da suíte; não declara que o produto passou nos testes. Nenhum resultado de execução foi inventado.
