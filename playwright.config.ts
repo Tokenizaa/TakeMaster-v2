@@ -1,11 +1,23 @@
+import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = process.env.E2E_BASE_URL?.trim();
 
 if (!baseURL) {
-  throw new Error(
-    'E2E_BASE_URL is required. Set it to the approved test target; this suite never falls back to localhost or starts a local server.'
-  );
+  throw new Error('E2E_BASE_URL is required in the environment or .env; this suite never falls back to localhost or starts a local server.');
+}
+
+let target: URL;
+try {
+  target = new URL(baseURL);
+} catch {
+  throw new Error('E2E_BASE_URL must be a valid absolute HTTP(S) URL.');
+}
+if (!['http:', 'https:'].includes(target.protocol)) {
+  throw new Error('E2E_BASE_URL must use HTTP or HTTPS.');
+}
+if (['localhost', '127.0.0.1', '::1'].includes(target.hostname.toLowerCase())) {
+  throw new Error('Localhost is not an approved E2E target. Set E2E_BASE_URL to the explicitly approved remote environment.');
 }
 
 export default defineConfig({
