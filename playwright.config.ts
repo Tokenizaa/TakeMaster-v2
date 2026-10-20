@@ -1,15 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const externalBaseURL = process.env.E2E_BASE_URL?.trim();
-const baseURL = externalBaseURL || 'http://127.0.0.1:3000';
+const baseURL = process.env.E2E_BASE_URL?.trim();
+
+if (!baseURL) {
+  throw new Error(
+    'E2E_BASE_URL is required. Set it to the approved test target; this suite never falls back to localhost or starts a local server.'
+  );
+}
 
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/e2e-visual.test.ts',
   timeout: 45_000,
-  expect: {
-    timeout: 8_000,
-  },
+  expect: { timeout: 8_000 },
   fullyParallel: false,
   workers: 1,
   retries: 0,
@@ -34,14 +37,4 @@ export default defineConfig({
       args: process.platform === 'linux' ? ['--no-sandbox', '--disable-dev-shm-usage'] : [],
     },
   },
-  webServer: externalBaseURL
-    ? undefined
-    : {
-        command: 'bun run dev',
-        url: baseURL,
-        reuseExistingServer: !process.env.CI,
-        timeout: 120_000,
-        stdout: 'pipe',
-        stderr: 'pipe',
-      },
 });
