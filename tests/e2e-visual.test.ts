@@ -74,7 +74,7 @@ test.describe('AUTHZ — protected domain endpoints reject anonymous access', ()
     ['/api/library', 'library'],
     ['/api/billing/overview', 'billing'],
     ['/api/admin/overview', 'admin'],
-    ['/api/knowledge-base', 'knowledge-base'],
+    ['/api/knowledge-base/shows/e2e-no-show/knowledge', 'knowledge-base'],
   ] as const;
 
   for (const [path, id] of protectedReadEndpoints) {
@@ -129,7 +129,7 @@ test.describe('ADMIN — authorization boundary', () => {
 
 test.describe('AI — authorization and request validation boundary', () => {
   test('AI-001 AI endpoints do not allow anonymous generation', async ({ request }) => {
-    const response = await request.post('/api/ai/generate', { data: {} });
+    const response = await request.post('/api/ai/diagnosis', { data: {} });
     expect([400, 401, 403, 404, 405]).toContain(response.status());
   });
 });
