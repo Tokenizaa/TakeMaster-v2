@@ -195,7 +195,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
     const showsResponse = await request.get('/api/shows', { headers });
     expect(showsResponse.status(), await showsResponse.text()).toBe(200);
-    const shows = (await showsResponse.json()).shows;
+    const shows = (await showsResponse.json());
     test.skip(!shows.length, 'A identidade E2E precisa de ao menos um programa para testar agenda.');
     let id: string | undefined;
     try {
