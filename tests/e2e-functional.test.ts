@@ -337,4 +337,33 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(errors).toEqual([]);
   });
 
+  test('AUTH-013 interface autenticada oferece encerramento de sessão', async ({ request, page }) => {
+    const login = await request.post('/api/auth/login', {
+      data: { emailOrUserId: email, organizationId, loginCode },
+    });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    await page.addInitScript(({ token, orgId }) => {
+      localStorage.setItem('tmv2_auth_token', token);
+      localStorage.setItem('tmv2_active_org_id', orgId);
+    }, { token: session.token, orgId: session.activeOrganization.id });
+    await page.goto('/');
+    await expect(page.getByRole('button', { name: /sair|encerrar sessão|logout/i })).toBeVisible();
+  });
+
+  test('AUTH-014 formulário de acesso oferece recuperação de credenciais', async ({ request, page }) => {
+    const login = await request.post('/api/auth/login', {
+      data: { emailOrUserId: email, organizationId, loginCode },
+    });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    await page.addInitScript(({ token, orgId }) => {
+      localStorage.setItem('tmv2_auth_token', token);
+      localStorage.setItem('tmv2_active_org_id', orgId);
+    }, { token: session.token, orgId: session.activeOrganization.id });
+    await page.goto('/');
+    await page.getByRole('button', { name: /trocar o Login Individual de Programa/i }).click();
+    await expect(page.getByText(/recuperar acesso|esqueci minha senha|redefinir senha/i)).toBeVisible();
+  });
+
 });
