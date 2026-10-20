@@ -96,7 +96,7 @@ test.describe('AUTHZ — limites anônimos para rotas protegidas', () => {
     ['AUTHZ-LIBRARY-001', '/api/library'],
     ['AUTHZ-BILLING-001', '/api/billing/overview'],
     ['AUTHZ-ADMIN-001', '/api/admin/overview'],
-    ['AUTHZ-KNOWLEDGE-001', '/api/knowledge-base/shows/e2e-no-show/knowledge'],
+    ['AUTHZ-KNOWLEDGE-001', '/api/shows/e2e-no-show/knowledge'],
   ] as const;
 
   for (const [id, path] of protectedReads) {
