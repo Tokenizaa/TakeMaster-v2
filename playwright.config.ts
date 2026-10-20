@@ -16,7 +16,7 @@ try {
 if (!['http:', 'https:'].includes(target.protocol)) {
   throw new Error('E2E_BASE_URL must use HTTP or HTTPS.');
 }
-if (['localhost', '127.0.0.1', '::1'].includes(target.hostname.toLowerCase())) {
+if (['localhost', '127.0.0.1', '::1', '[::1]'].includes(target.hostname.toLowerCase())) {
   throw new Error('Localhost is not an approved E2E target. Set E2E_BASE_URL to the explicitly approved remote environment.');
 }
 
