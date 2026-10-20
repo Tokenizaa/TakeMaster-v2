@@ -273,7 +273,11 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(response.status(), await response.text()).toBe(200);
     const body = await response.json();
     expect(Array.isArray(body.users)).toBe(true);
-    expect(Array.isArray(body.organizations)).toBe(true);
+    expect(Array.isArray(body.shows)).toBe(true);
+    expect(Array.isArray(body.plans)).toBe(true);
+    expect(Array.isArray(body.subscriptions)).toBe(true);
+    expect(Array.isArray(body.invoices)).toBe(true);
+    expect(Array.isArray(body.gatewayEvents)).toBe(true);
   });
   test('UI-010 sessão autenticada permite navegar pelos módulos operacionais', async ({ request, page }) => {
     const login = await request.post('/api/auth/login', {
