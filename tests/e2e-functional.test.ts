@@ -275,4 +275,38 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(Array.isArray(body.users)).toBe(true);
     expect(Array.isArray(body.organizations)).toBe(true);
   });
+  test('UI-010 sessão autenticada permite navegar pelos módulos operacionais', async ({ request, page }) => {
+    const login = await request.post('/api/auth/login', {
+      data: { emailOrUserId: email, organizationId, loginCode },
+    });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    await page.addInitScript(({ token, orgId }) => {
+      localStorage.setItem('tmv2_auth_token', token);
+      localStorage.setItem('tmv2_active_org_id', orgId);
+    }, { token: session.token, orgId: session.activeOrganization.id });
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto('/');
+    await expect(page.getByRole('button', { name: /Painel do Programa/ })).toBeVisible();
+    const navigation = [
+      'Episódios & Roteiros',
+      'Participantes & Convidados',
+      'Catálogo & Temporadas',
+      'Agenda de Produção',
+      'Biblioteca de Assets',
+      'Estúdio & Câmeras',
+      'Assinatura & Gateway',
+      'Painel Administrativo',
+    ];
+    for (const label of navigation) {
+      const item = page.getByRole('button', { name: new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) }).first();
+      if (await item.isVisible().catch(() => false)) {
+        await item.click();
+        await expect(item).toBeVisible();
+      }
+    }
+    expect(errors).toEqual([]);
+  });
+
 });
