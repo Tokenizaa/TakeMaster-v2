@@ -26,6 +26,9 @@ export interface AuthenticatedContext {
 }
 
 const INTERNAL_SESSION_KEY = process.env.INTERNAL_SESSION_KEY || '';
+const INTERNAL_SESSION_KEY_MIN_BYTES = 32;
+const hasStrongInternalSessionKey =
+  Buffer.byteLength(INTERNAL_SESSION_KEY, 'utf8') >= INTERNAL_SESSION_KEY_MIN_BYTES;
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || '';
 const authClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false } }) : null;
@@ -43,7 +46,7 @@ function signSessionPayload(payload: { userId: string; organizationId: string })
 export function verifySessionToken(
   token: string
 ): { userId: string; organizationId: string } | null {
-  if (!INTERNAL_SESSION_KEY || !token || !token.startsWith('tmv2.')) return null;
+  if (!hasStrongInternalSessionKey || !token || !token.startsWith('tmv2.')) return null;
   const parts = token.split('.');
   if (parts.length !== 3) return null;
   const [, data, sig] = parts;
@@ -66,7 +69,13 @@ export function verifySessionToken(
 }
 
 export async function buildAuthSession(userId: string, organizationId?: string): Promise<AuthSession> {
-  if (!INTERNAL_SESSION_KEY) throw new AppError(500, 'CONFIGURATION_ERROR', 'INTERNAL_SESSION_KEY não configurada.');
+  if (!hasStrongInternalSessionKey) {
+    throw new AppError(
+      500,
+      'CONFIGURATION_ERROR',
+      'INTERNAL_SESSION_KEY ausente ou fraca: configure uma chave aleatória com pelo menos 32 bytes.'
+    );
+  }
 
   // Admin auth lookup requires the service-role client (see getAuthUserById), not the publishable client.
   const user = await getAuthUserById(userId);
