@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 
 // Default to the deployed Cloudflare Worker so tests do not require a local server or a new URL.
-const baseURL = (process.env.E2E_BASE_URL?.trim() || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\\/$/, '');
+const baseURL = (process.env.E2E_BASE_URL?.trim() || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\/$/, '');
 
 let target: URL;
 try {
