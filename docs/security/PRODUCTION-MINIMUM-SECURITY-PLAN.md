@@ -56,6 +56,8 @@
 - [ ] Ainda é necessário confirmar que o valor configurado no ambiente de implantação atende ao mínimo e que a autenticação funciona após a mudança.
 - [ ] Build, lint e suíte Playwright não foram executados por esta alteração remota; não marcar como validados até executar e registrar resultados.
 
+- [x] `src/server/ai.ts` registra o tipo do erro do provedor de IA, em vez de gravar mensagens brutas que podem conter detalhes sensíveis; o diagnóstico detalhado deve permanecer em telemetria controlada e sem segredos.
+
 ## 4. Critérios objetivos de liberação
 
 A liberação só pode ser aprovada quando:
