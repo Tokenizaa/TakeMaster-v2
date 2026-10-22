@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-const baseURL = process.env.E2E_BASE_URL?.trim();
+const baseURL = (process.env.E2E_BASE_URL?.trim() || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\\/$/, '');
+const isProductionTarget = new URL(baseURL).hostname === 'takemaster-v2.olfnetto.workers.dev';
 
 test.beforeEach(async ({}, testInfo) => {
   testInfo.annotations.push({ type: 'suite', description: 'TakeMaster V2 E2E replacement suite' });
@@ -122,6 +123,7 @@ test.describe('AUTHZ — limites anônimos para rotas protegidas', () => {
 
   for (const [id, method, path, data] of protectedMutations) {
     test(`${id} ${method.toUpperCase()} ${path} bloqueia antes de mutar dados`, async ({ request }) => {
+      test.skip(isProductionTarget, 'Não executar mutações contra produção; valide estas rotas em ambiente isolado.');
       const response = await request[method](path, { data });
       expect(response.status(), `A mutação ${path} deve ser bloqueada sem autenticação`).toBe(401);
       expect((await response.json()).code).toBe('UNAUTHORIZED');
@@ -131,6 +133,7 @@ test.describe('AUTHZ — limites anônimos para rotas protegidas', () => {
 
 test.describe('VENOPAG — bloqueios sem autenticação; nenhuma cobrança real', () => {
   test('VENOPAG-001 assinatura bloqueia chamada anônima', async ({ request }) => {
+    test.skip(isProductionTarget, 'Não executar endpoints de cobrança contra produção.');
     const response = await request.post('/api/billing/subscribe', {
       data: { planId: 'e2e-no-write', paymentMethodType: 'pix_automatico' },
     });
@@ -138,11 +141,13 @@ test.describe('VENOPAG — bloqueios sem autenticação; nenhuma cobrança real'
   });
 
   test('VENOPAG-002 alteração de renovação bloqueia chamada anônima', async ({ request }) => {
+    test.skip(isProductionTarget, 'Não executar endpoints de cobrança contra produção.');
     const response = await request.post('/api/billing/subscriptions/e2e-no-write/auto-renew', { data: { autoRenew: false } });
     expect(response.status()).toBe(401);
   });
 
   test('VENOPAG-003 renovação manual bloqueia chamada anônima', async ({ request }) => {
+    test.skip(isProductionTarget, 'Não executar endpoints de cobrança contra produção.');
     const response = await request.post('/api/billing/subscriptions/e2e-no-write/renew-now', { data: { simulateFailure: true } });
     expect(response.status()).toBe(401);
   });
@@ -151,6 +156,7 @@ test.describe('VENOPAG — bloqueios sem autenticação; nenhuma cobrança real'
 test.describe('AI — fronteira de autenticação', () => {
   for (const action of ['diagnosis', 'research', 'outline', 'script', 'repiques', 'shorts', 'editor-script', 'assist']) {
     test(`AI-${action.toUpperCase()}-001 /api/ai/${action} exige sessão`, async ({ request }) => {
+      test.skip(isProductionTarget, 'Não arriscar chamadas pagas de IA contra produção se a autenticação estiver defeituosa.');
       const response = await request.post(`/api/ai/${action}`, { data: {} });
       expect(response.status()).toBe(401);
       expect((await response.json()).code).toBe('UNAUTHORIZED');
