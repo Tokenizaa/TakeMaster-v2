@@ -209,7 +209,7 @@ centralTheme (string), potentialStory (string), primaryConflict (string), primar
     return validateDiagnosisOutput(parsed, fallback, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
-    logStructured('WARN', 'ai_diagnosis_fallback', { error: String(err?.message || err) });
+    logStructured('WARN', 'ai_diagnosis_fallback', { errorType: err instanceof Error ? err.name : 'UnknownError' });
     return validateDiagnosisOutput(fallback, fallback, 'fallback').data;
   }
 }
@@ -285,7 +285,7 @@ aboutGuest, trajectory, company, keyDatesAndNumbers, previousInterviews, recurri
     return validateResearchOutput(parsed, fallback, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
-    logStructured('WARN', 'ai_research_fallback', { error: String(err?.message || err) });
+    logStructured('WARN', 'ai_research_fallback', { errorType: err instanceof Error ? err.name : 'UnknownError' });
     return validateResearchOutput(fallback, fallback, 'fallback').data;
   }
 }
@@ -414,7 +414,7 @@ Retorne APENAS JSON no formato:
     ).data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
-    logStructured('WARN', 'ai_outline_fallback', { error: String(err?.message || err) });
+    logStructured('WARN', 'ai_outline_fallback', { errorType: err instanceof Error ? err.name : 'UnknownError' });
     return validateOutlineOutput(
       { outline: fallbackOutline, questions: fallbackQuestions },
       { outline: fallbackOutline, questions: fallbackQuestions },
@@ -515,7 +515,7 @@ id, blockId, timestamp, type ('cold_open'|'opening'|'vinheta'|'transition'|'ques
     return validateScriptOutput(parsed, fallbackScript, 'nim').data;
   } catch (err: any) {
     incrementMetric('aiFallbacksTotal');
-    logStructured('WARN', 'ai_script_fallback', { error: String(err?.message || err) });
+    logStructured('WARN', 'ai_script_fallback', { errorType: err instanceof Error ? err.name : 'UnknownError' });
     return validateScriptOutput({ script: fallbackScript }, fallbackScript, 'fallback').data;
   }
 }
@@ -733,7 +733,7 @@ export async function executeNimEditorialCall(options: {
       logStructured('WARN', 'nim_primary_model_failed_trying_fallback', {
         primaryModel,
         fallbackModel,
-        error: String(primaryErr),
+        errorType: primaryErr instanceof Error ? primaryErr.name : 'UnknownError',
       });
       if (!fallbackModel || fallbackModel === primaryModel) throw primaryErr;
       try {
@@ -747,7 +747,7 @@ export async function executeNimEditorialCall(options: {
         logStructured('WARN', 'nim_fallback_model_failed_using_grounded_kb', {
           primaryModel,
           fallbackModel,
-          error: String(fallbackErr),
+          errorType: fallbackErr instanceof Error ? fallbackErr.name : 'UnknownError',
         });
         incrementMetric('aiFallbacksTotal');
         return {
