@@ -49,6 +49,13 @@
 - [ ] Concluir treinamento prático de secure coding pelo desenvolvedor, registrando data e tópicos; repetir quando houver mudanças relevantes ou incidentes.
 - [ ] Rever mensalmente alertas, vulnerabilidades abertas, backups e eventos de acesso privilegiado.
 
+## Implementação técnica registrada em 22/10/2026
+
+- [x] `src/server/auth.ts` rejeita emissão e validação de sessão quando `INTERNAL_SESSION_KEY` tem menos de 32 bytes UTF-8.
+- [x] `.env.example` documenta a exigência mínima e o comando sugerido `openssl rand -base64 32`; o segredo real não deve ser versionado.
+- [ ] Ainda é necessário confirmar que o valor configurado no ambiente de implantação atende ao mínimo e que a autenticação funciona após a mudança.
+- [ ] Build, lint e suíte Playwright não foram executados por esta alteração remota; não marcar como validados até executar e registrar resultados.
+
 ## 4. Critérios objetivos de liberação
 
 A liberação só pode ser aprovada quando:
