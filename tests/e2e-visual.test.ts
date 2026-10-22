@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const baseURL = (process.env.E2E_BASE_URL?.trim() || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\\/$/, '');
+const baseURL = process.env.E2E_BASE_URL?.trim() || 'https://takemaster-v2.olfnetto.workers.dev';
 const isProductionTarget = new URL(baseURL).hostname === 'takemaster-v2.olfnetto.workers.dev';
 
 test.beforeEach(async ({}, testInfo) => {
