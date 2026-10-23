@@ -550,42 +550,84 @@ export async function confirmPaymentAndActivateSubscription(
     throw new AppError(404, 'NOT_FOUND', 'Intenção de pagamento não encontrada.');
   }
 
-  // Idempotência: se já foi confirmada, não reativa
+  const subscriptionId = intent.subscription_id;
+  if (!subscriptionId) {
+    throw new AppError(400, 'VALIDATION_ERROR', 'Intenção de pagamento não possui subscription vinculada.');
+  }
+
+  // Idempotência: se já foi confirmada, verificar se a subscription está ativa
+  // (recuperação de falha anterior entre as duas gravações)
   if (intent.status === 'payment_confirmed') {
+    const subCheck = await db.from('organization_subscriptions')
+      .select('status')
+      .eq('id', subscriptionId)
+      .eq('organization_id', orgId)
+      .maybeSingle();
+    if (!subCheck.error && subCheck.data?.status === 'active') {
+      return listOrganizationSubscriptions(orgId);
+    }
+    // Estado inconsistente: pagamento confirmado mas subscription não ativa.
+    // Tenta recuperar ativando a subscription se ainda estiver pendente.
+    const recoverResult = await db.from('organization_subscriptions')
+      .update({
+        status: 'active',
+        ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        updated_at: now(),
+        gateway_subscription_id: gatewayTransactionId,
+      })
+      .eq('id', subscriptionId)
+      .eq('organization_id', orgId)
+      .eq('status', 'pending_payment');
+    if (!recoverResult.error && (recoverResult.data ?? []).length > 0) {
+      return listOrganizationSubscriptions(orgId);
+    }
+    // Se não conseguiu recuperar, retorna sucesso pois o pagamento já foi confirmado
     return listOrganizationSubscriptions(orgId);
   }
 
-  // Atualiza a intenção de pagamento
+  // Ativa APENAS a subscription vinculada a esta intenção (apenas se pendente)
+  const subResult = await db.from('organization_subscriptions')
+    .update({
+      status: 'active',
+      ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: now(),
+      gateway_subscription_id: gatewayTransactionId,
+    })
+    .eq('id', subscriptionId)
+    .eq('organization_id', orgId)
+    .eq('status', 'pending_payment');
+
+  if (subResult.error) throw new Error(subResult.error.message);
+  const rowsAffected = (subResult.data ?? []).length;
+
+  if (rowsAffected === 0) {
+    // A subscription já não está mais em pending_payment (pode ter sido ativada
+    // por uma tentativa concorrente ou já foi cancelada). Verifica o estado atual.
+    const currentSub = await db.from('organization_subscriptions')
+      .select('status')
+      .eq('id', subscriptionId)
+      .eq('organization_id', orgId)
+      .maybeSingle();
+    if (!currentSub.error && currentSub.data?.status === 'active') {
+      // Já está ativa — idempotente. Marca o payment intent como confirmado.
+      await updatePaymentIntentStatus(paymentIntentId, 'payment_confirmed', {
+        gatewayTransactionId,
+        gatewayPayload,
+        webhookReceivedAt: now(),
+        reconciledAt: now(),
+      });
+      return listOrganizationSubscriptions(orgId);
+    }
+    throw new AppError(409, 'CONFLICT', 'Subscription vinculada não está em estado pendente.');
+  }
+
+  // Marca a intenção de pagamento como confirmada apenas após ativar a subscription
   await updatePaymentIntentStatus(paymentIntentId, 'payment_confirmed', {
     gatewayTransactionId,
     gatewayPayload,
     webhookReceivedAt: now(),
     reconciledAt: now(),
   });
-
-  // Ativa APENAS a subscription vinculada a esta intenção
-  const subscriptionId = intent.subscription_id;
-  if (!subscriptionId) {
-    throw new AppError(400, 'VALIDATION_ERROR', 'Intenção de pagamento não possui subscription vinculada.');
-  }
-
-  const subResult = await db.from('organization_subscriptions')
-    .select('*')
-    .eq('id', subscriptionId)
-    .eq('organization_id', orgId)
-    .eq('status', 'pending_payment')
-    .maybeSingle();
-  if (subResult.error) throw new Error(subResult.error.message);
-  if (!subResult.data) {
-    throw new AppError(409, 'CONFLICT', 'Subscription vinculada não está em estado pendente ou não existe.');
-  }
-
-  await db.from('organization_subscriptions').update({
-    status: 'active',
-    ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    updated_at: now(),
-    gateway_subscription_id: gatewayTransactionId,
-  }).eq('id', subscriptionId);
 
   return listOrganizationSubscriptions(orgId);
 }

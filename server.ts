@@ -101,19 +101,15 @@ import {
 
 export function createApiApp() {
   const app = express();
-  app.use(express.json({ limit: '10mb' }));
 
-  // Captura o corpo bruto da requisição para verificação de assinatura de webhooks
-  // (precisa vir após o express.json para não quebrar o parse JSON das demais rotas)
-  app.use((req, _res, next) => {
-    let data = '';
-    req.on('data', chunk => { data += chunk; });
-    req.on('end', () => {
-      (req as any).rawBody = data;
-      next();
-    });
-    req.on('error', next);
-  });
+  // Captura o corpo bruto ANTES do parse JSON, para verificar assinatura de webhooks.
+  // A opção verify do express.json expõe req.rawBody com os bytes exatos recebidos.
+  app.use(express.json({
+    limit: '10mb',
+    verify: (req: any, _res, buffer) => {
+      req.rawBody = buffer;
+    },
+  }));
 
   // Authorization helpers
   const requireOrganizationAdmin = (auth: any) => {

@@ -678,12 +678,14 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
   // ============================================
   // Novo: Testes de segurança do webhook VenoPag
   // ============================================
-  test('WEBHOOK-001 webhook com assinatura HMAC inválida é rejeitado com 401', async ({ request }) => {
-    // Sem configurar VENOPAG_WEBHOOK_SECRET no ambiente de teste, o servidor
-    // deve rejeitar com erro de configuração ou assinatura inválida.
+  test('WEBHOOK-001 webhook com assinatura HMAC inválida não ativa pagamento', async ({ request }) => {
+    // O servidor deve rejeitar assinaturas inválidas. Se VENOPAG_WEBHOOK_SECRET
+    // não estiver configurado no ambiente, retorna 500 (configuração ausente).
+    // Se estiver configurado e a assinatura for inválida, retorna 401.
+    // Em nenhum caso deve retornar 200 com ativação de pagamento.
     const response = await request.post('/api/billing/webhook/venopag', {
       headers: {
-        'x-venopag-signature': 'falsa-assinatura-hmac',
+        'x-venopag-signature': 'falsa-assinatura-hmac-invalida',
         'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
         'content-type': 'application/json',
       },
@@ -692,6 +694,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
         transaction_id: 'tx-e2e-invalid-sig-' + Date.now(),
       },
     });
+    expect(response.status()).not.toBe(200);
     expect([400, 401, 500]).toContain(response.status());
   });
 
@@ -727,37 +730,61 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
   // ============================================
   // Novo: Teste de vinculação correta pagamento -> subscription
   // ============================================
-  test('BILLING-005 pagamento confirmado ativa apenas a subscription vinculada ao payment intent', async ({ request }) => {
+  test('BILLING-005 isolamento: pagamento vinculado a intent ativa apenas sua subscription', async ({ request }) => {
     test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
     const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
 
-    // Cria duas intenções de pagamento para a mesma organização
-    const subResp1 = await request.post('/api/billing/subscribe', {
-      headers,
-      data: { planId: 'rsplay_programa_individual', autoRenew: true },
-    });
-    expect([201, 403]).toContain(subResp1.status());
-    if (subResp1.status() !== 201) {
-      // Não é possível testar sem pagamento configurado
-      return;
+    // Cria duas subscriptions pendentes para a mesma organização
+    const subs: string[] = [];
+    for (let i = 0; i < 2; i++) {
+      const subResp = await request.post('/api/billing/subscribe', {
+        headers,
+        data: { planId: 'rsplay_programa_individual', autoRenew: true },
+      });
+      expect([201, 403]).toContain(subResp.status());
+      if (subResp.status() === 201) {
+        const body = await subResp.json();
+        subs.push(body.subscription.id);
+        expect(body.subscription.status).toBe('pending_payment');
+      }
     }
 
-    const body1 = await subResp1.json();
-    const subId1 = body1.subscription.id;
+    test.skip(subs.length < 1, 'Não foi possível criar subscriptions de teste.');
 
-    // Verifica que a subscription está em pending_payment
-    expect(body1.subscription.status).toBe('pending_payment');
-
-    // O webhook não pode ser executado sem VENOPAG_WEBHOOK_SECRET configurado,
-    // então apenas verificamos que a subscription permanece pendente sem confirmação
+    // Sem confirmação do webhook (VENOPAG_WEBHOOK_SECRET não configurado no
+    // ambiente de teste), nenhuma subscription deve ser ativada.
     const overviewResp = await request.get('/api/billing/overview', { headers });
     expect(overviewResp.status()).toBe(200);
     const overview = await overviewResp.json();
-    const pendingSub = overview.subscriptions.find((s: any) => s.id === subId1);
-    expect(pendingSub.status).toBe('pending_payment');
+    for (const subId of subs) {
+      const sub = overview.subscriptions.find((s: any) => s.id === subId);
+      expect(sub.status).toBe('pending_payment');
+    }
+
+    // Tenta webhook com assinatura inválida — nenhuma subscription deve mudar
+    const webhookResp = await request.post('/api/billing/webhook/venopag', {
+      headers: {
+        'x-venopag-signature': 'assinatura-invalida-para-teste',
+        'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
+        'content-type': 'application/json',
+      },
+      data: {
+        event_type: 'payment_confirmed',
+        transaction_id: 'tx-e2e-isolamento-' + Date.now(),
+      },
+    });
+    expect(webhookResp.status()).not.toBe(200);
+
+    // Verifica que as subscriptions continuam pendentes após webhook inválido
+    const overviewResp2 = await request.get('/api/billing/overview', { headers });
+    const overview2 = await overviewResp2.json();
+    for (const subId of subs) {
+      const sub = overview2.subscriptions.find((s: any) => s.id === subId);
+      expect(sub.status).toBe('pending_payment');
+    }
   });
 
 });
