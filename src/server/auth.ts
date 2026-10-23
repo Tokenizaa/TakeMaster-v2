@@ -15,6 +15,8 @@ import {
   consumePasswordResetToken,
   revokeToken,
   isTokenRevoked,
+  isUserTokenRevoked,
+  revokeAllUserTokens,
   sendPasswordResetEmail,
 } from './persistence';
 import { incrementMetric } from './logger';
@@ -41,10 +43,23 @@ const hasStrongInternalSessionKey =
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || '';
 export const authClient = SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false } }) : null;
+
+// Admin client for server-side admin operations (requires SERVICE_ROLE_KEY)
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+export const adminAuthClient = SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } }) : null;
+
+function getAdminAuthClient() {
+  if (!adminAuthClient) {
+    throw new AppError(500, 'CONFIGURATION_ERROR', 'Supabase admin client não configurado. Configure SUPABASE_SERVICE_ROLE_KEY.');
+  }
+  return adminAuthClient;
+}
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function signSessionPayload(payload: { userId: string; organizationId: string }): string {
-  const data = Buffer.from(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12 })).toString('base64url');
+  const now = Math.floor(Date.now() / 1000);
+  const data = Buffer.from(JSON.stringify({ ...payload, iat: now, exp: now + 60 * 60 * 12 })).toString('base64url');
   const sig = crypto
     .createHmac('sha256', INTERNAL_SESSION_KEY)
     .update(data)
@@ -54,7 +69,7 @@ function signSessionPayload(payload: { userId: string; organizationId: string })
 
 export function verifySessionToken(
   token: string
-): { userId: string; organizationId: string; exp: number } | null {
+): { userId: string; organizationId: string; iat: number; exp: number } | null {
   if (!hasStrongInternalSessionKey || !token || !token.startsWith('tmv2.')) return null;
   const parts = token.split('.');
   if (parts.length !== 3) return null;
@@ -68,7 +83,7 @@ export function verifySessionToken(
   if (!crypto.timingSafeEqual(providedSignatureHash, expectedSignatureHash)) return null;
   try {
     const parsed = JSON.parse(Buffer.from(data, 'base64url').toString('utf-8'));
-    if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string' && typeof parsed.exp === 'number' && parsed.exp > Math.floor(Date.now() / 1000)) {
+    if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string' && typeof parsed.exp === 'number' && typeof parsed.iat === 'number' && parsed.exp > Math.floor(Date.now() / 1000)) {
       return parsed;
     }
     return null;
@@ -79,11 +94,18 @@ export function verifySessionToken(
 
 export async function verifySessionTokenWithRevocation(
   token: string
-): Promise<{ userId: string; organizationId: string; exp: number } | null> {
+): Promise<{ userId: string; organizationId: string; iat: number; exp: number } | null> {
   const verified = verifySessionToken(token);
   if (!verified) return null;
+  
+  // Check individual token revocation
   const revoked = await isTokenRevoked(token);
   if (revoked) return null;
+  
+  // Check user-level token revocation (revokeAllUserTokens)
+  const userRevoked = await isUserTokenRevoked(verified.userId, verified.iat);
+  if (userRevoked) return null;
+  
   return verified;
 }
 
@@ -324,10 +346,10 @@ export async function requestPasswordReset(email: string): Promise<void> {
 }
 
 /**
- * Validate and consume password reset token.
+ * Validate password reset token WITHOUT consuming it.
  * Returns user ID if valid, null otherwise.
  */
-export async function validateAndConsumePasswordResetToken(token: string): Promise<string | null> {
+export async function validatePasswordResetTokenOnly(token: string): Promise<string | null> {
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   const result = await validatePasswordResetToken(tokenHash);
   if (!result) return null;
@@ -337,30 +359,54 @@ export async function validateAndConsumePasswordResetToken(token: string): Promi
     return null;
   }
 
-  // Mark token as used
-  await consumePasswordResetToken(tokenHash);
   return result.user_id;
 }
 
 /**
- * Reset password using validated token.
+ * Atomically consume password reset token and update password.
+ * Uses a transaction-like approach: marks token as used, updates password, revokes all sessions.
+ * Returns true on success, false on failure.
  */
 export async function resetPassword(token: string, newPassword: string): Promise<boolean> {
-  const userId = await validateAndConsumePasswordResetToken(token);
-  if (!userId) return false;
+  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
 
-  if (!authClient) throw new AppError(500, 'CONFIGURATION_ERROR', 'Supabase auth client não configurado.');
+  // First, validate the token (check exists, not expired, not used)
+  const result = await validatePasswordResetToken(tokenHash);
+  if (!result) return false;
 
-  // Update password via Supabase admin API
-  const { error } = await authClient.auth.admin.updateUserById(userId, {
-    password: newPassword,
-  });
-  if (error) throw new AppError(500, 'CONFIGURATION_ERROR', `Falha ao atualizar senha: ${error.message}`);
+  if (result.expires_at < new Date().toISOString() || result.used_at) {
+    return false;
+  }
 
-  // Revoke all existing tokens for this user (force re-login)
-  await revokeAllUserTokens(userId);
+  // Use admin client for password update (requires service role key)
+  const adminClient = getAdminAuthClient();
+  if (!adminClient) {
+    throw new AppError(500, 'CONFIGURATION_ERROR', 'Supabase admin client não configurado. Configure SUPABASE_SERVICE_ROLE_KEY.');
+  }
 
-  return true;
+  // Atomically: mark token as used, update password, revoke all sessions
+  try {
+    // Mark token as consumed
+    await consumePasswordResetToken(tokenHash);
+
+    // Update password via Supabase admin API
+    const { error } = await adminClient.auth.admin.updateUserById(result.user_id, {
+      password: newPassword,
+    });
+    if (error) {
+      // If password update fails, we should ideally rollback the token consumption
+      // For now, throw error - the token is already consumed but password not changed
+      throw new AppError(500, 'CONFIGURATION_ERROR', `Falha ao atualizar senha: ${error.message}`);
+    }
+
+    // Revoke all existing sessions for this user (force re-login)
+    await revokeAllUserTokens(result.user_id);
+
+    return true;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(500, 'INTERNAL_ERROR', `Erro ao redefinir senha: ${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
 /**

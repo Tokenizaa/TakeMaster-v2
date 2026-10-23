@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { verifySessionToken, buildAuthSession, loginWithEmailOrUserId, resolveRequestAuthContext, requestPasswordReset, validateAndConsumePasswordResetToken, resetPassword, logout } from '../auth';
+import { verifySessionToken, verifySessionTokenWithRevocation, buildAuthSession, loginWithEmailOrUserId, resolveRequestAuthContext, requestPasswordReset, validatePasswordResetTokenOnly, resetPassword, logout } from '../auth';
 import { AppError } from '../../domain/validation';
 
 const router = Router();
@@ -60,9 +60,9 @@ router.post('/switch-org', async (req: Request, res: Response) => {
       throw new AppError(401, 'UNAUTHORIZED', 'Token de sessão ausente.');
     }
     const token = authHeader.slice('Bearer '.length).trim();
-    const verified = verifySessionToken(token);
+    const verified = await verifySessionTokenWithRevocation(token);
     if (!verified) {
-      throw new AppError(401, 'UNAUTHORIZED', 'Token de sessão inválido ou expirado.');
+      throw new AppError(401, 'UNAUTHORIZED', 'Token de sessão inválido, expirado ou revogado.');
     }
     const { organizationId } = req.body;
     if (!organizationId) throw new AppError(400, 'VALIDATION_ERROR', 'organizationId obrigatório.');
@@ -99,7 +99,7 @@ router.post('/reset-password/validate', async (req: Request, res: Response) => {
     if (!token || typeof token !== 'string') {
       return res.status(400).json({ code: 'VALIDATION_ERROR', message: 'Token obrigatório.' });
     }
-    const userId = await validateAndConsumePasswordResetToken(token);
+    const userId = await validatePasswordResetTokenOnly(token);
     if (!userId) {
       return res.status(400).json({ code: 'INVALID_TOKEN', message: 'Token inválido, expirado ou já utilizado.' });
     }

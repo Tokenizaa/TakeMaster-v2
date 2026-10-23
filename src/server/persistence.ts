@@ -1000,6 +1000,20 @@ export async function isTokenRevoked(token: string): Promise<boolean> {
   return !r.error && !!r.data;
 }
 
+export async function isUserTokenRevoked(userId: string, tokenIssuedAt: number): Promise<boolean> {
+  const r = await db.rpc('is_user_token_revoked', { p_user_id: userId, p_token_issued_at: new Date(tokenIssuedAt * 1000).toISOString() });
+  if (r.error) {
+    logStructured('WARN', 'is_user_token_revoked_failed', { userId, error: r.error.message });
+    return false; // Fail open - don't block on revocation check failure
+  }
+  return !!r.data;
+}
+
+export async function revokeAllUserTokens(userId: string, reason: string = 'password_reset'): Promise<void> {
+  const r = await db.rpc('revoke_all_user_tokens', { p_user_id: userId, p_reason: reason });
+  if (r.error) throw new Error(`Failed to revoke all user tokens: ${r.error.message}`);
+}
+
 export async function getAuthUserByEmail(email: string) {
   if (!authClient) return null;
   const { data, error } = await authClient.auth.admin.listUsers();
