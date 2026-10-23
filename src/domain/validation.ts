@@ -88,6 +88,9 @@ const VALID_SCHEDULE_STATUSES: ScheduleEventStatus[] = [
   'in_progress',
   'completed',
   'cancelled',
+  'confirmado',
+  'pendente',
+  'concluido',
 ];
 
 export function validateShowPayload(input: any, isUpdate = false): Partial<Show> {

@@ -360,7 +360,7 @@ export async function listOrganizationSubscriptions(orgId: string) {
     billingCycle: x.commercial_plans?.billing_period === 'annual' ? 'annual' : 'monthly',
     amountCents: x.commercial_plans?.price_cents || 0,
     currency: x.commercial_plans?.currency || 'BRL',
-    status: x.status === 'active' ? 'active' : x.status === 'trial' ? 'trialing' : 'suspended',
+    status: x.status === 'active' ? 'active' : x.status === 'trial' ? 'trialing' : x.status === 'pending_payment' ? 'pending_payment' : 'suspended',
     autoRenew: x.auto_renew ?? true,
     paymentGateway: x.payment_gateway || '',
     paymentMethodType: x.payment_method_type || 'credit_card',

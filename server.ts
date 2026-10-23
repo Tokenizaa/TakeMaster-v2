@@ -23,8 +23,12 @@ import {
   deleteScheduleEvent,
   deleteShow,
   getEpisodeById,
+  getProductionById,
   getSetupState,
   getShowById,
+  getParticipantById,
+  getScheduleEventById,
+  getLibraryAssetById,
   handlePaymentFailure,
   listAuditLogs,
   listBillingInvoices,
@@ -684,6 +688,20 @@ export function createApiApp() {
     }
   });
 
+  app.get('/api/shows/:id', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const show = await getShowById(auth.organizationId, req.params.id);
+      if (!show) {
+        throw new AppError(404, 'NOT_FOUND', 'Programa não encontrado.');
+      }
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, req.params.id, 'canView');
+      res.json(show);
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.post('/api/shows', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
@@ -872,6 +890,20 @@ export function createApiApp() {
     }
   });
 
+  app.get('/api/productions/:id', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const production = await getProductionById(auth.organizationId, req.params.id);
+      if (!production) {
+        throw new AppError(404, 'NOT_FOUND', 'Produção não encontrada.');
+      }
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, production.showId, 'canView');
+      res.json(production);
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.post('/api/productions', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
@@ -1032,6 +1064,21 @@ export function createApiApp() {
   };
 
   app.get('/api/guests', requireAuth, handleListGuests);
+
+  app.get('/api/guests/:id', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const auth = await getAuthContext(req);
+      const guest = await getParticipantById(auth.organizationId, req.params.id);
+      if (!guest) {
+        throw new AppError(404, 'NOT_FOUND', 'Convidado não encontrado.');
+      }
+      // getParticipantById já verifica organização; não há programId no Guest
+      res.json(guest);
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.post('/api/guests', requireAuth, handleCreateGuest);
   app.put('/api/guests/:id', requireAuth, handleUpdateGuest);
   app.delete('/api/guests/:id', requireAuth, handleDeleteGuest);
@@ -1145,11 +1192,39 @@ export function createApiApp() {
     }
   });
 
-  app.delete('/api/library/:id', requireAuth, async (req, res, next) => {
+  app.get('/api/library/:id', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const auth = await getAuthContext(req);
+      const asset = await getLibraryAssetById(auth.organizationId, req.params.id);
+      if (!asset) {
+        throw new AppError(404, 'NOT_FOUND', 'Ativo não encontrado.');
+      }
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, asset.showId, 'canView');
+      res.json(asset);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.delete('/api/library/:id', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await getAuthContext(req);
       await deleteLibraryAsset(auth.organizationId, req.params.id, auth.userId);
       res.json({ success: true });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.get('/api/schedule/:id', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const auth = await getAuthContext(req);
+      const event = await getScheduleEventById(auth.organizationId, req.params.id);
+      if (!event) {
+        throw new AppError(404, 'NOT_FOUND', 'Evento de agenda não encontrado.');
+      }
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, event.showId, 'canView');
+      res.json(event);
     } catch (err) {
       next(err);
     }

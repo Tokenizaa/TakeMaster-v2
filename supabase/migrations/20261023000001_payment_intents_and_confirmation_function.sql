@@ -143,8 +143,8 @@ BEGIN
   END IF;
 
   IF v_subscription_status <> 'pending_payment' THEN
-    RAISE EXCEPTION 'Subscription vinculada não está em estado pendente (atual: %)'
-      USING ERRCODE = '409', v_subscription_status;
+    RAISE EXCEPTION 'Subscription vinculada não está em estado pendente (atual: %)', v_subscription_status
+      USING ERRCODE = '409';
   END IF;
 
   -- 5. Transação atômica: ativar subscription + confirmar pagamento

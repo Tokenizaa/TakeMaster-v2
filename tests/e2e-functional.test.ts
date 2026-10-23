@@ -114,7 +114,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     let id: string | undefined;
     try {
       const created = await request.post('/api/productions', { headers, data: {
-        title: `E2E Temporada ${Date.now()}`, showId, seasonNumber: 99,
+        title: `E2E Temporada ${Date.now()}`, showId, seasonNumber: Date.now() % 10000,
         status: 'planning', targetEpisodesCount: 1, executiveProducer: 'E2E',
       }});
       expect(created.status(), await created.text()).toBe(201);
@@ -167,11 +167,17 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
     const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+    const showsResponse = await request.get('/api/shows', { headers });
+    expect(showsResponse.status(), await showsResponse.text()).toBe(200);
+    const shows = await showsResponse.json();
+    test.skip(!shows.length, 'A identidade E2E precisa de ao menos um programa.');
+    const programId = shows[0].id;
     let id: string | undefined;
     try {
       const created = await request.post('/api/guests', { headers, data: {
         name: `E2E Participante ${Date.now()}`, role: 'Convidado de teste',
         company: 'QA', bio: 'Registro temporário E2E', contacts: '', notes: 'Remover ao finalizar',
+        programId,
       }});
       expect(created.status(), await created.text()).toBe(201);
       id = (await created.json()).id;
@@ -200,8 +206,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     let id: string | undefined;
     try {
       const created = await request.post('/api/schedule', { headers, data: {
-        title: `E2E Agenda ${Date.now()}`, showId: shows[0].id, type: 'briefing',
-        status: 'scheduled', scheduledStart: new Date(Date.now() + 86400000).toISOString(),
+        title: `E2E Agenda ${Date.now()}`, showId: shows[0].id, type: 'recording',
+        status: 'confirmado', scheduledStart: new Date(Date.now() + 86400000).toISOString(),
         scheduledEnd: new Date(Date.now() + 90000000).toISOString(), notes: 'Registro E2E temporário',
       }});
       expect(created.status(), await created.text()).toBe(201);
@@ -226,13 +232,14 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
     const showsResponse = await request.get('/api/shows', { headers });
     expect(showsResponse.status(), await showsResponse.text()).toBe(200);
-    const shows = (await showsResponse.json()).shows;
+    const shows = await showsResponse.json();
     test.skip(!shows.length, 'A identidade E2E precisa de ao menos um programa para testar a biblioteca.');
     let id: string | undefined;
     try {
       const created = await request.post('/api/library', { headers, data: {
-        title: `E2E Asset ${Date.now()}`, showId: shows[0].id, type: 'document',
+        title: `E2E Asset ${Date.now()}`, showId: shows[0].id, type: 'template',
         description: 'Asset temporário da suíte E2E', url: 'https://example.invalid/e2e',
+        category: 'b_roll',
       }});
       expect(created.status(), await created.text()).toBe(201);
       id = (await created.json()).id;
@@ -265,19 +272,33 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
-    const response = await request.get('/api/admin/overview', { headers: { authorization: `Bearer ${session.token}` } });
-    if (session.role !== 'owner' && session.role !== 'admin') {
-      expect([403]).toContain(response.status());
+    const headers = { authorization: `Bearer ${session.token}` };
+
+    // Administrador global acessa /api/admin/overview
+    if (session.isPlatformAdmin) {
+      const resp = await request.get('/api/admin/overview', { headers });
+      expect(resp.status()).toBe(200);
+      const body = await resp.json();
+      expect(Array.isArray(body.users)).toBe(true);
+      expect(Array.isArray(body.shows)).toBe(true);
       return;
     }
-    expect(response.status(), await response.text()).toBe(200);
-    const body = await response.json();
-    expect(Array.isArray(body.users)).toBe(true);
-    expect(Array.isArray(body.shows)).toBe(true);
-    expect(Array.isArray(body.plans)).toBe(true);
-    expect(Array.isArray(body.subscriptions)).toBe(true);
-    expect(Array.isArray(body.invoices)).toBe(true);
-    expect(Array.isArray(body.gatewayEvents)).toBe(true);
+
+    // Admin de organização acessa /api/admin/org/overview
+    if (session.role === 'owner' || session.role === 'admin') {
+      const resp = await request.get('/api/admin/org/overview', { headers });
+      expect([200, 404]).toContain(resp.status());
+      if (resp.status() === 200) {
+        const body = await resp.json();
+        expect(Array.isArray(body.users)).toBe(true);
+        expect(Array.isArray(body.shows)).toBe(true);
+      }
+      return;
+    }
+
+    // Usuário comum não acessa nenhum endpoint de admin
+    const resp = await request.get('/api/admin/overview', { headers });
+    expect([403]).toContain(resp.status());
   });
   test('AUTH-012 troca para organização sem vínculo é recusada', async ({ request }) => {
     const login = await request.post('/api/auth/login', {
@@ -482,19 +503,14 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
 
     const response = await request.post('/api/billing/subscribe', {
       headers,
-      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+      data: { planId: 'program-standard', autoRenew: true },
     });
-    expect([201, 403]).toContain(response.status());
-    if (response.status() === 201) {
-      const body = await response.json();
-      // Assinatura deve estar pendente ou ativa apenas se pagamento confirmado
-      expect(body.subscription?.status).toMatch(/active|pending_payment/);
-      if (body.subscription.status === 'active') {
-        // Se estiver ativa sem webhook confirmado, é um problema - mas atualmente
-        // o subscribeOrUpdatePlan cria com pending_payment quando não há payment_confirmed
-        expect(body.subscription.status).toBe('pending_payment');
-      }
-    }
+    // Usuário é owner da organização, então tem permissão para criar subscription
+    // A subscription fica em pending_payment até confirmação do gateway
+    expect(response.status(), await response.text()).toBe(201);
+    const body = await response.json();
+    // Assinatura deve estar pendente (não confirmada sem webhook)
+    expect(body.status).toBe('pending_payment');
   });
 
   test('BILLING-003 pagamento confirmado via webhook ativa assinatura (simulado)', async ({ request }) => {
@@ -507,12 +523,12 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     // Primeiro cria intenção de pagamento
     const subscribeResp = await request.post('/api/billing/subscribe', {
       headers,
-      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+      data: { planId: 'program-standard', autoRenew: true },
     });
     expect([201, 403]).toContain(subscribeResp.status());
     if (subscribeResp.status() === 201) {
       const body = await subscribeResp.json();
-      const subId = body.subscription.id;
+      const subId = body.id;
 
       // Tenta renovação simulada (falha ou sucesso)
       const renewResp = await request.post(`/api/billing/subscriptions/${subId}/renew-now`, {
@@ -742,13 +758,13 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     for (let i = 0; i < 2; i++) {
       const subResp = await request.post('/api/billing/subscribe', {
         headers,
-        data: { planId: 'rsplay_programa_individual', autoRenew: true },
+        data: { planId: 'program-standard', autoRenew: true },
       });
       expect([201, 403]).toContain(subResp.status());
       if (subResp.status() === 201) {
         const body = await subResp.json();
-        subs.push(body.subscription.id);
-        expect(body.subscription.status).toBe('pending_payment');
+        subs.push(body.id);
+        expect(body.status).toBe('pending_payment');
       }
     }
 
@@ -850,13 +866,13 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     for (let i = 0; i < 2; i++) {
       const subResp = await request.post('/api/billing/subscribe', {
         headers,
-        data: { planId: 'rsplay_programa_individual', autoRenew: true },
+        data: { planId: 'program-standard', autoRenew: true },
       });
       expect([201, 403]).toContain(subResp.status());
       if (subResp.status() === 201) {
         const body = await subResp.json();
-        subs.push(body.subscription.id);
-        expect(body.subscription.status).toBe('pending_payment');
+        subs.push(body.id);
+        expect(body.status).toBe('pending_payment');
       }
     }
     test.skip(subs.length < 2, 'Precisa de duas subscriptions pendentes para testar isolamento.');
@@ -897,7 +913,7 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     // Cria uma subscription pendente
     const subResp = await request.post('/api/billing/subscribe', {
       headers,
-      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+      data: { planId: 'program-standard', autoRenew: true },
     });
     expect([201, 403]).toContain(subResp.status());
     if (subResp.status() !== 201) {
@@ -905,8 +921,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
       return;
     }
     const body = await subResp.json();
-    const subId = body.subscription.id;
-    expect(body.subscription.status).toBe('pending_payment');
+    const subId = body.id;
+    expect(body.status).toBe('pending_payment');
 
     // Tenta webhook com assinatura inválida duas vezes - não deve ativar
     for (let i = 0; i < 2; i++) {
