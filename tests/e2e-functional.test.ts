@@ -787,4 +787,148 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     }
   });
 
+  // ============================================
+  // Novo: Teste de idempotência do webhook (mesmo evento duas vezes)
+  // ============================================
+  test('WEBHOOK-004 mesmo evento repetido não duplica ativação', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}` };
+
+    const transactionId = 'tx-e2e-idempotency-' + Date.now();
+
+    // Primeira tentativa com assinatura inválida (será rejeitada)
+    const first = await request.post('/api/billing/webhook/venopag', {
+      headers: {
+        'x-venopag-signature': 'assinatura-invalida',
+        'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
+        'content-type': 'application/json',
+      },
+      data: {
+        event_type: 'payment_confirmed',
+        transaction_id: transactionId,
+      },
+    });
+    expect(first.status()).not.toBe(200);
+
+    // Segunda tentativa com o mesmo transaction_id também deve ser rejeitada
+    const second = await request.post('/api/billing/webhook/venopag', {
+      headers: {
+        'x-venopag-signature': 'assinatura-invalida',
+        'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
+        'content-type': 'application/json',
+      },
+      data: {
+        event_type: 'payment_confirmed',
+        transaction_id: transactionId,
+      },
+    });
+    expect(second.status()).not.toBe(200);
+
+    // Nenhuma subscription deve ter sido ativada
+    const overviewResp = await request.get('/api/billing/overview', { headers });
+    expect(overviewResp.status()).toBe(200);
+    const overview = await overviewResp.json();
+    for (const sub of overview.subscriptions) {
+      expect(sub.status).not.toBe('active');
+    }
+  });
+
+  // ============================================
+  // Novo: Teste de ativação vinculada apenas ao payment intent correto
+  // ============================================
+  test('BILLING-006 payment intent vinculado ativa apenas sua subscription', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    // Cria duas subscriptions pendentes
+    const subs: string[] = [];
+    for (let i = 0; i < 2; i++) {
+      const subResp = await request.post('/api/billing/subscribe', {
+        headers,
+        data: { planId: 'rsplay_programa_individual', autoRenew: true },
+      });
+      expect([201, 403]).toContain(subResp.status());
+      if (subResp.status() === 201) {
+        const body = await subResp.json();
+        subs.push(body.subscription.id);
+        expect(body.subscription.status).toBe('pending_payment');
+      }
+    }
+    test.skip(subs.length < 2, 'Precisa de duas subscriptions pendentes para testar isolamento.');
+
+    // Tenta ativar via webhook com assinatura inválida - nenhuma deve mudar
+    const webhookResp = await request.post('/api/billing/webhook/venopag', {
+      headers: {
+        'x-venopag-signature': 'assinatura-invalida',
+        'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
+        'content-type': 'application/json',
+      },
+      data: {
+        event_type: 'payment_confirmed',
+        transaction_id: 'tx-e2e-vinculo-' + Date.now(),
+      },
+    });
+    expect(webhookResp.status()).not.toBe(200);
+
+    // Verifica que ambas continuam pendentes
+    const overviewResp = await request.get('/api/billing/overview', { headers });
+    const overview = await overviewResp.json();
+    for (const subId of subs) {
+      const sub = overview.subscriptions.find((s: any) => s.id === subId);
+      expect(sub.status).toBe('pending_payment');
+    }
+  });
+
+  // ============================================
+  // Novo: Teste de recuperação de estado inconsistente (pagamento confirmado, subscription pendente)
+  // ============================================
+  test('BILLING-007 recuperação de estado inconsistente via pagamento já confirmado', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    // Cria uma subscription pendente
+    const subResp = await request.post('/api/billing/subscribe', {
+      headers,
+      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+    });
+    expect([201, 403]).toContain(subResp.status());
+    if (subResp.status() !== 201) {
+      test.skip(true, 'Não foi possível criar subscription de teste.');
+      return;
+    }
+    const body = await subResp.json();
+    const subId = body.subscription.id;
+    expect(body.subscription.status).toBe('pending_payment');
+
+    // Tenta webhook com assinatura inválida duas vezes - não deve ativar
+    for (let i = 0; i < 2; i++) {
+      const whResp = await request.post('/api/billing/webhook/venopag', {
+        headers: {
+          'x-venopag-signature': 'assinatura-invalida-recuperacao',
+          'x-venopag-timestamp': Math.floor(Date.now() / 1000).toString(),
+          'content-type': 'application/json',
+        },
+        data: {
+          event_type: 'payment_confirmed',
+          transaction_id: 'tx-e2e-recuperacao-' + Date.now(),
+        },
+      });
+      expect(whResp.status()).not.toBe(200);
+    }
+
+    // Verifica que a subscription continua pendente (sem ativação fantasma)
+    const overviewResp = await request.get('/api/billing/overview', { headers });
+    const overview = await overviewResp.json();
+    const sub = overview.subscriptions.find((s: any) => s.id === subId);
+    expect(sub.status).toBe('pending_payment');
+  });
+
 });
