@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
-import { AuthSession, OrganizationRole, UserShowPermission } from '../domain/contracts';
+import { AuthSession, OrganizationRole, UserShowPermission, PlatformRole } from '../domain/contracts';
 import { AppError } from '../domain/validation';
 import {
   getAuthUserById,
@@ -20,7 +20,9 @@ export interface AuthenticatedContext {
   organizationId: string;
   organizationName: string;
   role: OrganizationRole;
+  platformRole: PlatformRole;
   isFullAccessAdmin: boolean;
+  isPlatformAdmin: boolean;
   allowedShowIds: string[];
   showPermissions: UserShowPermission[];
 }
@@ -115,6 +117,9 @@ export async function buildAuthSession(userId: string, organizationId?: string):
   const subscriptions = await listOrganizationSubscriptions(organization.id);
   const activeSubscription = subscriptions[0];
 
+  const platformRole = (user.user_metadata?.platformRole as PlatformRole) || 'none';
+  const isPlatformAdmin = platformRole === 'platform_admin';
+
   const userObj = {
     id: user.id,
     email: user.email || '',
@@ -124,6 +129,7 @@ export async function buildAuthSession(userId: string, organizationId?: string):
     loginCode: undefined,
     avatarUrl: user.user_metadata?.avatarUrl,
     role: undefined,
+    platformRole,
     showPermissions: permissions,
     createdAt: user.created_at,
     updatedAt: user.updated_at || user.created_at,
@@ -140,10 +146,12 @@ export async function buildAuthSession(userId: string, organizationId?: string):
     },
     activeOrganization: organization,
     role,
+    platformRole,
     memberships,
     showPermissions: permissions,
     allowedShowIds,
     isFullAccessAdmin,
+    isPlatformAdmin,
     activeSubscription,
   };
 }
@@ -225,7 +233,9 @@ export async function resolveRequestAuthContext(req: Request): Promise<Authentic
       organizationId: session.activeOrganization.id,
       organizationName: session.activeOrganization.name,
       role: session.role,
+      platformRole: session.platformRole,
       isFullAccessAdmin: session.isFullAccessAdmin,
+      isPlatformAdmin: session.isPlatformAdmin,
       allowedShowIds: session.allowedShowIds,
       showPermissions: session.showPermissions,
     };

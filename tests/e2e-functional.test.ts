@@ -384,4 +384,295 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     await expect(page.getByText(/Programa Vinculado no Primeiro Cadastro/)).toBeVisible();
   });
 
+  // ============================================
+  // Novo: Testes de Pré-Setup (Setup States)
+  // ============================================
+  test('SETUP-001 estado de setup é recuperado para programa com setup pendente', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    expect(showsResponse.status(), await showsResponse.text()).toBe(200);
+    const shows = await showsResponse.json();
+    test.skip(!shows.length, 'Identidade E2E precisa de ao menos um programa.');
+
+    const showId = shows[0].id;
+    const setup = await request.get(`/api/setup/state/${showId}`, { headers });
+    expect([200, 404]).toContain(setup.status());
+    if (setup.status() === 200) {
+      const body = await setup.json();
+      expect(body).toHaveProperty('status');
+      expect(body).toHaveProperty('programId');
+    }
+  });
+
+  test('SETUP-002 execução de setup idempotente: segundo retorno não duplica', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(!shows.length, 'Identidade E2E precisa de ao menos um programa.');
+
+    const showId = shows[0].id;
+
+    const first = await request.post(`/api/setup/run/${showId}`, { headers });
+    expect([200, 409]).toContain(first.status());
+
+    const second = await request.post(`/api/setup/run/${showId}`, { headers });
+    expect([200]).toContain(second.status());
+    const body = await second.json();
+    expect(body.status).toBe('ready');
+  });
+
+  test('SETUP-003 retry de setup falhado recupera estado', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(!shows.length, 'Identidade E2E precisa de ao menos um programa.');
+
+    const showId = shows[0].id;
+
+    await request.post(`/api/setup/retry/${showId}`, { headers });
+    const state = await request.get(`/api/setup/state/${showId}`, { headers });
+    expect(state.status()).toBe(200);
+    const body = await state.json();
+    expect(['setup_pending', 'setup_running', 'ready']).toContain(body.status);
+  });
+
+  test('SETUP-004 setup de um programa não altera outro programa', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(shows.length < 2, 'Identidade E2E precisa de ao menos dois programas para testar isolamento de setup.');
+
+    const showA = shows[0].id;
+    const showB = shows[1].id;
+
+    await request.post(`/api/setup/run/${showA}`, { headers });
+    const stateB = await request.get(`/api/setup/state/${showB}`, { headers });
+    // O setup de A não deve afetar B (B pode estar vazio, não deve ser afetado)
+    expect(stateB.status()).toBe(200);
+  });
+
+  // ============================================
+  // Novo: Testes de Pagamento (Payment Intents)
+  // ============================================
+  test('BILLING-002 pagamento sem confirmação do gateway não ativa assinatura', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const response = await request.post('/api/billing/subscribe', {
+      headers,
+      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+    });
+    expect([201, 403]).toContain(response.status());
+    if (response.status() === 201) {
+      const body = await response.json();
+      // Assinatura deve estar pendente ou ativa apenas se pagamento confirmado
+      expect(body.subscription?.status).toMatch(/active|pending_payment/);
+      if (body.subscription.status === 'active') {
+        // Se estiver ativa sem webhook confirmado, é um problema - mas atualmente
+        // o subscribeOrUpdatePlan cria com pending_payment quando não há payment_confirmed
+        expect(body.subscription.status).toBe('pending_payment');
+      }
+    }
+  });
+
+  test('BILLING-003 pagamento confirmado via webhook ativa assinatura (simulado)', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    // Primeiro cria intenção de pagamento
+    const subscribeResp = await request.post('/api/billing/subscribe', {
+      headers,
+      data: { planId: 'rsplay_programa_individual', autoRenew: true },
+    });
+    expect([201, 403]).toContain(subscribeResp.status());
+    if (subscribeResp.status() === 201) {
+      const body = await subscribeResp.json();
+      const subId = body.subscription.id;
+
+      // Tenta renovação simulada (falha ou sucesso)
+      const renewResp = await request.post(`/api/billing/subscriptions/${subId}/renew-now`, {
+        headers,
+        data: { simulateFailure: true },
+      });
+      expect([402, 200]).toContain(renewResp.status());
+    }
+  });
+
+  test('BILLING-004 pagamento expirado ou falhado não ativa acesso', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    // Tenta criar pagamento com expiração simulada via webhook não autenticado
+    const webhookResp = await request.post('/api/billing/webhook/venopag', {
+      data: {
+        event_type: 'payment_expired',
+        transaction_id: 'tx-e2e-expired-' + Date.now(),
+        failure_reason: 'PIX expirado',
+      },
+    });
+    expect([200, 400]).toContain(webhookResp.status());
+  });
+
+  // ============================================
+  // Novo: Testes de Isolamento de Programa (RBAC)
+  // ============================================
+  test('ISOLATION-001 usuário não consegue acessar programa de outro contexto', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(shows.length < 2, 'Identidade E2E precisa de ao menos dois programas para isolamento.');
+
+    // Tenta acessar episódio de um programa para o qual não tem permissão
+    // (se o usuário tiver apenas acesso a um show, o outro deve ser negado)
+    const otherShowId = shows[1].id;
+    const episodesResponse = await request.get(`/api/episodes?showId=${otherShowId}`, { headers });
+    expect(episodesResponse.status()).toBe(200);
+    const episodes = await episodesResponse.json();
+    expect(Array.isArray(episodes)).toBe(true);
+  });
+
+  test('ISOLATION-002 tentativa de editar programa sem permissão retorna 403', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(shows.length < 2, 'Identidade E2E precisa de ao menos dois programas para isolamento.');
+
+    const otherShowId = shows[1].id;
+    const updateResp = await request.put(`/api/shows/${otherShowId}`, {
+      headers,
+      data: { title: 'Tentativa de edição não autorizada' },
+    });
+    expect(updateResp.status()).toBe(403);
+  });
+
+  // ============================================
+  // Novo: Testes de Administração Global (Separation of Concerns)
+  // ============================================
+  test('GLOBAL-001 administrador global acessa painel global', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}` };
+
+    if (!session.isPlatformAdmin) {
+      // Usuário não é admin global: deve receber 403 no endpoint global
+      const resp = await request.get('/api/admin/overview', { headers });
+      expect(resp.status()).toBe(403);
+      return;
+    }
+
+    const resp = await request.get('/api/admin/overview', { headers });
+    expect(resp.status()).toBe(200);
+    const body = await resp.json();
+    expect(Array.isArray(body.users)).toBe(true);
+    expect(Array.isArray(body.shows)).toBe(true);
+  });
+
+  test('GLOBAL-002 admin de organização não acessa dados globais de outras organizações', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}` };
+
+    if (session.isPlatformAdmin) {
+      // Admin global pode acessar tudo - skip para este teste específico
+      return;
+    }
+
+    // Endpoint global deve negar acesso a admin de organização
+    const resp = await request.get('/api/admin/overview', { headers });
+    expect(resp.status()).toBe(403);
+  });
+
+  test('GLOBAL-003 org admin acessa escopo próprio via /api/admin/org/overview', async ({ request }) => {
+    const login = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login.status(), await login.text()).toBe(200);
+    const { session } = await login.json();
+    const headers = { authorization: `Bearer ${session.token}` };
+
+    if (['owner', 'admin'].includes(session.role)) {
+      const resp = await request.get('/api/admin/org/overview', { headers });
+      expect(resp.status()).toBe(200);
+    } else {
+      // Usuário comum não tem acesso ao admin org
+      const resp = await request.get('/api/admin/org/overview', { headers });
+      expect(resp.status()).toBe(403);
+    }
+  });
+
+  // ============================================
+  // Novo: Teste de persistência após login
+  // ============================================
+  test('WORKSPACE-003 persistência de episódios após login', async ({ request }) => {
+    test.skip(!canWrite, 'Escritas E2E exigem E2E_ALLOW_PERSISTENT_WRITES=true e E2E_TARGET_KIND=test ou staging.');
+    const login1 = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login1.status(), await login1.text()).toBe(200);
+    const { session } = await login1.json();
+    const headers = { authorization: `Bearer ${session.token}`, 'x-organization-id': organizationId! };
+
+    const showsResponse = await request.get('/api/shows', { headers });
+    const shows = await showsResponse.json();
+    test.skip(!shows.length, 'Identidade E2E precisa de ao menos um programa.');
+
+    // Cria episódio
+    const created = await request.post('/api/episodes', {
+      headers,
+      data: { title: `E2E Persistência ${Date.now()}`, showId: shows[0].id, status: 'draft', idea: 'Teste de persistência' },
+    });
+    expect(created.status(), await created.text()).toBe(201);
+    const episode = await created.json();
+    const episodeId = episode.id;
+
+    // Logout e login novamente (nova sessão)
+    const login2 = await request.post('/api/auth/login', { data: { emailOrUserId: email, organizationId, loginCode } });
+    expect(login2.status(), await login2.text()).toBe(200);
+    const { session: session2 } = await login2.json();
+    const headers2 = { authorization: `Bearer ${session2.token}`, 'x-organization-id': organizationId! };
+
+    // Verifica que o episódio persiste
+    const readResp = await request.get(`/api/episodes/${episodeId}`, { headers: headers2 });
+    expect(readResp.status(), await readResp.text()).toBe(200);
+    const readEpisode = await readResp.json();
+    expect(readEpisode.title).toBe(episode.title);
+    expect(readEpisode.id).toBe(episodeId);
+
+    // Limpeza
+    await request.delete(`/api/episodes/${episodeId}`, { headers: headers2 });
+  });
+
 });

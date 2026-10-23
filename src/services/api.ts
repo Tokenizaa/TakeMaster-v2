@@ -219,7 +219,7 @@ export const api = {
       body: JSON.stringify({ simulateFailure }),
     }),
 
-  // RSPlay TV SaaS Admin Panel (Users, Program Logins, Permissions & Reports)
+  // RSPlay TV SaaS Admin Panel (Users, Program Logins, Permissions & Reports) - Global (platform_admin)
   getAdminOverview: () => request<AdminOverviewResponse>('/api/admin/overview'),
 
   createAdminUser: (payload: {
@@ -254,6 +254,55 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify(updates),
     }),
+
+  // Organization-scoped Admin Panel (owner/admin)
+  getOrgAdminOverview: () => request<AdminOverviewResponse>('/api/admin/org/overview'),
+
+  createOrgAdminUser: (payload: {
+    name: string;
+    email: string;
+    jobTitle?: string;
+    loginCode?: string;
+    role?: OrganizationRole;
+    showPermissions?: Partial<UserShowPermission>[];
+  }) =>
+    request<User>('/api/admin/org/users', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  updateOrgUserShowPermissions: (userId: string, permissions: Partial<UserShowPermission>[]) =>
+    request<User>(`/api/admin/org/users/${userId}/permissions`, {
+      method: 'PUT',
+      body: JSON.stringify({ permissions }),
+    }),
+
+  updateOrgUserStatusOrRole: (
+    userId: string,
+    updates: {
+      role?: OrganizationRole;
+      status?: UserAccountStatus;
+      jobTitle?: string;
+      loginCode?: string;
+    }
+  ) =>
+    request<User>(`/api/admin/org/users/${userId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    }),
+
+  // Payment Intent & Setup
+  getPaymentIntent: (id: string) =>
+    request<any>(`/api/billing/payment-intents/${id}`),
+
+  getSetupState: (programId: string) =>
+    request<any>(`/api/setup/state/${encodeURIComponent(programId)}`),
+
+  runSetup: (programId: string) =>
+    request<any>(`/api/setup/run/${encodeURIComponent(programId)}`, { method: 'POST' }),
+
+  retrySetup: (programId: string) =>
+    request<any>(`/api/setup/retry/${encodeURIComponent(programId)}`, { method: 'POST' }),
 
   // Shows & Catalog
   createShow: (show: Partial<Show>) =>

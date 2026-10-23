@@ -94,7 +94,10 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
   const loadAdminOverview = async () => {
     setLoading(true);
     try {
-      const data = await api.getAdminOverview();
+      // Use global admin endpoint for platform admins, org admin endpoint for org admins
+      const data = session?.isPlatformAdmin 
+        ? await api.getAdminOverview() 
+        : await api.getOrgAdminOverview();
       setUsers(data.users);
       setShows(data.shows);
       setSubscriptions(data.subscriptions);
@@ -136,14 +139,23 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
         canExport: true,
       }));
 
-      const created = await api.createAdminUser({
-        name: newName.trim(),
-        email: newEmail.trim(),
-        jobTitle: newJobTitle.trim(),
-        loginCode: newLoginCode.trim() || 'rsplay123',
-        role: newRole,
-        showPermissions,
-      });
+      const created = session?.isPlatformAdmin
+        ? await api.createAdminUser({
+            name: newName.trim(),
+            email: newEmail.trim(),
+            jobTitle: newJobTitle.trim(),
+            loginCode: newLoginCode.trim() || 'rsplay123',
+            role: newRole,
+            showPermissions,
+          })
+        : await api.createOrgAdminUser({
+            name: newName.trim(),
+            email: newEmail.trim(),
+            jobTitle: newJobTitle.trim(),
+            loginCode: newLoginCode.trim() || 'rsplay123',
+            role: newRole,
+            showPermissions,
+          });
 
       setIsNewUserOpen(false);
       setNewName('');
@@ -209,7 +221,11 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
         }
       }
 
-      await api.updateUserShowPermissions(targetUser.id, nextPerms);
+      if (session?.isPlatformAdmin) {
+        await api.updateUserShowPermissions(targetUser.id, nextPerms);
+      } else {
+        await api.updateOrgUserShowPermissions(targetUser.id, nextPerms);
+      }
       await loadAdminOverview();
       await onWorkspaceMutated();
       setFeedback({
@@ -231,7 +247,11 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
     setSavingId(`status-${targetUser.id}`);
     setFeedback(null);
     try {
-      await api.updateUserStatusOrRole(targetUser.id, { status: nextStatus });
+      if (session?.isPlatformAdmin) {
+        await api.updateUserStatusOrRole(targetUser.id, { status: nextStatus });
+      } else {
+        await api.updateOrgUserStatusOrRole(targetUser.id, { status: nextStatus });
+      }
       await loadAdminOverview();
       setFeedback({
         type: 'success',

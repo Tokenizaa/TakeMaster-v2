@@ -35,6 +35,36 @@ export async function assertOrganizationRole(
   }
 }
 
+export async function assertPlatformAdmin(userId: string): Promise<void> {
+  const { data, error } = await getSupabaseAdmin()
+    .from('users') // This would be a custom table or check in auth.users metadata
+    .select('id')
+    .eq('id', userId)
+    .eq('raw_user_meta_data->>platformRole', 'platform_admin')
+    .maybeSingle();
+
+  if (error) throw new AppError('Falha ao verificar papel de plataforma', 'AUTHORIZATION_CHECK_FAILED', 500);
+  if (!data) throw new AppError('Acesso restrito a administradores de plataforma', 'FORBIDDEN', 403);
+}
+
+export async function assertPlatformAdminOrOrgAdmin(
+  userId: string,
+  organizationId: string,
+  orgRoles: OrganizationRole[] = ['owner', 'admin']
+): Promise<void> {
+  // First check if platform admin
+  try {
+    await assertPlatformAdmin(userId);
+    return; // Platform admin has access to everything
+  } catch (err) {
+    if (!(err instanceof AppError) || err.code !== 'FORBIDDEN') throw err;
+    // Not platform admin, fall through to org role check
+  }
+  
+  // Check organization role
+  await assertOrganizationRole(userId, organizationId, orgRoles);
+}
+
 export async function assertProgramAccess(userId: string, programId: string): Promise<void> {
   const { data: program, error: programError } = await getSupabaseAdmin()
     .from('programs')

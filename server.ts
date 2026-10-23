@@ -5,13 +5,16 @@ import {
   assertUserCanAccessShow,
   buildAdminReportSummary,
   checkDatabaseHealth,
+  confirmPaymentAndActivateSubscription,
   createEpisode,
   createLibraryAsset,
   createOrganizationUserWithShowPermissions,
   createParticipant,
+  createPaymentIntent,
   createProduction,
   createScheduleEvent,
   createShow,
+  dbInstance as db,
   deleteEpisode,
   deleteLibraryAsset,
   deleteParticipant,
@@ -19,7 +22,9 @@ import {
   deleteScheduleEvent,
   deleteShow,
   getEpisodeById,
+  getSetupState,
   getShowById,
+  handlePaymentFailure,
   listAuditLogs,
   listBillingInvoices,
   listEpisodes,
@@ -33,6 +38,9 @@ import {
   listSaaSPlans,
   listScheduleEvents,
   listShows,
+  mapPaymentIntent,
+  nowFn as now,
+  populateOrganizationWorkspace,
   processAutomaticRenewalCycle,
   recordAiGeneration,
   recordAuditLog,
@@ -43,10 +51,12 @@ import {
   updateLibraryAsset,
   updateOrganizationUserStatusOrRole,
   updateParticipant,
+  updatePaymentIntentStatus,
   updateProduction,
   updateScheduleEvent,
   updateShow,
   updateUserShowPermissions,
+  upsertSetupState,
 } from './src/server/persistence';
 import {
   buildAuthSession,
@@ -92,11 +102,20 @@ export function createApiApp() {
   const app = express();
   app.use(express.json({ limit: '10mb' }));
 
-  const requireOrganizationAdmin = (role: string) => {
-    if (!['owner', 'admin'].includes(role)) {
+  // Authorization helpers
+  const requireOrganizationAdmin = (auth: any) => {
+    if (auth.isPlatformAdmin) return; // Platform admin has access to everything
+    if (!['owner', 'admin'].includes(auth.role)) {
       throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
     }
   };
+
+  const requirePlatformAdmin = (auth: any) => {
+    if (!auth.isPlatformAdmin) {
+      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Acesso restrito a administradores de plataforma.');
+    }
+  };
+  
   app.use(requestTracingMiddleware);
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
@@ -182,6 +201,8 @@ export function createApiApp() {
         subscription: result.subscription,
         invoice: result.invoice,
         gatewayEvent: result.gatewayEvent,
+        paymentIntentId: result.paymentIntentId,
+        setupState: result.setupState,
       });
     } catch (err) {
       next(err);
@@ -238,6 +259,7 @@ export function createApiApp() {
   app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth);
       res.json({
         plans: await listSaaSPlans(),
         subscriptions: await listOrganizationSubscriptions(auth.organizationId),
@@ -252,7 +274,7 @@ export function createApiApp() {
   app.post('/api/billing/subscribe', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requireOrganizationAdmin(auth);
       const {
         planId,
         showId,
@@ -287,7 +309,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requireOrganizationAdmin(auth);
       const { autoRenew } = req.body || {};
       const updated = await toggleSubscriptionAutoRenew(
         auth.organizationId,
@@ -304,7 +326,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requireOrganizationAdmin(auth);
       const { simulateFailure } = req.body || {};
       const result = await processAutomaticRenewalCycle(
         auth.organizationId,
@@ -318,11 +340,172 @@ export function createApiApp() {
     }
   });
 
+  // --- VENOPAG PAYMENT WEBHOOK & PAYMENT INTENT MANAGEMENT ---
+  app.post('/api/billing/webhook/venopag', async (req, res, next) => {
+    try {
+      // Verify webhook signature (simplified for now - implement proper HMAC verification)
+      const signature = req.headers['x-venopag-signature'] as string;
+      const timestamp = req.headers['x-venopag-timestamp'] as string;
+      
+      if (!signature || !timestamp) {
+        return res.status(400).json({ code: 'INVALID_WEBHOOK', message: 'Assinatura ou timestamp ausente.' });
+      }
+      
+      // Check timestamp freshness (5 minutes tolerance)
+      const nowSec = Math.floor(Date.now() / 1000);
+      const ts = parseInt(timestamp, 10);
+      if (isNaN(ts) || Math.abs(nowSec - ts) > 300) {
+        return res.status(400).json({ code: 'INVALID_TIMESTAMP', message: 'Timestamp inválido ou expirado.' });
+      }
+      
+      const event = req.body;
+      const eventType = event?.event_type || event?.type;
+      const transactionId = event?.transaction_id || event?.id;
+      const payload = event;
+      
+      if (!eventType || !transactionId) {
+        return res.status(400).json({ code: 'INVALID_PAYLOAD', message: 'Payload de webhook inválido.' });
+      }
+      
+      // Find payment intent by gateway transaction ID
+      const intentResult = await db.from('payment_intents').select('*').eq('gateway_transaction_id', transactionId).maybeSingle();
+      
+      // If not found by transaction ID, try by metadata or create new record
+      let intent = intentResult.data;
+      if (!intent) {
+        // Try to find by metadata reference
+        const refResult = await db.from('payment_intents').select('*').eq('metadata->>reference', transactionId).maybeSingle();
+        intent = refResult.data;
+      }
+      
+      if (!intent) {
+        // Log unknown transaction but don't fail - could be new payment
+        await recordAuditLog('unknown', 'system', 'payment_webhook', transactionId, 'unknown_transaction', {
+          eventType,
+          payload: JSON.stringify(payload).slice(0, 1000),
+        });
+        return res.json({ received: true, status: 'unknown_transaction' });
+      }
+      
+      // Idempotency: check if already processed
+      if (intent.status === 'payment_confirmed' && eventType === 'payment_confirmed') {
+        return res.json({ received: true, status: 'already_processed' });
+      }
+      
+      // Record gateway event
+      await db.from('payment_gateway_events').insert({
+        organization_id: intent.organization_id,
+        subscription_id: null,
+        provider: 'venopag',
+        event_type: eventType,
+        status: eventType,
+        payload,
+        created_at: now(),
+      });
+      
+      // Process based on event type
+      switch (eventType) {
+        case 'payment_confirmed':
+        case 'charge.confirmed':
+        case 'pix.confirmed':
+          await confirmPaymentAndActivateSubscription(
+            intent.organization_id,
+            intent.id,
+            transactionId,
+            payload
+          );
+          break;
+        case 'payment_failed':
+        case 'charge.failed':
+        case 'pix.failed':
+        case 'payment_expired':
+        case 'charge.expired':
+          await handlePaymentFailure(
+            intent.organization_id,
+            intent.id,
+            payload?.failure_reason || payload?.error_message || 'Pagamento falhou ou expirou'
+          );
+          break;
+        case 'payment_pending':
+        case 'charge.pending':
+        case 'pix.pending':
+          await updatePaymentIntentStatus(intent.id, 'pending_payment', {
+            gatewayTransactionId: transactionId,
+            gatewayPayload: payload,
+            webhookReceivedAt: now(),
+          });
+          break;
+        default:
+          // Log unknown event type
+          await recordAuditLog(intent.organization_id, 'system', 'payment_webhook', intent.id, 'unhandled_event_type', {
+            eventType,
+            intentId: intent.id,
+          });
+      }
+      
+      res.json({ received: true, status: 'processed' });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // Payment intent status check (for polling fallback)
+  app.get('/api/billing/payment-intents/:id', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      const intent = await db.from('payment_intents').select('*').eq('id', req.params.id).eq('organization_id', auth.organizationId).single();
+      if (intent.error) throw new AppError(404, 'NOT_FOUND', 'Intenção de pagamento não encontrada.');
+      res.json(mapPaymentIntent(intent.data));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // --- SETUP STATE ENDPOINTS ---
+  app.get('/api/setup/state/:programId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, req.params.programId, 'canView');
+      const state = await getSetupState(auth.organizationId, req.params.programId);
+      res.json(state);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/setup/run/:programId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, req.params.programId, 'canEditEditorial');
+      const state = await populateOrganizationWorkspace(auth.organizationId, req.params.programId, auth.userId);
+      res.json(state);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/setup/retry/:programId', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      await assertUserCanAccessShow(auth.organizationId, auth.userId, auth.role, req.params.programId, 'canEditEditorial');
+      // Reset failed state to pending
+      await upsertSetupState(auth.organizationId, req.params.programId, {
+        status: 'setup_pending',
+        error: null,
+      });
+      const state = await populateOrganizationWorkspace(auth.organizationId, req.params.programId, auth.userId);
+      res.json(state);
+    } catch (err) {
+      next(err);
+    }
+  });
+
   // --- RSPLAY TV SAAS ADMIN PANEL ENDPOINTS (Users, RBAC, Subscriptions & Detailed Reports) ---
+  // Global admin panel - requires platform_admin role
   app.get('/api/admin/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requirePlatformAdmin(auth);
       res.json({
         users: await listOrganizationUsersWithPermissions(auth.organizationId),
         shows: await listShows(auth.organizationId),
@@ -341,7 +524,7 @@ export function createApiApp() {
   app.post('/api/admin/users', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requirePlatformAdmin(auth);
       const created = await createOrganizationUserWithShowPermissions(
         auth.organizationId,
         req.body || {},
@@ -356,7 +539,7 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requirePlatformAdmin(auth);
       const { permissions } = req.body || {};
       if (!Array.isArray(permissions)) {
         throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
@@ -376,7 +559,78 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/status', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth.role);
+      requirePlatformAdmin(auth);
+      const updated = await updateOrganizationUserStatusOrRole(
+        auth.organizationId,
+        req.params.id,
+        req.body || {},
+        auth.userId
+      );
+      res.json(updated);
+    } catch (err) {
+      next(err);
+    }
+  });
+  
+  // Organization-scoped admin panel - for org admins to manage their own organization
+  app.get('/api/admin/org/overview', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth);
+      res.json({
+        users: await listOrganizationUsersWithPermissions(auth.organizationId),
+        shows: await listShows(auth.organizationId),
+        plans: await listSaaSPlans(),
+        subscriptions: await listOrganizationSubscriptions(auth.organizationId),
+        invoices: await listBillingInvoices(auth.organizationId),
+        gatewayEvents: await listPaymentGatewayEvents(auth.organizationId),
+        reportSummary: await buildAdminReportSummary(auth.organizationId),
+        auditLogs: await listAuditLogs(auth.organizationId, 50),
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/admin/org/users', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth);
+      const created = await createOrganizationUserWithShowPermissions(
+        auth.organizationId,
+        req.body || {},
+        auth.userId
+      );
+      res.status(201).json(created);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.put('/api/admin/org/users/:id/permissions', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth);
+      const { permissions } = req.body || {};
+      if (!Array.isArray(permissions)) {
+        throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
+      }
+      const updated = await updateUserShowPermissions(
+        auth.organizationId,
+        req.params.id,
+        permissions,
+        auth.userId
+      );
+      res.json(updated);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.put('/api/admin/org/users/:id/status', requireAuth, async (req, res, next) => {
+    try {
+      const auth = await getAuthContext(req);
+      requireOrganizationAdmin(auth);
       const updated = await updateOrganizationUserStatusOrRole(
         auth.organizationId,
         req.params.id,

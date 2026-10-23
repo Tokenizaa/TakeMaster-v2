@@ -81,7 +81,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     email: '',
     loginCode: 'rsplay123',
     jobTitle: 'Produtor Executivo',
-    role: 'producer',
     showMode: 'knowledge_base',
     knowledgeBaseSlug: 'advogada-do-leque',
     newShowTitle: '',

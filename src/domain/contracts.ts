@@ -19,6 +19,24 @@ export type OrganizationRole =
   | 'host'
   | 'viewer';
 
+export type PlatformRole = 'platform_admin' | 'platform_operator' | 'none';
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  jobTitle?: string;
+  status?: UserAccountStatus;
+  loginCode?: string;
+  avatarUrl?: string;
+  role?: OrganizationRole;
+  platformRole?: PlatformRole;
+  showPermissions?: UserShowPermission[];
+  lastLoginAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type UserAccountStatus = 'active' | 'suspended' | 'invited';
 
 export type CatalogStatus = 'development' | 'active' | 'hiatus' | 'archived';
@@ -92,10 +110,60 @@ export type SubscriptionStatus =
   | 'canceled'
   | 'suspended';
 
+export type PaymentIntentStatus =
+  | 'created'
+  | 'pending_payment'
+  | 'payment_confirmed'
+  | 'payment_failed'
+  | 'expired'
+  | 'cancelled'
+  | 'refunded'
+  | 'reconciliation_needed';
+
+export interface PaymentIntent {
+  id: string;
+  organizationId: string;
+  programId?: string;
+  planId: SubscriptionPlanId;
+  amountCents: number;
+  currency: string;
+  status: PaymentIntentStatus;
+  gatewayProvider: string;
+  gatewayTransactionId?: string;
+  gatewayPayload?: Record<string, any>;
+  webhookReceivedAt?: string;
+  reconciledAt?: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type PaymentMethodType =
   | 'credit_card'
   | 'pix_automatico'
   | 'boleto_corporativo';
+
+export type SetupStatus =
+  | 'not_started'
+  | 'setup_pending'
+  | 'setup_running'
+  | 'setup_failed'
+  | 'ready'
+  | 'suspended'
+  | 'cancelled';
+
+export interface SetupState {
+  id: string;
+  organizationId: string;
+  programId: string;
+  status: SetupStatus;
+  version: number;
+  steps: Record<string, { status: 'pending' | 'completed' | 'failed'; completedAt?: string; error?: string }>;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+  error?: string;
+}
 
 export interface Organization {
   id: string;
@@ -215,10 +283,12 @@ export interface AuthSession {
   user: User;
   activeOrganization: Organization;
   role: OrganizationRole;
+  platformRole: PlatformRole;
   memberships: OrganizationMembership[];
   showPermissions: UserShowPermission[];
   allowedShowIds: string[];
   isFullAccessAdmin: boolean;
+  isPlatformAdmin: boolean;
   activeSubscription?: SaaSSubscription;
 }
 
@@ -635,7 +705,10 @@ export type ApiErrorCode =
   | 'NOT_FOUND'
   | 'CONFLICT'
   | 'PERSISTENCE_ERROR'
-  | 'AI_SCHEMA_ERROR';
+  | 'AI_SCHEMA_ERROR'
+  | 'PAYMENT_FAILED'
+  | 'SETUP_IN_PROGRESS'
+  | 'EMAIL_EXISTS';
 
 export interface StandardizedApiError {
   code: ApiErrorCode;
@@ -740,7 +813,6 @@ export interface SaaSRegistrationPayload {
   email: string;
   loginCode: string;
   jobTitle?: string;
-  role?: OrganizationRole;
   showMode: 'existing' | 'new' | 'knowledge_base';
   existingShowId?: string;
   knowledgeBaseSlug?: string;

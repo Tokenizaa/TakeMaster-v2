@@ -3,8 +3,10 @@ import { randomBytes } from 'node:crypto';
 import {
   AdminReportSummary, AuditLogEntry, BillingInvoice, Episode, EpisodeParticipant, Guest,
   LibraryAsset, Organization, OrganizationMembership, OrganizationRole, PaymentGatewayEvent,
-  PaymentMethodType, Production, SaaSPlanDefinition, SaaSRegistrationPayload, SaaSSubscription,
-  ScheduleEvent, ScriptVersion, Show, SubscriptionPlanId, User, UserAccountStatus, UserShowPermission,
+  PaymentIntent, PaymentIntentStatus, PaymentMethodType, PlatformRole, Production,
+  SaaSPlanDefinition, SaaSRegistrationPayload, SaaSSubscription, ScheduleEvent,
+  ScriptVersion, Show, SubscriptionPlanId, SetupState, SetupStatus, User,
+  UserAccountStatus, UserShowPermission,
 } from '../domain/contracts';
 import { AppError } from '../domain/validation';
 import { resolveProgramKnowledge } from './programKnowledge';
@@ -27,6 +29,36 @@ async function one(table: string, id: string) {
 function fail<T extends { error?: any; data?: any }>(r: T): T { if (r?.error) throw new Error(r.error.message); return r; }
 async function programUuid(id: string) { const p = await one('programs', id); return p?.id; }
 async function episodeUuid(id: string) { const e = await one('episodes', id); return e?.id; }
+
+function generateId(prefix: string) {
+  return `${prefix}-${Date.now()}-${randomBytes(8).toString('hex')}`;
+}
+
+async function upsertSetupState(orgId: string, programId: string, updates: Partial<SetupState>) {
+  const existing = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', programId).maybeSingle();
+  if (existing.error) throw new Error(existing.error.message);
+  const existingData = existing.data;
+  const payload: any = {
+    organization_id: orgId,
+    program_id: programId,
+    status: updates.status || 'setup_pending',
+    version: (existingData?.version || 0) + 1,
+    steps: updates.steps || existingData?.steps || {},
+    updated_at: now(),
+  };
+  if (updates.status === 'ready') payload.completed_at = now();
+  if (updates.status === 'setup_failed') payload.error = updates.error;
+  
+  if (existingData) {
+    const r = await db.from('setup_states').update(payload).eq('id', existingData.id).select('*').single();
+    fail(r);
+    return r.data;
+  } else {
+    const r = await db.from('setup_states').insert({ ...payload, id: generateId('setup'), created_at: now() }).select('*').single();
+    fail(r);
+    return r.data;
+  }
+}
 
 function mapCamera(r: any) {
   return { id: legacyId(r), name:r.name||'', label:r.label||r.name||'', purpose:r.purpose||'', framing:r.framing||'', active:r.active !== false };
@@ -225,7 +257,10 @@ export async function recordAiGeneration(input: {
 export async function recordAuditLog(org:string,userId:string,entityType:string,entityId:string,action:string,metadata:any={}){const r=await db.from('audit_log').insert({organization_id:org,actor_user_id:userId||null,action,table_name:entityType,row_id:isUuid(entityId)?entityId:null,metadata});fail(r);return true;}
 export async function listAuditLogs(org:string,limit=50){const r=await db.from('audit_log').select('*').eq('organization_id',org).order('created_at',{ascending:false}).limit(limit);return (fail(r).data||[]).map((x:any):AuditLogEntry=>({id:String(x.id),organizationId:org,userId:x.actor_user_id||undefined,entityType:x.table_name||'',entityId:x.row_id||'',action:x.action,metadata:x.metadata||{},createdAt:x.created_at}));}
 export async function checkDatabaseHealth(){try{const r=await db.from('organizations').select('id').limit(1);return {connected:!r.error,driver:'supabase',error:r.error?.message};}catch(e){return {connected:false,driver:'supabase',error:String(e)};}}
+export const nowFn = now;
+export const dbInstance = db;
 export function getDbConnection(){return db;}
+export function getNow(){return now();}
 export async function getAuthUserById(userId:string){
   const r = await db.auth.admin.getUserById(userId);
   if (r.error) return null;
@@ -300,13 +335,572 @@ export async function updateUserShowPermissions(orgId:string,userId:string,permi
   const users:any[]=await authUsers(); return mapUser(users.find((u:any)=>u.id===userId)||{},orgId);
 }
 export async function updateOrganizationUserStatusOrRole(orgId:string,userId:string,input:any,actorUserId?:string){const r=await db.from('organization_members').update({role:input.role,active:input.status!=='suspended',updated_at:now()}).eq('organization_id',orgId).eq('user_id',userId).select('*').single();fail(r);return r.data;}
-export async function listSaaSPlans(){const r=await db.from('commercial_plans').select('*').eq('active',true).order('price_cents');fail(r);return (r.data||[]).map((x:any):SaaSPlanDefinition=>({id:x.code,name:x.name,tagline:x.description,maxShows:999,maxUsers:999,monthlyPriceCents:x.price_cents||0,features:[]}));}
-export async function listOrganizationSubscriptions(orgId:string){const r=await db.from('organization_subscriptions').select('*,commercial_plans(*)').eq('organization_id',orgId).order('created_at',{ascending:false});fail(r);return (r.data||[]).map((x:any):SaaSSubscription=>({id:x.id,organizationId:orgId,planId:x.commercial_plans?.code||'rsplay_programa_individual',planName:x.commercial_plans?.name||'',billingCycle:x.commercial_plans?.billing_period==='annual'?'annual':'monthly',amountCents:x.commercial_plans?.price_cents||0,currency:x.commercial_plans?.currency||'BRL',status:x.status==='active'?'active':x.status==='trial'?'trialing':'suspended',autoRenew:true,paymentGateway:'',paymentMethodType:'credit_card',paymentMethodLast4:'',paymentMethodBrand:'',gatewayCustomerId:'',gatewaySubscriptionId:'',currentPeriodStart:x.starts_at,currentPeriodEnd:x.ends_at||x.starts_at,lastRenewalAt:undefined,canceledAt:undefined,createdAt:x.created_at,updatedAt:x.updated_at}));}
-export async function listBillingInvoices(_orgId?:string){return [] as BillingInvoice[];}
-export async function listPaymentGatewayEvents(_orgId?:string){return [] as PaymentGatewayEvent[];}
-export async function subscribeOrUpdatePlan(orgId:string,input:any,userId:string){const plan=await db.from('commercial_plans').select('*').eq('code',input.planId).single();fail(plan);const old=await db.from('organization_subscriptions').select('id').eq('organization_id',orgId).eq('status','active').limit(1);if(old.data?.[0])await db.from('organization_subscriptions').update({status:'cancelled',ends_at:now(),updated_at:now()}).eq('id',old.data[0].id);const r=await db.from('organization_subscriptions').insert({organization_id:orgId,plan_id:plan.data.id,status:'active'}).select('*').single();fail(r);return (await listOrganizationSubscriptions(orgId))[0];}
-export async function toggleSubscriptionAutoRenew(_orgId?:string,_id?:string,_autoRenew?:boolean,_userId?:string){return true;}
-export async function processAutomaticRenewalCycle(orgId:string,id:string,_simulateFailure?:boolean,_userId?:string){const subs=await listOrganizationSubscriptions(orgId);const s=subs.find(x=>x.id===id);if(!s)throw new AppError(404,'NOT_FOUND','Assinatura não encontrada.');return s;}
-export async function buildAdminReportSummary(orgId:string):Promise<AdminReportSummary>{const [subs,users,shows]=await Promise.all([listOrganizationSubscriptions(orgId),listOrganizationUsersWithPermissions(orgId),listShows(orgId)]);return {mrrCents:subs.reduce((a,x)=>a+x.amountCents,0),activeSubscriptionsCount:subs.filter(x=>x.status==='active').length,autoRenewEnabledCount:subs.filter(x=>x.autoRenew).length,paidInvoicesTotalCents:0,pendingInvoicesTotalCents:0,usersCount:users.length,showsReport:await Promise.all(shows.map(async s=>({showId:s.id,showTitle:s.title,format:s.format,host:s.host,episodesCount:(await listEpisodes(orgId,s.id)).length,publishedOrReadyCount:(await listEpisodes(orgId,s.id)).filter(e=>e.status==='published'||e.status==='ready').length,totalPlannedMinutes:0,scheduledSessionsCount:(await listScheduleEvents(orgId,s.id)).length,authorizedUsersCount:users.length})))};}
-export async function populateOrganizationWorkspace(){return true;}
-export async function registerSaaSAccountWithSubscription(payload:SaaSRegistrationPayload,organizationId:string){const user=await createOrganizationUserWithShowPermissions(organizationId,{email:payload.email,name:payload.name,loginCode:payload.loginCode,jobTitle:payload.jobTitle,role:payload.role||'editor'});let show:Show|undefined;if(payload.newShowTitle){show=await createShow(organizationId,{title:payload.newShowTitle,host:payload.newShowHost||'',format:payload.newShowFormat||'Outro'});}const subscription=await subscribeOrUpdatePlan(organizationId,{planId:payload.planId},user.id);return {user,show,subscription,invoice:undefined,gatewayEvent:undefined};}
+export async function listSaaSPlans() {
+  const r = await db.from('commercial_plans').select('*').eq('active', true).order('price_cents');
+  fail(r);
+  return (r.data || []).map((x: any): SaaSPlanDefinition => ({
+    id: x.code,
+    name: x.name,
+    tagline: x.description,
+    maxShows: 999,
+    maxUsers: 999,
+    monthlyPriceCents: x.price_cents || 0,
+    features: [],
+  }));
+}
+
+export async function listOrganizationSubscriptions(orgId: string) {
+  const r = await db.from('organization_subscriptions').select('*,commercial_plans(*)').eq('organization_id', orgId).order('created_at', { ascending: false });
+  fail(r);
+  return (r.data || []).map((x: any): SaaSSubscription => ({
+    id: x.id,
+    organizationId: orgId,
+    planId: x.commercial_plans?.code || 'rsplay_programa_individual',
+    planName: x.commercial_plans?.name || '',
+    billingCycle: x.commercial_plans?.billing_period === 'annual' ? 'annual' : 'monthly',
+    amountCents: x.commercial_plans?.price_cents || 0,
+    currency: x.commercial_plans?.currency || 'BRL',
+    status: x.status === 'active' ? 'active' : x.status === 'trial' ? 'trialing' : 'suspended',
+    autoRenew: x.auto_renew ?? true,
+    paymentGateway: x.payment_gateway || '',
+    paymentMethodType: x.payment_method_type || 'credit_card',
+    paymentMethodLast4: x.payment_method_last4 || '',
+    paymentMethodBrand: x.payment_method_brand || '',
+    gatewayCustomerId: x.gateway_customer_id || '',
+    gatewaySubscriptionId: x.gateway_subscription_id || '',
+    currentPeriodStart: x.starts_at,
+    currentPeriodEnd: x.ends_at || x.starts_at,
+    lastRenewalAt: x.last_renewal_at,
+    canceledAt: x.canceled_at,
+    createdAt: x.created_at,
+    updatedAt: x.updated_at,
+  }));
+}
+
+export async function listBillingInvoices(orgId?: string): Promise<BillingInvoice[]> {
+  if (!orgId) return [];
+  const r = await db.from('billing_invoices').select('*').eq('organization_id', orgId).order('created_at', { ascending: false });
+  if (r.error) return [];
+  return (r.data || []).map((x: any): BillingInvoice => ({
+    id: x.id,
+    organizationId: orgId,
+    subscriptionId: x.subscription_id,
+    invoiceNumber: x.invoice_number,
+    description: x.description,
+    amountCents: x.amount_cents,
+    currency: x.currency,
+    status: x.status,
+    paymentMethod: x.payment_method,
+    gatewayTransactionId: x.gateway_transaction_id,
+    autoRenewalCycle: x.auto_renewal_cycle || false,
+    dueDate: x.due_date,
+    paidAt: x.paid_at,
+    createdAt: x.created_at,
+  }));
+}
+
+export async function listPaymentGatewayEvents(orgId?: string): Promise<PaymentGatewayEvent[]> {
+  if (!orgId) return [];
+  const r = await db.from('payment_gateway_events').select('*').eq('organization_id', orgId).order('created_at', { ascending: false });
+  if (r.error) return [];
+  return (r.data || []).map((x: any): PaymentGatewayEvent => ({
+    id: x.id,
+    organizationId: orgId,
+    subscriptionId: x.subscription_id,
+    provider: x.provider,
+    eventType: x.event_type,
+    status: x.status,
+    payload: x.payload,
+    createdAt: x.created_at,
+  }));
+}
+
+export async function createPaymentIntent(
+  orgId: string,
+  programId: string | undefined,
+  planId: SubscriptionPlanId,
+  amountCents: number,
+  currency: string,
+  gatewayProvider: string,
+  metadata?: Record<string, any>
+): Promise<PaymentIntent> {
+  const id = generateId('pi');
+  const payload = {
+    id,
+    organization_id: orgId,
+    program_id: programId,
+    plan_id: planId,
+    amount_cents: amountCents,
+    currency,
+    status: 'created' as PaymentIntentStatus,
+    gateway_provider: gatewayProvider,
+    gateway_transaction_id: null,
+    gateway_payload: null,
+    webhook_received_at: null,
+    reconciled_at: null,
+    metadata: metadata || {},
+    created_at: now(),
+    updated_at: now(),
+  };
+  const r = await db.from('payment_intents').insert(payload).select('*').single();
+  fail(r);
+  return mapPaymentIntent(r.data);
+}
+
+export async function updatePaymentIntentStatus(
+  intentId: string,
+  status: PaymentIntentStatus,
+  updates?: Partial<{ gatewayTransactionId: string; gatewayPayload: Record<string, any>; webhookReceivedAt: string; reconciledAt: string }>
+) {
+  const payload: any = { status, updated_at: now() };
+  if (updates?.gatewayTransactionId) payload.gateway_transaction_id = updates.gatewayTransactionId;
+  if (updates?.gatewayPayload) payload.gateway_payload = updates.gatewayPayload;
+  if (updates?.webhookReceivedAt) payload.webhook_received_at = updates.webhookReceivedAt;
+  if (updates?.reconciledAt) payload.reconciled_at = updates.reconciledAt;
+  
+  const r = await db.from('payment_intents').update(payload).eq('id', intentId).select('*').single();
+  fail(r);
+  return mapPaymentIntent(r.data);
+}
+
+function mapPaymentIntent(x: any): PaymentIntent {
+  return {
+    id: x.id,
+    organizationId: x.organization_id,
+    programId: x.program_id,
+    planId: x.plan_id,
+    amountCents: x.amount_cents,
+    currency: x.currency,
+    status: x.status,
+    gatewayProvider: x.gateway_provider,
+    gatewayTransactionId: x.gateway_transaction_id,
+    gatewayPayload: x.gateway_payload,
+    webhookReceivedAt: x.webhook_received_at,
+    reconciledAt: x.reconciled_at,
+    metadata: x.metadata,
+    createdAt: x.created_at,
+    updatedAt: x.updated_at,
+  };
+}
+
+export async function subscribeOrUpdatePlan(
+  orgId: string,
+  input: { planId: SubscriptionPlanId; showId?: string; paymentMethodType?: PaymentMethodType; paymentMethodLast4?: string; paymentMethodBrand?: string; autoRenew?: boolean; paymentIntentId?: string },
+  userId: string
+) {
+  const plan = await db.from('commercial_plans').select('*').eq('code', input.planId).single();
+  fail(plan);
+  
+  // Check for existing active subscription
+  const old = await db.from('organization_subscriptions').select('id').eq('organization_id', orgId).eq('status', 'active').limit(1);
+  if (old.data?.[0]) {
+    await db.from('organization_subscriptions').update({ status: 'cancelled', ends_at: now(), updated_at: now() }).eq('id', old.data[0].id);
+  }
+  
+  // Determine subscription status based on payment intent
+  let subscriptionStatus: 'active' | 'pending_payment' = 'pending_payment';
+  if (input.paymentIntentId) {
+    const intent = await db.from('payment_intents').select('status').eq('id', input.paymentIntentId).single();
+    if (!intent.error && intent.data?.status === 'payment_confirmed') {
+      subscriptionStatus = 'active';
+    }
+  }
+  
+  const r = await db.from('organization_subscriptions').insert({
+    organization_id: orgId,
+    plan_id: plan.data.id,
+    status: subscriptionStatus,
+    show_id: input.showId,
+    auto_renew: input.autoRenew ?? true,
+    payment_method_type: input.paymentMethodType,
+    payment_method_last4: input.paymentMethodLast4,
+    payment_method_brand: input.paymentMethodBrand,
+    starts_at: now(),
+    ends_at: subscriptionStatus === 'active' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : null,
+  }).select('*').single();
+  fail(r);
+  
+  // If payment intent was provided, link it
+  if (input.paymentIntentId) {
+    await db.from('payment_intents').update({ reconciled_at: now() }).eq('id', input.paymentIntentId);
+  }
+  
+  return (await listOrganizationSubscriptions(orgId))[0];
+}
+
+export async function confirmPaymentAndActivateSubscription(
+  orgId: string,
+  paymentIntentId: string,
+  gatewayTransactionId: string,
+  gatewayPayload: Record<string, any>
+) {
+  // Update payment intent
+  await updatePaymentIntentStatus(paymentIntentId, 'payment_confirmed', {
+    gatewayTransactionId,
+    gatewayPayload,
+    webhookReceivedAt: now(),
+    reconciledAt: now(),
+  });
+  
+  // Find and activate pending subscription linked to this payment intent
+  const subs = await db.from('organization_subscriptions')
+    .select('*')
+    .eq('organization_id', orgId)
+    .eq('status', 'pending_payment')
+    .order('created_at', { ascending: false })
+    .limit(1);
+  
+  if (subs.data?.[0]) {
+    const sub = subs.data[0];
+    await db.from('organization_subscriptions').update({
+      status: 'active',
+      ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: now(),
+      gateway_subscription_id: gatewayTransactionId,
+    }).eq('id', sub.id);
+  }
+  
+  return listOrganizationSubscriptions(orgId);
+}
+
+export async function handlePaymentFailure(
+  orgId: string,
+  paymentIntentId: string,
+  reason: string
+) {
+  await updatePaymentIntentStatus(paymentIntentId, 'payment_failed', {
+    gatewayPayload: { failureReason: reason },
+    webhookReceivedAt: now(),
+  });
+  
+  const subs = await db.from('organization_subscriptions')
+    .select('*')
+    .eq('organization_id', orgId)
+    .eq('status', 'pending_payment')
+    .order('created_at', { ascending: false })
+    .limit(1);
+  
+  if (subs.data?.[0]) {
+    await db.from('organization_subscriptions').update({
+      status: 'cancelled',
+      ends_at: now(),
+      updated_at: now(),
+    }).eq('id', subs.data[0].id);
+  }
+}
+
+export async function toggleSubscriptionAutoRenew(
+  orgId: string,
+  id: string,
+  autoRenew: boolean,
+  userId?: string
+) {
+  const r = await db.from('organization_subscriptions').update({ auto_renew: autoRenew, updated_at: now() }).eq('id', id).eq('organization_id', orgId).select('*').single();
+  fail(r);
+  return (await listOrganizationSubscriptions(orgId)).find(s => s.id === id);
+}
+
+export async function processAutomaticRenewalCycle(
+  orgId: string,
+  id: string,
+  simulateFailure?: boolean,
+  userId?: string
+) {
+  const subs = await listOrganizationSubscriptions(orgId);
+  const s = subs.find(x => x.id === id);
+  if (!s) throw new AppError(404, 'NOT_FOUND', 'Assinatura não encontrada.');
+  
+  if (simulateFailure) {
+    await handlePaymentFailure(orgId, generateId('pi'), 'Simulated failure for testing');
+    throw new AppError(402, 'PAYMENT_FAILED', 'Pagamento simulado falhou.');
+  }
+  
+  // In real implementation, this would call the gateway
+  await db.from('organization_subscriptions').update({
+    last_renewal_at: now(),
+    ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: now(),
+  }).eq('id', id);
+  
+  return (await listOrganizationSubscriptions(orgId)).find(x => x.id === id)!;
+}
+
+async function createDefaultProgramStructure(orgId: string, programId: string, userId: string) {
+  // Create default season
+  const seasonId = generateId('season');
+  await db.from('seasons').insert({
+    id: seasonId,
+    program_id: programId,
+    number: 1,
+    title: 'Temporada 1',
+    status: 'planning',
+    target_episodes_count: 10,
+    executive_producer: '',
+    notes: 'Temporada inicial criada automaticamente no pré-setup',
+    created_at: now(),
+    updated_at: now(),
+  });
+  
+  // Create default cameras
+  const cameras = [
+    { id: generateId('cam'), program_id: programId, name: 'CAM 1', label: 'Câmera Principal', purpose: 'Principal', framing: 'close_up', active: true, sort_order: 1 },
+    { id: generateId('cam'), program_id: programId, name: 'CAM 2', label: 'Câmera Convidado', purpose: 'Guest', framing: 'medium', active: true, sort_order: 2 },
+    { id: generateId('cam'), program_id: programId, name: 'CAM 3', label: 'Câmera Wide', purpose: 'Wide', framing: 'wide', active: true, sort_order: 3 },
+  ];
+  await db.from('cameras').insert(cameras);
+  
+  // Create default editorial structure
+  await db.from('programs').update({
+    standard_structure: ['Abertura', 'Bloco 1', 'Bloco 2', 'Encerramento'],
+    default_opening: 'Bem-vindos ao {program_title}. Hoje recebemos {guest_name} para falar sobre {topic}.',
+    default_closing: 'Obrigado por assistir. Não esqueça de se inscrever e ativar as notificações.',
+    updated_at: now(),
+  }).eq('id', programId);
+  
+  // Grant producer access to creator
+  const program = await one('programs', programId);
+  if (program?.catalog_program_id) {
+    await db.from('program_user_access').upsert({
+      organization_id: orgId,
+      user_id: userId,
+      catalog_program_id: program.catalog_program_id,
+      role: 'producer',
+      status: 'active',
+      updated_at: now(),
+    }, { onConflict: 'organization_id,user_id,catalog_program_id' });
+  }
+}
+
+export async function populateOrganizationWorkspace(
+  orgId: string,
+  programId: string,
+  userId: string
+): Promise<SetupState> {
+  // Check existing setup state
+  const existing = await getSetupState(orgId, programId);
+  if (existing && existing.status === 'ready') {
+    return existing;
+  }
+  if (existing && existing.status === 'setup_running') {
+    throw new AppError(409, 'SETUP_IN_PROGRESS', 'Pré-setup já em andamento.');
+  }
+  
+  // Start or resume setup
+  const setup = await upsertSetupState(orgId, programId, {
+    status: 'setup_running',
+    steps: {
+      program_structure: { status: 'pending' },
+      default_season: { status: 'pending' },
+      cameras: { status: 'pending' },
+      editorial_defaults: { status: 'pending' },
+      user_permissions: { status: 'pending' },
+    },
+  });
+  
+  try {
+    // Step 1: Program structure validation
+    await upsertSetupState(orgId, programId, {
+      status: 'setup_running',
+      steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() } },
+    });
+    
+    // Step 2: Create default season
+    await createDefaultProgramStructure(orgId, programId, userId);
+    await upsertSetupState(orgId, programId, {
+      status: 'setup_running',
+      steps: { ...setup.steps, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() } },
+    });
+    
+    // Step 3: User permissions already handled in createDefaultProgramStructure
+    await upsertSetupState(orgId, programId, {
+      status: 'setup_running',
+      steps: { ...setup.steps, user_permissions: { status: 'completed', completedAt: now() } },
+    });
+    
+    // Mark as ready
+    const completed = await upsertSetupState(orgId, programId, {
+      status: 'ready',
+      steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() }, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() }, user_permissions: { status: 'completed', completedAt: now() } },
+    });
+    
+    await recordAuditLog(orgId, userId, 'setup_state', programId, 'completed', {
+      programId,
+      setupVersion: completed.version,
+    });
+    
+    return completed;
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Erro desconhecido no pré-setup';
+    await upsertSetupState(orgId, programId, {
+      status: 'setup_failed',
+      error: errMsg,
+      steps: setup.steps,
+    });
+    throw error;
+  }
+}
+
+export async function getSetupState(orgId: string, programId: string): Promise<SetupState | null> {
+  const r = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', programId).maybeSingle();
+  if (r.error) throw new Error(r.error.message);
+  if (!r.data) return null;
+  return {
+    id: r.data.id,
+    organizationId: r.data.organization_id,
+    programId: r.data.program_id,
+    status: r.data.status,
+    version: r.data.version,
+    steps: r.data.steps || {},
+    createdAt: r.data.created_at,
+    updatedAt: r.data.updated_at,
+    completedAt: r.data.completed_at,
+    error: r.data.error,
+  };
+}
+
+export async function registerSaaSAccountWithSubscription(
+  payload: SaaSRegistrationPayload,
+  organizationId: string
+) {
+  // Validate email uniqueness
+  const existingUser = await db.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  const usersList: any[] = (existingUser as any)?.data?.users || [];
+  const emailExists = usersList.some((u: any) => u.email?.toLowerCase() === payload.email.toLowerCase());
+  if (emailExists) {
+    throw new AppError(409, 'EMAIL_EXISTS', 'Este e-mail já está cadastrado na plataforma.');
+  }
+  
+  // Create user with default 'editor' role (never allow client to set privileged role)
+  const user = await createOrganizationUserWithShowPermissions(organizationId, {
+    email: payload.email,
+    name: payload.name,
+    loginCode: payload.loginCode,
+    jobTitle: payload.jobTitle,
+    role: 'editor', // Always default to editor, never trust client input
+  });
+  
+  let show: Show | undefined;
+  let paymentIntentId: string | undefined;
+  
+  // Create program if new
+  if (payload.newShowTitle) {
+    show = await createShow(organizationId, {
+      title: payload.newShowTitle,
+      host: payload.newShowHost || '',
+      format: payload.newShowFormat || 'Outro',
+    });
+    
+    // Create payment intent for the new program
+    const plan = await db.from('commercial_plans').select('*').eq('code', payload.planId).single();
+    if (!plan.error && plan.data) {
+      const intent = await createPaymentIntent(
+        organizationId,
+        show.id,
+        payload.planId,
+        plan.data.price_cents || 0,
+        plan.data.currency || 'BRL',
+        'venopag',
+        {
+          registrationType: 'new_program',
+          showTitle: payload.newShowTitle,
+          paymentMethodType: payload.paymentMethodType,
+          paymentMethodLast4: payload.paymentMethodLast4,
+          autoRenew: payload.autoRenew,
+        }
+      );
+      paymentIntentId = intent.id;
+    }
+  } else if (payload.existingShowId) {
+    // Link to existing program
+    const program = await getShowById(organizationId, payload.existingShowId);
+    if (!program) {
+      throw new AppError(404, 'NOT_FOUND', 'Programa selecionado não encontrado.');
+    }
+    show = program;
+    
+    // Create payment intent for existing program subscription
+    const plan = await db.from('commercial_plans').select('*').eq('code', payload.planId).single();
+    if (!plan.error && plan.data) {
+      const intent = await createPaymentIntent(
+        organizationId,
+        show.id,
+        payload.planId,
+        plan.data.price_cents || 0,
+        plan.data.currency || 'BRL',
+        'venopag',
+        {
+          registrationType: 'existing_program',
+          showTitle: show.title,
+          paymentMethodType: payload.paymentMethodType,
+          paymentMethodLast4: payload.paymentMethodLast4,
+          autoRenew: payload.autoRenew,
+        }
+      );
+      paymentIntentId = intent.id;
+    }
+  } else if (payload.knowledgeBaseSlug) {
+    // Knowledge base program - find by slug
+    const programs = await db.from('programs').select('*').eq('organization_id', organizationId).eq('legacy_id', payload.knowledgeBaseSlug);
+    if (programs.data?.length) {
+      show = await mapShow(programs.data[0]);
+    }
+  }
+  
+  // Create subscription (pending payment)
+  const subscription = await subscribeOrUpdatePlan(organizationId, {
+    planId: payload.planId,
+    showId: show?.id,
+    paymentMethodType: payload.paymentMethodType,
+    paymentMethodLast4: payload.paymentMethodLast4,
+    paymentMethodBrand: payload.paymentMethodBrand,
+    autoRenew: payload.autoRenew,
+    paymentIntentId,
+  }, user.id);
+  
+  // If show was created, run pre-setup
+  let setupState: SetupState | undefined;
+  if (show) {
+    try {
+      setupState = await populateOrganizationWorkspace(organizationId, show.id, user.id);
+    } catch (error) {
+      // Log but don't fail registration - setup can be retried
+      logStructured('WARN', 'setup_failed_during_registration', {
+        organizationId,
+        programId: show.id,
+        userId: user.id,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+  
+  return { user, show, subscription, invoice: undefined, gatewayEvent: undefined, paymentIntentId, setupState };
+}
+
+export async function buildAdminReportSummary(orgId: string): Promise<AdminReportSummary> {
+  const [subs, users, shows] = await Promise.all([
+    listOrganizationSubscriptions(orgId),
+    listOrganizationUsersWithPermissions(orgId),
+    listShows(orgId),
+  ]);
+  return {
+    mrrCents: subs.reduce((a, x) => a + x.amountCents, 0),
+    activeSubscriptionsCount: subs.filter(x => x.status === 'active').length,
+    autoRenewEnabledCount: subs.filter(x => x.autoRenew).length,
+    paidInvoicesTotalCents: 0,
+    pendingInvoicesTotalCents: 0,
+    usersCount: users.length,
+    showsReport: await Promise.all(shows.map(async s => ({
+      showId: s.id,
+      showTitle: s.title,
+      format: s.format,
+      host: s.host,
+      episodesCount: (await listEpisodes(orgId, s.id)).length,
+      publishedOrReadyCount: (await listEpisodes(orgId, s.id)).filter(e => e.status === 'published' || e.status === 'ready').length,
+      totalPlannedMinutes: 0,
+      scheduledSessionsCount: (await listScheduleEvents(orgId, s.id)).length,
+      authorizedUsersCount: users.length,
+    }))),
+  };
+}
+
+export { mapPaymentIntent, upsertSetupState };
