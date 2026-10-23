@@ -393,6 +393,18 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     <span>Autenticar Credencial</span>
                   </button>
                 </div>
+                <div className="flex justify-end mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setError(null);
+                    }}
+                    className="text-xs text-amber-400 hover:text-amber-300 underline hover:decoration-amber-400/30 transition-colors cursor-pointer"
+                    title="Iniciar fluxo de recuperação de acesso / redefinição de senha"
+                  >
+                    Esqueci minha senha? Recuperar acesso
+                  </button>
+                </div>
               </form>
             </>
           ) : (

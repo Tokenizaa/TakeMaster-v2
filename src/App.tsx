@@ -209,6 +209,22 @@ export function App() {
     }
   };
 
+  const handleLogout = () => {
+    api.logout();
+    setSession(null);
+    setShows([]);
+    setProductions([]);
+    setEpisodes([]);
+    setGuests([]);
+    setScheduleEvents([]);
+    setLibraryAssets([]);
+    setActiveEpisodeId(null);
+    setActiveSection('dashboard');
+    setSelectedShowId('ALL');
+    setSaveStatus('saved');
+    setSaveErrorMessage(null);
+  };
+
   const filteredEpisodes = useMemo(() => {
     return accessibleEpisodes.filter((ep) => {
       const matchesShow = selectedShowId === 'ALL' || ep.showId === selectedShowId;
@@ -529,6 +545,7 @@ export function App() {
         organizationName={session?.activeOrganization.name}
         session={session}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Area */}

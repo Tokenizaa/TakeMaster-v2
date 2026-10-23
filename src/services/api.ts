@@ -174,6 +174,19 @@ export const api = {
     return res.session;
   },
 
+  logout: () => {
+    try {
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+    } catch {
+      // ignore storage errors
+    }
+    try {
+      localStorage.removeItem(ACTIVE_ORG_KEY);
+    } catch {
+      // ignore storage errors
+    }
+  },
+
   // Workspace State (Filtered by Program-Level RBAC)
   getState: async (): Promise<WorkspaceStateResponse> => {
     const res = await request<WorkspaceStateResponse>('/api/state');

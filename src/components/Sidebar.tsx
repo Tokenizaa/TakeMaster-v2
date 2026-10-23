@@ -38,6 +38,7 @@ interface SidebarProps {
   organizationName?: string;
   session?: AuthSession | null;
   onOpenLoginModal?: () => void;
+  onLogout?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -52,6 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   organizationName = 'RSPlay TV — Rede Broadcast',
   session,
   onOpenLoginModal,
+  onLogout,
 }) => {
   const editorialItems: {
     id: NavSection;
@@ -197,6 +199,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-full py-1.5 px-2.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-medium text-zinc-200 transition-colors cursor-pointer"
             >
               Alternar Login de Programa
+            </button>
+          )}
+          {onLogout && (
+            <button
+              type="button"
+              onClick={onLogout}
+              className="w-full py-1.5 px-2.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-medium text-zinc-200 transition-colors cursor-pointer"
+              title="Encerrar sessão e limpar credenciais de autenticação"
+            >
+              Sair / Encerrar Sessão
             </button>
           )}
         </div>
