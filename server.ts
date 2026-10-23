@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import crypto from 'node:crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {
@@ -101,6 +102,18 @@ import {
 export function createApiApp() {
   const app = express();
   app.use(express.json({ limit: '10mb' }));
+
+  // Captura o corpo bruto da requisição para verificação de assinatura de webhooks
+  // (precisa vir após o express.json para não quebrar o parse JSON das demais rotas)
+  app.use((req, _res, next) => {
+    let data = '';
+    req.on('data', chunk => { data += chunk; });
+    req.on('end', () => {
+      (req as any).rawBody = data;
+      next();
+    });
+    req.on('error', next);
+  });
 
   // Authorization helpers
   const requireOrganizationAdmin = (auth: any) => {
@@ -343,19 +356,40 @@ export function createApiApp() {
   // --- VENOPAG PAYMENT WEBHOOK & PAYMENT INTENT MANAGEMENT ---
   app.post('/api/billing/webhook/venopag', async (req, res, next) => {
     try {
-      // Verify webhook signature (simplified for now - implement proper HMAC verification)
       const signature = req.headers['x-venopag-signature'] as string;
       const timestamp = req.headers['x-venopag-timestamp'] as string;
-      
+      const webhookSecret = process.env.VENOPAG_WEBHOOK_SECRET || '';
+
       if (!signature || !timestamp) {
         return res.status(400).json({ code: 'INVALID_WEBHOOK', message: 'Assinatura ou timestamp ausente.' });
       }
-      
+
+      if (!webhookSecret) {
+        incrementMetric('webhookMisconfiguredTotal');
+        logStructured('ERROR', 'venopag_webhook_secret_missing', {});
+        return res.status(500).json({ code: 'CONFIGURATION_ERROR', message: 'Webhook VenoPag não configurado.' });
+      }
+
       // Check timestamp freshness (5 minutes tolerance)
       const nowSec = Math.floor(Date.now() / 1000);
       const ts = parseInt(timestamp, 10);
       if (isNaN(ts) || Math.abs(nowSec - ts) > 300) {
+        incrementMetric('webhookInvalidTimestampTotal');
         return res.status(400).json({ code: 'INVALID_TIMESTAMP', message: 'Timestamp inválido ou expirado.' });
+      }
+
+      // Verify HMAC-SHA256 signature over the raw request body
+      const rawBody = (req as any).rawBody || '';
+      const expectedSig = crypto
+        .createHmac('sha256', webhookSecret)
+        .update(rawBody)
+        .digest('hex');
+
+      const providedSigHash = crypto.createHash('sha256').update(signature).digest();
+      const expectedSigHash = crypto.createHash('sha256').update(expectedSig).digest();
+      if (!crypto.timingSafeEqual(providedSigHash, expectedSigHash)) {
+        incrementMetric('webhookInvalidSignatureTotal');
+        return res.status(401).json({ code: 'INVALID_SIGNATURE', message: 'Assinatura do webhook inválida.' });
       }
       
       const event = req.body;
@@ -395,7 +429,7 @@ export function createApiApp() {
       // Record gateway event
       await db.from('payment_gateway_events').insert({
         organization_id: intent.organization_id,
-        subscription_id: null,
+        subscription_id: intent.subscription_id,
         provider: 'venopag',
         event_type: eventType,
         status: eventType,

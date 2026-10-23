@@ -124,6 +124,7 @@ export interface PaymentIntent {
   id: string;
   organizationId: string;
   programId?: string;
+  subscriptionId?: string;
   planId: SubscriptionPlanId;
   amountCents: number;
   currency: string;

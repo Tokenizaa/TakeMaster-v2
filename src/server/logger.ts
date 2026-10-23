@@ -9,6 +9,9 @@ export interface SystemMetrics {
   aiCallsTotal: number;
   aiFallbacksTotal: number;
   authFailuresTotal: number;
+  webhookMisconfiguredTotal: number;
+  webhookInvalidTimestampTotal: number;
+  webhookInvalidSignatureTotal: number;
   lastErrorAt?: string;
   lastErrorMessage?: string;
 }
@@ -22,6 +25,9 @@ const metricsState = {
   aiCallsTotal: 0,
   aiFallbacksTotal: 0,
   authFailuresTotal: 0,
+  webhookMisconfiguredTotal: 0,
+  webhookInvalidTimestampTotal: 0,
+  webhookInvalidSignatureTotal: 0,
   lastErrorAt: undefined as string | undefined,
   lastErrorMessage: undefined as string | undefined,
 };
@@ -33,7 +39,10 @@ export function incrementMetric(
     | 'autosavesTotal'
     | 'aiCallsTotal'
     | 'aiFallbacksTotal'
-    | 'authFailuresTotal',
+    | 'authFailuresTotal'
+    | 'webhookMisconfiguredTotal'
+    | 'webhookInvalidTimestampTotal'
+    | 'webhookInvalidSignatureTotal',
   errorMessage?: string
 ) {
   metricsState[key] += 1;
@@ -53,6 +62,9 @@ export function getSystemMetrics(): SystemMetrics {
     aiCallsTotal: metricsState.aiCallsTotal,
     aiFallbacksTotal: metricsState.aiFallbacksTotal,
     authFailuresTotal: metricsState.authFailuresTotal,
+    webhookMisconfiguredTotal: metricsState.webhookMisconfiguredTotal,
+    webhookInvalidTimestampTotal: metricsState.webhookInvalidTimestampTotal,
+    webhookInvalidSignatureTotal: metricsState.webhookInvalidSignatureTotal,
     lastErrorAt: metricsState.lastErrorAt,
     lastErrorMessage: metricsState.lastErrorMessage,
   };

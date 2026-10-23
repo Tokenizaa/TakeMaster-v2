@@ -468,6 +468,7 @@ function mapPaymentIntent(x: any): PaymentIntent {
     id: x.id,
     organizationId: x.organization_id,
     programId: x.program_id,
+    subscriptionId: x.subscription_id,
     planId: x.plan_id,
     amountCents: x.amount_cents,
     currency: x.currency,
@@ -522,7 +523,10 @@ export async function subscribeOrUpdatePlan(
   
   // If payment intent was provided, link it
   if (input.paymentIntentId) {
-    await db.from('payment_intents').update({ reconciled_at: now() }).eq('id', input.paymentIntentId);
+    await db.from('payment_intents').update({ 
+      reconciled_at: now(),
+      subscription_id: r.data.id,
+    }).eq('id', input.paymentIntentId);
   }
   
   return (await listOrganizationSubscriptions(orgId))[0];
@@ -534,32 +538,55 @@ export async function confirmPaymentAndActivateSubscription(
   gatewayTransactionId: string,
   gatewayPayload: Record<string, any>
 ) {
-  // Update payment intent
+  // Busca a intenção de pagamento vinculada à organização
+  const intentResult = await db.from('payment_intents')
+    .select('*')
+    .eq('id', paymentIntentId)
+    .eq('organization_id', orgId)
+    .maybeSingle();
+  if (intentResult.error) throw new Error(intentResult.error.message);
+  const intent = intentResult.data;
+  if (!intent) {
+    throw new AppError(404, 'NOT_FOUND', 'Intenção de pagamento não encontrada.');
+  }
+
+  // Idempotência: se já foi confirmada, não reativa
+  if (intent.status === 'payment_confirmed') {
+    return listOrganizationSubscriptions(orgId);
+  }
+
+  // Atualiza a intenção de pagamento
   await updatePaymentIntentStatus(paymentIntentId, 'payment_confirmed', {
     gatewayTransactionId,
     gatewayPayload,
     webhookReceivedAt: now(),
     reconciledAt: now(),
   });
-  
-  // Find and activate pending subscription linked to this payment intent
-  const subs = await db.from('organization_subscriptions')
+
+  // Ativa APENAS a subscription vinculada a esta intenção
+  const subscriptionId = intent.subscription_id;
+  if (!subscriptionId) {
+    throw new AppError(400, 'VALIDATION_ERROR', 'Intenção de pagamento não possui subscription vinculada.');
+  }
+
+  const subResult = await db.from('organization_subscriptions')
     .select('*')
+    .eq('id', subscriptionId)
     .eq('organization_id', orgId)
     .eq('status', 'pending_payment')
-    .order('created_at', { ascending: false })
-    .limit(1);
-  
-  if (subs.data?.[0]) {
-    const sub = subs.data[0];
-    await db.from('organization_subscriptions').update({
-      status: 'active',
-      ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-      updated_at: now(),
-      gateway_subscription_id: gatewayTransactionId,
-    }).eq('id', sub.id);
+    .maybeSingle();
+  if (subResult.error) throw new Error(subResult.error.message);
+  if (!subResult.data) {
+    throw new AppError(409, 'CONFLICT', 'Subscription vinculada não está em estado pendente ou não existe.');
   }
-  
+
+  await db.from('organization_subscriptions').update({
+    status: 'active',
+    ends_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: now(),
+    gateway_subscription_id: gatewayTransactionId,
+  }).eq('id', subscriptionId);
+
   return listOrganizationSubscriptions(orgId);
 }
 
@@ -568,24 +595,28 @@ export async function handlePaymentFailure(
   paymentIntentId: string,
   reason: string
 ) {
+  // Busca a intenção de pagamento vinculada à organização
+  const intentResult = await db.from('payment_intents')
+    .select('*')
+    .eq('id', paymentIntentId)
+    .eq('organization_id', orgId)
+    .maybeSingle();
+  if (intentResult.error) throw new Error(intentResult.error.message);
+  const intent = intentResult.data;
+
+  // Atualiza a intenção de pagamento como falha
   await updatePaymentIntentStatus(paymentIntentId, 'payment_failed', {
     gatewayPayload: { failureReason: reason },
     webhookReceivedAt: now(),
   });
-  
-  const subs = await db.from('organization_subscriptions')
-    .select('*')
-    .eq('organization_id', orgId)
-    .eq('status', 'pending_payment')
-    .order('created_at', { ascending: false })
-    .limit(1);
-  
-  if (subs.data?.[0]) {
+
+  // Cancela APENAS a subscription vinculada a esta intenção
+  if (intent && intent.subscription_id) {
     await db.from('organization_subscriptions').update({
       status: 'cancelled',
       ends_at: now(),
       updated_at: now(),
-    }).eq('id', subs.data[0].id);
+    }).eq('id', intent.subscription_id).eq('organization_id', orgId).eq('status', 'pending_payment');
   }
 }
 
