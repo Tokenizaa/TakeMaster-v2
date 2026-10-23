@@ -88,6 +88,18 @@ const EVENT_STATUS_LABELS: Record<ScheduleEventStatus, { label: string; badge: s
     label: 'Cancelado',
     badge: 'bg-zinc-900 text-zinc-500 border-zinc-800 line-through',
   },
+  confirmado: {
+    label: 'Confirmado',
+    badge: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+  },
+  pendente: {
+    label: 'Pendente',
+    badge: 'bg-zinc-800 text-zinc-300 border-zinc-700',
+  },
+  concluido: {
+    label: 'Concluído',
+    badge: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+  },
 };
 
 export const ScheduleView: React.FC<ScheduleViewProps> = ({

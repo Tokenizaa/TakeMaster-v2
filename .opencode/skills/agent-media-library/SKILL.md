@@ -37,13 +37,14 @@ Especialista no gerenciamento de assets de mídia reutilizáveis no sistema Take
 ## Pode Importar de
 
 - @agent-program-catalog (para associar assets a programas específicos)
-- @agent-episode-production (para associar assets a episódios específicos)
-- Outros agentes que precisem de acesso a assets de mídia
 
 ## NUNCA Importa de
 
-- Nenhum agente específico para implementação de funcionalidades que pertençam a este domínio
-- Porém, pode consumir informações de outros domínios quando necessário para associações
+- @agent-episode-production (episódios associam assets, biblioteca não importa episódios)
+- @agent-content-intelligence
+- @agent-talent-management
+- @agent-technical-production
+- @agent-frontend / @agent-backend (implementação direta de UI ou API)
 
 ## Contratos Públicos
 

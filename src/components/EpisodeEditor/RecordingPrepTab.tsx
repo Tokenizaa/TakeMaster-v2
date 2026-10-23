@@ -14,7 +14,7 @@ import {
   Coffee,
   Sparkles
 } from 'lucide-react';
-import { Episode, TechnicalChecklist } from '../../types';
+import { Episode, TechnicalChecklist, TechnicalChecklistItem } from '../../types';
 
 interface RecordingPrepTabProps {
   episode: Episode;
@@ -104,10 +104,11 @@ export const RecordingPrepTab: React.FC<RecordingPrepTabProps> = ({
     e.preventDefault();
     if (!newCustomLabel.trim()) return;
 
-    const newItem = {
+    const newItem: TechnicalChecklistItem = {
       id: `chk-${Date.now()}`,
-      label: newCustomLabel,
-      done: false,
+      task: newCustomLabel,
+      category: 'custom',
+      completed: false,
     };
 
     onUpdateEpisode({

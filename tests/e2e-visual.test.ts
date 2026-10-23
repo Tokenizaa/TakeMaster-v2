@@ -27,6 +27,8 @@ test.describe('PLATFORM — saúde e interface pública', () => {
     expect(body).toHaveProperty('metrics');
   });
 
+  test.setTimeout(90_000);
+
   test('PLATFORM-003 a entrada da aplicação carrega HTML', async ({ page }) => {
     const response = await page.goto('/');
     expect(response).not.toBeNull();

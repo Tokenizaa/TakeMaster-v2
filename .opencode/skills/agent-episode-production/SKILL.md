@@ -41,14 +41,18 @@ Especialista no gerenciamento completo de episódios no sistema TakeMaster. Resp
 
 - @agent-program-catalog (para validar se o programa associado existe)
 - @agent-talent-management (para validar se os participantes associados existem)
-- @agent-content-intelligence (para receber conteúdo gerado por IA para preencher episódios)
 - @agent-media-library (para associar assets da biblioteca a episódios)
 - @agent-technical-production (para obter configurações técnicas e checklists)
 
+## Consome via API (NÃO importa)
+
+- @agent-content-intelligence (via POST /api/ai/* — recebe DTOs tipados: EditorialDiagnosis, ResearchData, OutlineBlock[], ScriptItem[], PlannedShort[])
+
 ## NUNCA Importa de
 
-- Nenhum agente específico para implementação de funcionalidades que pertençam a este domínio
-- Porém, pode consumir informações de outros domínios quando necessário para associações e validações
+- @agent-content-intelligence (consumir via API /api/ai/*, não import direto)
+- @agent-frontend / @agent-backend (implementação direta de UI ou API)
+- Qualquer domínio que importe episode-production (evita ciclos)
 
 ## Contratos Públicos
 

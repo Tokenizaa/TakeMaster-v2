@@ -32,13 +32,16 @@ Especialista no gerenciamento de programas de TV no sistema TakeMaster. Respons�
 
 ## Pode Importar de
 
-- Qualquer agente que precise de informações sobre programas (quase todos os outros domínios)
-- Especialmente: @agent-content-intelligence, @agent-talent-management, @agent-episode-production
+- Nenhum (domínio leaf / shared kernel — outros domínios dependem dele)
 
 ## NUNCA Importa de
 
-- Nenhum agente específico (programas são informações centrais que podem ser consumidos por todos os domínios)
-- Porém, não deve implementar funcionalidades que pertençam a outros domínios
+- @agent-content-intelligence
+- @agent-talent-management
+- @agent-episode-production
+- @agent-media-library
+- @agent-technical-production
+- Qualquer agente de domínio de negócio (programas são referência somente leitura)
 
 ## Contratos Públicos
 

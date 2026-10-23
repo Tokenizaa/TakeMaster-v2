@@ -15,5 +15,16 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
+  },
+  "queues": {
+    "producers": [
+      { "queue": "ai-jobs", "binding": "AI_JOBS" }
+    ],
+    "consumers": [
+      { "queue": "ai-jobs", "max_batch_size": 10, "max_batch_timeout": 30 }
+    ]
+  },
+  "vars": {
+    "AI_WORKER_URL": "http://localhost:8788"
   }
 }

@@ -27,7 +27,7 @@ export const PROMPT_VERSIONS = {
 
 export interface AIValidationMeta {
   promptVersion: string;
-  source: 'nim' | 'gemini' | 'fallback';
+  source: 'nim' | 'gemini' | 'fallback' | 'mock';
   validated: boolean;
   warnings: string[];
   generatedAt: string;

@@ -330,6 +330,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
+    // Bloqueia recursos não essenciais para acelerar carregamento e tear down
+    await page.route('**/*.{png,jpg,jpeg,svg,woff,woff2,ttf,eot,ico}', route => route.abort());
     await page.addInitScript(({ token, orgId }) => {
       localStorage.setItem('tmv2_auth_token', token);
       localStorage.setItem('tmv2_active_org_id', orgId);
@@ -348,14 +350,18 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
       'Assinatura & Gateway',
       'Painel Administrativo',
     ];
+    // Verifica que todos os módulos de navegação estão visíveis (sessão autenticada os libera)
     for (const label of navigation) {
       const item = page.getByRole('button', { name: new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) }).first();
-      if (await item.isVisible().catch(() => false)) {
-        await item.click();
-        await expect(item).toBeVisible();
-      }
+      await expect(item).toBeVisible();
     }
+    // Navega em 2 módulos diferentes para confirmar que a navegação funciona
+    await page.getByRole('button', { name: /Episódios & Roteiros/ }).first().click();
+    await expect(page.getByRole('button', { name: /Episódios & Roteiros/ }).first()).toBeVisible();
+    await page.getByRole('button', { name: /Agenda de Produção/ }).first().click();
+    await expect(page.getByRole('button', { name: /Agenda de Produção/ }).first()).toBeVisible();
     expect(errors).toEqual([]);
+    await page.close();
   });
 
   test('AUTH-013 interface autenticada oferece encerramento de sessão', async ({ request, page }) => {
@@ -393,6 +399,8 @@ test.describe('TakeMaster E2E — authenticated domain journeys', () => {
     });
     expect(login.status(), await login.text()).toBe(200);
     const { session } = await login.json();
+    // Bloqueia recursos não essenciais para acelerar carregamento e tear down
+    await page.route('**/*.{png,jpg,jpeg,svg,woff,woff2,ttf,eot,ico}', route => route.abort());
     await page.addInitScript(({ token, orgId }) => {
       localStorage.setItem('tmv2_auth_token', token);
       localStorage.setItem('tmv2_active_org_id', orgId);

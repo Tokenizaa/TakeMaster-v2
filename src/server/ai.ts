@@ -1,4 +1,4 @@
-import { getServerConfig } from './config';
+import { getServerConfig, getNemotronModelChain, type NemotronModel } from './config';
 import {
   EditorialDiagnosis,
   EditorialFitLevel,
@@ -47,7 +47,7 @@ export function getNimModelConfig() {
     configured: c.nimApiKeys.some((key) => key.length > 5),
     credentialFailoverConfigured: c.nimApiKeys.length > 1,
     primaryModel: c.nimPrimaryModel,
-    fallbackModel: c.nimFallbackModel,
+    fallbackModels: c.nimFallbackModels,
     baseUrl: c.nimBaseUrl,
   };
 }
@@ -96,42 +96,66 @@ async function callNim(
   }
 }
 
-async function callNimWithCredentialFailover(
-  model: string,
+async function callNimWithModelFailover(
+  model: NemotronModel,
   contents: string,
   responseMimeType?: string
 ): Promise<GenerateResponse> {
-  const { nimApiKeys } = getServerConfig();
-  return withNimCredentialFailover(
-    nimApiKeys,
-    (apiKey) => callNim(model, contents, responseMimeType, apiKey),
-    (credentialIndex, status) => {
-      incrementMetric('aiFallbacksTotal');
-      logStructured('WARN', 'nim_credential_rejected_trying_secondary', {
-        credentialIndex,
-        statusCode: status,
-        model,
+  const { nimApiKeys, nimModelChain } = getServerConfig();
+  
+  // Start from the requested model, then try all subsequent models in chain
+  const startIndex = nimModelChain.indexOf(model);
+  const modelsToTry = startIndex >= 0 ? nimModelChain.slice(startIndex) : [model, ...nimModelChain];
+  
+  for (const modelId of modelsToTry) {
+    try {
+      return await withNimCredentialFailover(
+        nimApiKeys,
+        (apiKey) => callNim(modelId, contents, responseMimeType, apiKey),
+        (credentialIndex, status) => {
+          incrementMetric('aiFallbacksTotal');
+          logStructured('WARN', 'nim_credential_rejected_trying_next_key', {
+            credentialIndex,
+            statusCode: status,
+            model: modelId,
+          });
+        }
+      );
+    } catch (error) {
+      // If it's an auth error (401/403) on the last key, rethrow
+      if (error instanceof NimProviderError && [401, 403].includes(error.status)) {
+        throw error;
+      }
+      // If it's a quota/rate limit error (429), try next model
+      if (error instanceof NimProviderError && error.status === 429) {
+        logStructured('WARN', 'nim_quota_exceeded_trying_next_model', { 
+          currentModel: modelId,
+          nextModels: modelsToTry.slice(modelsToTry.indexOf(modelId) + 1)
+        });
+        continue;
+      }
+      // For other errors (timeout, network), try next model
+      logStructured('WARN', 'nim_model_failed_trying_next', { 
+        model: modelId, 
+        error: error instanceof Error ? error.message : String(error) 
       });
+      continue;
     }
-  );
+  }
+  
+  throw new Error(`Todos os ${modelsToTry.length} modelos Nemotron falharam ou esgotaram quota`);
 }
 
 async function generateWithFallback(options: GenerateOptions): Promise<GenerateResponse> {
-  const c = getServerConfig();
-  const primary = c.nimPrimaryModel;
-  try {
-    return await callNimWithCredentialFailover(primary, options.contents, options.config?.responseMimeType);
-  } catch (primaryError) {
-    if (primaryError instanceof NimProviderError && [401, 403].includes(primaryError.status)) {
-      throw primaryError;
-    }
-    if (!c.nimFallbackModel || c.nimFallbackModel === primary) throw primaryError;
-    try {
-      return await callNimWithCredentialFailover(c.nimFallbackModel, options.contents, options.config?.responseMimeType);
-    } catch {
-      throw new Error('IA indisponível após tentativa no modelo principal e fallback.');
-    }
-  }
+  const { nimModelChain, nimPrimaryModel } = getServerConfig();
+  const primary = options.model || nimPrimaryModel;
+  
+  // Validate model is in chain
+  const modelToUse = nimModelChain.includes(primary as NemotronModel) 
+    ? (primary as NemotronModel) 
+    : nimModelChain[0];
+  
+  return callNimWithModelFailover(modelToUse, options.contents, options.config?.responseMimeType);
 }
 
 export const ai = { models: { generateContent: generateWithFallback } };
@@ -705,22 +729,21 @@ export async function executeNimEditorialCall(options: {
   simulatePrimaryFailure?: boolean;
   simulateTotalFailure?: boolean;
 }): Promise<{ text: string; modelUsed: string; usedFallback: boolean }> {
-  const c = getServerConfig();
-  const primaryModel = c.nimPrimaryModel || 'qwen/qwen3.5-397b-a17b';
-  const fallbackModel = c.nimFallbackModel || 'deepseek-ai/deepseek-v3.2';
+  const { nimModelChain, nimPrimaryModel } = getServerConfig();
+  const primaryModel = nimPrimaryModel || nimModelChain[0];
 
   if (options.simulateTotalFailure) {
-    throw new Error('IA indisponível após tentativa no modelo principal e fallback.');
+    throw new Error('IA indisponível — todos os modelos Nemotron falharam.');
   }
 
-  const hasNimKey = c.nimApiKeys.some((key) => key.length > 5);
+  const hasNimKey = getServerConfig().nimApiKeys.some((key) => key.length > 5);
 
   if (hasNimKey || options.simulatePrimaryFailure) {
     try {
       if (options.simulatePrimaryFailure) {
         throw new Error(`Falha simulada no modelo principal (${primaryModel}).`);
       }
-      const primaryRes = await callNimWithCredentialFailover(primaryModel, options.prompt, 'application/json');
+      const primaryRes = await callNimWithModelFailover(primaryModel, options.prompt, 'application/json');
       return {
         text: primaryRes.text || '',
         modelUsed: primaryModel,
@@ -730,32 +753,14 @@ export async function executeNimEditorialCall(options: {
       if (primaryErr instanceof NimProviderError && [401, 403].includes(primaryErr.status)) {
         throw primaryErr;
       }
-      logStructured('WARN', 'nim_primary_model_failed_trying_fallback', {
+      logStructured('WARN', 'nim_primary_model_failed_trying_chain', {
         primaryModel,
-        fallbackModel,
+        remainingModels: nimModelChain.slice(1),
         errorType: primaryErr instanceof Error ? primaryErr.name : 'UnknownError',
       });
-      if (!fallbackModel || fallbackModel === primaryModel) throw primaryErr;
-      try {
-        const fallbackRes = await callNimWithCredentialFailover(fallbackModel, options.prompt, 'application/json');
-        return {
-          text: fallbackRes.text || '',
-          modelUsed: fallbackModel,
-          usedFallback: true,
-        };
-      } catch (fallbackErr) {
-        logStructured('WARN', 'nim_fallback_model_failed_using_grounded_kb', {
-          primaryModel,
-          fallbackModel,
-          errorType: fallbackErr instanceof Error ? fallbackErr.name : 'UnknownError',
-        });
-        incrementMetric('aiFallbacksTotal');
-        return {
-          text: '',
-          modelUsed: fallbackModel,
-          usedFallback: true,
-        };
-      }
+      // The chain failover is already handled inside callNimWithModelFailover
+      // If we reach here, all models in chain failed
+      throw new Error(`Todos os modelos Nemotron falharam: ${primaryErr instanceof Error ? primaryErr.message : String(primaryErr)}`);
     }
   }
 

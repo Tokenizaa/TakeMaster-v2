@@ -33,10 +33,10 @@ Especialista no fluxo de criação de conteúdo assistido por IA do TakeMaster. 
 
 - @agent-program-catalog (para obter informações sobre programas e formatos)
 - @agent-talent-management (para obter informações sobre participantes disponíveis)
-- @agent-episode-production (para obter contexto de episódios em produção)
 
 ## NUNCA Importa de
 
+- @agent-episode-production (consumir episódio via DTO/API, não import direto)
 - @agent-media-library
 - @agent-technical-production
 - Qualquer agente de frontend ou backend para implementação direta de UI ou API

@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: TakeMaster v2 / RSPlay TV SaaS API
+  version: "1.0.0"
+  description: |
+    API para gerenciamento de programas de TV, episódios, produções,
+    faturamento e geração de conteúdo com IA.
+  contact:
+    name: RSPlay TV API Team
+    email: api@rsplaytv.com.br
+  license:
+    name: Proprietário
+    url: https://rsplaytv.com.br/license
+servers:
+  - url: https://api.rsplaytv.com.br
+    description: Produção
+  - url: https://api.staging.rsplaytv.com.br
+    description: Staging
+  - url: http://localhost:3000
+    description: Desenvolvimento local
+paths:
+  /auth/login:
+    post:
+      summary: Autenticar usuário
+      tags: [Autenticação]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Sessão criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSessionResponse'
+        '401':
+          description: Credenciais inválidas
+  /auth/register:
+    post:
+      summary: Registrar nova conta SaaS
+      tags: [Autenticação]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Conta criada
+  /auth/logout:
+    post:
+      summary: Encerrar sessão
+      tags: [Autenticação]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Sessão encerrada
+  /auth/session:
+    get:
+      summary: Obter sessão atual
+      tags: [Autenticação]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Dados da sessão
+  /shows:
+    get:
+      summary: Listar programas
+      tags: [Shows]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ShowFilter'
+      responses:
+        '200':
+          description: Lista de programas
+    post:
+      summary: Criar programa
+      tags: [Shows]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShowRequest'
+      responses:
+        '201':
+          description: Programa criado
+  /shows/{id}:
+    get:
+      summary: Obter programa por ID
+      tags: [Shows]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ShowId'
+      responses:
+        '200':
+          description: Dados do programa
+        '404':
+          description: Não encontrado
+    put:
+      summary: Atualizar programa
+      tags: [Shows]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ShowId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShowRequest'
+      responses:
+        '200':
+          description: Programa atualizado
+    delete:
+      summary: Excluir programa
+      tags: [Shows]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ShowId'
+      responses:
+        '200':
+          description: Programa excluído
+  /episodes:
+    get:
+      summary: Listar episódios
+      tags: [Episódios]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ShowFilter'
+      responses:
+        '200':
+          description: Lista de episódios
+    post:
+      summary: Criar episódio
+      tags: [Episódios]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EpisodeRequest'
+      responses:
+        '201':
+          description: Episódio criado
+  /episodes/{id}:
+    get:
+      summary: Obter episódio por ID
+      tags: [Episódios]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EpisodeId'
+      responses:
+        '200':
+          description: Dados do episódio
+    put:
+      summary: Atualizar episódio
+      tags: [Episódios]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EpisodeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EpisodeRequest'
+      responses:
+        '200':
+          description: Episódio atualizado
+    delete:
+      summary: Excluir episódio
+      tags: [Episódios]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EpisodeId'
+      responses:
+        '200':
+          description: Episódio excluído
+  /productions:
+    get:
+      summary: Listar produções/temporadas
+      tags: [Produções]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de produções
+  /billing/subscribe:
+    post:
+      summary: Assinar plano
+      tags: [Faturamento]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequest'
+      responses:
+        '201':
+          description: Assinatura criada
+  /ai/diagnosis:
+    post:
+      summary: Gerar diagnóstico editorial com IA
+      tags: [IA]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AIDiagnosisRequest'
+      responses:
+        '200':
+          description: Diagnóstico gerado
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      format: JWT
+      description: Token de sessão tmv2.*
+  parameters:
+    ShowId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: ID do programa
+    EpisodeId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID do episódio
+    ShowFilter:
+      name: showId
+      in: query
+      schema:
+        type: string
+      description: Filtrar por ID do programa
+  schemas:
+    LoginRequest:
+      type: object
+      required: [emailOrUserId, loginCode]
+      properties:
+        emailOrUserId:
+          type: string
+        organizationId:
+          type: string
+          format: uuid
+        loginCode:
+          type: string
+    AuthSessionResponse:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/AuthSession'
+    AuthSession:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        activeOrganization:
+          $ref: '#/components/schemas/Organization'
+        role:
+          type: string
+        memberships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        allowedShowIds:
+          type: array
+          items:
+            type: string
+        isFullAccessAdmin:
+          type: boolean
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+    Membership:
+      type: object
+      properties:
+        organizationId:
+          type: string
+        role:
+          type: string
+    ShowRequest:
+      type: object
+      required: [title, format, host]
+      properties:
+        title:
+          type: string
+          minLength: 2
+          maxLength: 160
+        format:
+          type: string
+          enum: [Entrevista, Programa Solo, Mesa Redonda, Podcast/Videocast, Debate, Reportagem, Especial, Outro]
+        host:
+          type: string
+        defaultDurationMin:
+          type: integer
+          minimum: 5
+          maximum: 360
+    EpisodeRequest:
+      type: object
+      required: [showId, title, host]
+      properties:
+        showId:
+          type: string
+        title:
+          type: string
+          minLength: 2
+          maxLength: 200
+        host:
+          type: string
+        targetDurationMin:
+          type: integer
+          minimum: 5
+          maximum: 360
+    SubscribeRequest:
+      type: object
+      required: [planId]
+      properties:
+        planId:
+          type: string
+        showId:
+          type: string
+        paymentMethodType:
+          type: string
+        autoRenew:
+          type: boolean
+    AIDiagnosisRequest:
+      type: object
+      properties:
+        episodeTitle:
+          type: string
+        context:
+          type: string
+          maxLength: 5000

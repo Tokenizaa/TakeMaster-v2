@@ -1164,8 +1164,9 @@ export function buildSeedWorkspaceForOrg(organizationId: string) {
         customItems: [
           {
             id: 'chk-c1',
-            label: 'Foto impressa da hélice posicionada ao lado do apresentador',
-            done: true,
+            task: 'Foto impressa da hélice posicionada ao lado do apresentador',
+            category: 'custom',
+            completed: true,
           },
         ],
       },

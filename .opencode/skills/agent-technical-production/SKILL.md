@@ -37,13 +37,14 @@ Especialista nos aspectos técnicos de produção no sistema TakeMaster. Respons
 ## Pode Importar de
 
 - @agent-program-catalog (para obter configurações padrão de câmeras para programas)
-- @agent-episode-production (para associar configurações técnicas a episódios específicos)
-- Outros agentes que precisem de informações técnicas para produção
 
 ## NUNCA Importa de
 
-- Nenhum agente específico para implementação de funcionalidades que pertençam a este domínio
-- Porém, pode consumir informações de outros domínios quando necessário para produções técnicas
+- @agent-episode-production (episódios associam configurações técnicas, não o contrário)
+- @agent-content-intelligence
+- @agent-talent-management
+- @agent-media-library
+- @agent-frontend / @agent-backend (implementação direta de UI ou API)
 
 ## Contratos Públicos
 

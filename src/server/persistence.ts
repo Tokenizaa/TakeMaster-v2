@@ -1,5 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { randomBytes } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
+import crypto from 'crypto';
 import {
   AdminReportSummary, AuditLogEntry, BillingInvoice, Episode, EpisodeParticipant, Guest,
   LibraryAsset, Organization, OrganizationMembership, OrganizationRole, PaymentGatewayEvent,
@@ -11,6 +12,7 @@ import {
 import { AppError } from '../domain/validation';
 import { resolveProgramKnowledge } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
+import { authClient } from './auth';
 
 const url = process.env.SUPABASE_URL || '';
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -31,16 +33,17 @@ async function programUuid(id: string) { const p = await one('programs', id); re
 async function episodeUuid(id: string) { const e = await one('episodes', id); return e?.id; }
 
 function generateId(prefix: string) {
-  return `${prefix}-${Date.now()}-${randomBytes(8).toString('hex')}`;
+  return `${prefix}-${randomUUID()}`;
 }
 
 async function upsertSetupState(orgId: string, programId: string, updates: Partial<SetupState>) {
-  const existing = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', programId).maybeSingle();
+  const resolvedProgramId = await resolveProgramId(orgId, programId);
+  const existing = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', resolvedProgramId).maybeSingle();
   if (existing.error) throw new Error(existing.error.message);
   const existingData = existing.data;
   const payload: any = {
     organization_id: orgId,
-    program_id: programId,
+    program_id: resolvedProgramId,
     status: updates.status || 'setup_pending',
     version: (existingData?.version || 0) + 1,
     steps: updates.steps || existingData?.steps || {},
@@ -54,7 +57,7 @@ async function upsertSetupState(orgId: string, programId: string, updates: Parti
     fail(r);
     return r.data;
   } else {
-    const r = await db.from('setup_states').insert({ ...payload, id: generateId('setup'), created_at: now() }).select('*').single();
+    const r = await db.from('setup_states').insert({ ...payload, id: randomUUID(), created_at: now() }).select('*').single();
     fail(r);
     return r.data;
   }
@@ -623,7 +626,8 @@ export async function processAutomaticRenewalCycle(
   if (!s) throw new AppError(404, 'NOT_FOUND', 'Assinatura não encontrada.');
   
   if (simulateFailure) {
-    await handlePaymentFailure(orgId, generateId('pi'), 'Simulated failure for testing');
+    // Teste simulado: apenas lança erro de pagamento sem tentar atualizar
+    // um payment intent inexistente.
     throw new AppError(402, 'PAYMENT_FAILED', 'Pagamento simulado falhou.');
   }
   
@@ -697,8 +701,11 @@ export async function populateOrganizationWorkspace(
     throw new AppError(409, 'SETUP_IN_PROGRESS', 'Pré-setup já em andamento.');
   }
   
+  // Resolve o UUID do programa (aceita legacy_id ou UUID)
+  const resolvedProgramId = await resolveProgramId(orgId, programId);
+
   // Start or resume setup
-  const setup = await upsertSetupState(orgId, programId, {
+  const setup = await upsertSetupState(orgId, resolvedProgramId, {
     status: 'setup_running',
     steps: {
       program_structure: { status: 'pending' },
@@ -711,39 +718,39 @@ export async function populateOrganizationWorkspace(
   
   try {
     // Step 1: Program structure validation
-    await upsertSetupState(orgId, programId, {
+    await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
       steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() } },
     });
     
     // Step 2: Create default season
-    await createDefaultProgramStructure(orgId, programId, userId);
-    await upsertSetupState(orgId, programId, {
+    await createDefaultProgramStructure(orgId, resolvedProgramId, userId);
+    await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
       steps: { ...setup.steps, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() } },
     });
     
     // Step 3: User permissions already handled in createDefaultProgramStructure
-    await upsertSetupState(orgId, programId, {
+    await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
       steps: { ...setup.steps, user_permissions: { status: 'completed', completedAt: now() } },
     });
     
     // Mark as ready
-    const completed = await upsertSetupState(orgId, programId, {
+    const completed = await upsertSetupState(orgId, resolvedProgramId, {
       status: 'ready',
       steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() }, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() }, user_permissions: { status: 'completed', completedAt: now() } },
     });
     
-    await recordAuditLog(orgId, userId, 'setup_state', programId, 'completed', {
-      programId,
+    await recordAuditLog(orgId, userId, 'setup_state', resolvedProgramId, 'completed', {
+      programId: resolvedProgramId,
       setupVersion: completed.version,
     });
     
     return completed;
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : 'Erro desconhecido no pré-setup';
-    await upsertSetupState(orgId, programId, {
+    await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_failed',
       error: errMsg,
       steps: setup.steps,
@@ -753,7 +760,8 @@ export async function populateOrganizationWorkspace(
 }
 
 export async function getSetupState(orgId: string, programId: string): Promise<SetupState | null> {
-  const r = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', programId).maybeSingle();
+  const resolvedProgramId = await resolveProgramId(orgId, programId);
+  const r = await db.from('setup_states').select('*').eq('organization_id', orgId).eq('program_id', resolvedProgramId).maybeSingle();
   if (r.error) throw new Error(r.error.message);
   if (!r.data) return null;
   return {
@@ -768,6 +776,20 @@ export async function getSetupState(orgId: string, programId: string): Promise<S
     completedAt: r.data.completed_at,
     error: r.data.error,
   };
+}
+
+/**
+ * Resolve um identificador de programa (UUID ou legacy_id) para o UUID interno.
+ * Se já for UUID, retorna diretamente. Se for legacy_id, busca na tabela programs.
+ */
+async function resolveProgramId(orgId: string, programId: string): Promise<string> {
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(programId || '');
+  if (isUuid) return programId;
+  
+  const p = await db.from('programs').select('id').eq('organization_id', orgId).eq('legacy_id', programId).maybeSingle();
+  if (p.error) throw new Error(p.error.message);
+  if (!p.data) throw new AppError(404, 'NOT_FOUND', 'Programa não encontrado.');
+  return p.data.id;
 }
 
 export async function registerSaaSAccountWithSubscription(
@@ -916,3 +938,95 @@ export async function buildAdminReportSummary(orgId: string): Promise<AdminRepor
 }
 
 export { mapPaymentIntent, upsertSetupState };
+
+// ============================================================================
+// Password Reset Tokens
+// ============================================================================
+
+export async function createPasswordResetToken(
+  userId: string,
+  email: string,
+  tokenHash: string,
+  expiresAt: string
+): Promise<void> {
+  const r = await db.from('password_reset_tokens').insert({
+    user_id: userId,
+    token_hash: tokenHash,
+    email,
+    expires_at: expiresAt,
+  });
+  if (r.error) throw new Error(`Failed to create password reset token: ${r.error.message}`);
+}
+
+export async function validatePasswordResetToken(tokenHash: string): Promise<{ user_id: string; email: string; expires_at: string; used_at: string | null } | null> {
+  const r = await db.from('password_reset_tokens').select('*').eq('token_hash', tokenHash).single();
+  if (r.error || !r.data) return null;
+  return {
+    user_id: r.data.user_id,
+    email: r.data.email,
+    expires_at: r.data.expires_at,
+    used_at: r.data.used_at,
+  };
+}
+
+export async function consumePasswordResetToken(tokenHash: string): Promise<void> {
+  const r = await db.from('password_reset_tokens').update({ used_at: new Date().toISOString() }).eq('token_hash', tokenHash);
+  if (r.error) throw new Error(`Failed to consume password reset token: ${r.error.message}`);
+}
+
+// ============================================================================
+// Token Revocation (Server-side Logout)
+// ============================================================================
+
+export async function revokeToken(
+  tokenHash: string,
+  userId: string,
+  organizationId: string,
+  expiresAt: string
+): Promise<void> {
+  const r = await db.from('revoked_tokens').insert({
+    token_hash: tokenHash,
+    user_id: userId,
+    organization_id: organizationId,
+    expires_at: expiresAt,
+    reason: 'logout',
+  });
+  if (r.error) throw new Error(`Failed to revoke token: ${r.error.message}`);
+}
+
+export async function isTokenRevoked(token: string): Promise<boolean> {
+  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const r = await db.from('revoked_tokens').select('id').eq('token_hash', tokenHash).single();
+  return !r.error && !!r.data;
+}
+
+export async function getAuthUserByEmail(email: string) {
+  if (!authClient) return null;
+  const { data, error } = await authClient.auth.admin.listUsers();
+  if (error || !data?.users) return null;
+  const user = data.users.find(u => u.email?.toLowerCase() === email.toLowerCase());
+  return user || null;
+}
+
+async function sendPasswordResetEmail(email: string, rawToken: string): Promise<void> {
+  // Try to use Supabase's built-in password reset email
+  if (authClient) {
+    try {
+      await authClient.auth.resetPasswordForEmail(email, {
+        redirectTo: `${process.env.FRONTEND_URL || 'https://takemaster-v2.olfnetto.workers.dev'}/reset-password?token=TOKEN_PLACEHOLDER`,
+      });
+      // Note: Supabase's resetPasswordForEmail uses its own token system.
+      // Our custom token is stored in password_reset_tokens table.
+      // In production, you'd send a custom email with your own token.
+      // For now, we log that the email would be sent.
+      logStructured('INFO', 'password_reset_email_sent', { email, tokenPreview: rawToken.slice(0, 8) + '...' });
+      return;
+    } catch (err) {
+      logStructured('WARN', 'password_reset_email_failed', { email, error: String(err) });
+    }
+  }
+  // Fallback: log for development
+  logStructured('INFO', 'password_reset_email_fallback', { email, tokenPreview: rawToken.slice(0, 8) + '...' });
+}
+
+export { sendPasswordResetEmail };

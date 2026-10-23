@@ -35,13 +35,14 @@ Especialista no gerenciamento de talento no sistema TakeMaster. Responsável por
 ## Pode Importar de
 
 - @agent-program-catalog (para obter informações sobre quais programas existem)
-- @agent-episode-production (para associar participantes a episódios específicos)
-- Outros agentes que precisem de informações sobre talento
 
 ## NUNCA Importa de
 
-- Nenhum agente específico para implementação de funcionalidades que pertençam a este domínio
-- Porém, pode consumir informações de outros domínios quando necessário para associações
+- @agent-episode-production (episódios consomem talento, não o contrário)
+- @agent-content-intelligence
+- @agent-media-library
+- @agent-technical-production
+- @agent-frontend / @agent-backend (implementação direta de UI ou API)
 
 ## Contratos Públicos
 

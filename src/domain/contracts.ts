@@ -1,7 +1,15 @@
 /**
- * TakeMaster V2 / RSPlay TV SaaS — Canonical Domain Contracts
+ * TakeMaster V2 / RSPlay TV SaaS — Canonical Domain Contracts (Shared Kernel)
+ * 
+ * This is the SINGLE SOURCE OF TRUTH for all domain types.
+ * Domain-specific extensions go in src/domain/types/<domain>.ts
+ * 
  * Hierarchy: User -> Organization -> Show (Program-Level RBAC) -> Production -> Episode
  */
+
+// ============================================
+// IDENTITY & AUTH
+// ============================================
 
 export type OrganizationPlan =
   | 'starter'
@@ -21,6 +29,8 @@ export type OrganizationRole =
 
 export type PlatformRole = 'platform_admin' | 'platform_operator' | 'none';
 
+export type UserAccountStatus = 'active' | 'suspended' | 'invited';
+
 export interface User {
   id: string;
   email: string;
@@ -37,9 +47,107 @@ export interface User {
   updatedAt: string;
 }
 
-export type UserAccountStatus = 'active' | 'suspended' | 'invited';
+export interface Organization {
+  id: string;
+  name: string;
+  slug: string;
+  plan: OrganizationPlan;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserShowPermission {
+  id: string;
+  organizationId: string;
+  userId: string;
+  showId: string;
+  showTitle?: string;
+  canView: boolean;
+  canEditEditorial: boolean;
+  canEditScript: boolean;
+  canOperateStudio: boolean;
+  canManageSchedule: boolean;
+  canManageAssets: boolean;
+  canExport: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrganizationMembership {
+  organizationId: string;
+  organizationName: string;
+  organizationSlug: string;
+  role: OrganizationRole;
+}
+
+export interface AuthSession {
+  token: string;
+  user: User;
+  activeOrganization: Organization;
+  role: OrganizationRole;
+  platformRole: PlatformRole;
+  memberships: OrganizationMembership[];
+  showPermissions: UserShowPermission[];
+  allowedShowIds: string[];
+  isFullAccessAdmin: boolean;
+  isPlatformAdmin: boolean;
+  activeSubscription?: SaaSSubscription;
+}
+
+// ============================================
+// CATALOG
+// ============================================
 
 export type CatalogStatus = 'development' | 'active' | 'hiatus' | 'archived';
+
+export type ShowFormat =
+  | 'Entrevista'
+  | 'Programa Solo'
+  | 'Mesa Redonda'
+  | 'Podcast/Videocast'
+  | 'Debate'
+  | 'Reportagem'
+  | 'Especial'
+  | 'Outro';
+
+export interface CameraConfig {
+  [key: string]: any;
+  id: string;
+  name: string;
+  label: string;
+  purpose: string;
+  framing: string;
+  active: boolean;
+}
+
+export interface Show {
+  id: string;
+  organizationId?: string;
+  title: string;
+  description: string;
+  host: string;
+  format: ShowFormat;
+  defaultDurationMin: number;
+  editorialStyle: string;
+  scenario: string;
+  cameras: CameraConfig[];
+  defaultCameras?: CameraConfig[];
+  name?: string;
+  standardStructure: string[];
+  defaultOpening: string;
+  defaultClosing: string;
+  catalogStatus?: CatalogStatus;
+  category?: string;
+  targetAudience?: string;
+  distributionChannels?: string[];
+  createdBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ============================================
+// PRODUCTION (Season-level)
+// ============================================
 
 export type ProductionStatus =
   | 'planning'
@@ -47,6 +155,26 @@ export type ProductionStatus =
   | 'in_production'
   | 'post_production'
   | 'completed';
+
+export interface Production {
+  id: string;
+  organizationId: string;
+  showId: string;
+  title: string;
+  seasonNumber: number;
+  status: ProductionStatus;
+  targetEpisodesCount: number;
+  executiveProducer: string;
+  startDate?: string;
+  endDate?: string;
+  notes: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ============================================
+// EPISODE
+// ============================================
 
 export type EpisodeStatus =
   | 'draft'
@@ -60,15 +188,344 @@ export type EpisodeStatus =
   | 'editing'
   | 'published';
 
-export type ShowFormat =
-  | 'Entrevista'
-  | 'Programa Solo'
-  | 'Mesa Redonda'
-  | 'Podcast/Videocast'
-  | 'Debate'
-  | 'Reportagem'
-  | 'Especial'
-  | 'Outro';
+export interface Episode {
+  [key: string]: any;
+  id: string;
+  organizationId?: string;
+  showId: string;
+  productionId?: string;
+  episodeNumber: number;
+  title: string;
+  idea: string;
+  guestName: string;
+  guestId?: string;
+  participants?: EpisodeParticipant[];
+  host: string;
+  format: ShowFormat;
+  targetDurationMin: number;
+  objective?: string;
+  additionalInfo?: string;
+  status: EpisodeStatus;
+  diagnosis: EditorialDiagnosis;
+  research: ResearchData;
+  outline: OutlineBlock[];
+  questions: QuestionItem[];
+  script: ScriptItem[];
+  cameras: CameraConfig[];
+  assets: ProductionAsset[];
+  shorts: PlannedShort[];
+  recordingMarkers: RecordingMarker[];
+  technicalChecklist: TechnicalChecklist;
+  versions: ScriptVersion[];
+  editorScriptSynthesis?: string;
+  recordingTimeElapsed?: number;
+  topic?: string;
+  synopsis?: string;
+  presenterName?: string;
+  tone?: string;
+  targetDurationMinutes?: number;
+  segments?: Segment[];
+  checklist?: ChecklistItem[];
+  plannedShorts?: PlannedShort[];
+  materials?: ProductionMaterial[];
+  editorialNotesForPost?: string;
+  createdBy?: string;
+  updatedBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ============================================
+// TALENT / GUEST
+// ============================================
+
+export interface Guest {
+  [key: string]: any;
+  id: string;
+  organizationId?: string;
+  name: string;
+  role: string;
+  company: string;
+  bio: string;
+  contacts: string;
+  links: string[];
+  notes: string;
+  previousEpisodes: string[] | number;
+  previousResearchSummary?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export type Participant = Guest;
+
+export type ParticipantType = string;
+
+export interface EpisodeParticipant {
+  [key: string]: any;
+  id: string;
+  organizationId: string;
+  episodeId: string;
+  participantId: string;
+  participantName?: string;
+  participantRole?: string;
+  participantCompany?: string;
+  roleInEpisode: 'main_guest' | 'co_guest' | 'panelist' | 'specialist';
+  confirmationStatus: 'invited' | 'confirmed' | 'recorded' | 'declined';
+  notes: string;
+  createdAt: string;
+}
+
+// ============================================
+// EDITORIAL & RESEARCH
+// ============================================
+
+export interface EditorialDiagnosis {
+  centralTheme: string;
+  potentialStory: string;
+  primaryConflict: string;
+  primaryTransformation: string;
+  whyWatch: string;
+  whatToDiscover: string;
+  researchPoints: string[];
+  highImpactMoments: string[];
+  approved: boolean;
+}
+
+export interface ResearchSource {
+  id: string;
+  title: string;
+  url?: string;
+  detail: string;
+  status: 'CONFIRMADO' | 'NÃO CONFIRMADO' | 'PERGUNTAR AO CONVIDADO';
+  category:
+    | 'guest'
+    | 'trajectory'
+    | 'company'
+    | 'dates_numbers'
+    | 'interviews'
+    | 'contradictions'
+    | 'stories';
+}
+
+export interface ResearchData {
+  aboutGuest: string;
+  trajectory: string;
+  company: string;
+  keyDatesAndNumbers: string;
+  previousInterviews: string;
+  recurringThemes: string;
+  contradictionsAndClarifications: string;
+  compellingStories: string;
+  sources: ResearchSource[];
+}
+
+// ============================================
+// OUTLINE & QUESTIONS
+// ============================================
+
+export interface OutlineBlock {
+  [key: string]: any;
+  id: string;
+  blockNumber: number;
+  title: string;
+  estimatedDurationMin: number;
+  objective: string;
+  keyThemes: string[];
+  transitionText: string;
+}
+
+export type Segment = OutlineBlock;
+
+export interface FollowUpItem {
+  [key: string]: any;
+  id: string;
+  triggerCondition: string;
+  actionOrQuestion: string;
+  tag:
+    | 'DINHEIRO'
+    | 'FAMÍLIA'
+    | 'MEDO'
+    | 'CONFLITO'
+    | 'APROFUNDAR'
+    | 'NÃO INTERROMPER'
+    | 'OUTRO';
+}
+
+export interface QuestionItem {
+  id: string;
+  blockId: string;
+  order: number;
+  text: string;
+  objective: string;
+  suggestedCamera: string;
+  eyeDirection: string;
+  followUps: FollowUpItem[];
+}
+
+// ============================================
+// SCRIPT
+// ============================================
+
+export type ScriptItemType =
+  | 'cold_open'
+  | 'opening'
+  | 'vinheta'
+  | 'transition'
+  | 'question'
+  | 'reaction'
+  | 'closing'
+  | 'b_roll_insert';
+
+export interface ScriptItem {
+  [key: string]: any;
+  id: string;
+  blockId?: string;
+  timestamp: string;
+  type: ScriptItemType;
+  camera: string;
+  alternativeCamera?: string;
+  speaker: string;
+  targetPerson?: string;
+  eyeDirection: string;
+  shotType: string;
+  content: string;
+  directionalMarkers: string[];
+  isTeleprompter: boolean;
+  questionRefId?: string;
+}
+
+// ============================================
+// SHORTS
+// ============================================
+
+export type PlannedShortStatus = 'Planejado' | 'Capturado' | 'Excelente' | 'Não aconteceu';
+
+export interface PlannedShort {
+  [key: string]: any;
+  id: string;
+  title: string;
+  hook: string;
+  generatingQuestion: string;
+  estimatedDuration: string;
+  status: PlannedShortStatus;
+  notes?: string;
+  suggestedHook?: string;
+  narrativeArc?: string;
+  expectedDurationSeconds?: number;
+  cameraFocus?: string;
+  bRollNotes?: string;
+  targetPlatform?: string[];
+}
+
+// ============================================
+// ASSETS
+// ============================================
+
+export type AssetType =
+  | 'foto'
+  | 'video'
+  | 'documento'
+  | 'grafico'
+  | 'produto'
+  | 'materia'
+  | 'trilha'
+  | 'vinheta';
+
+export type AssetStatus = 'pendente' | 'em_busca' | 'obtido' | 'aprovado';
+
+export interface ProductionAsset {
+  id: string;
+  blockId?: string;
+  type: AssetType;
+  title: string;
+  description: string;
+  moment: string;
+  status: AssetStatus;
+  fileUrl?: string;
+  tags?: string[];
+  reusable?: boolean;
+  displayTime?: string;
+  content?: string;
+  notes?: string;
+}
+
+export type ProductionMaterial = ProductionAsset;
+
+export interface LibraryAsset extends ProductionAsset {
+  organizationId: string;
+  showId?: string;
+  episodeId?: string;
+  episodeTitle?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ============================================
+// RECORDING & TECHNICAL
+// ============================================
+
+export type RecordingMarkerType = 'momento_forte' | 'corte' | 'nota' | 'estender' | 'erro';
+
+export interface RecordingMarker {
+  id: string;
+  timestampSec: number;
+  formattedTime: string;
+  type: RecordingMarkerType;
+  blockTitle: string;
+  referenceText: string;
+  comment?: string;
+}
+
+export interface TechnicalChecklistItem {
+  [key: string]: any;
+  id: string;
+  task: string;
+  category: string;
+  completed: boolean;
+  assignedTo?: string;
+}
+
+export interface TechnicalChecklist {
+  cam1Recording: boolean;
+  cam2Recording: boolean;
+  cam3Recording: boolean;
+  micHost: boolean;
+  micGuest: boolean;
+  audioMonitored: boolean;
+  lighting: boolean;
+  memoryCardsStorage: boolean;
+  batteries: boolean;
+  syncClap: boolean;
+  waterReady: boolean;
+  silentPhones: boolean;
+  customItems: TechnicalChecklistItem[];
+}
+
+export type ChecklistItem = TechnicalChecklistItem;
+
+// ============================================
+// SCRIPT VERSIONS
+// ============================================
+
+export interface ScriptVersion {
+  id: string;
+  episodeId?: string;
+  organizationId?: string;
+  versionNumber: number;
+  name: string;
+  savedAt: string;
+  description: string;
+  snapshot: {
+    outline?: OutlineBlock[];
+    questions?: QuestionItem[];
+    script?: ScriptItem[];
+    diagnosis?: EditorialDiagnosis;
+  };
+}
+
+// ============================================
+// SCHEDULE
+// ============================================
 
 export type ScheduleEventType =
   | 'pre_interview'
@@ -84,19 +541,44 @@ export type ScheduleEventStatus =
   | 'confirmed'
   | 'in_progress'
   | 'completed'
-  | 'cancelled';
+  | 'cancelled'
+  | 'confirmado'
+  | 'pendente'
+  | 'concluido';
 
-export type AssetType =
-  | 'foto'
-  | 'video'
-  | 'documento'
-  | 'grafico'
-  | 'produto'
-  | 'materia'
-  | 'trilha'
-  | 'vinheta';
+export interface ScheduleEvent {
+  id: string;
+  organizationId: string;
+  showId: string;
+  productionId?: string;
+  episodeId?: string;
+  episodeTitle?: string;
+  episodeNumber?: number;
+  title: string;
+  type: ScheduleEventType;
+  status: ScheduleEventStatus;
+  scheduledStart: string;
+  scheduledEnd: string;
+  studioLocation: string;
+  assignedTeam: string[];
+  notes: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-export type AssetStatus = 'pendente' | 'em_busca' | 'obtido' | 'aprovado';
+export interface AgendaEvent {
+  id: string;
+  title: string;
+  type: 'recording' | 'rehearsal' | 'meeting' | 'deadline' | string;
+  scheduledDate: string;
+  scheduledTime: string;
+  episodeId?: string;
+  notes: string;
+}
+
+// ============================================
+// BILLING
+// ============================================
 
 export type SubscriptionPlanId =
   | 'rsplay_programa_individual'
@@ -108,7 +590,8 @@ export type SubscriptionStatus =
   | 'trialing'
   | 'past_due'
   | 'canceled'
-  | 'suspended';
+  | 'suspended'
+  | 'pending_payment';
 
 export type PaymentIntentStatus =
   | 'created'
@@ -143,76 +626,6 @@ export type PaymentMethodType =
   | 'credit_card'
   | 'pix_automatico'
   | 'boleto_corporativo';
-
-export type SetupStatus =
-  | 'not_started'
-  | 'setup_pending'
-  | 'setup_running'
-  | 'setup_failed'
-  | 'ready'
-  | 'suspended'
-  | 'cancelled';
-
-export interface SetupState {
-  id: string;
-  organizationId: string;
-  programId: string;
-  status: SetupStatus;
-  version: number;
-  steps: Record<string, { status: 'pending' | 'completed' | 'failed'; completedAt?: string; error?: string }>;
-  createdAt: string;
-  updatedAt: string;
-  completedAt?: string;
-  error?: string;
-}
-
-export interface Organization {
-  id: string;
-  name: string;
-  slug: string;
-  plan: OrganizationPlan;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface UserShowPermission {
-  id: string;
-  organizationId: string;
-  userId: string;
-  showId: string;
-  showTitle?: string;
-  canView: boolean;
-  canEditEditorial: boolean;
-  canEditScript: boolean;
-  canOperateStudio: boolean;
-  canManageSchedule: boolean;
-  canManageAssets: boolean;
-  canExport: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  jobTitle?: string;
-  status?: UserAccountStatus;
-  loginCode?: string;
-  avatarUrl?: string;
-  role?: OrganizationRole;
-  showPermissions?: UserShowPermission[];
-  lastLoginAt?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface OrganizationMembership {
-  organizationId: string;
-  organizationName: string;
-  organizationSlug: string;
-  role: OrganizationRole;
-}
 
 export interface SaaSPlanDefinition {
   id: SubscriptionPlanId;
@@ -279,397 +692,49 @@ export interface PaymentGatewayEvent {
   createdAt: string;
 }
 
-export interface AuthSession {
-  token: string;
-  user: User;
-  activeOrganization: Organization;
-  role: OrganizationRole;
-  platformRole: PlatformRole;
-  memberships: OrganizationMembership[];
-  showPermissions: UserShowPermission[];
-  allowedShowIds: string[];
-  isFullAccessAdmin: boolean;
-  isPlatformAdmin: boolean;
-  activeSubscription?: SaaSSubscription;
+export type SetupStatus =
+  | 'not_started'
+  | 'setup_pending'
+  | 'setup_running'
+  | 'setup_failed'
+  | 'ready'
+  | 'suspended'
+  | 'cancelled';
+
+export interface SetupState {
+  id: string;
+  organizationId: string;
+  programId: string;
+  status: SetupStatus;
+  version: number;
+  steps: Record<string, { status: 'pending' | 'completed' | 'failed'; completedAt?: string; error?: string }>;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+  error?: string;
 }
 
-export interface CameraConfig {
-  [key: string]: any;
-  id: string;
+export interface SaaSRegistrationPayload {
   name: string;
-  label: string;
-  purpose: string;
-  framing: string;
-  active: boolean;
+  email: string;
+  loginCode: string;
+  jobTitle?: string;
+  showMode: 'existing' | 'new' | 'knowledge_base';
+  existingShowId?: string;
+  knowledgeBaseSlug?: string;
+  newShowTitle?: string;
+  newShowHost?: string;
+  newShowFormat?: ShowFormat;
+  planId: SubscriptionPlanId;
+  paymentMethodType: PaymentMethodType;
+  paymentMethodBrand?: string;
+  paymentMethodLast4?: string;
+  autoRenew?: boolean;
 }
 
-export interface Show {
-  id: string;
-  organizationId?: string;
-  title: string;
-  description: string;
-  host: string;
-  format: ShowFormat;
-  defaultDurationMin: number;
-  editorialStyle: string;
-  scenario: string;
-  cameras: CameraConfig[];
-  defaultCameras?: CameraConfig[];
-  name?: string;
-  standardStructure: string[];
-  defaultOpening: string;
-  defaultClosing: string;
-  catalogStatus?: CatalogStatus;
-  category?: string;
-  targetAudience?: string;
-  distributionChannels?: string[];
-  createdBy?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Production {
-  id: string;
-  organizationId: string;
-  showId: string;
-  title: string;
-  seasonNumber: number;
-  status: ProductionStatus;
-  targetEpisodesCount: number;
-  executiveProducer: string;
-  startDate?: string;
-  endDate?: string;
-  notes: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Guest {
-  [key: string]: any;
-  id: string;
-  organizationId?: string;
-  name: string;
-  role: string;
-  company: string;
-  bio: string;
-  contacts: string;
-  links: string[];
-  notes: string;
-  previousEpisodes: string[] | number;
-  previousResearchSummary?: string;
-  createdAt: string;
-  updatedAt?: string;
-}
-
-export type Participant = Guest;
-
-export type Program = Show;
-export type ParticipantType = string;
-export type ProductionMaterial = ProductionAsset;
-export interface ChecklistItem {
-  [key: string]: any;
-  id: string;
-  task: string;
-  category: string;
-  completed: boolean;
-  assignedTo?: string;
-}
-export type Segment = OutlineBlock;
-export interface AgendaEvent {
-  id: string;
-  title: string;
-  type: 'recording' | 'rehearsal' | 'meeting' | 'deadline' | string;
-  scheduledDate: string;
-  scheduledTime: string;
-  episodeId?: string;
-  notes: string;
-}
-
-export interface EpisodeParticipant {
-  [key: string]: any;
-  id: string;
-  organizationId: string;
-  episodeId: string;
-  participantId: string;
-  participantName?: string;
-  participantRole?: string;
-  participantCompany?: string;
-  roleInEpisode: 'main_guest' | 'co_guest' | 'panelist' | 'specialist';
-  confirmationStatus: 'invited' | 'confirmed' | 'recorded' | 'declined';
-  notes: string;
-  createdAt: string;
-}
-
-export interface EditorialDiagnosis {
-  centralTheme: string;
-  potentialStory: string;
-  primaryConflict: string;
-  primaryTransformation: string;
-  whyWatch: string;
-  whatToDiscover: string;
-  researchPoints: string[];
-  highImpactMoments: string[];
-  approved: boolean;
-}
-
-export interface ResearchSource {
-  id: string;
-  title: string;
-  url?: string;
-  detail: string;
-  status: 'CONFIRMADO' | 'NÃO CONFIRMADO' | 'PERGUNTAR AO CONVIDADO';
-  category:
-    | 'guest'
-    | 'trajectory'
-    | 'company'
-    | 'dates_numbers'
-    | 'interviews'
-    | 'contradictions'
-    | 'stories';
-}
-
-export interface ResearchData {
-  aboutGuest: string;
-  trajectory: string;
-  company: string;
-  keyDatesAndNumbers: string;
-  previousInterviews: string;
-  recurringThemes: string;
-  contradictionsAndClarifications: string;
-  compellingStories: string;
-  sources: ResearchSource[];
-}
-
-export interface OutlineBlock {
-  [key: string]: any;
-  id: string;
-  blockNumber: number;
-  title: string;
-  estimatedDurationMin: number;
-  objective: string;
-  keyThemes: string[];
-  transitionText: string;
-}
-
-export interface FollowUpItem {
-  [key: string]: any;
-  id: string;
-  triggerCondition: string;
-  actionOrQuestion: string;
-  tag:
-    | 'DINHEIRO'
-    | 'FAMÍLIA'
-    | 'MEDO'
-    | 'CONFLITO'
-    | 'APROFUNDAR'
-    | 'NÃO INTERROMPER'
-    | 'OUTRO';
-}
-
-export interface QuestionItem {
-  id: string;
-  blockId: string;
-  order: number;
-  text: string;
-  objective: string;
-  suggestedCamera: string;
-  eyeDirection: string;
-  followUps: FollowUpItem[];
-}
-
-export interface ScriptItem {
-  [key: string]: any;
-  id: string;
-  blockId?: string;
-  timestamp: string;
-  type:
-    | 'cold_open'
-    | 'opening'
-    | 'vinheta'
-    | 'transition'
-    | 'question'
-    | 'reaction'
-    | 'closing'
-    | 'b_roll_insert';
-  camera: string;
-  alternativeCamera?: string;
-  speaker: string;
-  targetPerson?: string;
-  eyeDirection: string;
-  shotType: string;
-  content: string;
-  directionalMarkers: string[];
-  isTeleprompter: boolean;
-  questionRefId?: string;
-}
-
-export interface PlannedShort {
-  [key: string]: any;
-  id: string;
-  title: string;
-  hook: string;
-  generatingQuestion: string;
-  estimatedDuration: string;
-  status: 'Planejado' | 'Capturado' | 'Excelente' | 'Não aconteceu';
-  notes?: string;
-  suggestedHook?: string;
-  narrativeArc?: string;
-  expectedDurationSeconds?: number;
-  cameraFocus?: string;
-  bRollNotes?: string;
-  targetPlatform?: string[];
-}
-
-export interface ProductionAsset {
-  id: string;
-  blockId?: string;
-  type: AssetType;
-  title: string;
-  description: string;
-  moment: string;
-  status: AssetStatus;
-  fileUrl?: string;
-  tags?: string[];
-  reusable?: boolean;
-  displayTime?: string;
-  content?: string;
-  notes?: string;
-}
-
-export interface LibraryAsset extends ProductionAsset {
-  organizationId: string;
-  showId?: string;
-  episodeId?: string;
-  episodeTitle?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface RecordingMarker {
-  id: string;
-  timestampSec: number;
-  formattedTime: string;
-  type: 'momento_forte' | 'corte' | 'nota' | 'estender' | 'erro';
-  blockTitle: string;
-  referenceText: string;
-  comment?: string;
-}
-
-export interface TechnicalChecklistItem {
-  id: string;
-  label: string;
-  done: boolean;
-}
-
-export interface TechnicalChecklist {
-  cam1Recording: boolean;
-  cam2Recording: boolean;
-  cam3Recording: boolean;
-  micHost: boolean;
-  micGuest: boolean;
-  audioMonitored: boolean;
-  lighting: boolean;
-  memoryCardsStorage: boolean;
-  batteries: boolean;
-  syncClap: boolean;
-  waterReady: boolean;
-  silentPhones: boolean;
-  customItems: TechnicalChecklistItem[];
-}
-
-export interface ScriptVersion {
-  id: string;
-  episodeId?: string;
-  organizationId?: string;
-  versionNumber: number;
-  name: string;
-  savedAt: string;
-  description: string;
-  snapshot: {
-    outline?: OutlineBlock[];
-    questions?: QuestionItem[];
-    script?: ScriptItem[];
-    diagnosis?: EditorialDiagnosis;
-  };
-}
-
-export interface Episode {
-  [key: string]: any;
-  id: string;
-  organizationId?: string;
-  showId: string;
-  productionId?: string;
-  episodeNumber: number;
-  title: string;
-  idea: string;
-  guestName: string;
-  guestId?: string;
-  participants?: EpisodeParticipant[];
-  host: string;
-  format: ShowFormat;
-  targetDurationMin: number;
-  objective?: string;
-  additionalInfo?: string;
-  status: EpisodeStatus;
-  diagnosis: EditorialDiagnosis;
-  research: ResearchData;
-  outline: OutlineBlock[];
-  questions: QuestionItem[];
-  script: ScriptItem[];
-  cameras: CameraConfig[];
-  assets: ProductionAsset[];
-  shorts: PlannedShort[];
-  recordingMarkers: RecordingMarker[];
-  technicalChecklist: TechnicalChecklist;
-  versions: ScriptVersion[];
-  editorScriptSynthesis?: string;
-  recordingTimeElapsed?: number;
-  topic?: string;
-  synopsis?: string;
-  presenterName?: string;
-  tone?: string;
-  targetDurationMinutes?: number;
-  segments?: any[];
-  checklist?: ChecklistItem[];
-  plannedShorts?: PlannedShort[];
-  materials?: ProductionMaterial[];
-  editorialNotesForPost?: string;
-  createdBy?: string;
-  updatedBy?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ScheduleEvent {
-  id: string;
-  organizationId: string;
-  showId: string;
-  productionId?: string;
-  episodeId?: string;
-  episodeTitle?: string;
-  episodeNumber?: number;
-  title: string;
-  type: ScheduleEventType;
-  status: ScheduleEventStatus;
-  scheduledStart: string;
-  scheduledEnd: string;
-  studioLocation: string;
-  assignedTeam: string[];
-  notes: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface AuditLogEntry {
-  id: string;
-  organizationId: string;
-  userId?: string;
-  entityType: string;
-  entityId: string;
-  action: string;
-  metadata: Record<string, any>;
-  createdAt: string;
-}
+// ============================================
+// ADMIN & AUDIT
+// ============================================
 
 export interface AdminReportSummary {
   mrrCents: number;
@@ -691,11 +756,26 @@ export interface AdminReportSummary {
   }[];
 }
 
+export interface AuditLogEntry {
+  id: string;
+  organizationId: string;
+  userId?: string;
+  entityType: string;
+  entityId: string;
+  action: string;
+  metadata: Record<string, any>;
+  createdAt: string;
+}
+
 export interface DatabaseState {
   shows: Show[];
   episodes: Episode[];
   guests: Guest[];
 }
+
+// ============================================
+// ERRORS
+// ============================================
 
 export type ApiErrorCode =
   | 'CONFIGURATION_ERROR'
@@ -718,7 +798,9 @@ export interface StandardizedApiError {
   requestId?: string;
 }
 
-// --- PROGRAM IDENTITY & PAUTAS CURATION LAYER (RS PLAY KNOWLEDGE BASE) ---
+// ============================================
+// PROGRAM KNOWLEDGE BASE (RSPlay)
+// ============================================
 
 export interface ProgramKnowledgeSource {
   urlOriginal: string;
@@ -809,21 +891,8 @@ export interface ProgramPitchCurationResponse {
   generatedAt: string;
 }
 
-export interface SaaSRegistrationPayload {
-  name: string;
-  email: string;
-  loginCode: string;
-  jobTitle?: string;
-  showMode: 'existing' | 'new' | 'knowledge_base';
-  existingShowId?: string;
-  knowledgeBaseSlug?: string;
-  newShowTitle?: string;
-  newShowHost?: string;
-  newShowFormat?: ShowFormat;
-  planId: SubscriptionPlanId;
-  paymentMethodType: PaymentMethodType;
-  paymentMethodBrand?: string;
-  paymentMethodLast4?: string;
-  autoRenew?: boolean;
-}
+// ============================================
+// ALIASES (compatibilidade)
+// ============================================
 
+export type Program = Show;
