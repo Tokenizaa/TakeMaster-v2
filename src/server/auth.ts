@@ -370,12 +370,11 @@ export async function validatePasswordResetTokenOnly(token: string): Promise<str
  * Returns true on success, false on failure.
  */
 export async function resetPassword(token: string, newPassword: string): Promise<boolean> {
+  const adminClient = getAdminAuthClient();
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   const claimId = crypto.randomUUID();
   const result = await claimPasswordResetToken(tokenHash, claimId);
   if (!result) return false;
-
-  const adminClient = getAdminAuthClient();
   let passwordUpdated = false;
   try {
     const { error } = await adminClient.auth.admin.updateUserById(result.user_id, { password: newPassword });

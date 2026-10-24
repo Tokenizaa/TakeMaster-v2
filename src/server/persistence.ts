@@ -1054,7 +1054,7 @@ async function sendPasswordResetEmail(email: string, rawToken: string): Promise<
 
   const frontendUrl = (process.env.FRONTEND_URL || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\/$/, '');
   const resetUrl = new URL('/', frontendUrl);
-  resetUrl.searchParams.set('token', rawToken);
+  resetUrl.searchParams.set('resetToken', rawToken);
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
