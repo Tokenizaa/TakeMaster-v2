@@ -209,8 +209,8 @@ export function App() {
     }
   };
 
-  const handleLogout = () => {
-    api.logout();
+  const handleLogout = async () => {
+    const serverRevoked = await api.logout();
     setSession(null);
     setShows([]);
     setProductions([]);
@@ -222,7 +222,11 @@ export function App() {
     setActiveSection('dashboard');
     setSelectedShowId('ALL');
     setSaveStatus('saved');
-    setSaveErrorMessage(null);
+    setSaveErrorMessage(
+      serverRevoked
+        ? null
+        : 'Sessão removida deste dispositivo, mas o servidor não confirmou a revogação. Verifique a conexão antes de considerar a sessão encerrada em todos os dispositivos.'
+    );
   };
 
   const filteredEpisodes = useMemo(() => {

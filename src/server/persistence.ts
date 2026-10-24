@@ -969,9 +969,22 @@ export async function validatePasswordResetToken(tokenHash: string): Promise<{ u
   };
 }
 
-export async function consumePasswordResetToken(tokenHash: string): Promise<void> {
-  const r = await db.from('password_reset_tokens').update({ used_at: new Date().toISOString() }).eq('token_hash', tokenHash);
-  if (r.error) throw new Error(`Failed to consume password reset token: ${r.error.message}`);
+export async function claimPasswordResetToken(tokenHash: string, claimId: string): Promise<{ user_id: string; email: string } | null> {
+  const r = await db.rpc('claim_password_reset_token', { p_token_hash: tokenHash, p_claim_id: claimId });
+  if (r.error) throw new Error(`Failed to claim password reset token: ${r.error.message}`);
+  const row = Array.isArray(r.data) ? r.data[0] : r.data;
+  return row?.user_id ? { user_id: row.user_id, email: row.email } : null;
+}
+
+export async function completePasswordResetTokenClaim(tokenHash: string, claimId: string): Promise<boolean> {
+  const r = await db.rpc('complete_password_reset_token_claim', { p_token_hash: tokenHash, p_claim_id: claimId });
+  if (r.error) throw new Error(`Failed to complete password reset token: ${r.error.message}`);
+  return r.data === true;
+}
+
+export async function releasePasswordResetTokenClaim(tokenHash: string, claimId: string): Promise<void> {
+  const r = await db.rpc('release_password_reset_token_claim', { p_token_hash: tokenHash, p_claim_id: claimId });
+  if (r.error) throw new Error(`Failed to release password reset token claim: ${r.error.message}`);
 }
 
 // ============================================================================
@@ -996,15 +1009,19 @@ export async function revokeToken(
 
 export async function isTokenRevoked(token: string): Promise<boolean> {
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-  const r = await db.from('revoked_tokens').select('id').eq('token_hash', tokenHash).single();
-  return !r.error && !!r.data;
+  const r = await db.from('revoked_tokens').select('id').eq('token_hash', tokenHash).maybeSingle();
+  if (r.error) {
+    logStructured('ERROR', 'token_revocation_lookup_failed', { error: r.error.message });
+    throw new Error('Não foi possível verificar o estado da sessão.');
+  }
+  return !!r.data;
 }
 
 export async function isUserTokenRevoked(userId: string, tokenIssuedAt: number): Promise<boolean> {
   const r = await db.rpc('is_user_token_revoked', { p_user_id: userId, p_token_issued_at: new Date(tokenIssuedAt * 1000).toISOString() });
   if (r.error) {
-    logStructured('WARN', 'is_user_token_revoked_failed', { userId, error: r.error.message });
-    return false; // Fail open - don't block on revocation check failure
+    logStructured('ERROR', 'is_user_token_revoked_failed', { userId, error: r.error.message });
+    throw new Error('Não foi possível verificar a revogação das sessões.');
   }
   return !!r.data;
 }
@@ -1015,32 +1032,46 @@ export async function revokeAllUserTokens(userId: string, reason: string = 'pass
 }
 
 export async function getAuthUserByEmail(email: string) {
-  if (!authClient) return null;
-  const { data, error } = await authClient.auth.admin.listUsers();
-  if (error || !data?.users) return null;
+  // Administrative API: use the server-only service-role client.
+  const { data, error } = await db.auth.admin.listUsers();
+  if (error || !data?.users) {
+    if (error) logStructured('ERROR', 'auth_user_lookup_failed', { error: error.message });
+    return null;
+  }
   const user = data.users.find(u => u.email?.toLowerCase() === email.toLowerCase());
   return user || null;
 }
 
 async function sendPasswordResetEmail(email: string, rawToken: string): Promise<void> {
-  // Try to use Supabase's built-in password reset email
-  if (authClient) {
-    try {
-      await authClient.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.FRONTEND_URL || 'https://takemaster-v2.olfnetto.workers.dev'}/reset-password?token=TOKEN_PLACEHOLDER`,
-      });
-      // Note: Supabase's resetPasswordForEmail uses its own token system.
-      // Our custom token is stored in password_reset_tokens table.
-      // In production, you'd send a custom email with your own token.
-      // For now, we log that the email would be sent.
-      logStructured('INFO', 'password_reset_email_sent', { email, tokenPreview: rawToken.slice(0, 8) + '...' });
-      return;
-    } catch (err) {
-      logStructured('WARN', 'password_reset_email_failed', { email, error: String(err) });
-    }
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.EMAIL_FROM;
+  if (!apiKey || !from) {
+    logStructured('ERROR', 'password_reset_email_not_configured', {
+      hasResendApiKey: Boolean(apiKey),
+      hasEmailFrom: Boolean(from),
+    });
+    throw new Error('Envio de e-mail não configurado.');
   }
-  // Fallback: log for development
-  logStructured('INFO', 'password_reset_email_fallback', { email, tokenPreview: rawToken.slice(0, 8) + '...' });
+
+  const frontendUrl = (process.env.FRONTEND_URL || 'https://takemaster-v2.olfnetto.workers.dev').replace(/\/$/, '');
+  const resetUrl = new URL('/reset-password', frontendUrl);
+  resetUrl.searchParams.set('token', rawToken);
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from,
+      to: [email],
+      subject: 'Redefinição de senha do TakeMaster',
+      html: `<p>Recebemos uma solicitação para redefinir sua senha do TakeMaster.</p><p><a href="${resetUrl.toString()}">Redefinir minha senha</a></p><p>O link expira em uma hora e só pode ser usado uma vez. Se você não solicitou esta alteração, ignore esta mensagem.</p>`,
+      text: `Redefina sua senha do TakeMaster: ${resetUrl.toString()}\nO link expira em uma hora e só pode ser usado uma vez.`,
+    }),
+  });
+  if (!response.ok) {
+    logStructured('ERROR', 'password_reset_email_failed', { status: response.status });
+    throw new Error('O provedor de e-mail recusou a mensagem.');
+  }
+  logStructured('INFO', 'password_reset_email_sent', { provider: 'resend' });
 }
 
 export { sendPasswordResetEmail };

@@ -12,7 +12,9 @@ import {
   verifyUserOrganizationAccess,
   createPasswordResetToken,
   validatePasswordResetToken,
-  consumePasswordResetToken,
+  claimPasswordResetToken,
+  completePasswordResetTokenClaim,
+  releasePasswordResetTokenClaim,
   revokeToken,
   isTokenRevoked,
   isUserTokenRevoked,
@@ -369,43 +371,29 @@ export async function validatePasswordResetTokenOnly(token: string): Promise<str
  */
 export async function resetPassword(token: string, newPassword: string): Promise<boolean> {
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-
-  // First, validate the token (check exists, not expired, not used)
-  const result = await validatePasswordResetToken(tokenHash);
+  const claimId = crypto.randomUUID();
+  const result = await claimPasswordResetToken(tokenHash, claimId);
   if (!result) return false;
 
-  if (result.expires_at < new Date().toISOString() || result.used_at) {
-    return false;
-  }
-
-  // Use admin client for password update (requires service role key)
   const adminClient = getAdminAuthClient();
-  if (!adminClient) {
-    throw new AppError(500, 'CONFIGURATION_ERROR', 'Supabase admin client não configurado. Configure SUPABASE_SERVICE_ROLE_KEY.');
-  }
-
-  // Atomically: mark token as used, update password, revoke all sessions
+  let passwordUpdated = false;
   try {
-    // Mark token as consumed
-    await consumePasswordResetToken(tokenHash);
+    const { error } = await adminClient.auth.admin.updateUserById(result.user_id, { password: newPassword });
+    if (error) throw new AppError(500, 'CONFIGURATION_ERROR', 'Não foi possível atualizar a senha. Tente novamente.');
+    passwordUpdated = true;
 
-    // Update password via Supabase admin API
-    const { error } = await adminClient.auth.admin.updateUserById(result.user_id, {
-      password: newPassword,
-    });
-    if (error) {
-      // If password update fails, we should ideally rollback the token consumption
-      // For now, throw error - the token is already consumed but password not changed
-      throw new AppError(500, 'CONFIGURATION_ERROR', `Falha ao atualizar senha: ${error.message}`);
+    await revokeAllUserTokens(result.user_id, 'password_reset');
+    const consumed = await completePasswordResetTokenClaim(tokenHash, claimId);
+    if (!consumed) {
+      throw new AppError(500, 'INTERNAL_ERROR', 'A senha foi atualizada, mas não foi possível concluir o token de recuperação. Solicite suporte.');
     }
-
-    // Revoke all existing sessions for this user (force re-login)
-    await revokeAllUserTokens(result.user_id);
-
     return true;
   } catch (error) {
+    if (!passwordUpdated) {
+      try { await releasePasswordResetTokenClaim(tokenHash, claimId); } catch { /* lease expires automatically */ }
+    }
     if (error instanceof AppError) throw error;
-    throw new AppError(500, 'INTERNAL_ERROR', `Erro ao redefinir senha: ${error instanceof Error ? error.message : String(error)}`);
+    throw new AppError(500, 'INTERNAL_ERROR', 'Erro ao redefinir senha. Tente novamente.');
   }
 }
 
@@ -425,13 +413,3 @@ export async function logout(token: string): Promise<void> {
   await revokeToken(tokenHash, verified.userId, verified.organizationId, expiresAt);
 }
 
-/**
- * Revoke all tokens for a user (used after password reset).
- */
-export async function revokeAllUserTokens(userId: string): Promise<void> {
-  // This would require a more complex query to find all active tokens for the user.
-  // For now, we rely on the fact that password reset invalidates the session
-  // by changing the password, which will fail on next login attempt.
-  // A full implementation would track all issued tokens per user.
-  // Placeholder for future enhancement.
-}

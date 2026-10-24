@@ -174,17 +174,24 @@ export const api = {
     return res.session;
   },
 
-  logout: () => {
+  logout: async (): Promise<boolean> => {
+    const token = getStoredAuthToken();
+    const organizationId = getStoredOrganizationId();
+    let serverRevoked = false;
     try {
-      localStorage.removeItem(AUTH_TOKEN_KEY);
+      if (token) {
+        const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+        if (organizationId) headers['X-Organization-Id'] = organizationId;
+        const response = await fetch('/api/auth/logout', { method: 'POST', headers });
+        serverRevoked = response.ok;
+      }
     } catch {
-      // ignore storage errors
+      // Local logout must still complete if the server cannot be reached.
+    } finally {
+      try { localStorage.removeItem(AUTH_TOKEN_KEY); } catch { /* ignore storage errors */ }
+      try { localStorage.removeItem(ACTIVE_ORG_KEY); } catch { /* ignore storage errors */ }
     }
-    try {
-      localStorage.removeItem(ACTIVE_ORG_KEY);
-    } catch {
-      // ignore storage errors
-    }
+    return serverRevoked;
   },
 
   // Workspace State (Filtered by Program-Level RBAC)
