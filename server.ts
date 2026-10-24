@@ -31,12 +31,16 @@ import {
   getLibraryAssetById,
   handlePaymentFailure,
   listAuditLogs,
+  listAllOrganizations,
+  listAllShows,
+  listAllAuditLogs,
   listBillingInvoices,
   listEpisodes,
   listLibraryAssets,
   listOrganizationsByIds,
   listOrganizationSubscriptions,
   listOrganizationUsersWithPermissions,
+  listUsersAndOrganizations,
   listParticipants,
   listPaymentGatewayEvents,
   listProductions,
@@ -67,7 +71,14 @@ import {
   buildAuthSession,
   getAuthContext,
   loginWithEmailOrUserId,
+  logout,
+  requireOrganizationAdminContext,
+  requireOrganizationContext,
+  requirePlatformAdminContext,
   requireAuth,
+  requestPasswordReset,
+  validatePasswordResetTokenOnly,
+  resetPassword,
 } from './src/server/auth';
 import {
   AppError,
@@ -115,20 +126,6 @@ export function createApiApp() {
     },
   }));
 
-  // Authorization helpers
-  const requireOrganizationAdmin = (auth: any) => {
-    if (auth.isPlatformAdmin) return; // Platform admin has access to everything
-    if (!['owner', 'admin'].includes(auth.role)) {
-      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
-    }
-  };
-
-  const requirePlatformAdmin = (auth: any) => {
-    if (!auth.isPlatformAdmin) {
-      throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Acesso restrito a administradores de plataforma.');
-    }
-  };
-  
   app.use(requestTracingMiddleware);
 
   // --- OBSERVABILITY & HEALTH CHECK (Phase 5 & 6) ---
@@ -166,7 +163,9 @@ export function createApiApp() {
     try {
       const auth = await getAuthContext(req);
       const session = await buildAuthSession(auth.userId, auth.organizationId);
-      const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
+      const orgUsers = auth.organizationId
+        ? await listOrganizationUsersWithPermissions(auth.organizationId)
+        : [];
       const availableOrganizations = await listOrganizationsByIds(
         session.memberships.map((membership) => membership.organizationId)
       );
@@ -184,18 +183,21 @@ export function createApiApp() {
     try {
       const { emailOrUserId, organizationId, loginCode } = req.body || {};
       const session = await loginWithEmailOrUserId(emailOrUserId, organizationId, loginCode);
-      await recordAuditLog(
-        session.activeOrganization.id,
-        session.user.id,
-        'auth_session',
-        session.user.id,
-        'login',
-        {
-          email: session.user.email,
-          role: session.role,
-          allowedShowsCount: session.allowedShowIds.length,
-        }
-      );
+      // Auditoria só registra quando há contexto organizacional; sessão global não inventa organização.
+      if (session.activeOrganization) {
+        await recordAuditLog(
+          session.activeOrganization.id,
+          session.user.id,
+          'auth_session',
+          session.user.id,
+          'login',
+          {
+            email: session.user.email,
+            role: session.role,
+            allowedShowsCount: session.allowedShowIds.length,
+          }
+        );
+      }
       res.json({ session });
     } catch (err) {
       next(err);
@@ -244,11 +246,88 @@ export function createApiApp() {
     }
   });
 
+  app.post('/api/auth/logout', async (req, res, next) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        throw new AppError(401, 'UNAUTHORIZED', 'Token de sessão ausente.');
+      }
+      const token = authHeader.slice('Bearer '.length).trim();
+      await logout(token);
+      res.json({ success: true, message: 'Sessão encerrada com sucesso.' });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/auth/forgot-password', async (req, res, next) => {
+    try {
+      const { email } = req.body || {};
+      if (!email || typeof email !== 'string') {
+        return res.json({ success: true });
+      }
+      await requestPasswordReset(email);
+      res.json({ success: true });
+    } catch (err) {
+      res.json({ success: true });
+    }
+  });
+
+  app.post('/api/auth/reset-password/validate', async (req, res, next) => {
+    try {
+      const { token } = req.body || {};
+      if (!token || typeof token !== 'string') {
+        return res.status(400).json({ code: 'VALIDATION_ERROR', message: 'Token obrigatório.' });
+      }
+      const userId = await validatePasswordResetTokenOnly(token);
+      if (!userId) {
+        return res.status(400).json({ code: 'INVALID_TOKEN', message: 'Token inválido, expirado ou já utilizado.' });
+      }
+      res.json({ valid: true });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post('/api/auth/reset-password', async (req, res, next) => {
+    try {
+      const { token, password } = req.body || {};
+      if (!token || typeof token !== 'string' || !password || typeof password !== 'string') {
+        throw new AppError(400, 'VALIDATION_ERROR', 'Token e nova senha são obrigatórios.');
+      }
+      if (password.length < 8) {
+        throw new AppError(400, 'VALIDATION_ERROR', 'A senha deve ter pelo menos 8 caracteres.');
+      }
+      const success = await resetPassword(token, password);
+      if (!success) {
+        return res.status(400).json({ code: 'INVALID_TOKEN', message: 'Token inválido, expirado ou já utilizado.' });
+      }
+      res.json({ success: true, message: 'Senha redefinida com sucesso. Faça login com a nova senha.' });
+    } catch (err) {
+      next(err);
+    }
+  });
+
   // --- WORKSPACE STATE AGGREGATOR (Filtered by Program-Level RBAC) ---
   app.get('/api/state', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
       const session = await buildAuthSession(auth.userId, auth.organizationId);
+      // Sem contexto organizacional (admin global): retorna workspace vazio sem vazar dados de organizações.
+      if (!auth.organizationId) {
+        res.json({
+          session,
+          availableUsers: [],
+          shows: [],
+          productions: [],
+          episodes: [],
+          guests: [],
+          scheduleEvents: [],
+          libraryAssets: [],
+          auditLogs: [],
+        });
+        return;
+      }
       const allowedFilter = session.isFullAccessAdmin ? undefined : session.allowedShowIds;
       const orgUsers = await listOrganizationUsersWithPermissions(auth.organizationId);
 
@@ -272,7 +351,7 @@ export function createApiApp() {
   app.get('/api/billing/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       res.json({
         plans: await listSaaSPlans(),
         subscriptions: await listOrganizationSubscriptions(auth.organizationId),
@@ -287,7 +366,7 @@ export function createApiApp() {
   app.post('/api/billing/subscribe', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const {
         planId,
         showId,
@@ -322,7 +401,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/auto-renew', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const { autoRenew } = req.body || {};
       const updated = await toggleSubscriptionAutoRenew(
         auth.organizationId,
@@ -339,7 +418,7 @@ export function createApiApp() {
   app.post('/api/billing/subscriptions/:id/renew-now', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const { simulateFailure } = req.body || {};
       const result = await processAutomaticRenewalCycle(
         auth.organizationId,
@@ -539,16 +618,71 @@ export function createApiApp() {
   app.get('/api/admin/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requirePlatformAdmin(auth);
+      requirePlatformAdminContext(auth);
+
+      if (auth.organizationId) {
+        // Escopo organizacional: admin global vinculado a uma organização vê apenas essa organização.
+        res.json({
+          users: await listOrganizationUsersWithPermissions(auth.organizationId),
+          shows: await listShows(auth.organizationId),
+          plans: await listSaaSPlans(),
+          subscriptions: await listOrganizationSubscriptions(auth.organizationId),
+          invoices: await listBillingInvoices(auth.organizationId),
+          gatewayEvents: await listPaymentGatewayEvents(auth.organizationId),
+          reportSummary: await buildAdminReportSummary(auth.organizationId),
+          auditLogs: await listAuditLogs(auth.organizationId, 50),
+        });
+        return;
+      }
+
+      // Escopo global (sem organização): agrega entre todas as organizações.
+      const [organizations, allUsers, allShows] = await Promise.all([
+        listAllOrganizations(),
+        listUsersAndOrganizations(),
+        listAllShows(),
+      ]);
+      const orgIds = organizations.map((o) => o.id);
+      const [subscriptions, invoices, gatewayEvents, auditLogs] = await Promise.all([
+        Promise.all(orgIds.map((oid) => listOrganizationSubscriptions(oid))).then((lists) =>
+          lists.flat()
+        ),
+        Promise.all(orgIds.map((oid) => listBillingInvoices(oid))).then((lists) => lists.flat()),
+        Promise.all(orgIds.map((oid) => listPaymentGatewayEvents(oid))).then((lists) => lists.flat()),
+        listAllAuditLogs(50),
+      ]);
+
+      const mrrCents = subscriptions.reduce((a, x) => a + x.amountCents, 0);
+      const activeSubscriptionsCount = subscriptions.filter((x) => x.status === 'active').length;
+      const autoRenewEnabledCount = subscriptions.filter((x) => x.autoRenew).length;
+
       res.json({
-        users: await listOrganizationUsersWithPermissions(auth.organizationId),
-        shows: await listShows(auth.organizationId),
+        users: allUsers.users,
+        organizations,
+        shows: allShows,
         plans: await listSaaSPlans(),
-        subscriptions: await listOrganizationSubscriptions(auth.organizationId),
-        invoices: await listBillingInvoices(auth.organizationId),
-        gatewayEvents: await listPaymentGatewayEvents(auth.organizationId),
-        reportSummary: await buildAdminReportSummary(auth.organizationId),
-        auditLogs: await listAuditLogs(auth.organizationId, 50),
+        subscriptions,
+        invoices,
+        gatewayEvents,
+        reportSummary: {
+          mrrCents,
+          activeSubscriptionsCount,
+          autoRenewEnabledCount,
+          paidInvoicesTotalCents: 0,
+          pendingInvoicesTotalCents: 0,
+          usersCount: allUsers.users.length,
+          showsReport: allShows.map((s) => ({
+            showId: s.id,
+            showTitle: s.title,
+            format: s.format,
+            host: s.host,
+            episodesCount: 0,
+            publishedOrReadyCount: 0,
+            totalPlannedMinutes: 0,
+            scheduledSessionsCount: 0,
+            authorizedUsersCount: allUsers.users.length,
+          })),
+        },
+        auditLogs,
       });
     } catch (err) {
       next(err);
@@ -558,7 +692,7 @@ export function createApiApp() {
   app.post('/api/admin/users', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requirePlatformAdmin(auth);
+      requirePlatformAdminContext(auth);
       const created = await createOrganizationUserWithShowPermissions(
         auth.organizationId,
         req.body || {},
@@ -573,7 +707,7 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requirePlatformAdmin(auth);
+      requirePlatformAdminContext(auth);
       const { permissions } = req.body || {};
       if (!Array.isArray(permissions)) {
         throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
@@ -593,7 +727,7 @@ export function createApiApp() {
   app.put('/api/admin/users/:id/status', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requirePlatformAdmin(auth);
+      requirePlatformAdminContext(auth);
       const updated = await updateOrganizationUserStatusOrRole(
         auth.organizationId,
         req.params.id,
@@ -610,7 +744,7 @@ export function createApiApp() {
   app.get('/api/admin/org/overview', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       res.json({
         users: await listOrganizationUsersWithPermissions(auth.organizationId),
         shows: await listShows(auth.organizationId),
@@ -629,7 +763,7 @@ export function createApiApp() {
   app.post('/api/admin/org/users', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const created = await createOrganizationUserWithShowPermissions(
         auth.organizationId,
         req.body || {},
@@ -644,7 +778,7 @@ export function createApiApp() {
   app.put('/api/admin/org/users/:id/permissions', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const { permissions } = req.body || {};
       if (!Array.isArray(permissions)) {
         throw new AppError(400, 'VALIDATION_ERROR', 'permissions deve ser uma lista.');
@@ -664,7 +798,7 @@ export function createApiApp() {
   app.put('/api/admin/org/users/:id/status', requireAuth, async (req, res, next) => {
     try {
       const auth = await getAuthContext(req);
-      requireOrganizationAdmin(auth);
+      requireOrganizationAdminContext(auth);
       const updated = await updateOrganizationUserStatusOrRole(
         auth.organizationId,
         req.params.id,

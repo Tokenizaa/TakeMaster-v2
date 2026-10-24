@@ -154,8 +154,13 @@ export function App() {
       const isOrgId = orgOrCode && orgOrCode.startsWith('org-');
       const orgId = isOrgId ? orgOrCode : session?.activeOrganization.id;
       const loginCode = isOrgId ? maybeCode : orgOrCode;
-      await api.login(emailOrUserId, orgId, loginCode);
+      const loginSession = await api.login(emailOrUserId, orgId, loginCode);
       await loadWorkspaceState();
+      // Administrador global sem organização ativa vai para o painel global;
+      // demais perfis mantêm o dashboard do programa.
+      setActiveSection(
+        loginSession?.isPlatformAdmin && !loginSession?.activeOrganization ? 'admin' : 'dashboard'
+      );
     } catch (err: any) {
       setLoading(false);
       throw err;
@@ -169,7 +174,7 @@ export function App() {
     try {
       await api.registerAccount({
         ...payload,
-        organizationId: session?.activeOrganization.id || 'org-takemaster-studio',
+        ...(session?.activeOrganization?.id ? { organizationId: session.activeOrganization.id } : {}),
       });
       await loadWorkspaceState();
     } catch (err: any) {
@@ -585,7 +590,9 @@ export function App() {
         {!activeEpisode && session && (
           <div className="bg-zinc-900/60 border-b border-zinc-800/80 px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2.5 text-zinc-300">
-              {session.isFullAccessAdmin ? (
+              {session.isGlobalSession || (session.isPlatformAdmin && !session.isFullAccessAdmin) ? (
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              ) : session.isFullAccessAdmin ? (
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               ) : (
                 <Lock className="w-4 h-4 text-amber-400 shrink-0" />
@@ -595,7 +602,9 @@ export function App() {
               </span>
               <span className="text-zinc-600">·</span>
               <span className="text-zinc-400">
-                {session.isFullAccessAdmin
+                {session.isGlobalSession
+                  ? 'Acesso Global à Plataforma — sem vínculo com organização ou programa.'
+                  : session.isFullAccessAdmin
                   ? `Visão Administrativa Master (${accessibleShows.length} programas liberados)`
                   : `Isolamento por Programa Ativo — Visualizando exclusivamente: ${accessibleShows
                       .map((s) => s.title)

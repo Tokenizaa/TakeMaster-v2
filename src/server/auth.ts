@@ -28,12 +28,13 @@ export interface AuthenticatedContext {
   userId: string;
   userEmail: string;
   userName: string;
-  organizationId: string;
-  organizationName: string;
-  role: OrganizationRole;
+  organizationId?: string;
+  organizationName?: string;
+  role?: OrganizationRole;
   platformRole: PlatformRole;
   isFullAccessAdmin: boolean;
   isPlatformAdmin: boolean;
+  isGlobalSession: boolean;
   allowedShowIds: string[];
   showPermissions: UserShowPermission[];
 }
@@ -59,9 +60,17 @@ function getAdminAuthClient() {
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-function signSessionPayload(payload: { userId: string; organizationId: string }): string {
+export function signSessionPayload(payload: { userId: string; organizationId?: string }): string {
   const now = Math.floor(Date.now() / 1000);
-  const data = Buffer.from(JSON.stringify({ ...payload, iat: now, exp: now + 60 * 60 * 12 })).toString('base64url');
+  const payloadJson: { userId: string; iat: number; exp: number; organizationId?: string } = {
+    userId: payload.userId,
+    iat: now,
+    exp: now + 60 * 60 * 12,
+  };
+  if (payload.organizationId) {
+    payloadJson.organizationId = payload.organizationId;
+  }
+  const data = Buffer.from(JSON.stringify(payloadJson)).toString('base64url');
   const sig = crypto
     .createHmac('sha256', INTERNAL_SESSION_KEY)
     .update(data)
@@ -71,7 +80,7 @@ function signSessionPayload(payload: { userId: string; organizationId: string })
 
 export function verifySessionToken(
   token: string
-): { userId: string; organizationId: string; iat: number; exp: number } | null {
+): { userId: string; organizationId?: string; iat: number; exp: number } | null {
   if (!hasStrongInternalSessionKey || !token || !token.startsWith('tmv2.')) return null;
   const parts = token.split('.');
   if (parts.length !== 3) return null;
@@ -85,7 +94,13 @@ export function verifySessionToken(
   if (!crypto.timingSafeEqual(providedSignatureHash, expectedSignatureHash)) return null;
   try {
     const parsed = JSON.parse(Buffer.from(data, 'base64url').toString('utf-8'));
-    if (typeof parsed.userId === 'string' && typeof parsed.organizationId === 'string' && typeof parsed.exp === 'number' && typeof parsed.iat === 'number' && parsed.exp > Math.floor(Date.now() / 1000)) {
+    if (
+      typeof parsed.userId === 'string' &&
+      typeof parsed.exp === 'number' &&
+      typeof parsed.iat === 'number' &&
+      parsed.exp > Math.floor(Date.now() / 1000) &&
+      (parsed.organizationId === undefined || typeof parsed.organizationId === 'string')
+    ) {
       return parsed;
     }
     return null;
@@ -96,7 +111,7 @@ export function verifySessionToken(
 
 export async function verifySessionTokenWithRevocation(
   token: string
-): Promise<{ userId: string; organizationId: string; iat: number; exp: number } | null> {
+): Promise<{ userId: string; organizationId?: string; iat: number; exp: number } | null> {
   const verified = verifySessionToken(token);
   if (!verified) return null;
   
@@ -135,20 +150,69 @@ export async function buildAuthSession(userId: string, organizationId?: string):
   }
 
   const memberships = await getUserMemberships(user.id);
-  if (memberships.length === 0) {
+  const platformRole = (user.user_metadata?.platformRole as PlatformRole) || 'none';
+  const isPlatformAdmin = platformRole === 'platform_admin';
+
+  // ------------------------------------------------------------------
+  // Sessão global de administrador de plataforma (sem organização)
+  // ------------------------------------------------------------------
+  // Um platform_admin pode autenticar-se sem pertencer a nenhuma organização.
+  // Nesse contexto não há activeOrganization, role organizacional nem
+  // isFullAccessAdmin (o papel de plataforma não confere acesso operacional).
+  if (!organizationId) {
+    if (!isPlatformAdmin) {
+      throw new AppError(
+        403,
+        'FORBIDDEN_CONTEXT',
+        'Usuário não pertence a nenhuma organização ativa.'
+      );
+    }
+
+    const token = signSessionPayload({ userId: user.id });
+
+    const userObj = {
+      id: user.id,
+      email: user.email || '',
+      name: user.user_metadata?.name || user.user_metadata?.full_name || user.email || '',
+      jobTitle: user.user_metadata?.jobTitle,
+      status: user.banned_until ? ('suspended' as const) : ('active' as const),
+      loginCode: undefined,
+      avatarUrl: user.user_metadata?.avatarUrl,
+      role: undefined,
+      platformRole,
+      showPermissions: [],
+      createdAt: user.created_at,
+      updatedAt: user.updated_at || user.created_at,
+    };
+
+    return {
+      token,
+      user: { ...userObj, role: undefined, showPermissions: [] },
+      activeOrganization: undefined,
+      role: undefined,
+      platformRole,
+      memberships,
+      showPermissions: [],
+      allowedShowIds: [],
+      isFullAccessAdmin: false,
+      isPlatformAdmin: true,
+      isGlobalSession: true,
+      activeSubscription: undefined,
+    };
+  }
+
+  // ------------------------------------------------------------------
+  // Sessão organizacional (operacional) — exige vínculo válido com a organização
+  // ------------------------------------------------------------------
+  if (!memberships.some((m) => m.organizationId === organizationId)) {
     throw new AppError(
       403,
       'FORBIDDEN_CONTEXT',
-      'Usuário não pertence a nenhuma organização ativa.'
+      'Usuário não pertence à organização informada.'
     );
   }
 
-  const targetOrgId =
-    organizationId && memberships.some((m) => m.organizationId === organizationId)
-      ? organizationId
-      : organizationId || memberships[0].organizationId;
-
-  const { organization, role } = await verifyUserOrganizationAccess(user.id, targetOrgId);
+  const { organization, role } = await verifyUserOrganizationAccess(user.id, organizationId);
   const { isFullAccessAdmin, allowedShowIds, permissions } = await getEffectiveAllowedShowIds(
     organization.id,
     user.id,
@@ -157,9 +221,6 @@ export async function buildAuthSession(userId: string, organizationId?: string):
 
   const subscriptions = await listOrganizationSubscriptions(organization.id);
   const activeSubscription = subscriptions[0];
-
-  const platformRole = (user.user_metadata?.platformRole as PlatformRole) || 'none';
-  const isPlatformAdmin = platformRole === 'platform_admin';
 
   const userObj = {
     id: user.id,
@@ -193,6 +254,7 @@ export async function buildAuthSession(userId: string, organizationId?: string):
     allowedShowIds,
     isFullAccessAdmin,
     isPlatformAdmin,
+    isGlobalSession: false,
     activeSubscription,
   };
 }
@@ -265,19 +327,24 @@ export async function resolveRequestAuthContext(req: Request): Promise<Authentic
       throw new AppError(401, 'UNAUTHORIZED', 'Token de sessão inválido, expirado ou revogado.');
     }
 
+    // O cabeçalho X-Organization-Id somente é honrado quando o usuário possui vínculo ativo
+    // com aquela organização. Não concede acesso por si só, nem eleva platform_admin a
+    // sessão operacional automática. buildAuthSession rejeita vínculos inválidos com 403.
     const effectiveOrgId = headerOrgId || verified.organizationId;
     const session = await buildAuthSession(verified.userId, effectiveOrgId);
+    const activeOrg = session.activeOrganization;
     return {
       token: session.token,
       userId: session.user.id,
       userEmail: session.user.email,
       userName: session.user.name,
-      organizationId: session.activeOrganization.id,
-      organizationName: session.activeOrganization.name,
+      organizationId: activeOrg?.id,
+      organizationName: activeOrg?.name,
       role: session.role,
       platformRole: session.platformRole,
       isFullAccessAdmin: session.isFullAccessAdmin,
       isPlatformAdmin: session.isPlatformAdmin,
+      isGlobalSession: Boolean(session.isGlobalSession),
       allowedShowIds: session.allowedShowIds,
       showPermissions: session.showPermissions,
     };
@@ -290,6 +357,18 @@ export async function resolveRequestAuthContext(req: Request): Promise<Authentic
 export async function requireAuth(req: Request, _res: Response, next: NextFunction) {
   try {
     const ctx = await resolveRequestAuthContext(req);
+    // Rotas operacionais exigem contexto organizacional. São isentas:
+    // sessão de auth, troca de organização, painel global e estado de workspace.
+    const orgExemptPaths = [
+      '/api/auth/session',
+      '/api/auth/switch-org',
+      '/api/admin/overview',
+      '/api/state',
+    ];
+    if (!ctx.organizationId && !orgExemptPaths.includes(req.path)) {
+      incrementMetric('authFailuresTotal');
+      requireOrganizationContext(ctx);
+    }
     (req as any).auth = ctx;
     next();
   } catch (err) {
@@ -321,6 +400,32 @@ export async function getAuthContext(req: Request): Promise<AuthenticatedContext
     return (req as any).auth as AuthenticatedContext;
   }
   return resolveRequestAuthContext(req);
+}
+
+/**
+ * Verificadores de autorização puros (sobre o contexto resolvido).
+ * Não dependem de banco de dados e podem ser testados isoladamente.
+ */
+
+/* Requer papel de plataforma. Não confere acesso operacional à organização por si só. */
+export function requirePlatformAdminContext(ctx: AuthenticatedContext): void {
+  if (!ctx || !ctx.isPlatformAdmin) {
+    throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Acesso restrito a administradores de plataforma.');
+  }
+}
+
+/* Requer membro ativo da organização com role owner/admin. platform_admin não entra por bypass. */
+export function requireOrganizationAdminContext(ctx: AuthenticatedContext): void {
+  if (!ctx || !['owner', 'admin'].includes(ctx.role ?? ('' as OrganizationRole))) {
+    throw new AppError(403, 'FORBIDDEN_CONTEXT', 'Apenas administradores da organização podem executar esta ação.');
+  }
+}
+
+/* Requer contexto organizacional ativo; sessões globais (platform_admin sem org) são rejeitadas. */
+export function requireOrganizationContext(ctx: AuthenticatedContext): void {
+  if (!ctx || !ctx.organizationId) {
+    throw new AppError(409, 'ORGANIZATION_CONTEXT_REQUIRED', 'Contexto de organização é obrigatório para esta operação.');
+  }
 }
 
 /**
@@ -409,6 +514,7 @@ export async function logout(token: string): Promise<void> {
   // Hash the token for storage
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
 
-  await revokeToken(tokenHash, verified.userId, verified.organizationId, expiresAt);
+  // Sessões globais (sem organização) não possuem organizationId; revogam o token por usuário.
+  await revokeToken(tokenHash, verified.userId, verified.organizationId ?? null, expiresAt);
 }
 
