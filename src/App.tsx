@@ -979,10 +979,11 @@ export function App() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => {
+          const isAuthRoute = ['/login', '/signup'].includes(window.location.pathname) ||
+            new URLSearchParams(window.location.search).has('auth');
+          if (isAuthRoute && !session) return;
           setIsLoginModalOpen(false);
-          if (['/login', '/signup'].includes(window.location.pathname) || new URLSearchParams(window.location.search).has('auth')) {
-            window.history.replaceState({}, '', pathForSection(activeSection));
-          }
+          if (isAuthRoute) window.history.replaceState({}, '', pathForSection(activeSection));
         }}
         session={session}
         availableUsers={availableUsers}
