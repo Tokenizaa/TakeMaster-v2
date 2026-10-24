@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import {
   validateEditorialBaseMatchesProgram,
   mapEditorialBaseToOperationalConfig,
@@ -10,6 +10,7 @@ import {
   buildGroundedEditorialIdentity,
 } from './programKnowledge';
 import { Show, ProgramKnowledgeSummary, ProgramEditorialIdentity, ProgramKnowledgeSource } from '../domain/contracts';
+import { randomUUID } from 'node:crypto';
 
 const NAO_IDENTIFICADO_NA_BASE = 'não identificado na base';
 
@@ -461,8 +462,10 @@ describe('Supabase persistence integration', () => {
   });
 
   describe('Supabase persistence integration', () => {
-    const TEST_ORG_ID = '00000000-0000-0000-0000-000000000002';
-    const TEST_PROGRAM_SLUG = 'test-editorial-integration';
+    const TEST_ORG_ID = randomUUID();
+    const TEST_PROGRAM_ID = randomUUID();
+    const TEST_CATALOG_ID = randomUUID();
+    const TEST_PROGRAM_SLUG = `test-editorial-integration-${randomUUID()}`;
 
     beforeAll(async () => {
       if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -485,7 +488,7 @@ describe('Supabase persistence integration', () => {
       
       // Create test organization
       await db.from('organizations').upsert({
-        id: '00000000-0000-0000-0000-000000000002',
+        id: TEST_ORG_ID,
         name: 'Test Organization Integration',
         slug: 'test-org-integration',
         plan: 'starter',
@@ -495,9 +498,9 @@ describe('Supabase persistence integration', () => {
 
       // Create test program
       await db.from('programs').upsert({
-        id: '00000000-0000-0000-0000-000000000003',
-        legacy_id: 'test-editorial-integration',
-        organization_id: '00000000-0000-0000-0000-000000000002',
+        id: TEST_PROGRAM_ID,
+        legacy_id: TEST_PROGRAM_SLUG,
+        organization_id: TEST_ORG_ID,
         name: 'Test Editorial Integration',
         title: 'Test Editorial Integration',
         description: 'Test program for editorial integration',
@@ -516,8 +519,8 @@ describe('Supabase persistence integration', () => {
 
       // Create catalog program entry
       await db.from('program_catalog').upsert({
-        id: '00000000-0000-0000-0000-000000000003',
-        slug: 'test-editorial-integration',
+        id: TEST_CATALOG_ID,
+        slug: TEST_PROGRAM_SLUG,
         nomeDoPrograma: 'Test Editorial Integration',
         apresentador: 'Test Host',
         descricao: 'Test program for editorial integration',
@@ -542,9 +545,9 @@ describe('Supabase persistence integration', () => {
 
       // Link program to organization
       await db.from('organization_programs').upsert({
-        organization_id: '00000000-0000-0000-0000-000000000002',
-        catalog_program_id: '00000000-0000-0000-0000-000000000003',
-        program_id: '00000000-0000-0000-0000-000000000003',
+        organization_id: TEST_ORG_ID,
+        catalog_program_id: TEST_CATALOG_ID,
+        program_id: TEST_PROGRAM_ID,
         status: 'active',
         starts_at: new Date().toISOString(),
         created_at: new Date().toISOString(),
@@ -555,12 +558,12 @@ describe('Supabase persistence integration', () => {
     async function cleanupTestData() {
       const { db } = await import('./persistence');
       
-      await db.from('organization_programs').delete().eq('organization_id', '00000000-0000-0000-0000-000000000002');
-      await db.from('programs').delete().eq('id', '00000000-0000-0000-0000-000000000003');
-      await db.from('program_catalog').delete().eq('id', '00000000-0000-0000-0000-000000000003');
-      await db.from('organizations').delete().eq('id', '00000000-0000-0000-0000-000000000002');
-      await db.from('seasons').delete().eq('program_id', '00000000-0000-0000-0000-000000000003');
-      await db.from('cameras').delete().eq('program_id', '00000000-0000-0000-0000-000000000003');
+      await db.from('organization_programs').delete().eq('organization_id', TEST_ORG_ID);
+      await db.from('programs').delete().eq('id', TEST_PROGRAM_ID);
+      await db.from('program_catalog').delete().eq('id', TEST_PROGRAM_ID);
+      await db.from('organizations').delete().eq('id', TEST_ORG_ID);
+      await db.from('seasons').delete().eq('program_id', TEST_PROGRAM_ID);
+      await db.from('cameras').delete().eq('program_id', TEST_PROGRAM_ID);
     }
 
     it('integrates editorial base and persists configuration to Supabase', async () => {
@@ -579,8 +582,8 @@ describe('Supabase persistence integration', () => {
       };
 
       const result = await integrateEditorialBaseToSetup(
-        '00000000-0000-0000-0000-000000000002',
-        '00000000-0000-0000-0000-000000000003',
+        TEST_ORG_ID,
+        TEST_PROGRAM_ID,
         mockShow,
         'test-editorial-integration'
       );
@@ -606,7 +609,7 @@ describe('Supabase persistence integration', () => {
 
       // Verify data was persisted to Supabase by reading it back
       const { db } = await import('./persistence');
-      const season = await db.from('seasons').select('*').eq('program_id', '00000000-0000-0000-0000-000000000003').eq('number', 1).maybeSingle();
+      const season = await db.from('seasons').select('*').eq('program_id', TEST_PROGRAM_ID).eq('number', 1).maybeSingle();
       expect(season.data).toBeDefined();
       expect(season.data?.title).toContain('Test Editorial Integration');
     });
@@ -627,8 +630,8 @@ describe('Supabase persistence integration', () => {
       };
 
       const result = await integrateEditorialBaseToSetup(
-        '00000000-0000-0000-0000-000000000002',
-        '00000000-0000-0000-0000-000000000003',
+        TEST_ORG_ID,
+        TEST_PROGRAM_ID,
         mockShow,
         'test-editorial-integration'
       );
