@@ -12,7 +12,6 @@ import {
 import { AppError } from '../domain/validation';
 import { resolveProgramKnowledge } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
-import { authClient } from './auth';
 
 const url = process.env.SUPABASE_URL || '';
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
