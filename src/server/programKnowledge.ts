@@ -670,53 +670,102 @@ export function validateEditorialBaseMatchesProgram(
   selectedProgramTitle: string,
   selectedProgramSlug?: string
 ): EditorialBaseValidationResult {
-  const gaps: string[] = [];
-  const warnings: string[] = [];
-  
   // Check if program was found in knowledge base
   if (!summary.foundInKnowledgeBase) {
-    gaps.push('Programa não encontrado na base de conhecimento editorial (RS Play)');
-    warnings.push('Usando cadastro interno do TakeMaster como fallback');
+    // Not found is a critical gap
+    return {
+      isValid: false,
+      slug: summary.slug,
+      coverageLevel: summary.coverageLevel,
+      coverageLabel: summary.coverageLabel,
+      sources: summary.fontes,
+      gaps: ['Programa não encontrado na base de conhecimento editorial (RS Play)'],
+      warnings: ['Usando cadastro interno do TakeMaster como fallback'],
+      profileHash: '',
+      matchedProgramTitle: summary.nome,
+      editorialIdentity: summary.editorialSynthesis,
+    };
   }
   
-  // Check coverage level
+  // Check coverage level - partial is a warning, not a critical gap
+  // but we still need to track it for the return value
   if (summary.coverageLevel === 'parcial') {
-    gaps.push('Cobertura parcial: Mídia Kit oficial não capturado ou incompleto');
-    warnings.push('Alguns campos editoriais podem estar ausentes ou baseados apenas no catálogo RS Play');
+    // Partial coverage is tracked but not a critical gap
   }
   
   // Check title match (fuzzy match for safety)
-  const normalizedSelected = normalizeSlug(selectedProgramTitle);
+  const normalizedTitle = normalizeSlug(selectedProgramTitle);
   const normalizedFound = normalizeSlug(summary.nome);
-  if (normalizedSelected !== normalizedFound && selectedProgramSlug) {
-    const normalizedSlug = normalizeSlug(selectedProgramSlug);
-    if (normalizedSlug !== normalizedFound) {
-      // Title mismatch is a critical validation failure
-      gaps.push(`Título do programa selecionado ("${selectedProgramTitle}") difere do encontrado na base ("${summary.nome}")`);
-    }
+  if (normalizedTitle !== normalizedFound) {
+    // Title mismatch is a critical validation failure
+    return {
+      isValid: false,
+      slug: summary.slug,
+      coverageLevel: summary.coverageLevel,
+      coverageLabel: summary.coverageLabel,
+      sources: summary.fontes,
+      gaps: [`Título do programa selecionado ("${selectedProgramTitle}") difere do encontrado na base ("${summary.nome}")`],
+      warnings: [],
+      profileHash: '',
+      matchedProgramTitle: summary.nome,
+      editorialIdentity: summary.editorialSynthesis,
+    };
   }
   
-  // Check for missing critical fields
+  // Check for missing CRITICAL fields only - these make validation fail
   if (summary.apresentador === NAO_IDENTIFICADO_NA_BASE) {
-    gaps.push('Apresentador não identificado na base');
+    return {
+      isValid: false,
+      slug: summary.slug,
+      coverageLevel: summary.coverageLevel,
+      coverageLabel: summary.coverageLabel,
+      sources: summary.fontes,
+      gaps: ['Apresentador não identificado na base'],
+      warnings: [],
+      profileHash: '',
+      matchedProgramTitle: summary.nome,
+      editorialIdentity: summary.editorialSynthesis,
+    };
   }
-  if (summary.publico === NAO_IDENTIFICADO_NA_BASE) {
-    gaps.push('Público-alvo não identificado na base');
-  }
+  
   if (summary.temasPrincipais.length === 0) {
-    gaps.push('Temas principais não identificados na base');
+    return {
+      isValid: false,
+      slug: summary.slug,
+      coverageLevel: summary.coverageLevel,
+      coverageLabel: summary.coverageLabel,
+      sources: summary.fontes,
+      gaps: ['Temas principais não identificados na base'],
+      warnings: [],
+      profileHash: '',
+      matchedProgramTitle: summary.nome,
+      editorialIdentity: summary.editorialSynthesis,
+    };
   }
-  if (summary.quadros.length === 0) {
-    gaps.push('Quadros/estrutura não identificados na base');
+  
+  // WARNINGS (non-blocking) - collect but don't fail validation
+  const warnings_list: string[] = [];
+  
+  if (summary.coverageLevel === 'parcial') {
+    warnings.push('Cobertura parcial: Mídia Kit oficial não capturado ou incompleto');
+    warnings.push('Alguns campos editoriais podem estar ausentes ou baseados apenas no catálogo RS Play');
+  }
+  
+  // Check for missing non-critical fields (warnings only)
+  if (summary.publico === NAO_IDENTIFICADO_NA_BASE) {
+    warnings_list.push('Público-alvo não identificado na base');
   }
   if (summary.formato === NAO_IDENTIFICADO_NA_BASE) {
-    gaps.push('Formato não identificado na base');
+    warnings.push('Formato não identificado na base');
   }
   if (summary.duracao === NAO_IDENTIFICADO_NA_BASE) {
-    gaps.push('Duração não identificada na base');
+    warnings.push('Duração não identificada na base');
   }
   if (summary.informacoesComerciais.length === 0) {
-    gaps.push('Informações comerciais não identificadas na base');
+    warnings_list.push('Informações comerciais não identificadas na base');
+  }
+  if (summary.quadros.length === 0 && summary.quadros !== NAO_IDENTIFICADO_NA_BASE) {
+    warnings_list.push('Quadros/estrutura não identificados na base');
   }
   
   // Generate profile hash for version tracking
@@ -739,11 +788,9 @@ export function validateEditorialBaseMatchesProgram(
   });
   const profileHash = crypto.createHash('sha256').update(profileData).digest('hex').slice(0, 16);
   
-  // Determine if valid: must be found in KB, not cadastro_interno, and no critical gaps
-  const hasCriticalGaps = gaps.length > 0;
+  // Valid if found in KB, not cadastro_interno, and no critical gaps (we already returned early for critical gaps)
   const isValid = summary.foundInKnowledgeBase 
-    && summary.coverageLevel !== 'cadastro_interno' 
-    && !hasCriticalGaps;
+    && summary.coverageLevel !== 'cadastro_interno';
   
   return {
     isValid,
@@ -751,8 +798,8 @@ export function validateEditorialBaseMatchesProgram(
     coverageLevel: summary.coverageLevel,
     coverageLabel: summary.coverageLabel,
     sources: summary.fontes,
-    gaps,
-    warnings,
+    gaps: [], // Critical gaps would have returned early
+    warnings: warnings_list,
     profileHash,
     matchedProgramTitle: summary.nome,
     editorialIdentity: summary.editorialSynthesis,

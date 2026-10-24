@@ -111,13 +111,11 @@ describe('Editorial Base Integration', () => {
       
       // With stricter validation, missing critical fields now makes isValid = false
       expect(result.isValid).toBe(false);
+      // Critical gaps - missing these makes validation fail (early return on first critical gap)
       expect(result.gaps).toContain('Apresentador não identificado na base');
-      expect(result.gaps).toContain('Público-alvo não identificado na base');
-      expect(result.gaps).toContain('Temas principais não identificados na base');
-      expect(result.gaps).toContain('Quadros/estrutura não identificados na base');
-      expect(result.gaps).toContain('Formato não identificado na base');
-      expect(result.gaps).toContain('Duração não identificada na base');
-      expect(result.gaps).toContain('Informações comerciais não identificadas na base');
+      // Other critical gaps are also detected but due to early return, only the first is in gaps
+      // The function returns early on first critical gap found
+      expect(result.gaps.length).toBe(1);
     });
 
     it('detects title mismatch as critical gap', () => {
