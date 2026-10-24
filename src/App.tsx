@@ -146,12 +146,25 @@ export function App() {
       setSaveErrorMessage(null);
     } catch (err: any) {
       console.error('Failed to load workspace state:', err);
+      setIsLoginModalOpen(true);
       setSaveStatus('error');
       setSaveErrorMessage(err?.message || 'Erro ao carregar workspace');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const syncSectionFromLocation = () => {
+      const path = window.location.pathname;
+      const section = path === '/app' ? 'dashboard' : path.startsWith('/app/') ? path.slice('/app/'.length).split('/')[0] : 'dashboard';
+      const allowed: NavSection[] = ['dashboard', 'shows', 'episodes', 'guests', 'schedule', 'library', 'studio', 'billing', 'admin'];
+      setActiveSection(allowed.includes(section as NavSection) ? section as NavSection : 'dashboard');
+      if (['/login', '/signup'].includes(path)) setIsLoginModalOpen(true);
+    };
+    window.addEventListener('popstate', syncSectionFromLocation);
+    return () => window.removeEventListener('popstate', syncSectionFromLocation);
+  }, []);
 
   useEffect(() => {
     loadWorkspaceState();
@@ -555,7 +568,7 @@ export function App() {
       <Sidebar
         activeSection={activeSection}
         onSelectSection={(sec) => {
-          setActiveSection(sec);
+          navigateToSection(sec);
           setActiveEpisodeId(null);
         }}
         onNewEpisode={() => setIsNewEpisodeOpen(true)}
@@ -630,7 +643,7 @@ export function App() {
               <span className="text-zinc-700">·</span>
               <button
                 type="button"
-                onClick={() => setActiveSection('billing')}
+                onClick={() => navigateToSection('billing')}
                 className="text-zinc-300 hover:text-zinc-100 font-medium flex items-center gap-1 cursor-pointer"
               >
                 <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
@@ -639,7 +652,7 @@ export function App() {
               <span className="text-zinc-700">·</span>
               <button
                 type="button"
-                onClick={() => setActiveSection('admin')}
+                onClick={() => navigateToSection('admin')}
                 className="text-zinc-300 hover:text-zinc-100 font-medium flex items-center gap-1 cursor-pointer"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
@@ -948,7 +961,7 @@ export function App() {
                 session={session}
                 onImpersonateUser={async (email, loginCode) => {
                   await handleLoginProfile(email, loginCode);
-                  setActiveSection('dashboard');
+                  navigateToSection('dashboard');
                 }}
                 onWorkspaceMutated={loadWorkspaceState}
               />
