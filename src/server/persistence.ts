@@ -811,7 +811,7 @@ export async function populateOrganizationWorkspace(
     // Step 2: Editorial base integration
     await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
-      steps: { ...setup.steps, editorial_integration: { status: 'completed', completedAt: now() } },
+      steps: { ...setup.steps, editorial_integration: { status: 'in_progress', startedAt: now() } },
     });
     
     // Integrate editorial base if not skipped
@@ -826,6 +826,12 @@ export async function populateOrganizationWorkspace(
       editorialConfig = integrationResult.config;
       validation = integrationResult.validation;
       hasEditorialBase = integrationResult.success;
+      
+      // Mark editorial integration as completed after successful integration
+      await upsertSetupState(orgId, resolvedProgramId, {
+        status: 'setup_running',
+        steps: { ...setup.steps, editorial_integration: { status: 'completed', completedAt: now() } },
+      });
       
       // If editorial base was selected but is invalid, mark as incomplete setup
       if (!integrationResult.success && validation && validation.coverageLevel !== 'cadastro_interno') {

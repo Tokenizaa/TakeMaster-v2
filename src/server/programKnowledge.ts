@@ -24,12 +24,25 @@ export function normalizeSlug(input: string): string {
 }
 
 function getKnowledgeBaseDirs(): string[] {
+  // Use environment variable for production deployment, fallback to cwd for development
+  const explicitPath = process.env.KNOWLEDGE_BASE_PATH;
   const cwd = process.cwd();
-  const candidates = [
+  
+  const candidates: string[] = [];
+  
+  // Explicit path from environment takes priority (production deployment)
+  if (explicitPath) {
+    candidates.push(explicitPath);
+    candidates.push(path.resolve(explicitPath, 'programs'));
+  }
+  
+  // Development fallbacks
+  candidates.push(
     path.resolve(cwd, 'rsplay-knowledge-base'),
     path.resolve(cwd, 'rsplay-knowledge-base', 'programs'),
-    path.resolve(cwd, 'programs'),
-  ];
+    path.resolve(cwd, 'programs')
+  );
+  
   return candidates.filter((dir) => {
     try {
       return fs.existsSync(dir) && fs.statSync(dir).isDirectory();
@@ -650,6 +663,7 @@ export interface EditorialOperationalConfig {
 /**
  * Validates that the editorial base corresponds to the selected program
  * and returns validation result with gaps and warnings.
+ * Returns isValid: false if there are critical mismatches (e.g., title mismatch).
  */
 export function validateEditorialBaseMatchesProgram(
   summary: ProgramKnowledgeSummary,
@@ -677,7 +691,8 @@ export function validateEditorialBaseMatchesProgram(
   if (normalizedSelected !== normalizedFound && selectedProgramSlug) {
     const normalizedSlug = normalizeSlug(selectedProgramSlug);
     if (normalizedSlug !== normalizedFound) {
-      warnings.push(`Título do programa selecionado ("${selectedProgramTitle}") difere do encontrado na base ("${summary.nome}")`);
+      // Title mismatch is a critical validation failure
+      gaps.push(`Título do programa selecionado ("${selectedProgramTitle}") difere do encontrado na base ("${summary.nome}")`);
     }
   }
   
@@ -724,8 +739,14 @@ export function validateEditorialBaseMatchesProgram(
   });
   const profileHash = crypto.createHash('sha256').update(profileData).digest('hex').slice(0, 16);
   
+  // Determine if valid: must be found in KB, not cadastro_interno, and no critical gaps
+  const hasCriticalGaps = gaps.length > 0;
+  const isValid = summary.foundInKnowledgeBase 
+    && summary.coverageLevel !== 'cadastro_interno' 
+    && !hasCriticalGaps;
+  
   return {
-    isValid: summary.foundInKnowledgeBase && summary.coverageLevel !== 'cadastro_interno',
+    isValid,
     slug: summary.slug,
     coverageLevel: summary.coverageLevel,
     coverageLabel: summary.coverageLabel,
