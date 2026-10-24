@@ -827,14 +827,19 @@ export async function populateOrganizationWorkspace(
       validation = integrationResult.validation;
       hasEditorialBase = integrationResult.success;
       
-      // Mark editorial integration as completed after successful integration
-      await upsertSetupState(orgId, resolvedProgramId, {
-        status: 'setup_running',
-        steps: { ...setup.steps, editorial_integration: { status: 'completed', completedAt: now() } },
-      });
-      
-      // If editorial base was selected but is invalid, mark as incomplete setup
-      if (!integrationResult.success && validation && validation.coverageLevel !== 'cadastro_interno') {
+      // Only mark the step completed when integration actually succeeded.
+      // Authorial programs without an editorial base are explicitly skipped.
+      if (integrationResult.success) {
+        await upsertSetupState(orgId, resolvedProgramId, {
+          status: 'setup_running',
+          steps: { ...setup.steps, editorial_integration: { status: 'completed', completedAt: now() } },
+        });
+      } else if (validation?.coverageLevel === 'cadastro_interno') {
+        await upsertSetupState(orgId, resolvedProgramId, {
+          status: 'setup_running',
+          steps: { ...setup.steps, editorial_integration: { status: 'skipped', completedAt: now(), error: integrationResult.error || 'Programa autoral sem base editorial.' } },
+        });
+      } else {
         await upsertSetupState(orgId, resolvedProgramId, {
           status: 'setup_failed',
           error: `Base editorial selecionada inválida ou incompatível: ${integrationResult.error}`,
