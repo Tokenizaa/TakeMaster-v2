@@ -54,7 +54,22 @@ export function App() {
   const [libraryAssets, setLibraryAssets] = useState<LibraryAsset[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [activeSection, setActiveSection] = useState<NavSection>('dashboard');
+  const sectionFromPath = (path: string): NavSection => {
+    const section = path === '/app' ? 'dashboard' : path.startsWith('/app/') ? path.slice('/app/'.length).split('/')[0] : 'dashboard';
+    const allowed: NavSection[] = ['dashboard', 'shows', 'episodes', 'guests', 'schedule', 'library', 'studio', 'billing', 'admin'];
+    return allowed.includes(section as NavSection) ? (section as NavSection) : 'dashboard';
+  };
+  const pathForSection = (section: NavSection) => section === 'dashboard' ? '/app' : `/app/${section}`;
+  const [activeSection, setActiveSection] = useState<NavSection>(() =>
+    typeof window === 'undefined' ? 'dashboard' : sectionFromPath(window.location.pathname)
+  );
+  const navigateToSection = (section: NavSection, replace = false) => {
+    setActiveSection(section);
+    if (typeof window !== 'undefined') {
+      const nextPath = pathForSection(section);
+      if (window.location.pathname !== nextPath) window.history[replace ? 'replaceState' : 'pushState']({}, '', nextPath);
+    }
+  };
   const [selectedShowId, setSelectedShowId] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -64,7 +79,9 @@ export function App() {
   const [isNewEpisodeOpen, setIsNewEpisodeOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return new URLSearchParams(window.location.search).has('resetToken');
+    const params = new URLSearchParams(window.location.search);
+    return ['/login', '/signup'].includes(window.location.pathname) ||
+      params.has('resetToken') || params.has('auth');
   });
   const [exportEpisode, setExportEpisode] = useState<Episode | null>(null);
   const [studioEpisodeId, setStudioEpisodeId] = useState<string | null>(null);
@@ -120,6 +137,7 @@ export function App() {
     try {
       const state = await api.getState();
       setSession(state.session);
+      if (!state.session) setIsLoginModalOpen(true);
       setAvailableUsers(state.availableUsers || []);
       setShows(state.shows);
       setProductions(state.productions || []);
@@ -131,12 +149,25 @@ export function App() {
       setSaveErrorMessage(null);
     } catch (err: any) {
       console.error('Failed to load workspace state:', err);
+      setIsLoginModalOpen(true);
       setSaveStatus('error');
       setSaveErrorMessage(err?.message || 'Erro ao carregar workspace');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const syncSectionFromLocation = () => {
+      const path = window.location.pathname;
+      const section = path === '/app' ? 'dashboard' : path.startsWith('/app/') ? path.slice('/app/'.length).split('/')[0] : 'dashboard';
+      const allowed: NavSection[] = ['dashboard', 'shows', 'episodes', 'guests', 'schedule', 'library', 'studio', 'billing', 'admin'];
+      setActiveSection(allowed.includes(section as NavSection) ? section as NavSection : 'dashboard');
+      if (['/login', '/signup'].includes(path)) setIsLoginModalOpen(true);
+    };
+    window.addEventListener('popstate', syncSectionFromLocation);
+    return () => window.removeEventListener('popstate', syncSectionFromLocation);
+  }, []);
 
   useEffect(() => {
     loadWorkspaceState();
@@ -223,6 +254,8 @@ export function App() {
     setLibraryAssets([]);
     setActiveEpisodeId(null);
     setActiveSection('dashboard');
+    window.history.replaceState({}, '', '/login');
+    setIsLoginModalOpen(true);
     setSelectedShowId('ALL');
     setSaveStatus('saved');
     setSaveErrorMessage(
@@ -540,7 +573,7 @@ export function App() {
       <Sidebar
         activeSection={activeSection}
         onSelectSection={(sec) => {
-          setActiveSection(sec);
+          navigateToSection(sec);
           setActiveEpisodeId(null);
         }}
         onNewEpisode={() => setIsNewEpisodeOpen(true)}
@@ -577,7 +610,7 @@ export function App() {
           onOpenLoginModal={() => setIsLoginModalOpen(true)}
           onOpenBilling={() => {
             setActiveEpisodeId(null);
-            setActiveSection('billing');
+            navigateToSection('billing');
           }}
         />
 
@@ -615,7 +648,7 @@ export function App() {
               <span className="text-zinc-700">·</span>
               <button
                 type="button"
-                onClick={() => setActiveSection('billing')}
+                onClick={() => navigateToSection('billing')}
                 className="text-zinc-300 hover:text-zinc-100 font-medium flex items-center gap-1 cursor-pointer"
               >
                 <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
@@ -624,7 +657,7 @@ export function App() {
               <span className="text-zinc-700">·</span>
               <button
                 type="button"
-                onClick={() => setActiveSection('admin')}
+                onClick={() => navigateToSection('admin')}
                 className="text-zinc-300 hover:text-zinc-100 font-medium flex items-center gap-1 cursor-pointer"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
@@ -788,7 +821,7 @@ export function App() {
                   onOpenEpisode={(id) => openEpisode(id)}
                   onNewEpisode={() => setIsNewEpisodeOpen(true)}
                   onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
-                  onNavigateSection={setActiveSection}
+                  onNavigateSection={navigateToSection}
                 />
               </ShowPermissionGuard>
             )}
@@ -814,7 +847,7 @@ export function App() {
                   onDeleteProduction={handleDeleteProduction}
                   onSelectShowFilter={(id) => {
                     setSelectedShowId(id);
-                    setActiveSection('episodes');
+                    navigateToSection('episodes');
                   }}
                   onUsePitchInProduction={handleUsePitchInProduction}
                   canEditShow={(id) => permissions.canEditEditorial(id)}
@@ -933,7 +966,7 @@ export function App() {
                 session={session}
                 onImpersonateUser={async (email, loginCode) => {
                   await handleLoginProfile(email, loginCode);
-                  setActiveSection('dashboard');
+                  navigateToSection('dashboard');
                 }}
                 onWorkspaceMutated={loadWorkspaceState}
               />
@@ -944,8 +977,15 @@ export function App() {
 
       {/* Modals & Drawers */}
       <LoginModal
+        standalone={['/login', '/signup'].includes(window.location.pathname)}
         isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
+        onClose={() => {
+          const isAuthRoute = ['/login', '/signup'].includes(window.location.pathname) ||
+            new URLSearchParams(window.location.search).has('auth');
+          if (isAuthRoute && !session) return;
+          setIsLoginModalOpen(false);
+          if (isAuthRoute) window.history.replaceState({}, '', pathForSection(activeSection));
+        }}
         session={session}
         availableUsers={availableUsers}
         allShows={accessibleShows}

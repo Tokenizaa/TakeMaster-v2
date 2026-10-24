@@ -27,6 +27,7 @@ import {
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  standalone?: boolean;
   session?: AuthSession | null;
   currentSession?: AuthSession | null;
   availableUsers: User[];
@@ -49,6 +50,7 @@ const ROLE_LABELS: Record<string, string> = {
 export const LoginModal: React.FC<LoginModalProps> = ({
   isOpen,
   onClose,
+  standalone = false,
   session,
   currentSession: currentSessionProp,
   availableUsers,
@@ -56,7 +58,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onRegister,
 }) => {
   const currentSession = session ?? currentSessionProp ?? null;
-  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>(() =>
+    typeof window !== 'undefined' && window.location.pathname === '/signup' ? 'register' : 'login'
+  );
   const [emailInput, setEmailInput] = useState('');
   const [codeInput, setCodeInput] = useState('');
   const [selectedOrgId] = useState(
@@ -194,8 +198,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto ${standalone ? 'bg-zinc-950 p-4 sm:p-8' : 'bg-black/80 backdrop-blur-sm p-4'}`}>
+      {standalone && <a href="/" className="fixed left-5 top-5 z-[60] text-sm font-medium text-zinc-300 hover:text-white">← Voltar ao início</a>}
+      <div className={`bg-zinc-950 border border-zinc-800 ${standalone ? 'rounded-xl max-w-2xl' : 'rounded-2xl max-w-3xl'} w-full overflow-hidden shadow-2xl`}>
         {/* Header */}
         <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
           <div className="flex items-center gap-3">
