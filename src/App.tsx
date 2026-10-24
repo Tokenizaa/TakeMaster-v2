@@ -253,7 +253,9 @@ export function App() {
     setScheduleEvents([]);
     setLibraryAssets([]);
     setActiveEpisodeId(null);
-    navigateToSection('dashboard');
+    setActiveSection('dashboard');
+    window.history.replaceState({}, '', '/login');
+    setIsLoginModalOpen(true);
     setSelectedShowId('ALL');
     setSaveStatus('saved');
     setSaveErrorMessage(
