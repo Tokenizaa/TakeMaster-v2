@@ -381,7 +381,6 @@ describe('Editorial Base Integration', () => {
       expect(Array.isArray(programs)).toBe(true);
     });
   });
-});
 
 describe('Supabase persistence integration', () => {
     it('integrates editorial base and persists configuration to Supabase', async () => {
@@ -461,7 +460,188 @@ describe('Supabase persistence integration', () => {
     });
   });
 
-  describe('Production availability validation', () => {
+  describe('Supabase persistence integration', () => {
+    const TEST_ORG_ID = '00000000-0000-0000-0000-000000000002';
+    const TEST_PROGRAM_SLUG = 'test-editorial-integration';
+
+    beforeAll(async () => {
+      if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.log('Skipping Supabase tests - credentials not configured');
+        return;
+      }
+      // Create test organization and program
+      await createTestOrgAndProgram();
+    });
+
+    afterAll(async () => {
+      if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        return;
+      }
+      await cleanupTestData();
+    });
+
+    async function createTestOrgAndProgram() {
+      const { db } = await import('./persistence');
+      
+      // Create test organization
+      await db.from('organizations').upsert({
+        id: '00000000-0000-0000-0000-000000000002',
+        name: 'Test Organization Integration',
+        slug: 'test-org-integration',
+        plan: 'starter',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'id' });
+
+      // Create test program
+      await db.from('programs').upsert({
+        id: '00000000-0000-0000-0000-000000000003',
+        legacy_id: 'test-editorial-integration',
+        organization_id: '00000000-0000-0000-0000-000000000002',
+        name: 'Test Editorial Integration',
+        title: 'Test Editorial Integration',
+        description: 'Test program for editorial integration',
+        host: 'Test Host',
+        format: 'Entrevista',
+        default_duration_min: 45,
+        editorial_style: 'Test editorial style',
+        scenario: 'Test scenario',
+        standard_structure: ['Abertura', 'Bloco 1', 'Encerramento'],
+        default_opening: 'Bem-vindos ao {program_title}. Hoje recebemos {guest_name} para falar sobre {topic}.',
+        default_closing: 'Obrigado por assistir. Não esqueça de se inscrever e ativar as notificações.',
+        catalog_status: 'active',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'id' });
+
+      // Create catalog program entry
+      await db.from('program_catalog').upsert({
+        id: '00000000-0000-0000-0000-000000000003',
+        slug: 'test-editorial-integration',
+        nomeDoPrograma: 'Test Editorial Integration',
+        apresentador: 'Test Host',
+        descricao: 'Test program for editorial integration',
+        proposta: 'Test proposal',
+        conceito: 'Test concept',
+        publico: 'Test audience',
+        temasPrincipais: ['Teste'],
+        quadros: ['Abertura', 'Bloco 1', 'Encerramento'],
+        formato: 'Entrevista',
+        duracao: '45 minutos',
+        horario: '20:00',
+        canalPlataforma: 'Test Channel',
+        caracteristicasEditoriais: ['Test'],
+        informacoesComerciais: [],
+        redesSociais: [],
+        imagensCount: 0,
+        secoesExtraidasCount: 0,
+        fontes: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }, { onConflict: 'id' });
+
+      // Link program to organization
+      await db.from('organization_programs').upsert({
+        organization_id: '00000000-0000-0000-0000-000000000002',
+        catalog_program_id: '00000000-0000-0000-0000-000000000003',
+        program_id: '00000000-0000-0000-0000-000000000003',
+        status: 'active',
+        starts_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'organization_id,catalog_program_id' });
+    }
+
+    async function cleanupTestData() {
+      const { db } = await import('./persistence');
+      
+      await db.from('organization_programs').delete().eq('organization_id', '00000000-0000-0000-0000-000000000002');
+      await db.from('programs').delete().eq('id', '00000000-0000-0000-0000-000000000003');
+      await db.from('program_catalog').delete().eq('id', '00000000-0000-0000-0000-000000000003');
+      await db.from('organizations').delete().eq('id', '00000000-0000-0000-0000-000000000002');
+      await db.from('seasons').delete().eq('program_id', '00000000-0000-0000-0000-000000000003');
+      await db.from('cameras').delete().eq('program_id', '00000000-0000-0000-0000-000000000003');
+    }
+
+    it('integrates editorial base and persists configuration to Supabase', async () => {
+      if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.log('Skipping Supabase test - credentials not configured');
+        return;
+      }
+
+      const mockShow = {
+        id: 'show-test-editorial',
+        title: 'Test Editorial Integration',
+        description: 'Test program for editorial integration',
+        host: 'Test Host',
+        format: 'Entrevista',
+        defaultDurationMin: 45,
+      };
+
+      const result = await integrateEditorialBaseToSetup(
+        '00000000-0000-0000-0000-000000000002',
+        '00000000-0000-0000-0000-000000000003',
+        mockShow,
+        'test-editorial-integration'
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.validation.isValid).toBe(true);
+      expect(result.validation.coverageLevel).toBe('completa');
+      expect(result.config).toBeDefined();
+      expect(result.config.editorialIdentity).toBeDefined();
+      expect(result.config.editorialIdentity.essencia).toBeDefined();
+      expect(result.config.editorialIdentity.publico).toBeDefined();
+      expect(result.config.editorialIdentity.temas).toBeDefined();
+      expect(result.config.editorialIdentity.formatos).toBeDefined();
+      expect(result.config.editorialIdentity.forcas).toBeDefined();
+      expect(result.config.editorialIdentity.diferenciais).toBeDefined();
+      expect(result.config.setupStructure).toBeDefined();
+      expect(result.config.setupStructure.season).toBeDefined();
+      expect(result.config.setupStructure.cameras).toBeDefined();
+      expect(result.config.setupStructure.editorialDefaults).toBeDefined();
+      expect(result.validation.profileHash).toBeDefined();
+      expect(result.validation.gaps.length).toBe(0);
+      expect(result.validation.coverageLevel).toBe('completa');
+
+      // Verify data was persisted to Supabase by reading it back
+      const { db } = await import('./persistence');
+      const season = await db.from('seasons').select('*').eq('program_id', '00000000-0000-0000-0000-000000000003').eq('number', 1).maybeSingle();
+      expect(season.data).toBeDefined();
+      expect(season.data?.title).toContain('Test Editorial Integration');
+    });
+
+    it('persists editorial configuration with proper org/program scope', async () => {
+      if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.log('Skipping Supabase test - credentials not configured');
+        return;
+      }
+
+      const mockShow = {
+        id: 'show-test-editorial',
+        title: 'Test Editorial Integration',
+        description: 'Test program for editorial integration',
+        host: 'Test Host',
+        format: 'Entrevista',
+        defaultDurationMin: 45,
+      };
+
+      const result = await integrateEditorialBaseToSetup(
+        '00000000-0000-0000-0000-000000000002',
+        '00000000-0000-0000-0000-000000000003',
+        mockShow,
+        'test-editorial-integration'
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.validation.isValid).toBe(true);
+      
+      // Verify the configuration is tied to the program slug
+      expect(result.config.setupStructure.season.title).toContain('Test Editorial Integration');
+      expect(result.config.setupStructure.cameras.length).toBeGreaterThan(0);
+      expect(result.config.editorialIdentity.apresentador).toBe('Test Host');
+    });
+  });
     it('knowledge base files are included in build', async () => {
       // Use dynamic import to get real fs module
       const realFs = await import('fs');

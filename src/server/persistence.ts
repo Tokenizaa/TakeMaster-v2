@@ -1242,4 +1242,4 @@ async function sendPasswordResetEmail(email: string, rawToken: string): Promise<
   logStructured('INFO', 'password_reset_email_sent', { provider: 'resend' });
 }
 
-export { sendPasswordResetEmail };
+export { sendPasswordResetEmail, db };
