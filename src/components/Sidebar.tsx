@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   guestsCount,
   scheduleCount = 0,
   libraryCount = 0,
-  organizationName = 'RSPlay TV — Rede Broadcast',
+  organizationName = 'RSPlay TV — Plataforma',
   session,
   onOpenLoginModal,
   onLogout,
@@ -122,7 +122,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     );
   };
 
-  const isRestrictedProfile = session && !session.isFullAccessAdmin;
+  const isGlobalAdmin = Boolean(session && session.isPlatformAdmin && !session.activeOrganization);
+  const isRestrictedProfile = Boolean(session && !session.isPlatformAdmin && !session.isFullAccessAdmin);
 
   return (
     <aside className="w-64 bg-zinc-950 border-r border-zinc-800/80 flex flex-col h-screen shrink-0 select-none">
@@ -183,12 +184,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="flex items-center gap-1.5 text-amber-400 text-xs font-semibold truncate">
               <Lock className="w-3.5 h-3.5 shrink-0" />
               <span className="truncate">
-                {isRestrictedProfile ? 'Login Isolado por Programa' : 'Acesso Master Admin'}
+                {isGlobalAdmin
+                  ? 'Acesso Global (Plataforma)'
+                  : isRestrictedProfile
+                  ? 'Login Isolado por Programa'
+                  : 'Acesso Master Admin'}
               </span>
             </div>
           </div>
           <p className="text-[11px] text-zinc-400 leading-relaxed">
-            {isRestrictedProfile
+            {isGlobalAdmin
+              ? 'Painel global da plataforma — sem vínculo com organização ou programa.'
+              : isRestrictedProfile
               ? `Visualizando apenas ${showsCount} programa(s) liberado(s) para ${session?.user.name.split(' ')[0]}.`
               : `Todos os ${showsCount} programas e relatórios liberados.`}
           </p>

@@ -47,14 +47,15 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenLoginModal,
   onOpenBilling,
 }) => {
-  const isRestrictedProfile = session && !session.isFullAccessAdmin;
+  const isGlobalAdmin = Boolean(session && session.isPlatformAdmin && !session.activeOrganization);
+  const isRestrictedProfile = Boolean(session && !session.isPlatformAdmin && !session.isFullAccessAdmin);
 
   return (
     <header className="h-16 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80 px-6 flex items-center justify-between shrink-0 z-20 gap-4">
       {/* Left: Context Hierarchy (Organization -> Show) & Search */}
       <div className="flex items-center gap-3 flex-1 max-w-3xl min-w-0">
-        {/* Multi-Tenant Organization Selector */}
-        {session && session.memberships && session.memberships.length > 0 && (
+        {/* Multi-Tenant Organization Selector (somente sessão organizacional ativa)} */}
+        {session && session.activeOrganization && session.memberships && session.memberships.length > 0 && (
           <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5 shrink-0">
             <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <select

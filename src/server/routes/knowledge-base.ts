@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { resolveRequestAuthContext } from '../auth';
+import { resolveRequestAuthContext, AuthenticatedContext } from '../auth';
 import { generateProgramEditorialIdentity, generateProgramPitchSuggestions } from '../ai';
 import { getShowById } from '../persistence';
 import { assertOrganizationMember, assertProgramAccess } from '../authorization';
@@ -7,7 +7,10 @@ import { AppError } from '../../domain/validation';
 
 const router = Router();
 
-async function getShowForAI(ctx: {userId: string; organizationId: string}, showId: string) {
+async function getShowForAI(ctx: AuthenticatedContext, showId: string) {
+  if (!ctx.organizationId) {
+    throw new AppError(409, 'ORGANIZATION_CONTEXT_REQUIRED', 'Contexto de organização é obrigatório.');
+  }
   await assertOrganizationMember(ctx.userId, ctx.organizationId);
   await assertProgramAccess(ctx.userId, showId);
   const show = await getShowById(ctx.organizationId, showId);
