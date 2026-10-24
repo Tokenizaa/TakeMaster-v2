@@ -62,7 +62,10 @@ export function App() {
   const [activeEpisodeTab, setActiveEpisodeTab] = useState<string>('diagnosis');
 
   const [isNewEpisodeOpen, setIsNewEpisodeOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).has('resetToken');
+  });
   const [exportEpisode, setExportEpisode] = useState<Episode | null>(null);
   const [studioEpisodeId, setStudioEpisodeId] = useState<string | null>(null);
   const [initialTeleprompterText, setInitialTeleprompterText] = useState<string | undefined>(

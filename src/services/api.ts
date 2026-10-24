@@ -140,6 +140,24 @@ export const api = {
       availableOrganizations: Organization[];
     }>('/api/auth/session'),
 
+  requestPasswordReset: (email: string) =>
+    request<{ success: boolean }>('/api/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+
+  validatePasswordResetToken: (token: string) =>
+    request<{ valid: boolean }>('/api/auth/reset-password/validate', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    }),
+
+  resetPassword: (token: string, password: string) =>
+    request<{ success: boolean; message: string }>('/api/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ token, password }),
+    }),
+
   login: async (emailOrUserId: string, organizationId?: string, loginCode?: string) => {
     const res = await request<{ session: AuthSession }>('/api/auth/login', {
       method: 'POST',

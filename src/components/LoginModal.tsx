@@ -64,6 +64,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [recoveryMode, setRecoveryMode] = useState<'none' | 'request' | 'reset'>('none');
+  const [recoveryEmail, setRecoveryEmail] = useState('');
+  const [resetToken, setResetToken] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [recoveryMessage, setRecoveryMessage] = useState<string | null>(null);
 
   // Registration + Payer Onboarding State
   const [kbPrograms, setKbPrograms] = useState<
@@ -94,12 +99,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   });
 
   useEffect(() => {
-    if (isOpen) {
-      api
-        .listKnowledgeBasePrograms()
-        .then((list) => setKbPrograms(list))
-        .catch(() => {});
+    if (!isOpen) return;
+    const token = new URLSearchParams(window.location.search).get('resetToken');
+    if (token) {
+      setResetToken(token);
+      setRecoveryMode('reset');
+      api.validatePasswordResetToken(token).catch(() => {
+        setError('O link de recuperação é inválido, expirou ou já foi utilizado.');
+      });
     }
+    api.listKnowledgeBasePrograms().then((list) => setKbPrograms(list)).catch(() => {});
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -129,6 +138,30 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       onClose();
     } catch (err: any) {
       setError(err.message || 'Credencial inválida ou sem permissão de programa.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleRecoverySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setRecoveryMessage(null);
+    setSubmitting(true);
+    try {
+      if (recoveryMode === 'request') {
+        await api.requestPasswordReset(recoveryEmail.trim());
+        setRecoveryMessage('Se o endereço estiver cadastrado, enviaremos um link de recuperação. Verifique também a pasta de spam.');
+      } else if (recoveryMode === 'reset') {
+        await api.resetPassword(resetToken, newPassword);
+        setRecoveryMode('none');
+        setActiveTab('login');
+        setNewPassword('');
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setRecoveryMessage('Senha redefinida. Entre com a nova senha.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Não foi possível concluir a recuperação de senha.');
     } finally {
       setSubmitting(false);
     }
@@ -228,8 +261,62 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               {error}
             </div>
           )}
+          {recoveryMessage && (
+            <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 text-xs font-medium">
+              {recoveryMessage}
+            </div>
+          )}
 
-          {activeTab === 'login' ? (
+          {recoveryMode !== 'none' ? (
+            <form onSubmit={handleRecoverySubmit} className="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-4">
+              <h3 className="text-sm font-semibold text-zinc-100">
+                {recoveryMode === 'request' ? 'Recuperar acesso' : 'Definir nova senha'}
+              </h3>
+              {recoveryMode === 'request' ? (
+                <div>
+                  <label className="block text-xs text-zinc-400 mb-1">E-mail cadastrado</label>
+                  <input
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={recoveryEmail}
+                    onChange={(e) => setRecoveryEmail(e.target.value)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
+                    placeholder="voce@empresa.com"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label className="block text-xs text-zinc-400 mb-1">Nova senha (mínimo 8 caracteres)</label>
+                  <input
+                    type="password"
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-100"
+                  />
+                </div>
+              )}
+              <div className="flex justify-between items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => { setRecoveryMode('none'); setError(null); setRecoveryMessage(null); }}
+                  className="text-xs text-zinc-400 hover:text-zinc-200 underline"
+                >
+                  Voltar para login
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-xs disabled:opacity-50"
+                >
+                  {submitting ? 'Processando…' : recoveryMode === 'request' ? 'Enviar link' : 'Redefinir senha'}
+                </button>
+              </div>
+            </form>
+          ) : activeTab === 'login' ? (
             <>
               {/* Program-Scoped Logins Grid */}
               <div>
@@ -398,6 +485,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                     type="button"
                     onClick={() => {
                       setError(null);
+                      setRecoveryMessage(null);
+                      setRecoveryEmail(emailInput.trim());
+                      setRecoveryMode('request');
                     }}
                     className="text-xs text-amber-400 hover:text-amber-300 underline hover:decoration-amber-400/30 transition-colors cursor-pointer"
                     title="Iniciar fluxo de recuperação de acesso / redefinição de senha"
