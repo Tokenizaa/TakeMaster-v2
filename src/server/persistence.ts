@@ -10,7 +10,7 @@ import {
   UserAccountStatus, UserShowPermission,
 } from '../domain/contracts';
 import { AppError } from '../domain/validation';
-import { resolveProgramKnowledge } from './programKnowledge';
+import { resolveProgramKnowledge, integrateEditorialBaseToSetup, EditorialOperationalConfig, EditorialBaseValidationResult } from './programKnowledge';
 import { incrementMetric, logStructured } from './logger';
 
 const url = process.env.SUPABASE_URL || '';
@@ -640,39 +640,110 @@ export async function processAutomaticRenewalCycle(
   return (await listOrganizationSubscriptions(orgId)).find(x => x.id === id)!;
 }
 
-async function createDefaultProgramStructure(orgId: string, programId: string, userId: string) {
-  // Create default season
-  const seasonId = generateId('season');
-  await db.from('seasons').insert({
-    id: seasonId,
-    program_id: programId,
-    number: 1,
-    title: 'Temporada 1',
-    status: 'planning',
-    target_episodes_count: 10,
-    executive_producer: '',
-    notes: 'Temporada inicial criada automaticamente no pré-setup',
-    created_at: now(),
-    updated_at: now(),
-  });
+async function createDefaultProgramStructure(
+  orgId: string, 
+  programId: string, 
+  userId: string,
+  editorialConfig?: EditorialOperationalConfig,
+  validation?: EditorialBaseValidationResult
+) {
+  // Check idempotency - don't duplicate if already exists
+  const existingSeason = await db.from('seasons').select('id').eq('program_id', programId).eq('number', 1).maybeSingle();
+  if (!existingSeason.data) {
+    // Create default season
+    const seasonId = generateId('season');
+    await db.from('seasons').insert({
+      id: seasonId,
+      program_id: programId,
+      number: 1,
+      title: editorialConfig?.title ? `Temporada 1 - ${editorialConfig.title}` : 'Temporada 1',
+      status: 'planning',
+      target_episodes_count: 10,
+      executive_producer: '',
+      notes: editorialConfig 
+        ? `Temporada inicial criada automaticamente no pré-setup com base editorial (${editorialConfig.editorialSource.coverageLabel})`
+        : 'Temporada inicial criada automaticamente no pré-setup',
+      created_at: now(),
+      updated_at: now(),
+    });
+  }
   
-  // Create default cameras
-  const cameras = [
-    { id: generateId('cam'), program_id: programId, name: 'CAM 1', label: 'Câmera Principal', purpose: 'Principal', framing: 'close_up', active: true, sort_order: 1 },
-    { id: generateId('cam'), program_id: programId, name: 'CAM 2', label: 'Câmera Convidado', purpose: 'Guest', framing: 'medium', active: true, sort_order: 2 },
-    { id: generateId('cam'), program_id: programId, name: 'CAM 3', label: 'Câmera Wide', purpose: 'Wide', framing: 'wide', active: true, sort_order: 3 },
-  ];
-  await db.from('cameras').insert(cameras);
+  // Check idempotency for cameras
+  const existingCameras = await db.from('cameras').select('id').eq('program_id', programId);
+  if (!existingCameras.data || existingCameras.data.length === 0) {
+    // Create cameras from editorial config or defaults
+    const camerasToCreate = editorialConfig?.cameras || [
+      { name: 'CAM 1', label: 'Câmera Principal', purpose: 'Principal', framing: 'close_up', active: true },
+      { name: 'CAM 2', label: 'Câmera Convidado', purpose: 'Guest', framing: 'medium', active: true },
+      { name: 'CAM 3', label: 'Câmera Wide', purpose: 'Wide', framing: 'wide', active: true },
+    ];
+    
+    const cameras = camerasToCreate.map((cam, index) => ({
+      id: generateId('cam'),
+      program_id: programId,
+      name: cam.name,
+      label: cam.label,
+      purpose: cam.purpose,
+      framing: cam.framing,
+      active: cam.active,
+      sort_order: index + 1,
+    }));
+    await db.from('cameras').insert(cameras);
+  }
   
-  // Create default editorial structure
+  // Create/update editorial structure from config or defaults
+  const standardStructure = editorialConfig?.standardStructure || ['Abertura', 'Bloco 1', 'Bloco 2', 'Encerramento'];
+  const defaultOpening = editorialConfig?.defaultOpening || 'Bem-vindos ao {program_title}. Hoje recebemos {guest_name} para falar sobre {topic}.';
+  const defaultClosing = editorialConfig?.defaultClosing || 'Obrigado por assistir. Não esqueça de se inscrever e ativar as notificações.';
+  
   await db.from('programs').update({
-    standard_structure: ['Abertura', 'Bloco 1', 'Bloco 2', 'Encerramento'],
-    default_opening: 'Bem-vindos ao {program_title}. Hoje recebemos {guest_name} para falar sobre {topic}.',
-    default_closing: 'Obrigado por assistir. Não esqueça de se inscrever e ativar as notificações.',
+    standard_structure: standardStructure,
+    default_opening: defaultOpening,
+    default_closing: defaultClosing,
+    // Update program with editorial metadata if available
+    ...(editorialConfig && {
+      title: editorialConfig.title,
+      description: editorialConfig.description,
+      host: editorialConfig.host,
+      format: editorialConfig.format,
+      default_duration_min: editorialConfig.defaultDurationMin,
+      editorial_style: editorialConfig.editorialStyle,
+      category: editorialConfig.category,
+      target_audience: editorialConfig.targetAudience,
+      distribution_channels: editorialConfig.distributionChannels,
+    }),
     updated_at: now(),
   }).eq('id', programId);
   
-  // Grant producer access to creator
+  // Store editorial source tracking in a metadata field (using notes or a new field)
+  if (editorialConfig && validation) {
+    const editorialMeta = {
+      editorialSource: editorialConfig.editorialSource,
+      validation: {
+        isValid: validation.isValid,
+        coverageLevel: validation.coverageLevel,
+        coverageLabel: validation.coverageLabel,
+        gaps: validation.gaps,
+        warnings: validation.warnings,
+        profileHash: validation.profileHash,
+        matchedProgramTitle: validation.matchedProgramTitle,
+      },
+      mappedAt: new Date().toISOString(),
+    };
+    
+    // Store in program metadata - using a JSON field if available, or notes
+    // For now, we'll use the notes field to store this tracking info
+    const program = await one('programs', programId);
+    const existingNotes = program?.notes || '';
+    const metaString = `\n\n--- EDITORIAL BASE TRACKING ---\n${JSON.stringify(editorialMeta, null, 2)}`;
+    
+    await db.from('programs').update({
+      notes: existingNotes + metaString,
+      updated_at: now(),
+    }).eq('id', programId);
+  }
+  
+  // Grant producer access to creator (idempotent)
   const program = await one('programs', programId);
   if (program?.catalog_program_id) {
     await db.from('program_user_access').upsert({
@@ -689,7 +760,11 @@ async function createDefaultProgramStructure(orgId: string, programId: string, u
 export async function populateOrganizationWorkspace(
   orgId: string,
   programId: string,
-  userId: string
+  userId: string,
+  options?: {
+    explicitSlug?: string;
+    skipEditorialIntegration?: boolean;
+  }
 ): Promise<SetupState> {
   // Check existing setup state
   const existing = await getSetupState(orgId, programId);
@@ -703,17 +778,28 @@ export async function populateOrganizationWorkspace(
   // Resolve o UUID do programa (aceita legacy_id ou UUID)
   const resolvedProgramId = await resolveProgramId(orgId, programId);
 
+  // Get show data for editorial integration
+  const show = await getShowById(orgId, resolvedProgramId);
+  if (!show) {
+    throw new AppError(404, 'NOT_FOUND', 'Programa não encontrado para setup.');
+  }
+
   // Start or resume setup
   const setup = await upsertSetupState(orgId, resolvedProgramId, {
     status: 'setup_running',
     steps: {
       program_structure: { status: 'pending' },
+      editorial_integration: { status: 'pending' },
       default_season: { status: 'pending' },
       cameras: { status: 'pending' },
       editorial_defaults: { status: 'pending' },
       user_permissions: { status: 'pending' },
     },
   });
+  
+  let editorialConfig: EditorialOperationalConfig | undefined;
+  let validation: EditorialBaseValidationResult | undefined;
+  let hasEditorialBase = false;
   
   try {
     // Step 1: Program structure validation
@@ -722,32 +808,105 @@ export async function populateOrganizationWorkspace(
       steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() } },
     });
     
-    // Step 2: Create default season
-    await createDefaultProgramStructure(orgId, resolvedProgramId, userId);
+    // Step 2: Editorial base integration
     await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
-      steps: { ...setup.steps, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() } },
+      steps: { ...setup.steps, editorial_integration: { status: 'completed', completedAt: now() } },
     });
     
-    // Step 3: User permissions already handled in createDefaultProgramStructure
+    // Integrate editorial base if not skipped
+    if (!options?.skipEditorialIntegration) {
+      const integrationResult = await integrateEditorialBaseToSetup(
+        orgId,
+        resolvedProgramId,
+        { title: show.title, id: show.id },
+        options?.explicitSlug
+      );
+      
+      editorialConfig = integrationResult.config;
+      validation = integrationResult.validation;
+      hasEditorialBase = integrationResult.success;
+      
+      // If editorial base was selected but is invalid, mark as incomplete setup
+      if (!integrationResult.success && validation && validation.coverageLevel !== 'cadastro_interno') {
+        await upsertSetupState(orgId, resolvedProgramId, {
+          status: 'setup_failed',
+          error: `Base editorial selecionada inválida ou incompatível: ${integrationResult.error}`,
+          steps: { 
+            ...setup.steps, 
+            program_structure: { status: 'completed', completedAt: now() },
+            editorial_integration: { status: 'failed', completedAt: now(), error: integrationResult.error },
+          },
+        });
+        throw new AppError(400, 'EDITORIAL_BASE_INVALID', integrationResult.error || 'Base editorial inválida');
+      }
+    }
+    
+    // Step 3: Create default season and structure (with editorial config if available)
+    await createDefaultProgramStructure(orgId, resolvedProgramId, userId, editorialConfig, validation);
+    await upsertSetupState(orgId, resolvedProgramId, {
+      status: 'setup_running',
+      steps: { 
+        ...setup.steps, 
+        default_season: { status: 'completed', completedAt: now() }, 
+        cameras: { status: 'completed', completedAt: now() }, 
+        editorial_defaults: { status: 'completed', completedAt: now() } 
+      },
+    });
+    
+    // Step 4: User permissions already handled in createDefaultProgramStructure
     await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_running',
       steps: { ...setup.steps, user_permissions: { status: 'completed', completedAt: now() } },
     });
     
-    // Mark as ready
+    // Determine final status: ready if editorial base integrated successfully OR if no editorial base was expected (authorial program)
+    const isAuthorialProgram = !hasEditorialBase && (!validation || validation.coverageLevel === 'cadastro_interno');
+    const finalStatus = hasEditorialBase || isAuthorialProgram ? 'ready' : 'setup_failed';
+    
+    // Mark as ready or incomplete
     const completed = await upsertSetupState(orgId, resolvedProgramId, {
-      status: 'ready',
-      steps: { ...setup.steps, program_structure: { status: 'completed', completedAt: now() }, default_season: { status: 'completed', completedAt: now() }, cameras: { status: 'completed', completedAt: now() }, editorial_defaults: { status: 'completed', completedAt: now() }, user_permissions: { status: 'completed', completedAt: now() } },
+      status: finalStatus,
+      steps: { 
+        ...setup.steps, 
+        program_structure: { status: 'completed', completedAt: now() }, 
+        default_season: { status: 'completed', completedAt: now() }, 
+        cameras: { status: 'completed', completedAt: now() }, 
+        editorial_defaults: { status: 'completed', completedAt: now() }, 
+        user_permissions: { status: 'completed', completedAt: now() },
+        editorial_integration: { 
+          status: hasEditorialBase ? 'completed' : (isAuthorialProgram ? 'skipped' : 'failed'), 
+          completedAt: now(),
+          ...(validation ? { 
+            coverageLevel: validation.coverageLevel,
+            coverageLabel: validation.coverageLabel,
+            gaps: validation.gaps,
+            warnings: validation.warnings,
+            profileHash: validation.profileHash,
+          } : {})
+        },
+      },
+      ...(finalStatus === 'setup_failed' ? { error: 'Setup editorial incompleto: base não disponível ou inválida' } : {}),
     });
     
-    await recordAuditLog(orgId, userId, 'setup_state', resolvedProgramId, 'completed', {
+    await recordAuditLog(orgId, userId, 'setup_state', resolvedProgramId, finalStatus === 'ready' ? 'completed' : 'failed', {
       programId: resolvedProgramId,
       setupVersion: completed.version,
+      hasEditorialBase,
+      coverageLevel: validation?.coverageLevel,
+      gaps: validation?.gaps,
     });
+    
+    if (finalStatus === 'setup_failed') {
+      throw new AppError(400, 'SETUP_INCOMPLETE', 'Setup editorial incompleto: base não disponível ou inválida');
+    }
     
     return completed;
   } catch (error) {
+    // Don't double-wrap AppError
+    if (error instanceof AppError) {
+      throw error;
+    }
     const errMsg = error instanceof Error ? error.message : 'Erro desconhecido no pré-setup';
     await upsertSetupState(orgId, resolvedProgramId, {
       status: 'setup_failed',
@@ -894,7 +1053,11 @@ export async function registerSaaSAccountWithSubscription(
   let setupState: SetupState | undefined;
   if (show) {
     try {
-      setupState = await populateOrganizationWorkspace(organizationId, show.id, user.id);
+      setupState = await populateOrganizationWorkspace(organizationId, show.id, user.id, {
+        explicitSlug: payload.knowledgeBaseSlug,
+        // Skip editorial integration for new authorial programs (newShowTitle)
+        skipEditorialIntegration: !!payload.newShowTitle,
+      });
     } catch (error) {
       // Log but don't fail registration - setup can be retried
       logStructured('WARN', 'setup_failed_during_registration', {

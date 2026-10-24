@@ -43,6 +43,7 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
+    "vitest": "^5.0.5",
     "wrangler": "4.131.1"
   }
 }

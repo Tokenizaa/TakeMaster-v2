@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import {
   Episode,
   Guest,
@@ -12,7 +13,7 @@ import {
 const NAO_INFORMADO = 'não informado na fonte';
 const NAO_IDENTIFICADO_NA_BASE = 'não identificado na base';
 
-function normalizeSlug(input: string): string {
+export function normalizeSlug(input: string): string {
   return String(input || '')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -580,3 +581,392 @@ ${sourcesLines}
 }
 
 export const listAvailableKnowledgeBasePrograms = listKnowledgeBasePrograms;
+
+/**
+ * Result of editorial base validation and mapping
+ */
+export interface EditorialBaseValidationResult {
+  isValid: boolean;
+  slug: string;
+  coverageLevel: 'completa' | 'parcial' | 'cadastro_interno';
+  coverageLabel: string;
+  sources: ProgramKnowledgeSource[];
+  gaps: string[];
+  warnings: string[];
+  profileHash: string;
+  matchedProgramTitle: string;
+  editorialIdentity: ProgramEditorialIdentity;
+}
+
+/**
+ * Operational configuration derived from editorial base
+ */
+export interface EditorialOperationalConfig {
+  // Program identity
+  title: string;
+  description: string;
+  host: string;
+  format: string;
+  defaultDurationMin: number;
+  editorialStyle: string;
+  scenario: string;
+  category: string;
+  targetAudience: string;
+  distributionChannels: string[];
+  
+  // Episode structure
+  standardStructure: string[];
+  defaultOpening: string;
+  defaultClosing: string;
+  
+  // Cameras
+  cameras: Array<{
+    name: string;
+    label: string;
+    purpose: string;
+    framing: string;
+    active: boolean;
+  }>;
+  
+  // Editorial metadata
+  themes: string[];
+  quadros: string[];
+  diferenciais: string[];
+  informacoesComerciais: string[];
+  redesSociais: string[];
+  
+  // Tracking
+  editorialSource: {
+    slug: string;
+    coverageLevel: string;
+    coverageLabel: string;
+    profileHash: string;
+    sourcesCount: number;
+    gaps: string[];
+    mappedAt: string;
+  };
+}
+
+/**
+ * Validates that the editorial base corresponds to the selected program
+ * and returns validation result with gaps and warnings.
+ */
+export function validateEditorialBaseMatchesProgram(
+  summary: ProgramKnowledgeSummary,
+  selectedProgramTitle: string,
+  selectedProgramSlug?: string
+): EditorialBaseValidationResult {
+  const gaps: string[] = [];
+  const warnings: string[] = [];
+  
+  // Check if program was found in knowledge base
+  if (!summary.foundInKnowledgeBase) {
+    gaps.push('Programa não encontrado na base de conhecimento editorial (RS Play)');
+    warnings.push('Usando cadastro interno do TakeMaster como fallback');
+  }
+  
+  // Check coverage level
+  if (summary.coverageLevel === 'parcial') {
+    gaps.push('Cobertura parcial: Mídia Kit oficial não capturado ou incompleto');
+    warnings.push('Alguns campos editoriais podem estar ausentes ou baseados apenas no catálogo RS Play');
+  }
+  
+  // Check title match (fuzzy match for safety)
+  const normalizedSelected = normalizeSlug(selectedProgramTitle);
+  const normalizedFound = normalizeSlug(summary.nome);
+  if (normalizedSelected !== normalizedFound && selectedProgramSlug) {
+    const normalizedSlug = normalizeSlug(selectedProgramSlug);
+    if (normalizedSlug !== normalizedFound) {
+      warnings.push(`Título do programa selecionado ("${selectedProgramTitle}") difere do encontrado na base ("${summary.nome}")`);
+    }
+  }
+  
+  // Check for missing critical fields
+  if (summary.apresentador === NAO_IDENTIFICADO_NA_BASE) {
+    gaps.push('Apresentador não identificado na base');
+  }
+  if (summary.publico === NAO_IDENTIFICADO_NA_BASE) {
+    gaps.push('Público-alvo não identificado na base');
+  }
+  if (summary.temasPrincipais.length === 0) {
+    gaps.push('Temas principais não identificados na base');
+  }
+  if (summary.quadros.length === 0) {
+    gaps.push('Quadros/estrutura não identificados na base');
+  }
+  if (summary.formato === NAO_IDENTIFICADO_NA_BASE) {
+    gaps.push('Formato não identificado na base');
+  }
+  if (summary.duracao === NAO_IDENTIFICADO_NA_BASE) {
+    gaps.push('Duração não identificada na base');
+  }
+  if (summary.informacoesComerciais.length === 0) {
+    gaps.push('Informações comerciais não identificadas na base');
+  }
+  
+  // Generate profile hash for version tracking
+  const profileData = JSON.stringify({
+    slug: summary.slug,
+    nome: summary.nome,
+    apresentador: summary.apresentador,
+    descricao: summary.descricao,
+    proposta: summary.proposta,
+    conceito: summary.conceito,
+    publico: summary.publico,
+    temasPrincipais: summary.temasPrincipais,
+    quadros: summary.quadros,
+    formato: summary.formato,
+    duracao: summary.duracao,
+    horario: summary.horario,
+    canalPlataforma: summary.canalPlataforma,
+    informacoesComerciais: summary.informacoesComerciais,
+    redesSociais: summary.redesSociais,
+  });
+  const profileHash = crypto.createHash('sha256').update(profileData).digest('hex').slice(0, 16);
+  
+  return {
+    isValid: summary.foundInKnowledgeBase && summary.coverageLevel !== 'cadastro_interno',
+    slug: summary.slug,
+    coverageLevel: summary.coverageLevel,
+    coverageLabel: summary.coverageLabel,
+    sources: summary.fontes,
+    gaps,
+    warnings,
+    profileHash,
+    matchedProgramTitle: summary.nome,
+    editorialIdentity: summary.editorialSynthesis,
+  };
+}
+
+/**
+ * Maps editorial base data to operational configuration for program setup.
+ * Only maps fields that have actual evidence in the editorial base.
+ * Missing data is left as explicit gaps, not fabricated.
+ */
+export function mapEditorialBaseToOperationalConfig(
+  validation: EditorialBaseValidationResult,
+  show: Partial<Show> & { title: string; id?: string }
+): EditorialOperationalConfig {
+  const { summary: editorialSummary, editorialIdentity } = 
+    resolveProgramKnowledge(show, validation.slug);
+  
+  // Use editorial data when available, otherwise use show data or mark as provisional
+  const hasEditorialBase = validation.isValid && validation.coverageLevel !== 'cadastro_interno';
+  
+  // Map format from editorial base
+  let format = 'Outro';
+  if (hasEditorialBase && editorialSummary.formato !== NAO_IDENTIFICADO_NA_BASE) {
+    format = editorialSummary.formato;
+  } else if (show.format && show.format !== 'Outro') {
+    format = show.format;
+  }
+  
+  // Map duration
+  let defaultDurationMin = 45;
+  if (hasEditorialBase && editorialSummary.duracao !== NAO_IDENTIFICADO_NA_BASE) {
+    const durMatch = editorialSummary.duracao.match(/(\d+)/);
+    if (durMatch) defaultDurationMin = parseInt(durMatch[1], 10);
+  } else if (show.defaultDurationMin && show.defaultDurationMin > 0) {
+    defaultDurationMin = show.defaultDurationMin;
+  }
+  
+  // Map host/apresentador
+  let host = '';
+  if (hasEditorialBase && editorialSummary.apresentador !== NAO_IDENTIFICADO_NA_BASE) {
+    host = editorialSummary.apresentador.split(' — ')[0].trim();
+  } else if (show.host) {
+    host = show.host;
+  }
+  
+  // Map editorial style / tom
+  let editorialStyle = '';
+  if (hasEditorialBase && editorialIdentity.tom !== NAO_IDENTIFICADO_NA_BASE) {
+    editorialStyle = editorialIdentity.tom;
+  } else if (show.editorialStyle) {
+    editorialStyle = show.editorialStyle;
+  }
+  
+  // Map standard structure / quadros
+  let standardStructure = ['Abertura', 'Bloco 1', 'Bloco 2', 'Encerramento'];
+  if (hasEditorialBase && editorialSummary.quadros.length > 0) {
+    standardStructure = editorialSummary.quadros;
+  } else if (show.standardStructure && show.standardStructure.length > 0) {
+    standardStructure = show.standardStructure;
+  }
+  
+  // Map default opening/closing
+  let defaultOpening = 'Bem-vindos ao {program_title}. Hoje recebemos {guest_name} para falar sobre {topic}.';
+  let defaultClosing = 'Obrigado por assistir. Não esqueça de se inscrever e ativar as notificações.';
+  
+  if (hasEditorialBase) {
+    // Try to personalize based on editorial identity
+    if (editorialIdentity.essencia !== NAO_IDENTIFICADO_NA_BASE) {
+      defaultOpening = `Bem-vindos ao ${editorialSummary.nome}. ${editorialIdentity.essencia.slice(0, 200)} Hoje recebemos {guest_name}.`;
+    }
+    if (editorialIdentity.diferenciais[0] !== NAO_IDENTIFICADO_NA_BASE) {
+      defaultClosing = `Obrigado por assistir ao ${editorialSummary.nome}. ${editorialIdentity.diferenciais[0]} Até a próxima!`;
+    }
+  }
+  
+  // Map cameras based on format
+  const cameras = getDefaultCamerasForFormat(format);
+  
+  // Map category/themes
+  let category = '';
+  if (hasEditorialBase && editorialSummary.temasPrincipais.length > 0) {
+    category = editorialSummary.temasPrincipais[0];
+  } else if (show.category) {
+    category = show.category;
+  }
+  
+  // Map target audience
+  let targetAudience = '';
+  if (hasEditorialBase && editorialSummary.publico !== NAO_IDENTIFICADO_NA_BASE) {
+    targetAudience = editorialSummary.publico;
+  } else if (show.targetAudience) {
+    targetAudience = show.targetAudience;
+  }
+  
+  // Map distribution channels
+  let distributionChannels: string[] = [];
+  if (hasEditorialBase && editorialSummary.canalPlataforma !== NAO_IDENTIFICADO_NA_BASE) {
+    distributionChannels = editorialSummary.canalPlataforma.split(' • ').map(s => s.trim()).filter(Boolean);
+  } else if (show.distributionChannels && show.distributionChannels.length > 0) {
+    distributionChannels = show.distributionChannels;
+  }
+  
+  return {
+    title: editorialSummary.nome || show.title,
+    description: editorialSummary.descricao || show.description || '',
+    host,
+    format,
+    defaultDurationMin,
+    editorialStyle,
+    scenario: show.scenario || '',
+    category,
+    targetAudience,
+    distributionChannels,
+    standardStructure,
+    defaultOpening,
+    defaultClosing,
+    cameras,
+    themes: hasEditorialBase ? editorialSummary.temasPrincipais : (show.category ? [show.category] : []),
+    quadros: hasEditorialBase ? editorialSummary.quadros : standardStructure,
+    diferenciais: hasEditorialBase ? editorialIdentity.diferenciais : [NAO_IDENTIFICADO_NA_BASE],
+    informacoesComerciais: hasEditorialBase ? editorialSummary.informacoesComerciais : [],
+    redesSociais: hasEditorialBase ? editorialSummary.redesSociais : [],
+    editorialSource: {
+      slug: validation.slug,
+      coverageLevel: validation.coverageLevel,
+      coverageLabel: validation.coverageLabel,
+      profileHash: validation.profileHash,
+      sourcesCount: validation.sources.length,
+      gaps: validation.gaps,
+      mappedAt: new Date().toISOString(),
+    },
+  };
+}
+
+/**
+ * Gets default camera configuration based on show format.
+ */
+function getDefaultCamerasForFormat(format: string): Array<{
+  name: string;
+  label: string;
+  purpose: string;
+  framing: string;
+  active: boolean;
+}> {
+  const baseCameras = [
+    { name: 'CAM 1', label: 'Câmera Principal', purpose: 'Principal', framing: 'close_up', active: true },
+    { name: 'CAM 2', label: 'Câmera Convidado', purpose: 'Guest', framing: 'medium', active: true },
+    { name: 'CAM 3', label: 'Câmera Wide', purpose: 'Wide', framing: 'wide', active: true },
+  ];
+  
+  // Customize based on format
+  const fmt = format.toLowerCase();
+  if (fmt.includes('entrevista') || fmt.includes('solo')) {
+    return baseCameras;
+  }
+  if (fmt.includes('mesa') || fmt.includes('redonda') || fmt.includes('debate')) {
+    return [
+      { name: 'CAM 1', label: 'Câmera Principal (Mesa)', purpose: 'Principal', framing: 'medium', active: true },
+      { name: 'CAM 2', label: 'Câmera Convidado 1', purpose: 'Guest', framing: 'close_up', active: true },
+      { name: 'CAM 3', label: 'Câmera Convidado 2', purpose: 'Guest', framing: 'close_up', active: true },
+      { name: 'CAM 4', label: 'Câmera Wide (Mesa)', purpose: 'Wide', framing: 'wide', active: true },
+    ];
+  }
+  if (fmt.includes('podcast') || fmt.includes('videocast')) {
+    return [
+      { name: 'CAM 1', label: 'Câmera Host', purpose: 'Principal', framing: 'close_up', active: true },
+      { name: 'CAM 2', label: 'Câmera Convidado', purpose: 'Guest', framing: 'close_up', active: true },
+      { name: 'CAM 3', label: 'Câmera Wide / Overhead', purpose: 'Wide', framing: 'wide', active: true },
+    ];
+  }
+  if (fmt.includes('reportagem')) {
+    return [
+      { name: 'CAM 1', label: 'Câmera Repórter', purpose: 'Principal', framing: 'medium', active: true },
+      { name: 'CAM 2', label: 'Câmera Entrevistado', purpose: 'Guest', framing: 'close_up', active: true },
+      { name: 'CAM 3', label: 'Câmera B-Roll / Ambiente', purpose: 'B-Roll', framing: 'wide', active: true },
+    ];
+  }
+  
+  return baseCameras;
+}
+
+/**
+ * Integrates editorial base into program setup.
+ * This is the main integration function that connects editorial knowledge to operational setup.
+ * 
+ * @param orgId - Organization ID
+ * @param programId - Program UUID
+ * @param show - Show data (partial)
+ * @param explicitSlug - Optional explicit slug to resolve
+ * @returns Operational config and validation result
+ */
+export async function integrateEditorialBaseToSetup(
+  orgId: string,
+  programId: string,
+  show: Partial<Show> & { title: string; id?: string },
+  explicitSlug?: string
+): Promise<{
+  config: EditorialOperationalConfig;
+  validation: EditorialBaseValidationResult;
+  success: boolean;
+  error?: string;
+}> {
+  try {
+    // Resolve the editorial knowledge base
+    const { summary } = resolveProgramKnowledge(show, explicitSlug);
+    
+    // Validate the base matches the selected program
+    const validation = validateEditorialBaseMatchesProgram(summary, show.title, explicitSlug);
+    
+    // If base is invalid (not found, unreadable, incompatible), return error
+    if (!validation.isValid) {
+      return {
+        config: null as any,
+        validation,
+        success: false,
+        error: `Base editorial inválida ou ausente: ${validation.gaps.join('; ')}`,
+      };
+    }
+    
+    // Map editorial data to operational config
+    const config = mapEditorialBaseToOperationalConfig(validation, show);
+    
+    return {
+      config,
+      validation,
+      success: true,
+    };
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Erro desconhecido na integração da base editorial';
+    return {
+      config: null as any,
+      validation: null as any,
+      success: false,
+      error: errMsg,
+    };
+  }
+}

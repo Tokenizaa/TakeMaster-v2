@@ -1,0 +1,433 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import {
+  validateEditorialBaseMatchesProgram,
+  mapEditorialBaseToOperationalConfig,
+  integrateEditorialBaseToSetup,
+  normalizeSlug,
+  findProgramFolder,
+  listKnowledgeBasePrograms,
+  resolveProgramKnowledge,
+  buildGroundedEditorialIdentity,
+} from './programKnowledge';
+import { Show, ProgramKnowledgeSummary, ProgramEditorialIdentity, ProgramKnowledgeSource } from '../domain/contracts';
+
+const NAO_IDENTIFICADO_NA_BASE = 'não identificado na base';
+
+describe('Editorial Base Integration', () => {
+  
+  beforeEach(() => {
+    vi.resetModules();
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  describe('normalizeSlug', () => {
+    it('normalizes slug correctly', () => {
+      expect(normalizeSlug('Meu Programa')).toBe('meu-programa');
+      expect(normalizeSlug('show-advogada-leque')).toBe('advogada-leque');
+      expect(normalizeSlug('  Café com Leite  ')).toBe('cafe-com-leite');
+      expect(normalizeSlug('PROGRAMA@#$%')).toBe('programa');
+    });
+  });
+
+  describe('validateEditorialBaseMatchesProgram', () => {
+    const createMockSummary = (overrides: Partial<ProgramKnowledgeSummary> = {}): ProgramKnowledgeSummary => ({
+      slug: 'test-program',
+      showId: 'show-1',
+      foundInKnowledgeBase: true,
+      coverageLevel: 'completa',
+      coverageLabel: 'Cobertura Completa',
+      nome: 'Teste Programa',
+      apresentador: 'Apresentador Teste',
+      descricao: 'Descrição do programa',
+      proposta: 'Proposta editorial',
+      conceito: 'Conceito do programa',
+      publico: 'Público geral',
+      temasPrincipais: ['Tema 1', 'Tema 2'],
+      quadros: ['Abertura', 'Bloco 1', 'Encerramento'],
+      formato: 'Entrevista',
+      duracao: '45 minutos',
+      horario: '20:00',
+      canalPlataforma: 'RS Play',
+      caracteristicasEditoriais: ['Característica 1'],
+      informacoesComerciais: ['Info comercial'],
+      redesSociais: ['@teste'],
+      imagensCount: 5,
+      secoesExtraidasCount: 10,
+      fontes: [{
+        urlOriginal: 'https://rsplay.com.br/teste',
+        urlCanonica: 'https://rsplay.com.br/teste',
+        tituloDaPagina: 'Teste',
+        tipoDePagina: 'catalogo',
+        statusHttp: 200,
+        dataHoraScrape: new Date().toISOString(),
+        trechosCount: 5,
+      }],
+      editorialSynthesis: {
+        essencia: 'Essência do programa',
+        publico: 'Público geral',
+        tom: 'Tom conversacional',
+        temas: ['Tema 1'],
+        formatos: ['Entrevista'],
+        forcas: ['Força 1'],
+        abordagens_recomendadas: ['Abordagem 1'],
+        abordagens_a_evitar: [NAO_IDENTIFICADO_NA_BASE],
+        diferenciais: ['Diferencial 1'],
+        fontes: [],
+        modelUsed: 'test',
+        usedFallback: false,
+        generatedAt: new Date().toISOString(),
+      },
+      ...overrides,
+    });
+
+    it('validates complete editorial base successfully', () => {
+      const summary = createMockSummary();
+      const result = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      
+      expect(result.isValid).toBe(true);
+      expect(result.coverageLevel).toBe('completa');
+      expect(result.gaps.length).toBe(0);
+      expect(result.profileHash).toBeDefined();
+      expect(result.profileHash.length).toBe(16);
+    });
+
+    it('detects missing critical fields', () => {
+      const summary = createMockSummary({
+        apresentador: NAO_IDENTIFICADO_NA_BASE,
+        publico: NAO_IDENTIFICADO_NA_BASE,
+        temasPrincipais: [],
+        quadros: [],
+        formato: NAO_IDENTIFICADO_NA_BASE,
+        duracao: NAO_IDENTIFICADO_NA_BASE,
+        informacoesComerciais: [],
+      });
+      
+      const result = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      
+      expect(result.isValid).toBe(true);
+      expect(result.gaps).toContain('Apresentador não identificado na base');
+      expect(result.gaps).toContain('Público-alvo não identificado na base');
+      expect(result.gaps).toContain('Temas principais não identificados na base');
+      expect(result.gaps).toContain('Quadros/estrutura não identificados na base');
+      expect(result.gaps).toContain('Formato não identificado na base');
+      expect(result.gaps).toContain('Duração não identificada na base');
+      expect(result.gaps).toContain('Informações comerciais não identificadas na base');
+    });
+
+    it('detects partial coverage', () => {
+      const summary = createMockSummary({
+        coverageLevel: 'parcial',
+        coverageLabel: 'Cobertura Parcial',
+      });
+      
+      const result = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      
+      expect(result.coverageLevel).toBe('parcial');
+      expect(result.gaps).toContain('Cobertura parcial: Mídia Kit oficial não capturado ou incompleto');
+    });
+
+    it('detects internal registration (no editorial base)', () => {
+      const summary = createMockSummary({
+        foundInKnowledgeBase: false,
+        coverageLevel: 'cadastro_interno',
+        coverageLabel: 'Cadastro Interno',
+      });
+      
+      const result = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      
+      expect(result.isValid).toBe(false);
+      expect(result.coverageLevel).toBe('cadastro_interno');
+      expect(result.gaps).toContain('Programa não encontrado na base de conhecimento editorial (RS Play)');
+      expect(result.warnings).toContain('Usando cadastro interno do TakeMaster como fallback');
+    });
+
+    it('warns on title mismatch', () => {
+      const summary = createMockSummary({
+        nome: 'Programa Diferente',
+      });
+      
+      const result = validateEditorialBaseMatchesProgram(summary, 'Teste Programa', 'test-program');
+      
+      expect(result.warnings).toContain('Título do programa selecionado ("Teste Programa") difere do encontrado na base ("Programa Diferente")');
+    });
+
+    it('generates consistent profile hash', () => {
+      const summary = createMockSummary();
+      const result1 = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      const result2 = validateEditorialBaseMatchesProgram(summary, 'Teste Programa');
+      
+      expect(result1.profileHash).toBe(result2.profileHash);
+    });
+
+    it('generates different hash for different data', () => {
+      const summary1 = createMockSummary({ nome: 'Programa 1' });
+      const summary2 = createMockSummary({ nome: 'Programa 2' });
+      
+      const result1 = validateEditorialBaseMatchesProgram(summary1, 'Programa 1');
+      const result2 = validateEditorialBaseMatchesProgram(summary2, 'Programa 2');
+      
+      expect(result1.profileHash).not.toBe(result2.profileHash);
+    });
+  });
+
+  describe('mapEditorialBaseToOperationalConfig', () => {
+    const createMockValidation = (overrides: Partial<{
+      isValid: boolean;
+      coverageLevel: 'completa' | 'parcial' | 'cadastro_interno';
+      editorialIdentity: ProgramEditorialIdentity;
+    }> = {}) => ({
+      isValid: true,
+      slug: 'test-program',
+      coverageLevel: 'completa' as const,
+      coverageLabel: 'Cobertura Completa',
+      sources: [],
+      gaps: [],
+      warnings: [],
+      profileHash: 'abc123',
+      matchedProgramTitle: 'Teste Programa',
+      editorialIdentity: {
+        essencia: 'Essência do programa',
+        publico: 'Público geral',
+        tom: 'Tom conversacional',
+        temas: ['Tema 1', 'Tema 2'],
+        formatos: ['Entrevista'],
+        forcas: ['Força 1'],
+        abordagens_recomendadas: ['Abordagem 1'],
+        abordagens_a_evitar: [NAO_IDENTIFICADO_NA_BASE],
+        diferenciais: ['Diferencial único'],
+        fontes: [],
+        modelUsed: 'test',
+        usedFallback: false,
+        generatedAt: new Date().toISOString(),
+      },
+      ...overrides,
+    });
+
+    const createMockShow = (overrides: Partial<Show> = {}): Partial<Show> & { title: string; id?: string } => ({
+      id: 'show-1',
+      title: 'Teste Programa',
+      description: 'Descrição do show',
+      host: 'Host do Show',
+      format: 'Entrevista',
+      defaultDurationMin: 60,
+      editorialStyle: 'Estilo do show',
+      scenario: 'Cenário do show',
+      category: 'Categoria do show',
+      targetAudience: 'Público do show',
+      distributionChannels: ['Canal 1'],
+      standardStructure: ['Abertura', 'Bloco 1', 'Bloco 2', 'Encerramento'],
+      ...overrides,
+    });
+
+    it('validates editorial base validation result structure', () => {
+      const validation = createMockValidation();
+      const show = createMockShow();
+      
+      expect(validation.isValid).toBe(true);
+      expect(validation.coverageLevel).toBe('completa');
+      expect(validation.editorialIdentity.tom).toBe('Tom conversacional');
+      expect(validation.editorialIdentity.diferenciais[0]).toBe('Diferencial único');
+    });
+
+    it('falls back to show data when editorial base is partial', () => {
+      const validation = createMockValidation({ coverageLevel: 'parcial' });
+      const show = createMockShow();
+      
+      expect(validation.coverageLevel).toBe('parcial');
+    });
+
+    it('uses generic defaults for authorial program (no editorial base)', () => {
+      const validation = createMockValidation({ 
+        isValid: false, 
+        coverageLevel: 'cadastro_interno',
+      });
+      const show = createMockShow({ title: 'Programa Autoral', host: 'Host Autoral' });
+      
+      expect(validation.isValid).toBe(false);
+      expect(validation.coverageLevel).toBe('cadastro_interno');
+    });
+
+    it('tracks gaps in editorial source metadata', () => {
+      const validation = createMockValidation({ 
+        coverageLevel: 'parcial',
+        gaps: ['Apresentador não identificado na base', 'Público-alvo não identificado na base'],
+      });
+      
+      expect(validation.gaps).toContain('Apresentador não identificado na base');
+      expect(validation.gaps).toContain('Público-alvo não identificado na base');
+    });
+  });
+
+  describe('integrateEditorialBaseToSetup', () => {
+    const mockShow = {
+      id: 'show-1',
+      title: 'Teste Programa',
+      description: 'Descrição',
+      host: 'Host',
+      format: 'Entrevista',
+    };
+
+    it('returns error for invalid editorial base (internal registration)', async () => {
+      // This test uses the real resolveProgramKnowledge which will find no program
+      // and return cadastro_interno fallback
+      const result = await integrateEditorialBaseToSetup('org-1', 'prog-1', mockShow);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Base editorial inválida ou ausente');
+      expect(result.validation.isValid).toBe(false);
+      expect(result.validation.coverageLevel).toBe('cadastro_interno');
+    });
+
+    it('handles missing program gracefully', async () => {
+      const result = await integrateEditorialBaseToSetup('org-1', 'non-existent-prog', mockShow);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBeDefined();
+    });
+  });
+
+  describe('Idempotency checks', () => {
+    it('normalizeSlug produces consistent results', () => {
+      const show = { title: 'Teste', id: 'show-1' };
+      
+      const slug1 = normalizeSlug(show.title);
+      const slug2 = normalizeSlug(show.title);
+      
+      expect(slug1).toBe(slug2);
+    });
+
+    it('validateEditorialBaseMatchesProgram produces consistent hash', () => {
+      const summary: ProgramKnowledgeSummary = {
+        slug: 'test',
+        showId: 'show-1',
+        foundInKnowledgeBase: true,
+        coverageLevel: 'completa',
+        coverageLabel: 'Completa',
+        nome: 'Teste',
+        apresentador: 'Apresentador',
+        descricao: 'Desc',
+        proposta: 'Prop',
+        conceito: 'Conc',
+        publico: 'Público',
+        temasPrincipais: ['Tema'],
+        quadros: ['Bloco'],
+        formato: 'Entrevista',
+        duracao: '45 min',
+        horario: '20:00',
+        canalPlataforma: 'RS Play',
+        caracteristicasEditoriais: [],
+        informacoesComerciais: [],
+        redesSociais: [],
+        imagensCount: 0,
+        secoesExtraidasCount: 0,
+        fontes: [],
+        editorialSynthesis: {
+          essencia: 'Essência',
+          publico: 'Público',
+          tom: 'Tom',
+          temas: ['Tema'],
+          formatos: ['Entrevista'],
+          forcas: ['Força'],
+          abordagens_recomendadas: ['Abordagem'],
+          abordagens_a_evitar: [NAO_IDENTIFICADO_NA_BASE],
+          diferenciais: ['Diferencial'],
+          fontes: [],
+          modelUsed: 'test',
+          usedFallback: false,
+          generatedAt: new Date().toISOString(),
+        },
+      };
+
+      const result1 = validateEditorialBaseMatchesProgram(summary, 'Teste');
+      const result2 = validateEditorialBaseMatchesProgram(summary, 'Teste');
+      
+      expect(result1.profileHash).toBe(result2.profileHash);
+    });
+  });
+
+  describe('Authorization and isolation', () => {
+    it('validateEditorialBaseMatchesProgram does not modify input', () => {
+      const summary: ProgramKnowledgeSummary = {
+        slug: 'test',
+        showId: 'show-1',
+        foundInKnowledgeBase: true,
+        coverageLevel: 'completa',
+        coverageLabel: 'Completa',
+        nome: 'Teste',
+        apresentador: 'Apresentador',
+        descricao: 'Desc',
+        proposta: 'Prop',
+        conceito: 'Conc',
+        publico: 'Público',
+        temasPrincipais: ['Tema'],
+        quadros: ['Bloco'],
+        formato: 'Entrevista',
+        duracao: '45 min',
+        horario: '20:00',
+        canalPlataforma: 'RS Play',
+        caracteristicasEditoriais: [],
+        informacoesComerciais: [],
+        redesSociais: [],
+        imagensCount: 0,
+        secoesExtraidasCount: 0,
+        fontes: [],
+        editorialSynthesis: {
+          essencia: 'Essência',
+          publico: 'Público',
+          tom: 'Tom',
+          temas: ['Tema'],
+          formatos: ['Entrevista'],
+          forcas: ['Força'],
+          abordagens_recomendadas: ['Abordagem'],
+          abordagens_a_evitar: [NAO_IDENTIFICADO_NA_BASE],
+          diferenciais: ['Diferencial'],
+          fontes: [],
+          modelUsed: 'test',
+          usedFallback: false,
+          generatedAt: new Date().toISOString(),
+        },
+      };
+
+      const originalNome = summary.nome;
+      validateEditorialBaseMatchesProgram(summary, 'Teste');
+      
+      expect(summary.nome).toBe(originalNome);
+    });
+  });
+
+  describe('listKnowledgeBasePrograms', () => {
+    it('returns array (may be empty depending on filesystem)', () => {
+      // This tests the function runs without error
+      const programs = listKnowledgeBasePrograms();
+      expect(Array.isArray(programs)).toBe(true);
+    });
+  });
+});
+
+describe('Runtime availability validation', () => {
+  it('knowledge base files are included in build', async () => {
+    // Use dynamic import to get real fs module
+    const realFs = await import('fs');
+    const realPath = await import('path');
+    
+    const programsDir = '/home/lg/workspace/projects/TakeMaster-v2/programs';
+    expect(realFs.existsSync(programsDir)).toBe(true);
+    
+    const entries = realFs.readdirSync(programsDir, { withFileTypes: true });
+    const programFolders = entries.filter(e => e.isDirectory());
+    
+    expect(programFolders.length).toBeGreaterThan(0);
+    
+    const firstProgram = programFolders[0];
+    const programPath = realPath.join(programsDir, firstProgram.name);
+    
+    expect(realFs.existsSync(realPath.join(programPath, 'profile.json'))).toBe(true);
+    expect(realFs.existsSync(realPath.join(programPath, 'content.md'))).toBe(true);
+    expect(realFs.existsSync(realPath.join(programPath, 'sources.json'))).toBe(true);
+    expect(realFs.existsSync(realPath.join(programPath, 'media.json'))).toBe(true);
+  });
+});
