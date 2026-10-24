@@ -977,6 +977,7 @@ export function App() {
 
       {/* Modals & Drawers */}
       <LoginModal
+        standalone={['/login', '/signup'].includes(window.location.pathname)}
         isOpen={isLoginModalOpen}
         onClose={() => {
           const isAuthRoute = ['/login', '/signup'].includes(window.location.pathname) ||
