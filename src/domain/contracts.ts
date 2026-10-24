@@ -83,9 +83,10 @@ export interface OrganizationMembership {
 export interface AuthSession {
   token: string;
   user: User;
-  activeOrganization: Organization;
-  role: OrganizationRole;
+  activeOrganization?: Organization;
+  role?: OrganizationRole;
   platformRole: PlatformRole;
+  isGlobalSession?: boolean;
   memberships: OrganizationMembership[];
   showPermissions: UserShowPermission[];
   allowedShowIds: string[];
@@ -782,6 +783,7 @@ export type ApiErrorCode =
   | 'VALIDATION_ERROR'
   | 'UNAUTHORIZED'
   | 'FORBIDDEN_CONTEXT'
+  | 'ORGANIZATION_CONTEXT_REQUIRED'
   | 'SUBSCRIPTION_INACTIVE'
   | 'NOT_FOUND'
   | 'CONFLICT'

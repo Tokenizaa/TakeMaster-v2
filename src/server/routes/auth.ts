@@ -19,15 +19,16 @@ router.post('/session', async (req: Request, res: Response) => {
         email: ctx.userEmail,
         name: ctx.userName,
       },
-      activeOrganization: {
-        id: ctx.organizationId,
-        name: ctx.organizationName,
-      },
+      activeOrganization: ctx.organizationId
+        ? { id: ctx.organizationId, name: ctx.organizationName }
+        : null,
       role: ctx.role,
       memberships: [],
       showPermissions: ctx.showPermissions,
       allowedShowIds: ctx.allowedShowIds,
       isFullAccessAdmin: ctx.isFullAccessAdmin,
+      isPlatformAdmin: ctx.isPlatformAdmin,
+      isGlobalSession: Boolean(ctx.isGlobalSession),
       activeSubscription: null,
     });
   } catch (error) {

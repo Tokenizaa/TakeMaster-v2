@@ -60,7 +60,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [emailInput, setEmailInput] = useState('');
   const [codeInput, setCodeInput] = useState('');
   const [selectedOrgId] = useState(
-    currentSession?.activeOrganization.id || 'org-takemaster-studio'
+    currentSession?.activeOrganization?.id ?? undefined
   );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);

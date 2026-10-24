@@ -55,7 +55,12 @@ export function getStoredOrganizationId(): string | null {
 export function storeAuthSessionContext(session: AuthSession) {
   try {
     localStorage.setItem(AUTH_TOKEN_KEY, session.token);
-    localStorage.setItem(ACTIVE_ORG_KEY, session.activeOrganization.id);
+    // Persiste a organização ativa apenas quando há uma (sessão global não inventa organização).
+    if (session.activeOrganization?.id) {
+      localStorage.setItem(ACTIVE_ORG_KEY, session.activeOrganization.id);
+    } else {
+      localStorage.removeItem(ACTIVE_ORG_KEY);
+    }
   } catch {
     // ignore storage quota errors
   }
@@ -73,7 +78,9 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-  if (orgId) {
+  // Envia a organização apenas quando há um contexto ativo válido; sessões globais
+  // não inventam organização nem tentam escalar via X-Organization-Id.
+  if (orgId && orgId !== 'undefined') {
     headers['X-Organization-Id'] = orgId;
   }
 
