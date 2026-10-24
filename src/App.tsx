@@ -54,7 +54,22 @@ export function App() {
   const [libraryAssets, setLibraryAssets] = useState<LibraryAsset[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [activeSection, setActiveSection] = useState<NavSection>('dashboard');
+  const sectionFromPath = (path: string): NavSection => {
+    const section = path === '/app' ? 'dashboard' : path.startsWith('/app/') ? path.slice('/app/'.length).split('/')[0] : 'dashboard';
+    const allowed: NavSection[] = ['dashboard', 'shows', 'episodes', 'guests', 'schedule', 'library', 'studio', 'billing', 'admin'];
+    return allowed.includes(section as NavSection) ? (section as NavSection) : 'dashboard';
+  };
+  const pathForSection = (section: NavSection) => section === 'dashboard' ? '/app' : `/app/${section}`;
+  const [activeSection, setActiveSection] = useState<NavSection>(() =>
+    typeof window === 'undefined' ? 'dashboard' : sectionFromPath(window.location.pathname)
+  );
+  const navigateToSection = (section: NavSection, replace = false) => {
+    setActiveSection(section);
+    if (typeof window !== 'undefined') {
+      const nextPath = pathForSection(section);
+      if (window.location.pathname !== nextPath) window.history[replace ? 'replaceState' : 'pushState']({}, '', nextPath);
+    }
+  };
   const [selectedShowId, setSelectedShowId] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -222,7 +237,7 @@ export function App() {
     setScheduleEvents([]);
     setLibraryAssets([]);
     setActiveEpisodeId(null);
-    setActiveSection('dashboard');
+    navigateToSection('dashboard');
     setSelectedShowId('ALL');
     setSaveStatus('saved');
     setSaveErrorMessage(
@@ -577,7 +592,7 @@ export function App() {
           onOpenLoginModal={() => setIsLoginModalOpen(true)}
           onOpenBilling={() => {
             setActiveEpisodeId(null);
-            setActiveSection('billing');
+            navigateToSection('billing');
           }}
         />
 
@@ -788,7 +803,7 @@ export function App() {
                   onOpenEpisode={(id) => openEpisode(id)}
                   onNewEpisode={() => setIsNewEpisodeOpen(true)}
                   onOpenStudioMode={(ep) => setStudioEpisodeId(ep.id)}
-                  onNavigateSection={setActiveSection}
+                  onNavigateSection={navigateToSection}
                 />
               </ShowPermissionGuard>
             )}
@@ -814,7 +829,7 @@ export function App() {
                   onDeleteProduction={handleDeleteProduction}
                   onSelectShowFilter={(id) => {
                     setSelectedShowId(id);
-                    setActiveSection('episodes');
+                    navigateToSection('episodes');
                   }}
                   onUsePitchInProduction={handleUsePitchInProduction}
                   canEditShow={(id) => permissions.canEditEditorial(id)}
@@ -945,7 +960,12 @@ export function App() {
       {/* Modals & Drawers */}
       <LoginModal
         isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
+        onClose={() => {
+          setIsLoginModalOpen(false);
+          if (['/login', '/signup'].includes(window.location.pathname) || new URLSearchParams(window.location.search).has('auth')) {
+            window.history.replaceState({}, '', pathForSection(activeSection));
+          }
+        }}
         session={session}
         availableUsers={availableUsers}
         allShows={accessibleShows}
