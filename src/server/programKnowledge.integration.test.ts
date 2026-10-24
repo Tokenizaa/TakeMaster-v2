@@ -650,7 +650,7 @@ describe('Supabase persistence integration', () => {
       const realFs = await import('fs');
       const realPath = await import('path');
       
-      const programsDir = '/home/lg/workspace/projects/TakeMaster-v2/programs';
+      const programsDir = process.env.KNOWLEDGE_BASE_PATH || `${process.cwd()}/programs`;
       expect(realFs.existsSync(programsDir)).toBe(true);
       
       const entries = realFs.readdirSync(programsDir, { withFileTypes: true });
@@ -672,11 +672,11 @@ describe('Supabase persistence integration', () => {
       const realFs = await import('fs');
       const realPath = await import('path');
       
-      const distDir = '/home/lg/workspace/projects/TakeMaster-v2/dist';
+      const distDir = `${process.cwd()}/dist`;
       
       // If dist exists, check if programs are accessible (they should be served as static assets)
       // For now, verify the source files exist - the build process should handle this
-      const programsDir = '/home/lg/workspace/projects/TakeMaster-v2/programs';
+      const programsDir = process.env.KNOWLEDGE_BASE_PATH || `${process.cwd()}/programs`;
       expect(require('fs').existsSync(programsDir)).toBe(true);
     });
   });
