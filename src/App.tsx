@@ -135,6 +135,7 @@ export function App() {
     try {
       const state = await api.getState();
       setSession(state.session);
+      if (!state.session) setIsLoginModalOpen(true);
       setAvailableUsers(state.availableUsers || []);
       setShows(state.shows);
       setProductions(state.productions || []);
