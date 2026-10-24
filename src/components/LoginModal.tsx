@@ -56,7 +56,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onRegister,
 }) => {
   const currentSession = session ?? currentSessionProp ?? null;
-  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>(() =>
+    typeof window !== 'undefined' && window.location.pathname === '/signup' ? 'register' : 'login'
+  );
   const [emailInput, setEmailInput] = useState('');
   const [codeInput, setCodeInput] = useState('');
   const [selectedOrgId] = useState(
